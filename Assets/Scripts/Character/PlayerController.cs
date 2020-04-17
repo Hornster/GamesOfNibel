@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
 
     //--Private Variables Exposed to the Inspector.
@@ -29,35 +29,20 @@ public class CharacterController : MonoBehaviour
     private PhysicsMaterial2D fullFritcion;
 
     //--Private Variables
-    private float xInput;
-    private float slopeDownAngle;
-    private float slopeDownAngleOld;
-    private float slopeSideAngle;
 
-    private int facingDirection = 1;
-
-    private bool isGrounded;
-    private bool canJump;
-    private bool isOnSlope;
-    private bool isJumping;
-    private bool canWalkOnSlope;
-
-    private Vector2 newVelocity;
-    private Vector2 newForce;
-    private Vector2 colliderSize;
     //Perpendicular
-    private Vector2 slopeNormalPerp;
 
     //--Component References
     private Rigidbody2D rb;
     private CapsuleCollider2D cc;
+    private readonly PlayerState _playerState = new PlayerState();
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         cc = GetComponent<CapsuleCollider2D>();
 
-        colliderSize = cc.size;
+        _playerState.colliderSize = cc.size;
     }
 
     private void Update()
@@ -74,7 +59,7 @@ public class CharacterController : MonoBehaviour
 
     private void SlopeCheck()
     {
-        float scaledColliderSize = (colliderSize.y * transform.localScale.y);
+        float scaledColliderSize = (_playerState.colliderSize.y * transform.localScale.y);
         Vector2 checkPos = transform.position - new Vector3(0, scaledColliderSize / 2, 0);
 
         SlopeCheckHorizontal(checkPos);
@@ -89,18 +74,18 @@ public class CharacterController : MonoBehaviour
 
         if (slopeHitFront)
         {
-            isOnSlope = true;
-            slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+            _playerState.isOnSlope = true;
+            _playerState.slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
         }
         else if (slopeHitBack)
         {
-            isOnSlope = true;
-            slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+            _playerState.isOnSlope = true;
+            _playerState.slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
         }
         else
         {
-            slopeSideAngle = 0.0f;
-            isOnSlope = false;
+            _playerState.slopeSideAngle = 0.0f;
+            _playerState.isOnSlope = false;
         }
     }
 
@@ -110,31 +95,31 @@ public class CharacterController : MonoBehaviour
         Debug.DrawRay(checkPos, Vector2.down * slopeCheckDistance, Color.black);
         if (hit)
         {
-            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+            _playerState.slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
 
-            slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+            _playerState.slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-            if (slopeDownAngle != slopeDownAngleOld)
+            if (_playerState.slopeDownAngle != _playerState.slopeDownAngleOld)
             {
-                isOnSlope = true;
+                _playerState.isOnSlope = true;
             }
 
-            slopeDownAngleOld = slopeDownAngle;
+            _playerState.slopeDownAngleOld = _playerState.slopeDownAngle;
 
-            Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
+            Debug.DrawRay(hit.point, _playerState.slopeNormalPerp, Color.red);
             Debug.DrawRay(hit.point, hit.normal, Color.yellow);
         }
 
-        if (slopeDownAngle > maxSlopeAngle || slopeSideAngle > maxSlopeAngle)
+        if (_playerState.slopeDownAngle > maxSlopeAngle || _playerState.slopeSideAngle > maxSlopeAngle)
         {
-            canWalkOnSlope = false;
+            _playerState.canWalkOnSlope = false;
         }
         else
         {
-            canWalkOnSlope = true;
+            _playerState.canWalkOnSlope = true;
         }
 
-        if (isOnSlope && xInput == 0.0f && canWalkOnSlope)
+        if (_playerState.isOnSlope && _playerState.xInput == 0.0f && _playerState.canWalkOnSlope)
         {
             rb.sharedMaterial = fullFritcion;
         }
@@ -146,9 +131,9 @@ public class CharacterController : MonoBehaviour
 
     private void CheckInput()
     {
-        xInput = Input.GetAxisRaw("Horizontal");
+        _playerState.xInput = Input.GetAxisRaw("Horizontal");
 
-        if (xInput == -facingDirection)
+        if (_playerState.xInput == -_playerState.facingDirection)
         {
             Flip();
         }
@@ -161,33 +146,33 @@ public class CharacterController : MonoBehaviour
 
     private void CheckGround()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        _playerState.isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
         if (rb.velocity.y <= 0.0f)
         {
-            isJumping = false;
+            _playerState.isJumping = false;
         }
-        if (isGrounded && !isJumping && slopeDownAngle <= maxSlopeAngle)
+        if (_playerState.isGrounded && !_playerState.isJumping && _playerState.slopeDownAngle <= maxSlopeAngle)
         {
-            canJump = true;
+            _playerState.canJump = true;
         }
         else
         {
-            canJump = false;
+            _playerState.canJump = false;
         }
     }
 
     private void Jump()
     {
-        if (canJump)
+        if (_playerState.canJump)
         {
-            canJump = false;
-            isJumping = true;
+            _playerState.canJump = false;
+            _playerState.isJumping = true;
 
-            newVelocity.Set(0.0f, 0.0f);
-            rb.velocity = newVelocity;
-            newForce.Set(0.0f, jumpForce);
-            rb.AddForce(newForce, ForceMode2D.Impulse);
+            _playerState.newVelocity = new Vector2(0.0f, 0.0f);
+            rb.velocity = _playerState.newVelocity;
+            _playerState.newForce = new Vector2(0.0f, jumpForce);
+            rb.AddForce(_playerState.newForce, ForceMode2D.Impulse);
         }
     }
 
@@ -195,30 +180,30 @@ public class CharacterController : MonoBehaviour
 
     private void ApplyMovement()
     {
-        if (isGrounded && !isOnSlope && !isJumping)
+        if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)
         {
             //On flat ground
-            newVelocity.Set(movementSpeed * xInput, 0.0f);
-            rb.velocity = newVelocity;
+            _playerState.newVelocity = new Vector2(movementSpeed * _playerState.xInput, 0.0f);
+            rb.velocity = _playerState.newVelocity;
         }
-        else if (isGrounded && isOnSlope && !isJumping && canWalkOnSlope)
+        else if (_playerState.isGrounded && _playerState.isOnSlope && !_playerState.isJumping && _playerState.canWalkOnSlope)
         {
             //On slope
             //-xInput since the normal is rotated counterclockwise
-            newVelocity.Set(movementSpeed * slopeNormalPerp.x * -xInput, movementSpeed * slopeNormalPerp.y * -xInput);
-            rb.velocity = newVelocity;
+            _playerState.newVelocity = new Vector2(movementSpeed * _playerState.slopeNormalPerp.x * -_playerState.xInput, movementSpeed * _playerState.slopeNormalPerp.y * -_playerState.xInput);
+            rb.velocity = _playerState.newVelocity;
         }
-        else if (!isGrounded)
+        else if (!_playerState.isGrounded)
         {
             //In the air
-            newVelocity.Set(movementSpeed * xInput, rb.velocity.y);
-            rb.velocity = newVelocity;
+            _playerState.newVelocity = new Vector2(movementSpeed * _playerState.xInput, rb.velocity.y);
+            rb.velocity = _playerState.newVelocity;
         }
     }
 
     private void Flip()
     {
-        facingDirection *= -1;
+        _playerState.facingDirection *= -1;
         transform.Rotate(0.0f, 180.0f, 0.0f);
     }
 
