@@ -99,7 +99,10 @@ namespace Assets.Scripts.Player
                 _playerState.isOnSlope = false;
             }
         }
-
+        /// <summary>
+        /// Checks for the slope right beneath the player.
+        /// </summary>
+        /// <param name="checkPos">Position which the testing ray will be cast from.</param>
         private void SlopeCheckVertical(Vector2 checkPos)
         {
             var hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, whatIsGround);
