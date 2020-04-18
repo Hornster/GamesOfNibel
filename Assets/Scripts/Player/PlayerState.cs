@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerState
+public class PlayerState : MonoBehaviour
 {
     public float xInput{ get; set; }
     public float slopeDownAngle{ get; set; }
