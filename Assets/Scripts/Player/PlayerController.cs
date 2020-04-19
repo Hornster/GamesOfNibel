@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Assets.Scripts.Player;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(PlayerPhysics), typeof(PlayerState))]
 public class PlayerController : MonoBehaviour
