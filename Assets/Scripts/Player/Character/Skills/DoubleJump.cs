@@ -14,11 +14,14 @@ namespace Assets.Scripts.Player.Character.Skills
         /// <summary>
         /// Rigidbody of the character.
         /// </summary>
+
+        [SerializeField]//TODO remove serialization, debug feature.
         private Rigidbody2D _characterRigidbody;
 
         /// <summary>
         /// Uses this skill.
         /// </summary>
+        [SerializeField]//TODO remove serialization, debug feature.
         private PlayerState _playerState;
         /// <summary>
         /// Performs double jump.
@@ -30,7 +33,7 @@ namespace Assets.Scripts.Player.Character.Skills
                 _characterRigidbody.velocity = Vector2.zero;
                 //1.0f since double jump always pushes the character up.
                 var dirVector = new Vector2(_playerState.xInput, 1.0f);
-                _characterRigidbody.AddForce(dirVector*_force);
+                _characterRigidbody.AddForce(dirVector*_force, ForceMode2D.Impulse);
 
                 _playerState.CanDoubleJump = false;
             }

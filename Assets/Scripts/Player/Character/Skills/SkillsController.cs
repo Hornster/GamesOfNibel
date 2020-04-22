@@ -10,14 +10,34 @@ namespace Assets.Scripts.Player.Character.Skills
 {
     public class SkillsController : MonoBehaviour
     {
+        //DEBUG
+        [SerializeField] private DoubleJump _doubleJumpSkill;
+
+        private void Start()
+        {
+            AddBasicSkill(SkillType.DoubleJump, _doubleJumpSkill);
+        }
+        //DEBUG
+
+
         /// <summary>
         /// Reference to the gameobject that stores skills of the character.
         /// </summary>
         [SerializeField] private GameObject _basicSkillContainer;
         /// <summary>
+        /// Info about player state - what skills can they use, are they on the ground, etc.
+        /// </summary>
+        [SerializeField] private PlayerState _playerState;
+        /// <summary>
         /// Stores basic skills that are available for the player.
         /// </summary>
-        private Dictionary<SkillType, IBasicSkill> _basicSkills;
+        private Dictionary<SkillType, IBasicSkill> _basicSkills = new Dictionary<SkillType, IBasicSkill>();
+        
+        private void Update()
+        {
+            //Perform reset of one-use skills if it is possible.
+            _playerState.ChkSkillResetPossible();
+        }
         /// <summary>
         /// Adds the skill to the skill set of the character. If skill was added - returns true.
         /// Returns false if skill was already present.
@@ -26,7 +46,7 @@ namespace Assets.Scripts.Player.Character.Skills
         /// <param name="skill">The skill object itself.</param>
         public bool AddBasicSkill(SkillType type, IBasicSkill skill)
         {
-            if (_basicSkills.ContainsKey(type))
+            if (_basicSkills.ContainsKey(type) == false)
             {
                 _basicSkills.Add(type, skill);
                 return true;

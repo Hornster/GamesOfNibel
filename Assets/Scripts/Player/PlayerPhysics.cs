@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Helpers;
 using UnityEditor;
 using UnityEngine;
 
@@ -113,7 +114,7 @@ namespace Assets.Scripts.Player
 
                 _playerState.slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-                if (_playerState.slopeDownAngle != _playerState.slopeDownAngleOld)
+                if (ValueComparator.IsEqual(_playerState.slopeDownAngle, _playerState.slopeDownAngleOld) == false)
                 {
                     _playerState.isOnSlope = true;
                 }

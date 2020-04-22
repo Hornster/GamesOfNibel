@@ -17,4 +17,23 @@ public class PlayerState : MonoBehaviour
     public Vector2 colliderSize{ get; set; }
     public Vector2 slopeNormalPerp{ get; set; }
     public bool CanDoubleJump { get; set; }
+
+    /// <summary>
+    /// Checks if one-use skills can be reset. If yes - calls resetting method.
+    /// </summary>
+    public void ChkSkillResetPossible()
+    {
+        if (isGrounded || canWalkOnSlope)
+        {
+            ResetOneUseSkills();
+        }
+        
+    }
+    /// <summary>
+    /// Resets all basic movement one-time skills.
+    /// </summary>
+    public void ResetOneUseSkills()
+    {
+        CanDoubleJump = true;
+    }
 }

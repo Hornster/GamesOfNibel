@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
+using Assets.Scripts.Player.Character.Skills;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerPhysics), typeof(PlayerState))]
@@ -12,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private float movementSpeed;
     [SerializeField]
     private float jumpForce;
+
+    [SerializeField] private SkillsController _skillsController;
 
 
     //--Component References
@@ -53,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void RotatePlayer()
     {
-        if (_playerState.xInput == -_playerState.facingDirection)
+        if (ValueComparator.IsEqual(_playerState.xInput, -_playerState.facingDirection))
         {
             Flip();
         }
@@ -70,6 +75,10 @@ public class PlayerController : MonoBehaviour
             rb.velocity = _playerState.newVelocity;
             _playerState.newForce = new Vector2(0.0f, jumpForce);
             rb.AddForce(_playerState.newForce, ForceMode2D.Impulse);
+        }
+        else if (_playerState.CanDoubleJump)
+        {
+            _skillsController.UseSkill(SkillType.DoubleJump);
         }
     }
     
