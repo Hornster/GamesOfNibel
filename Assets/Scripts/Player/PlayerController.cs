@@ -103,6 +103,16 @@ public class PlayerController : MonoBehaviour
             _playerState.newVelocity = new Vector2(movementSpeed * _playerState.xInput, rb.velocity.y);
             rb.velocity = _playerState.newVelocity;
         }
+        //TODO DEBUG
+        if (_playerState.IsWallSliding)
+        {
+            rb.velocity = new Vector2(movementSpeed * _playerState.xInput, rb.velocity.y);
+
+            if (rb.velocity.y < -5f)
+            {
+                rb.velocity = new Vector2(movementSpeed * _playerState.xInput, -5f);
+            }
+        }
     }
 
     private void Flip()

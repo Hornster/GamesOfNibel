@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assets.Scripts.Common.Enums
+{
+    /// <summary>
+    /// Defines types of influence that can the wall slide skill have on the player during gameplay.
+    /// </summary>
+    public enum WallSlideType
+    {
+        //IMPORTANT!!!!
+        //Each new type should be of power of 2, i.e. 1, 2, 4, 8, 16...
+        //Types can be merged with each other and each bit in the integer value is assigned to given type.
+        /// <summary>
+        /// The player's velocity caps at provided value.
+        /// </summary>
+        MaxVelocityCap = 1,
+        /// <summary>
+        /// The gravity is decreased for the player during the slide, making them accelerate at
+        /// slower rate.
+        /// </summary>
+        GravityDecrease = 2
+    }
+}

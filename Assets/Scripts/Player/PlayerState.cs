@@ -12,11 +12,19 @@ public class PlayerState : MonoBehaviour
     public bool isOnSlope{ get; set; }
     public bool isJumping{ get; set; }
     public bool canWalkOnSlope{ get; set; }
+    /// <summary>
+    /// Holds a climbable wall.
+    /// </summary>
+    public bool IsTouchingWall { get; set; }
+    /// <summary>
+    /// Holds a climbable wall and is sliding down it.
+    /// </summary>
+    public bool IsWallSliding { get; set; }
+    public bool CanDoubleJump { get; set; }
     public Vector2 newVelocity{ get; set; }
     public Vector2 newForce{ get; set; }
     public Vector2 colliderSize{ get; set; }
     public Vector2 slopeNormalPerp{ get; set; }
-    public bool CanDoubleJump { get; set; }
 
     /// <summary>
     /// Checks if one-use skills can be reset. If yes - calls resetting method.

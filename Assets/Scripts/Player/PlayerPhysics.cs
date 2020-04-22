@@ -18,12 +18,24 @@ namespace Assets.Scripts.Player
         private float maxSlopeAngle;
         [SerializeField]
         private float groundCheckRadius;
+        [SerializeField]
+        private float wallCheckDistance;
+        /// <summary>
+        /// Max angle of the wall towards horizontal ground that the player can climb on (or perform a wall jump).
+        /// </summary>
+        [SerializeField]
+        private float _maxClimbableAngle;
 
         /// <summary>
         /// Defines where will the collision and slope checking rays be coming from.
         /// </summary>
         [SerializeField]
         private Transform groundCheck;
+        /// <summary>
+        /// Start position for additional ray that checks if the character touches a long enough part of wall for
+        /// climbing/wall jumping.
+        /// </summary>
+        [SerializeField] private Transform wallCheck;
 
         /// <summary>
         /// What is treated by the character as collidable ground?
@@ -49,6 +61,7 @@ namespace Assets.Scripts.Player
         {
             CheckGround();
             SlopeCheck();
+            WallCheck();
         }
 
         private void CheckGround()
@@ -143,9 +156,29 @@ namespace Assets.Scripts.Player
                 rb.sharedMaterial = noFriction;
             }
         }
+        /// <summary>
+        /// Checks if the character is holding a wall.
+        /// </summary>
+        private void WallCheck()
+        {
+            _playerState.IsTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, whatIsGround);
+
+            if (_playerState.IsTouchingWall && _playerState.isGrounded == false && rb.velocity.y < 0)
+            {
+                _playerState.IsWallSliding = true;
+            }
+            else
+            {
+                _playerState.IsWallSliding = false;
+            }
+        }
+
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+
+            var wallLineDest = new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y, wallCheck.position.z);
+            Gizmos.DrawLine(wallCheck.position, wallLineDest);
         }
     }
 }

@@ -1860,6 +1860,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: DefaultCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 5535999678530167655, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: wallCheckDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535999678530167655, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: _maxClimbableAngle
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361ca711c3b0bc3418cc10627f502602, type: 3}
 --- !u!1001 &7988244651343071799
