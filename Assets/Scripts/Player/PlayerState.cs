@@ -1,5 +1,9 @@
-﻿using UnityEngine;
-
+﻿using Assets.Scripts.Common;
+using UnityEngine;
+/// <summary>
+/// Contains all necessary info about the player's physics and movement.
+/// </summary>
+[RequireComponent(typeof(GravityManager))]
 public class PlayerState : MonoBehaviour
 {
     public float xInput{ get; set; }
@@ -25,6 +29,13 @@ public class PlayerState : MonoBehaviour
     public Vector2 newForce{ get; set; }
     public Vector2 colliderSize{ get; set; }
     public Vector2 slopeNormalPerp{ get; set; }
+
+    public GravityManager GravityManager { get; private set; }
+
+    private void Start()
+    {
+        GravityManager = GetComponent<GravityManager>();
+    }
 
     /// <summary>
     /// Checks if one-use skills can be reset. If yes - calls resetting method.

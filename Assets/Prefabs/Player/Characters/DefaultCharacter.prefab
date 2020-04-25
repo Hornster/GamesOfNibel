@@ -29,6 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1753275036181363796}
+  - {fileID: 1218396695}
   m_Father: {fileID: 5535999678530167676}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,8 +46,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doubleJumpSkill: {fileID: 1505746250139720151}
+  _wallSlideSkill: {fileID: 0}
   _basicSkillContainer: {fileID: 1149836952}
   _playerState: {fileID: 5535999678530167654}
+--- !u!1 &1218396694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1218396695}
+  - component: {fileID: 1218396696}
+  m_Layer: 0
+  m_Name: WallSlideModifier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1218396695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218396694}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1149836953}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1218396696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218396694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e010b9ca04406704d9392bcf9b00e629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxVelocityCap: 3
+  _gravityScale: 0.25
+  _rb: {fileID: 5535999678530167650}
+  _playerState: {fileID: 5535999678530167654}
+  _wallSlideType: 01000000
 --- !u!1 &2978589374422729586
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _force: 20
   _characterRigidbody: {fileID: 5535999678530167650}
-  _playerState: {fileID: 0}
+  _playerState: {fileID: 5535999678530167654}
 --- !u!1 &3555151304681087138
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,11 +414,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b0d1d0383957ce448b22282c927d08f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slopeCheckDistance: 0.5
+  slopeCheckDistance: 0.45
   maxSlopeAngle: 45
   groundCheckRadius: 0.45
-  wallCheckDistance: 0
-  _maxClimbableAngle: 0
+  wallCheckDistance: 1
+  _maxClimbableAngle: 100
   groundCheck: {fileID: 5535999677804198595}
   wallCheck: {fileID: 2765676036440023524}
   whatIsGround:

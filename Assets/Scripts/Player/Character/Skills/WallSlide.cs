@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Assets.Scripts.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
 using UnityEngine;
 
 namespace Assets.Scripts.Player.Character.Skills
@@ -26,6 +24,10 @@ namespace Assets.Scripts.Player.Character.Skills
         /// State of the player.
         /// </summary>
         [SerializeField] private PlayerState _playerState;//TODO remove serialize, make the ref be assigned by factory
+        /// <summary>
+        /// Which wall slide attributes shall be applied?
+        /// </summary>
+        [SerializeField] private WallSlideType[] _wallSlideType;//TODO This is debug. Remove it later on.
         /// <summary>
         /// Defines what influence types the wall slide has on the player.
         /// Check WallSlideType enum for details.
@@ -52,14 +54,15 @@ namespace Assets.Scripts.Player.Character.Skills
             switch (effect)
             {
                 case WallSlideType.MaxVelocityCap:
-                    
-                    //TODO Create a gravity manager and connect it to player state.
-                    //TODO Make the skills that influence gravity provide multipliers
-                    //TODO to gravity manager, which he will apply to the gravity (chaining multipliers).
-                    //TODO Each new frame, reset the gravity and calculate it again (fixedUpdate).
+                    if (Mathf.Abs(_playerState.newVelocity.y) >= _maxVelocityCap)
+                    {
+                        float newVelocityY = _maxVelocityCap * Mathf.Sign(_playerState.newVelocity.y);
+                        _rb.velocity = new Vector2(_rb.velocity.x, newVelocityY);
+                    }
 
                     break;
                 case WallSlideType.GravityDecrease:
+                    _playerState.GravityManager.AddGravityModifier(_gravityScale, this.GetHashCode());
                     break;
             }
         }
@@ -67,23 +70,26 @@ namespace Assets.Scripts.Player.Character.Skills
         private void Start()
         {
             _wallSlideTypes = Enum.GetValues(typeof(WallSlideType)).Cast<WallSlideType>();
+            foreach (var type in _wallSlideType)
+            {
+                AddType(type);
+            }
         }
 
         public void UseSkill()
         {
             if (_playerState.IsWallSliding == false)
             {
-
+                return;
             }
 
             foreach (var type in _wallSlideTypes)
             {
-                if (((int) type & _influenceTypes) != 0)
+                if (((int)type & _influenceTypes) != 0)
                 {
                     ApplyEffect(type);
                 }
             }
-        }
         }
     }
 }

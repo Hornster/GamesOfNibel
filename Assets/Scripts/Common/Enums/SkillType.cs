@@ -8,6 +8,7 @@ namespace Assets.Scripts.Common.Enums
 {
     public enum SkillType
     {
-        DoubleJump
+        DoubleJump,
+        WallSlide
     }
 }
