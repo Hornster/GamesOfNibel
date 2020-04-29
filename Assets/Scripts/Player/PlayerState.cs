@@ -1,11 +1,17 @@
 ﻿using Assets.Scripts.Common;
 using UnityEngine;
+using UnityEngine.Events;
+
 /// <summary>
 /// Contains all necessary info about the player's physics and movement.
 /// </summary>
 [RequireComponent(typeof(GravityManager))]
 public class PlayerState : MonoBehaviour
 {
+    //TODO Debug, remove later
+    [SerializeField] private UnityEvent _doubleJumpReset;
+    //TODO end debug
+
     public float xInput{ get; set; }
     public float slopeDownAngle{ get; set; }
     public float slopeDownAngleOld{ get; set; }
@@ -42,7 +48,7 @@ public class PlayerState : MonoBehaviour
     /// </summary>
     public void ChkSkillResetPossible()
     {
-        if (isGrounded || canWalkOnSlope)
+        if (isGrounded || IsTouchingWall)
         {
             ResetOneUseSkills();
         }
@@ -54,5 +60,16 @@ public class PlayerState : MonoBehaviour
     public void ResetOneUseSkills()
     {
         CanDoubleJump = true;
+
+        NotifyDebugWatchers();
+    }
+
+    //todo DEBUG
+    private void NotifyDebugWatchers()
+    {
+        if (CanDoubleJump)
+        {
+            _doubleJumpReset?.Invoke();
+        }
     }
 }

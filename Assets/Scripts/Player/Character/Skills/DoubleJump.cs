@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Player.Character.Skills
 {
@@ -11,9 +12,12 @@ namespace Assets.Scripts.Player.Character.Skills
         /// Defines the force applied to character during double jump.
         /// </summary>
         [SerializeField] private float _force = 20.0f;
+
         /// <summary>
         /// Rigidbody of the character.
         /// </summary>
+        //TODO Debug feature to show skill usage.
+        [SerializeField] private UnityEvent _skillUsed;
 
         [SerializeField]//TODO remove serialization, debug feature.
         private Rigidbody2D _characterRigidbody;
@@ -28,7 +32,7 @@ namespace Assets.Scripts.Player.Character.Skills
         /// </summary>
         public void UseSkill()
         {
-            if (_playerState.isGrounded==false && _playerState.CanDoubleJump)
+            if (_playerState.isGrounded==false && _playerState.CanDoubleJump && _playerState.IsTouchingWall == false)
             {
                 _characterRigidbody.velocity = Vector2.zero;
                 //1.0f since double jump always pushes the character up.
@@ -36,6 +40,9 @@ namespace Assets.Scripts.Player.Character.Skills
                 _characterRigidbody.AddForce(dirVector*_force, ForceMode2D.Impulse);
 
                 _playerState.CanDoubleJump = false;
+
+                //todo DEBUG
+                _skillUsed?.Invoke();
             }
         }
     }
