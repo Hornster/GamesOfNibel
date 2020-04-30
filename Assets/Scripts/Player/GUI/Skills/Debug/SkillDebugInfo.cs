@@ -23,35 +23,29 @@ namespace Assets.Scripts.Player.GUI.Skills.Debug
         private void Start()
         {
             _skillImage = GetComponent<Image>();
+            _skillColorBeforeUnavailable = _skillReadyColor;
         }
 
         public void SkillWasUsed()
         {
-            var imageMaterial = _skillImage.material;
-            imageMaterial.color = _skillUsedColor;
-            _skillImage.material = imageMaterial;
+            _skillImage.color = _skillUsedColor;
+            _skillColorBeforeUnavailable = _skillUsedColor;
         }
 
         public void SkillWasReset()
         {
-            var imageMaterial = _skillImage.material;
-            imageMaterial.color = _skillReadyColor;
-            _skillImage.material = imageMaterial;
+            _skillImage.color = _skillReadyColor;
+            _skillColorBeforeUnavailable = _skillReadyColor;
         }
 
         public void SkillBecameUnavailable()
         {
-            var imageMaterial = _skillImage.material;
-            _skillColorBeforeUnavailable = imageMaterial.color;
-            imageMaterial.color = _skillUnavailableColor;
-            _skillImage.material = imageMaterial;
+            _skillImage.color = _skillUnavailableColor;
         }
 
         public void SkillBecameAvailable()
         {
-            var imageMaterial = _skillImage.material;
-            imageMaterial.color = _skillColorBeforeUnavailable;
-            _skillImage.material = imageMaterial;
+            _skillImage.color = _skillColorBeforeUnavailable;
         }
     }
 }

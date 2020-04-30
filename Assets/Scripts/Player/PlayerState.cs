@@ -42,6 +42,7 @@ public class PlayerState : MonoBehaviour
     {
         GravityManager = GetComponent<GravityManager>();
     }
+    
 
     /// <summary>
     /// Checks if one-use skills can be reset. If yes - calls resetting method.

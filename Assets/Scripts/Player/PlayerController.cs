@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpForce;
 
+    [SerializeField] private float _airborneAccelerationFactor = 0.4f;
+
     [SerializeField] private SkillsController _skillsController;
 
 
@@ -81,6 +83,10 @@ public class PlayerController : MonoBehaviour
             _playerState.newForce = new Vector2(0.0f, jumpForce);
             rb.AddForce(_playerState.newForce, ForceMode2D.Impulse);
         }
+        else if (_playerState.IsTouchingWall)
+        {
+            _skillsController.UseSkill(SkillType.WallJump);
+        }
         else if (_playerState.CanDoubleJump)
         {
             _skillsController.UseSkill(SkillType.DoubleJump);
@@ -104,8 +110,15 @@ public class PlayerController : MonoBehaviour
         }
         else if (!_playerState.isGrounded)
         {
+            var currentVelocity = rb.velocity;
+            currentVelocity.x += movementSpeed * _playerState.xInput * _airborneAccelerationFactor;
+
+            if (Mathf.Abs(currentVelocity.x) > movementSpeed)
+            {
+                currentVelocity.x = Mathf.Sign(currentVelocity.x) * movementSpeed;
+            }
             //In the air
-            _playerState.newVelocity = new Vector2(movementSpeed * _playerState.xInput, rb.velocity.y);
+            _playerState.newVelocity = currentVelocity;
             rb.velocity = _playerState.newVelocity;
         }
 

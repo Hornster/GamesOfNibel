@@ -17,11 +17,11 @@ namespace Assets.Scripts.Common.Enums
         /// <summary>
         /// The player's velocity caps at provided value.
         /// </summary>
-        MaxVelocityCap = 1,
+        GravityDecrease = 1,
         /// <summary>
         /// The gravity is decreased for the player during the slide, making them accelerate at
-        /// slower rate.
+        /// slower rate. Must stay at the end!
         /// </summary>
-        GravityDecrease = 2
+        MaxVelocityCap = 2
     }
 }
