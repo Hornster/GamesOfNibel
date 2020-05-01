@@ -40,6 +40,7 @@ namespace Assets.Scripts.Player.Character.Skills
                 _characterRigidbody.AddForce(dirVector*_force, ForceMode2D.Impulse);
 
                 _playerState.CanDoubleJump = false;
+                _playerState.IsGliding = false;
 
                 //todo DEBUG
                 _skillUsed?.Invoke();

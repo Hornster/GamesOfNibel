@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _doubleJumpSkill: {fileID: 1505746250139720151}
   _wallSlideSkill: {fileID: 1218396696}
-  _wallJumpSkill: {fileID: 0}
+  _wallJumpSkill: {fileID: 2086006907}
+  _glideSkill: {fileID: 0}
   _basicSkillContainer: {fileID: 1149836952}
   _playerState: {fileID: 5535999678530167654}
 --- !u!1 &1218396694
@@ -94,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e010b9ca04406704d9392bcf9b00e629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxVelocityCap: 5
+  _maxVelocityCap: 0
   _gravityScale: 5
   _rb: {fileID: 5535999678530167650}
   _playerState: {fileID: 5535999678530167654}
@@ -142,8 +143,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af877370e6e1aae4b8d8891cd0cec269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wallJumpDirection: {x: 0.3, y: 0.7}
-  _wallJumpForce: 20
+  _wallJumpUnavailable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SkillBecameUnavailable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _wallJumpAvailable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SkillBecameAvailable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _wallJumpDirection: {x: 0.8, y: 1}
+  _wallJumpForce: 30
   _characterRigidbody: {fileID: 5535999678530167650}
   _playerState: {fileID: 5535999678530167654}
 --- !u!1 &2978589374422729586
@@ -189,11 +218,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1da2f2ef103884599455920990bdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _force: 20
+  _force: 30
   _skillUsed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4796753842890911782}
+      - m_Target: {fileID: 5535999676738631025}
         m_MethodName: SkillWasUsed
         m_Mode: 1
         m_Arguments:
@@ -327,21 +356,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 5535999678685711693}
   _character: {fileID: 5535999678530167676}
---- !u!114 &4796753842890911782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5535999678489656153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7d23d4165ebf324f853d48518a9155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillReadyColor: {r: 1, g: 1, b: 1, a: 1}
-  _skillUsedColor: {r: 0, g: 0, b: 0, a: 1}
-  _skillUnavailableColor: {r: 0.4811321, g: 0.3018423, b: 0.3018423, a: 1}
 --- !u!1 &5535999678530167677
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 20
   jumpForce: 30
+  _airborneAccelerationFactor: 0.15
   _skillsController: {fileID: 6052496438944943729}
 --- !u!114 &5535999678530167655
 MonoBehaviour:
@@ -494,7 +509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b0d1d0383957ce448b22282c927d08f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slopeCheckDistance: 0.45
+  slopeCheckDistance: 1
   maxSlopeAngle: 45
   groundCheckRadius: 0.45
   wallCheckDistance: 1
@@ -521,36 +536,8 @@ MonoBehaviour:
   _doubleJumpReset:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4796753842890911782}
+      - m_Target: {fileID: 5535999676738631025}
         m_MethodName: SkillWasReset
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _wallJumpUnavailable:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2114999656}
-        m_MethodName: SkillBecameUnavailable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _wallJumpAvailable:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2114999656}
-        m_MethodName: SkillBecameUnavailable
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -656,48 +643,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5535999678685711688}
   m_Enabled: 1
---- !u!114 &2114999656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8304797463337396956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7d23d4165ebf324f853d48518a9155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillReadyColor: {r: 1, g: 1, b: 1, a: 1}
-  _skillUsedColor: {r: 0, g: 0, b: 0, a: 1}
-  _skillUnavailableColor: {r: 0.4811321, g: 0.3018423, b: 0.3018423, a: 1}
---- !u!114 &2114999657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8304797463337396956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
 --- !u!1001 &1027573144726947159
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -705,16 +650,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5535999678183602757}
     m_Modifications:
-    - target: {fileID: 4796753843572653576, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796753843572653582, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Name
-      value: Double jump
-      objectReference: {fileID: 0}
     - target: {fileID: 4796753843839723852, guid: ed828b82390b2eb4699baf4cbbb07698,
         type: 3}
       propertyPath: m_Name
@@ -833,15 +768,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1027573144726947159}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8304797463337396956 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9007829405864832907, guid: ed828b82390b2eb4699baf4cbbb07698,
+--- !u!114 &5535999676738631025 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4796753842890911782, guid: ed828b82390b2eb4699baf4cbbb07698,
     type: 3}
   m_PrefabInstance: {fileID: 1027573144726947159}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5535999678489656153 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4796753843572653582, guid: ed828b82390b2eb4699baf4cbbb07698,
-    type: 3}
-  m_PrefabInstance: {fileID: 1027573144726947159}
-  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d23d4165ebf324f853d48518a9155a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

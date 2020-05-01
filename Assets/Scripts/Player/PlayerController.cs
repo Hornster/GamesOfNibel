@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
         _playerState = GetComponent<PlayerState>();
 
         InputReader.RegisterJumpHandler(Jump);
+        InputReader.RegisterGlideHandler(Glide);
 
         _playerState.colliderSize = cc.size;
     }
@@ -93,6 +95,22 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    private void Glide(GlideStages glideStage)
+    {
+        switch (glideStage)
+        {
+            case GlideStages.GlideBegin:
+                _playerState.IsGliding = true;
+                break;
+            case GlideStages.GlideKeep:
+                _skillsController.UseSkill(SkillType.Glide);
+                break;
+            case GlideStages.GlideStop:
+                _playerState.IsGliding = false;
+                break;
+        }
+    }
+
     private void ApplyMovement()
     {
         if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)

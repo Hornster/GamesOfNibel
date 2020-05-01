@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Enums;
 using UnityEngine;
 using UnityEngine.Events;
 using Vector2 = System.Numerics.Vector2;
@@ -13,6 +14,7 @@ namespace Assets.Scripts.Player
     {
         //Events
         private static UnityAction _jumpHandler;
+        private static UnityAction<GlideStages> _glideHandler;
 
         //Private variables
         private ButtonConfig _buttonConfig;
@@ -48,6 +50,19 @@ namespace Assets.Scripts.Player
             {
                 _jumpHandler?.Invoke();
             }
+
+            if (Input.GetKeyDown(_buttonConfig.GlideButton))
+            {
+                _glideHandler?.Invoke(GlideStages.GlideBegin);
+            }
+            else if (Input.GetKey(_buttonConfig.GlideButton))
+            {
+                _glideHandler?.Invoke(GlideStages.GlideKeep);
+            }
+            else if (Input.GetKeyUp(_buttonConfig.GlideButton))
+            {
+                _glideHandler?.Invoke(GlideStages.GlideStop);
+            }
         }
         /// <summary>
         /// Registers jump handler.
@@ -56,6 +71,14 @@ namespace Assets.Scripts.Player
         public static void RegisterJumpHandler(UnityAction handler)
         {
             _jumpHandler += handler;
+        }
+        /// <summary>
+        /// Registers glide handler.
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void RegisterGlideHandler(UnityAction<GlideStages> handler)
+        {
+            _glideHandler += handler;
         }
     }
 }

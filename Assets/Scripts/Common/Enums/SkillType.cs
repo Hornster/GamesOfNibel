@@ -10,6 +10,7 @@ namespace Assets.Scripts.Common.Enums
     {
         DoubleJump,
         WallSlide,
-        WallJump
+        WallJump,
+        Glide
     }
 }

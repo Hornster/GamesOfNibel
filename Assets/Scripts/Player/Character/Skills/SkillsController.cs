@@ -14,12 +14,14 @@ namespace Assets.Scripts.Player.Character.Skills
         [SerializeField] private DoubleJump _doubleJumpSkill;
         [SerializeField] private WallSlide _wallSlideSkill;
         [SerializeField] private WallJump _wallJumpSkill;
+        [SerializeField] private Glide _glideSkill;
 
         private void Start()
         {
             AddBasicSkill(SkillType.DoubleJump, _doubleJumpSkill);
             AddBasicSkill(SkillType.WallSlide, _wallSlideSkill);
             AddBasicSkill(SkillType.WallJump, _wallJumpSkill);
+            AddBasicSkill(SkillType.Glide, _glideSkill);
         }
         //DEBUG
 
