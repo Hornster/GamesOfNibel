@@ -40,7 +40,7 @@ namespace Assets.Scripts.Common
 
         private ListDictionary _activeMultipliers = new ListDictionary();
 
-        private void Start()
+        private void Awake()
         {
             _referenceGravityValue = (2 * _baseJumpHeight) / (_baseJumpTime * _baseJumpTime);
             _currentGravityValue = _referenceGravityValue;
@@ -108,6 +108,14 @@ namespace Assets.Scripts.Common
         public float GetBaseJumpStartVelocity()
         {
             return _baseJumpHeight / _baseJumpTime + 0.5f * _referenceGravityValue * _baseJumpTime;
+        }
+        /// <summary>
+        /// Returns the time it takes the character to reach higher point in regular jump, in seconds.
+        /// </summary>
+        /// <returns></returns>
+        public float GetBaseJumptTime()
+        {
+            return _baseJumpTime;
         }
     }
 }

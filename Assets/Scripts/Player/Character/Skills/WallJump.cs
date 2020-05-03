@@ -10,9 +10,12 @@ namespace Assets.Scripts.Player.Character.Skills
         [SerializeField] private UnityEvent _wallJumpUnavailable;
         [SerializeField] private UnityEvent _wallJumpAvailable;
 
-        [SerializeField] private Vector2 _wallJumpDirection;
-        [SerializeField] private float _wallJumpForce;
+        private Vector2 _wallJumpDirection;
+        private float _wallJumpVelocity;
 
+        [Range(1, 90)]
+        [SerializeField] private float _jumpAngle;
+        [SerializeField] private float _jumpHeight;
 
         /// <summary>
         /// Rigidbody of the character.
@@ -26,9 +29,20 @@ namespace Assets.Scripts.Player.Character.Skills
         [SerializeField] //TODO remove serialization, debug feature.
         private PlayerState _playerState;
 
+        private void CalculateJumpStartVelocity()
+        {
+            float angleInRadians = Mathf.Deg2Rad * _jumpAngle;
+            float angleSin = Mathf.Sin(angleInRadians);
+            float jumpTime = _playerState.GravityManager.GetBaseJumptTime();
+            _wallJumpDirection = new Vector2(Mathf.Cos(angleInRadians), angleSin);
+            _wallJumpVelocity = _jumpHeight / jumpTime;
+            _wallJumpVelocity += 0.5f* _playerState.GravityManager.GetRefGravityValue() * jumpTime;
+            _wallJumpVelocity /= _wallJumpDirection.y;
+        }
         private void Start()
         {
             _wallJumpDirection.Normalize();
+            CalculateJumpStartVelocity();
         }
         //todo DEBUG
         private void ChkSkillAvailablilty()
@@ -56,13 +70,11 @@ namespace Assets.Scripts.Player.Character.Skills
                 _characterRigidbody.velocity = Vector2.zero;
                 //Since the horizontal velocity is being assigned directly, we need to assign
                 //it this way here, too.
-                float newYForce = _wallJumpDirection.y * _wallJumpForce;
-                float newXVelocity = _wallJumpDirection.x * _wallJumpForce;
-                newXVelocity = newXVelocity / _characterRigidbody.mass;
+                float newYVelocity = _wallJumpDirection.y * _wallJumpVelocity;
+                float newXVelocity = _wallJumpDirection.x * _wallJumpVelocity;
                 newXVelocity *= (-_playerState.facingDirection);
 
-                _characterRigidbody.AddForce(new Vector2(0, newYForce), ForceMode2D.Impulse);
-                _characterRigidbody.velocity += new Vector2(newXVelocity, 0);
+                _characterRigidbody.velocity = new Vector2(newXVelocity, newYVelocity);
 
                 _playerState.isJumping = true;
             }

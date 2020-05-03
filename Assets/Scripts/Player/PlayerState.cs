@@ -38,7 +38,7 @@ public class PlayerState : MonoBehaviour
 
     public GravityManager GravityManager { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
         GravityManager = GetComponent<GravityManager>();
     }

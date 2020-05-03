@@ -2201,6 +2201,14 @@ PrefabInstance:
       propertyPath: _baseJumpHeight
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2086006907, guid: 361ca711c3b0bc3418cc10627f502602, type: 3}
+      propertyPath: _jumpHeight
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086006907, guid: 361ca711c3b0bc3418cc10627f502602, type: 3}
+      propertyPath: _jumpAngle
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 5535999678183602757, guid: 361ca711c3b0bc3418cc10627f502602,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2209,7 +2217,7 @@ PrefabInstance:
     - target: {fileID: 5535999678183602757, guid: 361ca711c3b0bc3418cc10627f502602,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 15.9
       objectReference: {fileID: 0}
     - target: {fileID: 5535999678183602757, guid: 361ca711c3b0bc3418cc10627f502602,
         type: 3}
@@ -2270,6 +2278,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _jumpHeight
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535999678530167648, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: _horizontalAirSpeedDeceleration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535999678530167648, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: _exceedingSpeedDecelerationFactor
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361ca711c3b0bc3418cc10627f502602, type: 3}
