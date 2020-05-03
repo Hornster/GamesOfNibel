@@ -12,9 +12,19 @@ namespace Assets.Scripts.Common
     public class GravityManager :MonoBehaviour
     {
         /// <summary>
+        /// How long will it take to reach max height jumping off the ground vertically.
+        /// </summary>
+        [SerializeField]
+        private float _baseJumpTime = 1.5f;
+        /// <summary>
+        /// How high can the character jump from the ground vertically.
+        /// </summary>
+        [SerializeField]
+        private float _baseJumpHeight = 3.0f;
+        /// <summary>
         /// What default gravity value affects the target?
         /// </summary>
-        [SerializeField] private float _referenceGravityValue;
+        private float _referenceGravityValue;
         /// <summary>
         /// Which rigidbody is this manager influencing. This is done automatically each FixedUpdate pass.
         /// </summary>
@@ -32,7 +42,10 @@ namespace Assets.Scripts.Common
 
         private void Start()
         {
+            _referenceGravityValue = (2 * _baseJumpHeight) / (_baseJumpTime * _baseJumpTime);
             _currentGravityValue = _referenceGravityValue;
+            Debug.Log("Resetting the " + _influencedRigidbody + " to 0.");
+            _influencedRigidbody.gravityScale = 0.0f;
         }
         /// <summary>
         /// Recalculates the current gravity multiplier basing of stored multipliers.
@@ -61,7 +74,9 @@ namespace Assets.Scripts.Common
             CalcGravityMultiplier();
 
             _currentGravityValue = _referenceGravityValue * _currentGravityMultiplier;
-            _influencedRigidbody.gravityScale = _currentGravityValue;
+            var newVelocityY = _influencedRigidbody.velocity.y - _currentGravityValue * Time.deltaTime;
+
+            _influencedRigidbody.velocity = new Vector2(_influencedRigidbody.velocity.x, newVelocityY); ;
 
             ResetGravityModifiers();
         }
@@ -78,7 +93,21 @@ namespace Assets.Scripts.Common
                 _currentGravityMultiplier *= value;
             }
         }
-        
-
+        /// <summary>
+        /// Returns the reference value of the gravity (not influenced by any factors).
+        /// </summary>
+        /// <returns></returns>
+        public float GetRefGravityValue()
+        {
+            return _referenceGravityValue;
+        }
+        /// <summary>
+        /// Calculates and returns base jump beginning velocity.
+        /// </summary>
+        /// <returns></returns>
+        public float GetBaseJumpStartVelocity()
+        {
+            return _baseJumpHeight / _baseJumpTime + 0.5f * _referenceGravityValue * _baseJumpTime;
+        }
     }
 }

@@ -1,0 +1,21 @@
+Used skills:
+- double jump
+- wall jump
+- glide
+
+map elements:
+- three flag spawn sites on the map
+- red team spawn
+- blue team spawn
+- solid ground
+- platforms (player can jump down, phasing through them)
+- bouncing plant
+
+map rules:
+- flag spawns randomly between spawn areas
+- symmetry, symmetry, SYMMETRY!
+- not too big - in the beginning only 2 players will play. Let's say, 
+	running from left to right ought take 10 seconds
+- player bases positioned at similar height as middle flag spawn site
+- at least 3 routes leading to any given neutral base
+- try to make the routes same in length. I know, I know, will be tough to do

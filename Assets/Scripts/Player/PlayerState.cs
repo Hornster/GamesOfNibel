@@ -33,7 +33,6 @@ public class PlayerState : MonoBehaviour
     public bool CanDoubleJump { get; set; }
     public bool IsGliding { get; set; }
     public Vector2 newVelocity{ get; set; }
-    public Vector2 newForce{ get; set; }
     public Vector2 colliderSize{ get; set; }
     public Vector2 slopeNormalPerp{ get; set; }
 

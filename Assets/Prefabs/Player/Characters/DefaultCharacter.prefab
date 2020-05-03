@@ -1,5 +1,107 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &806982589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 806982590}
+  - component: {fileID: 806982591}
+  m_Layer: 0
+  m_Name: Glide
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &806982590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806982589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1149836953}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &806982591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806982589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ff69b7d2d8cac44198ebab8db1b9963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxFallingSpeed: 0
+  _skillUsed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1027573144099937392}
+        m_MethodName: SkillWasUsed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _skillReset:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1027573144099937392}
+        m_MethodName: SkillWasReset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _skillUnavailable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1027573144099937392}
+        m_MethodName: SkillBecameUnavailable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _skillAvailable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1027573144099937392}
+        m_MethodName: SkillBecameAvailable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _characterRigidbody: {fileID: 5535999678530167650}
+  _playerState: {fileID: 5535999678530167654}
 --- !u!1 &1149836952
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,6 +133,7 @@ Transform:
   - {fileID: 1753275036181363796}
   - {fileID: 1218396695}
   - {fileID: 2086006906}
+  - {fileID: 806982590}
   m_Father: {fileID: 5535999678530167676}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -49,7 +152,7 @@ MonoBehaviour:
   _doubleJumpSkill: {fileID: 1505746250139720151}
   _wallSlideSkill: {fileID: 1218396696}
   _wallJumpSkill: {fileID: 2086006907}
-  _glideSkill: {fileID: 0}
+  _glideSkill: {fileID: 806982591}
   _basicSkillContainer: {fileID: 1149836952}
   _playerState: {fileID: 5535999678530167654}
 --- !u!1 &1218396694
@@ -146,7 +249,7 @@ MonoBehaviour:
   _wallJumpUnavailable:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1027573145231298623}
         m_MethodName: SkillBecameUnavailable
         m_Mode: 1
         m_Arguments:
@@ -160,7 +263,7 @@ MonoBehaviour:
   _wallJumpAvailable:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1027573145231298623}
         m_MethodName: SkillBecameAvailable
         m_Mode: 1
         m_Arguments:
@@ -771,6 +874,30 @@ RectTransform:
 --- !u!114 &5535999676738631025 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4796753842890911782, guid: ed828b82390b2eb4699baf4cbbb07698,
+    type: 3}
+  m_PrefabInstance: {fileID: 1027573144726947159}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d23d4165ebf324f853d48518a9155a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1027573145231298623 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2114999656, guid: ed828b82390b2eb4699baf4cbbb07698,
+    type: 3}
+  m_PrefabInstance: {fileID: 1027573144726947159}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d23d4165ebf324f853d48518a9155a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1027573144099937392 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 987797799, guid: ed828b82390b2eb4699baf4cbbb07698,
     type: 3}
   m_PrefabInstance: {fileID: 1027573144726947159}
   m_PrefabAsset: {fileID: 0}

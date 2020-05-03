@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviour
     //--Private Variables Exposed to the Inspector.
     [SerializeField]
     private float movementSpeed;
-    [SerializeField]
-    private float jumpForce;
 
     [SerializeField] private float _airborneAccelerationFactor = 0.4f;
 
@@ -28,6 +26,16 @@ public class PlayerController : MonoBehaviour
 
     private PlayerState _playerState;
     private PlayerPhysics _playerPhysics;
+    
+    /// <summary>
+    /// The velocity calculated from gravity, jump time and jump force.
+    /// </summary>
+    private float _jumpVelocity;
+
+    private void CalcJumpVelocity()
+    {
+        _jumpVelocity += _playerState.GravityManager.GetBaseJumpStartVelocity();
+    }
 
     private void Start()
     {
@@ -40,6 +48,8 @@ public class PlayerController : MonoBehaviour
         InputReader.RegisterGlideHandler(Glide);
 
         _playerState.colliderSize = cc.size;
+
+        CalcJumpVelocity();
     }
 
     private void Update()
@@ -80,10 +90,8 @@ public class PlayerController : MonoBehaviour
             _playerState.canJump = false;
             _playerState.isJumping = true;
 
-            _playerState.newVelocity = new Vector2(0.0f, 0.0f);
-            rb.velocity = _playerState.newVelocity;
-            _playerState.newForce = new Vector2(0.0f, jumpForce);
-            rb.AddForce(_playerState.newForce, ForceMode2D.Impulse);
+            _playerState.newVelocity = new Vector2(0.0f, _jumpVelocity); 
+            rb.velocity = new Vector2(0.0f, _jumpVelocity);
         }
         else if (_playerState.IsTouchingWall)
         {
