@@ -2193,6 +2193,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 806982591, guid: 361ca711c3b0bc3418cc10627f502602, type: 3}
+      propertyPath: _maxFallingSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1218396696, guid: 361ca711c3b0bc3418cc10627f502602, type: 3}
+      propertyPath: _maxVelocityCap
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1426052490, guid: 361ca711c3b0bc3418cc10627f502602, type: 3}
       propertyPath: _baseJumpTime
       value: 0.5

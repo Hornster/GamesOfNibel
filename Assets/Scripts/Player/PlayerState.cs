@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Common;
+using Assets.Scripts.Player.Gravity;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +17,7 @@ public class PlayerState : MonoBehaviour
     public float slopeDownAngle{ get; set; }
     public float slopeDownAngleOld{ get; set; }
     public float slopeSideAngle{ get; set; }
+    public float MaxFallingVelocityY { get; set; }
     public int facingDirection { get; set; } = 1;
     public bool isGrounded{ get; set; }
     public bool canJump{ get; set; }
@@ -32,6 +34,10 @@ public class PlayerState : MonoBehaviour
     public bool IsWallSliding { get; set; }
     public bool CanDoubleJump { get; set; }
     public bool IsGliding { get; set; }
+    /// <summary>
+    /// If there are any restrictions towards Y velocity - this flag should be set to true.
+    /// </summary>
+    public bool IsFallngVelocityCapped { get; set; }
     public Vector2 newVelocity{ get; set; }
     public Vector2 colliderSize{ get; set; }
     public Vector2 slopeNormalPerp{ get; set; }

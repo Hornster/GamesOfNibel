@@ -11,7 +11,8 @@ namespace Assets.Scripts.Player.Character.Skills
         /// <summary>
         /// Defines the force applied to character during double jump.
         /// </summary>
-        [SerializeField] private float _force = 20.0f;
+        private float _initialVelocity = 20.0f;
+        [SerializeField] private float _jumpHeight = 5.0f;
 
         /// <summary>
         /// Rigidbody of the character.
@@ -27,6 +28,13 @@ namespace Assets.Scripts.Player.Character.Skills
         /// </summary>
         [SerializeField]//TODO remove serialization, debug feature.
         private PlayerState _playerState;
+
+        private void Start()
+        {
+            float gravity = _playerState.GravityManager.GetRefGravityValue();
+            float jumpTime = _playerState.GravityManager.GetBaseJumptTime();
+            _initialVelocity = _jumpHeight / jumpTime + 0.5f * gravity * jumpTime;
+        }
         /// <summary>
         /// Performs double jump.
         /// </summary>
@@ -34,10 +42,9 @@ namespace Assets.Scripts.Player.Character.Skills
         {
             if (_playerState.isGrounded==false && _playerState.CanDoubleJump && _playerState.IsTouchingWall == false)
             {
-                _characterRigidbody.velocity = Vector2.zero;
                 //1.0f since double jump always pushes the character up.
                 var dirVector = new Vector2(_playerState.xInput, 1.0f);
-                _characterRigidbody.AddForce(dirVector*_force, ForceMode2D.Impulse);
+                _characterRigidbody.velocity = dirVector*_initialVelocity;
 
                 _playerState.CanDoubleJump = false;
                 _playerState.IsGliding = false;

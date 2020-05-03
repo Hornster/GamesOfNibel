@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Player.Gravity.Constraints;
 using UnityEngine;
 
 namespace Assets.Scripts.Player.Character.Skills
@@ -53,20 +54,25 @@ namespace Assets.Scripts.Player.Character.Skills
         {
             switch (effect)
             {
-                case WallSlideType.MaxVelocityCap:
-                    if (Mathf.Abs(_playerState.newVelocity.y) >= _maxVelocityCap)
-                    {
-                        float newVelocityY = _maxVelocityCap * Mathf.Sign(_playerState.newVelocity.y);
-                        _rb.velocity = new Vector2(_rb.velocity.x, newVelocityY);
-                    }
-
-                    break;
                 case WallSlideType.GravityDecrease:
-                    _playerState.GravityManager.AddGravityModifier(_gravityScale, this.GetHashCode());
+                    _playerState.GravityManager.AddOneFrameGravityModifier(_gravityScale, this.GetHashCode());
                     break;
             }
         }
-
+        /// <summary>
+        /// If necessary, applies max velocity constraint to gravity manager.
+        /// </summary>
+        private void CreateMaxVelocityConstraint()
+        {
+            foreach (var wallSlideType in _wallSlideTypes)
+            {
+                if (wallSlideType == WallSlideType.MaxVelocityCap)
+                {
+                    var velocityConstraint = new WallSlideVelocityConstraint(_playerState, _maxVelocityCap);
+                    _playerState.GravityManager.ApplyMaxVelocityConstraint(velocityConstraint);
+                }
+            }
+        }
         private void Start()
         {
             _wallSlideTypes = Enum.GetValues(typeof(WallSlideType)).Cast<WallSlideType>();
@@ -74,6 +80,8 @@ namespace Assets.Scripts.Player.Character.Skills
             {
                 AddType(type);
             }
+
+            CreateMaxVelocityConstraint();
         }
 
         public void UseSkill()

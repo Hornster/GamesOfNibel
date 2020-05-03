@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Player.Gravity.Constraints;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -50,6 +52,12 @@ namespace Assets.Scripts.Player.Character.Skills
         [SerializeField]//TODO remove serialization, debug feature.
         private PlayerState _playerState;
 
+        private void Start()
+        {
+            var maxVelocityConstraint = new GlideVelocityConstraint(_playerState, _maxFallingSpeed);
+            _playerState.GravityManager.ApplyMaxVelocityConstraint(maxVelocityConstraint);
+        }
+
         private void FixedUpdate()
         {
             //todo DEBUG
@@ -72,12 +80,6 @@ namespace Assets.Scripts.Player.Character.Skills
             //This skill can be used only when the player is airborne.
             if (!_playerState.isGrounded && !_playerState.IsTouchingWall && _playerState.IsGliding)
             {
-                if (Mathf.Abs(_characterRigidbody.velocity.y) > _maxFallingSpeed)
-                {
-                    float newVelocityY = _maxFallingSpeed * Mathf.Sign(_characterRigidbody.velocity.y);
-                    _characterRigidbody.velocity = new Vector2(_characterRigidbody.velocity.x, newVelocityY);
-                }
-
                 _skillUsed?.Invoke();
             }
         }

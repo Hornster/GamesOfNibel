@@ -1,13 +1,9 @@
-﻿using System;
+﻿using System.Collections.Specialized;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor;
+using Assets.Scripts.Player.Gravity.Constraints;
 using UnityEngine;
 
-namespace Assets.Scripts.Common
+namespace Assets.Scripts.Player.Gravity
 {
     public class GravityManager :MonoBehaviour
     {
@@ -37,6 +33,10 @@ namespace Assets.Scripts.Common
         /// Current value of Gravity. Assigned to the target rigidbody.
         /// </summary>
         private float _currentGravityValue;
+        /// <summary>
+        /// Stores all max constraints assigned to player.
+        /// </summary>
+        private List<IMaxVelConstraint> _maxConstraints = new List<IMaxVelConstraint>();
 
         private ListDictionary _activeMultipliers = new ListDictionary();
 
@@ -68,6 +68,16 @@ namespace Assets.Scripts.Common
         {
             _activeMultipliers.Clear();
         }
+        /// <summary>
+        /// Checks if falling constraint should be applied.
+        /// </summary>
+        private void CheckForFallingConstraints()
+        {
+            foreach (var constraint in _maxConstraints)
+            {
+                _influencedRigidbody.velocity = constraint.ChkForConstraint(_influencedRigidbody.velocity);
+            }
+        }
 
         private void FixedUpdate()
         {
@@ -76,22 +86,33 @@ namespace Assets.Scripts.Common
             _currentGravityValue = _referenceGravityValue * _currentGravityMultiplier;
             var newVelocityY = _influencedRigidbody.velocity.y - _currentGravityValue * Time.deltaTime;
 
-            _influencedRigidbody.velocity = new Vector2(_influencedRigidbody.velocity.x, newVelocityY); ;
+            _influencedRigidbody.velocity = new Vector2(_influencedRigidbody.velocity.x, newVelocityY);
+
+            CheckForFallingConstraints();
 
             ResetGravityModifiers();
         }
         /// <summary>
         /// Applies a multiplier to the reference gravity value. Every object can apply only one modifier at a time.
+        /// The multiplier will be reset upon going through the next FixedUpdate stage.
         /// </summary>
         /// <param name="value">The value applied to the gravity multiplier.</param>
         /// <param name="addingObjRefHash">The hash of the object that adds the value. Used as key.</param>
-        public void AddGravityModifier(float value, int addingObjRefHash)
+        public void AddOneFrameGravityModifier(float value, int addingObjRefHash)
         {
             if (_activeMultipliers.Contains(addingObjRefHash) == false)
             {
                 _activeMultipliers.Add(addingObjRefHash, value);
                 _currentGravityMultiplier *= value;
             }
+        }
+        /// <summary>
+        /// Applies a falling velocity constraint.
+        /// </summary>
+        /// <param name="constraint">Constraint on max velocity.</param>
+        public void ApplyMaxVelocityConstraint(IMaxVelConstraint constraint)
+        {
+            _maxConstraints.Add(constraint);
         }
         /// <summary>
         /// Returns the reference value of the gravity (not influenced by any factors).
