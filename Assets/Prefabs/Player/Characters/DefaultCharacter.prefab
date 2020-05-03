@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ff69b7d2d8cac44198ebab8db1b9963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxFallingSpeed: 0
+  _maxFallingSpeed: 3
   _skillUsed:
     m_PersistentCalls:
       m_Calls:
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e010b9ca04406704d9392bcf9b00e629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxVelocityCap: 0
+  _maxVelocityCap: 1
   _gravityScale: 5
   _rb: {fileID: 5535999678530167650}
   _playerState: {fileID: 5535999678530167654}
@@ -274,8 +274,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _wallJumpDirection: {x: 0.8, y: 1}
-  _wallJumpForce: 30
+  _jumpAngle: 45
+  _jumpHeight: 3
   _characterRigidbody: {fileID: 5535999678530167650}
   _playerState: {fileID: 5535999678530167654}
 --- !u!1 &2978589374422729586
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1da2f2ef103884599455920990bdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _force: 30
+  _jumpHeight: 5
   _skillUsed:
     m_PersistentCalls:
       m_Calls:
@@ -597,7 +597,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 20
-  jumpForce: 30
   _airborneAccelerationFactor: 0.15
   _skillsController: {fileID: 6052496438944943729}
 --- !u!114 &5535999678530167655
@@ -662,7 +661,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c368945a3ebb6694c87dfc4a6b552565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _referenceGravityValue: 9
+  _baseJumpTime: 0.5
+  _baseJumpHeight: 4
   _influencedRigidbody: {fileID: 5535999678530167650}
 --- !u!1 &5535999678685711688
 GameObject:
@@ -753,6 +753,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5535999678183602757}
     m_Modifications:
+    - target: {fileID: 4381736600199654286, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4796753843839723852, guid: ed828b82390b2eb4699baf4cbbb07698,
         type: 3}
       propertyPath: m_Name

@@ -15,6 +15,7 @@ namespace Assets.Scripts.Player
         //Events
         private static UnityAction _jumpHandler;
         private static UnityAction<GlideStages> _glideHandler;
+        private static UnityAction _helpToggleHandler;
 
         //Private variables
         private ButtonConfig _buttonConfig;
@@ -63,6 +64,11 @@ namespace Assets.Scripts.Player
             {
                 _glideHandler?.Invoke(GlideStages.GlideStop);
             }
+
+            if (Input.GetKeyDown(_buttonConfig.HelpButton))
+            {
+                _helpToggleHandler?.Invoke();
+            }
         }
         /// <summary>
         /// Registers jump handler.
@@ -79,6 +85,14 @@ namespace Assets.Scripts.Player
         public static void RegisterGlideHandler(UnityAction<GlideStages> handler)
         {
             _glideHandler += handler;
+        }
+        /// <summary>
+        /// Registers glide handler.
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void RegisterHelpToggleHandler(UnityAction handler)
+        {
+            _helpToggleHandler += handler;
         }
     }
 }

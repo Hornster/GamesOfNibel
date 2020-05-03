@@ -17,6 +17,8 @@ namespace Assets.Scripts.Player
         public KeyCode JumpButton { get; set; } = KeyCode.Space;
         public KeyCode GlideButton { get; set; } = KeyCode.LeftShift;
 
+        public KeyCode HelpButton { get; set; } = KeyCode.H;
+
         private static ButtonConfig _instance;
 
         public static ButtonConfig GetInstance()
