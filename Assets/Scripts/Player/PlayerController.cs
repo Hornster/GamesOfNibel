@@ -90,8 +90,8 @@ public class PlayerController : MonoBehaviour
             _playerState.canJump = false;
             _playerState.isJumping = true;
 
-            _playerState.newVelocity = new Vector2(0.0f, _jumpVelocity); 
-            rb.velocity = new Vector2(0.0f, _jumpVelocity);
+            _playerState.newVelocity = new Vector2(rb.velocity.x, _jumpVelocity); 
+            rb.velocity = new Vector2(rb.velocity.x, _jumpVelocity);
         }
         else if (_playerState.IsTouchingWall)
         {
@@ -118,21 +118,46 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+    /// <summary>
+    /// Check if the character's really close to ground.
+    /// If yes - reset the Y velocity.
+    /// </summary>
+    /// <param name="velocity">Current velocity of the player.</param>
+    private Vector2 ChkHowCloseToGround(Vector2 velocity)
+    {
+        if (_playerState.IsStandingOnGround)
+        {
+            velocity.y = 0.0f;
+        }
+
+        return velocity;
+    }
 
     private void ApplyMovement()
     {
+        //TODO Do it like this - make a switch. When isGround == false - switch = false.
+        //TODO When IsDeeplyGrounded == true - switch = true. Player keeps falling UNTIL THIS SWITCH IS FREAKING TRUE.
         if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)
         {
+            var newVelocity = ChkHowCloseToGround(new Vector2(movementSpeed * _playerState.xInput, _playerState.newVelocity.y));
             //On flat ground
-            _playerState.newVelocity = new Vector2(movementSpeed * _playerState.xInput, 0.0f);
-            rb.velocity = _playerState.newVelocity;
+            _playerState.newVelocity = newVelocity;
+            rb.velocity = newVelocity;
         }
         else if (_playerState.isGrounded && _playerState.isOnSlope && !_playerState.isJumping && _playerState.canWalkOnSlope)
         {
             //On slope
             //-xInput since the normal is rotated counterclockwise
-            _playerState.newVelocity = new Vector2(movementSpeed * _playerState.slopeNormalPerp.x * -_playerState.xInput, movementSpeed * _playerState.slopeNormalPerp.y * -_playerState.xInput);
-            rb.velocity = _playerState.newVelocity;
+            if (_playerState.IsStandingOnGround)
+            {
+                _playerState.newVelocity = new Vector2(movementSpeed * _playerState.slopeNormalPerp.x * -_playerState.xInput, movementSpeed * _playerState.slopeNormalPerp.y * -_playerState.xInput);
+                rb.velocity = _playerState.newVelocity;
+            }
+            else
+            {
+                _playerState.newVelocity = new Vector2(movementSpeed * _playerState.slopeNormalPerp.x * -_playerState.xInput, rb.velocity.y);
+                rb.velocity = _playerState.newVelocity;
+            }
         }
         else if (!_playerState.isGrounded)
         {

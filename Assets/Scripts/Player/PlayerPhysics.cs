@@ -26,11 +26,18 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private float _maxClimbableAngle;
 
+        [SerializeField] private Vector2 _closeGroundCheckSize;
+
         /// <summary>
         /// Defines where will the collision and slope checking rays be coming from.
         /// </summary>
         [SerializeField]
         private Transform groundCheck;
+        /// <summary>
+        /// Used to test how close to the ground the character is. If they are close enough,
+        /// the Y velocity shall be set to 0.
+        /// </summary>
+        [SerializeField] private Transform _groundCloseCheck;
         /// <summary>
         /// Start position for additional ray that checks if the character touches a long enough part of wall for
         /// climbing/wall jumping.
@@ -67,6 +74,7 @@ namespace Assets.Scripts.Player
         private void CheckGround()
         {
             _playerState.isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+            _playerState.IsStandingOnGround = Physics2D.OverlapBox(_groundCloseCheck.position, _closeGroundCheckSize, 0.0f, whatIsGround);
 
             if (rb.velocity.y <= 0.0f)
             {
@@ -176,6 +184,7 @@ namespace Assets.Scripts.Player
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+            Gizmos.DrawWireCube((Vector2)_groundCloseCheck.position, _closeGroundCheckSize);
 
             var wallLineDest = new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y, wallCheck.position.z);
             Gizmos.DrawLine(wallCheck.position, wallLineDest);

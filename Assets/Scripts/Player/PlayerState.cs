@@ -20,6 +20,12 @@ public class PlayerState : MonoBehaviour
     public float MaxFallingVelocityY { get; set; }
     public int facingDirection { get; set; } = 1;
     public bool isGrounded{ get; set; }
+    /// <summary>
+    /// Set to true when the character is standing directly on the ground.
+    /// Literally, touching it with their feet. When that happens - you can safely reset
+    /// velocity y to 0.0f.
+    /// </summary>
+    public bool IsStandingOnGround { get; set; }
     public bool canJump{ get; set; }
     public bool isOnSlope{ get; set; }
     public bool isJumping{ get; set; }

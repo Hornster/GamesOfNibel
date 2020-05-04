@@ -18,6 +18,7 @@ namespace Assets.Scripts.Player
         public KeyCode GlideButton { get; set; } = KeyCode.LeftShift;
 
         public KeyCode HelpButton { get; set; } = KeyCode.H;
+        public KeyCode LeaveButton { get; set; } = KeyCode.Escape;
 
         private static ButtonConfig _instance;
 

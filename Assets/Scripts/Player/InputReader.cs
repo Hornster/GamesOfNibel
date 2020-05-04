@@ -16,6 +16,7 @@ namespace Assets.Scripts.Player
         private static UnityAction _jumpHandler;
         private static UnityAction<GlideStages> _glideHandler;
         private static UnityAction _helpToggleHandler;
+        private static UnityAction _gameLeaveHandler;
 
         //Private variables
         private ButtonConfig _buttonConfig;
@@ -69,6 +70,10 @@ namespace Assets.Scripts.Player
             {
                 _helpToggleHandler?.Invoke();
             }
+            if (Input.GetKeyDown(_buttonConfig.LeaveButton))
+            {
+                _gameLeaveHandler?.Invoke();
+            }
         }
         /// <summary>
         /// Registers jump handler.
@@ -93,6 +98,14 @@ namespace Assets.Scripts.Player
         public static void RegisterHelpToggleHandler(UnityAction handler)
         {
             _helpToggleHandler += handler;
+        }
+        /// <summary>
+        /// Registers game ending handler.
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void RegisterGameEnd(UnityAction handler)
+        {
+            _gameLeaveHandler += handler;
         }
     }
 }
