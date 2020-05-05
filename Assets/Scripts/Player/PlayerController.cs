@@ -135,6 +135,8 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyMovement()
     {
+        //rb.velocity = new Vector2(0.0f, 0.0f);
+        //return;
         //TODO Do it like this - make a switch. When isGround == false - switch = false.
         //TODO When IsDeeplyGrounded == true - switch = true. Player keeps falling UNTIL THIS SWITCH IS FREAKING TRUE.
         if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)
@@ -151,11 +153,6 @@ public class PlayerController : MonoBehaviour
             if (_playerState.IsStandingOnGround)
             {
                 _playerState.newVelocity = new Vector2(movementSpeed * _playerState.slopeNormalPerp.x * -_playerState.xInput, movementSpeed * _playerState.slopeNormalPerp.y * -_playerState.xInput);
-                rb.velocity = _playerState.newVelocity;
-            }
-            else
-            {
-                _playerState.newVelocity = new Vector2(movementSpeed * _playerState.slopeNormalPerp.x * -_playerState.xInput, rb.velocity.y);
                 rb.velocity = _playerState.newVelocity;
             }
         }

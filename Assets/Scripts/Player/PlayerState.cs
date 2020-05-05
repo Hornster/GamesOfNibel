@@ -54,7 +54,14 @@ public class PlayerState : MonoBehaviour
     {
         GravityManager = GetComponent<GravityManager>();
     }
-    
+    /// <summary>
+    /// Should be called whenever the character stops touching the ground.
+    /// </summary>
+    public void CharacterStoppedTouchingTheGround()
+    {
+        isGrounded = false;
+        IsStandingOnGround = false;
+    }
 
     /// <summary>
     /// Checks if one-use skills can be reset. If yes - calls resetting method.

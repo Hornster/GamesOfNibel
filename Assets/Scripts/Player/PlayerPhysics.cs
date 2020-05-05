@@ -74,7 +74,17 @@ namespace Assets.Scripts.Player
         private void CheckGround()
         {
             _playerState.isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-            _playerState.IsStandingOnGround = Physics2D.OverlapBox(_groundCloseCheck.position, _closeGroundCheckSize, 0.0f, whatIsGround);
+            bool isCloseToGround = Physics2D.OverlapBox(_groundCloseCheck.position, _closeGroundCheckSize, 0.0f, whatIsGround);
+
+            if (_playerState.isGrounded == false)
+            {
+                _playerState.CharacterStoppedTouchingTheGround();
+            }
+
+            if (isCloseToGround)
+            {
+                _playerState.IsStandingOnGround = true;
+            }
 
             if (rb.velocity.y <= 0.0f)
             {
