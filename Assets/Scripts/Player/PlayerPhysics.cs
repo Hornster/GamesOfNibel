@@ -179,7 +179,17 @@ namespace Assets.Scripts.Player
         /// </summary>
         private void WallCheck()
         {
-            _playerState.IsTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, whatIsGround);
+            //The character is rotating, so left side in the code would become right side.
+            //Basically check for wall presence from both sides of the character...
+            bool isWallCloseFromRightSide = Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance, whatIsGround);
+            bool isWallCloseFromLeftSide = Physics2D.Raycast(wallCheck.position, Vector2.left, wallCheckDistance, whatIsGround);
+            //...and take a logic sum of both. If at least one side is close to wall - character's
+            //touching a wall.
+            _playerState.IsTouchingWall = isWallCloseFromRightSide || isWallCloseFromLeftSide;
+
+            //TODO: Check where is the wall - on left or right. Then rotate the character if necessary.
+            //TODO: Make a separate class dedicated to rotation and rotating the player. Pass it to
+            //TODO: PlayerController and here.
 
             if (_playerState.IsTouchingWall && _playerState.isGrounded == false && rb.velocity.y < 0)
             {
