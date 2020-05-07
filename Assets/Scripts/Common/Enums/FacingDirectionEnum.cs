@@ -11,7 +11,9 @@ namespace Assets.Scripts.Common.Enums
     /// </summary>
     public enum FacingDirectionEnum
     {
-        Left = 0,
+        //Left shall be left as -1, right as 1. The values are used
+        //for logical and math operations in the code.
+        Left = -1,
         Right = 1
     }
 }

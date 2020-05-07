@@ -4,6 +4,7 @@ using System.Net;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
+using Assets.Scripts.Player.Character;
 using Assets.Scripts.Player.Character.Skills;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _airborneAccelerationFactor = 0.4f;
 
     [SerializeField] private SkillsController _skillsController;
+    [SerializeField] private CharacterRotator _characterRotator;
 
 
     //--Component References
@@ -55,7 +57,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckInput();
-        RotatePlayer();
     }
 
     private void ChkWallSlide()
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        RotatePlayer();
         _playerPhysics.CheckCollisions();
         ApplyMovement();
     }
@@ -79,7 +81,7 @@ public class PlayerController : MonoBehaviour
     {
         if (ValueComparator.IsEqual(_playerState.xInput, -_playerState.facingDirection))
         {
-            Flip();
+            _characterRotator.TurnCharacterHorizontally();
         }
     }
     
@@ -172,12 +174,4 @@ public class PlayerController : MonoBehaviour
 
         ChkWallSlide();
     }
-
-    private void Flip()
-    {
-        _playerState.facingDirection *= -1;
-        transform.Rotate(0.0f, 180.0f, 0.0f);
-    }
-
-
 }

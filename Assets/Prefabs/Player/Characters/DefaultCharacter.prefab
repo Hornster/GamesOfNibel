@@ -746,6 +746,7 @@ GameObject:
   - component: {fileID: 5535999678530167655}
   - component: {fileID: 5535999678530167654}
   - component: {fileID: 1426052490}
+  - component: {fileID: 1044868125930535866}
   m_Layer: 0
   m_Name: CharacterBody
   m_TagString: Untagged
@@ -872,6 +873,7 @@ MonoBehaviour:
   movementSpeed: 20
   _airborneAccelerationFactor: 0.15
   _skillsController: {fileID: 6052496438944943729}
+  _characterRotator: {fileID: 1044868125930535866}
 --- !u!114 &5535999678530167655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,6 +900,7 @@ MonoBehaviour:
     m_Bits: 256
   noFriction: {fileID: 6200000, guid: 8d7d04a4abb1e044e98872f977e4a88c, type: 2}
   fullFritcion: {fileID: 6200000, guid: e85e3177551e52e40854a443c22e1ca5, type: 2}
+  _characterRotator: {fileID: 1044868125930535866}
 --- !u!114 &5535999678530167654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,6 +942,20 @@ MonoBehaviour:
   _baseJumpTime: 0.5
   _baseJumpHeight: 4
   _influencedRigidbody: {fileID: 5535999678530167650}
+--- !u!114 &1044868125930535866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5535999678530167677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94b6e269e3a20f64e9cd8d993b62b722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterTransform: {fileID: 5535999678530167676}
+  _playerState: {fileID: 5535999678530167654}
 --- !u!1 &5535999678685711688
 GameObject:
   m_ObjectHideFlags: 0

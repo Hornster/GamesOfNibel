@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common.Helpers;
+using Assets.Scripts.Player.Character;
 using UnityEditor;
 using UnityEngine;
 
@@ -55,6 +56,8 @@ namespace Assets.Scripts.Player
         private PhysicsMaterial2D noFriction;
         [SerializeField]
         private PhysicsMaterial2D fullFritcion;
+
+        [SerializeField] private CharacterRotator _characterRotator;
         private Rigidbody2D rb;
         private PlayerState _playerState;
 
@@ -187,9 +190,7 @@ namespace Assets.Scripts.Player
             //touching a wall.
             _playerState.IsTouchingWall = isWallCloseFromRightSide || isWallCloseFromLeftSide;
 
-            //TODO: Check where is the wall - on left or right. Then rotate the character if necessary.
-            //TODO: Make a separate class dedicated to rotation and rotating the player. Pass it to
-            //TODO: PlayerController and here.
+            _characterRotator.TurnCharacterToWall(isWallCloseFromLeftSide, isWallCloseFromRightSide);
 
             if (_playerState.IsTouchingWall && _playerState.isGrounded == false && rb.velocity.y < 0)
             {
