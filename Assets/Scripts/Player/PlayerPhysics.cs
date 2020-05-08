@@ -53,7 +53,7 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private LayerMask whatIsGround;
 
-        //Component references
+        //Component referencesddd
         [SerializeField]
         private PhysicsMaterial2D noFriction;
         [SerializeField]
@@ -166,6 +166,14 @@ namespace Assets.Scripts.Player
                 _playerState.canWalkOnSlope = false;
             }
             else
+            {
+                _playerState.canWalkOnSlope = true;
+            }
+            //A special case. When the player is standing on 100% horizontal ground
+            //AND is standing right next to perfectly vertical wall (90° towards flat ground),
+            //then the character shouldn't treat the wall as unclimbable slope (what it was doing).
+            if (ValueComparator.IsEqual(_playerState.slopeDownAngle, 0.0f) 
+                && ValueComparator.IsEqual(_playerState.slopeSideAngle, 90.0f))
             {
                 _playerState.canWalkOnSlope = true;
             }
