@@ -14,7 +14,9 @@ namespace Assets.Scripts.Player
     {
 
         [SerializeField]
-        private float slopeCheckDistance;
+        private float _verticalSlopeCheckDistance;
+        [SerializeField]
+        private float _horizontalSlopeCheckDistance;
         [SerializeField]
         private float maxSlopeAngle;
         [SerializeField]
@@ -115,8 +117,8 @@ namespace Assets.Scripts.Player
 
         private void SlopeCheckHorizontal(Vector2 checkPos)
         {
-            var slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, whatIsGround);
-            var slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, whatIsGround);
+            var slopeHitFront = Physics2D.Raycast(checkPos, transform.right, _horizontalSlopeCheckDistance, whatIsGround);
+            var slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, _horizontalSlopeCheckDistance, whatIsGround);
 
             if (slopeHitFront)
             {
@@ -140,8 +142,8 @@ namespace Assets.Scripts.Player
         /// <param name="checkPos">Position which the testing ray will be cast from.</param>
         private void SlopeCheckVertical(Vector2 checkPos)
         {
-            var hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, whatIsGround);
-            Debug.DrawRay(checkPos, Vector2.down * slopeCheckDistance, Color.black);
+            var hit = Physics2D.Raycast(checkPos, Vector2.down, _verticalSlopeCheckDistance, whatIsGround);
+            Debug.DrawRay(checkPos, Vector2.down * _verticalSlopeCheckDistance, Color.black);
             if (hit)
             {
                 _playerState.slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
@@ -168,7 +170,7 @@ namespace Assets.Scripts.Player
                 _playerState.canWalkOnSlope = true;
             }
 
-            if (_playerState.isOnSlope && _playerState.xInput == 0.0f && _playerState.canWalkOnSlope)
+            if (_playerState.isOnSlope && ValueComparator.IsEqual(_playerState.xInput, 0.0f) && _playerState.canWalkOnSlope)
             {
                 rb.sharedMaterial = fullFritcion;
             }
@@ -207,8 +209,12 @@ namespace Assets.Scripts.Player
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
             Gizmos.DrawWireCube((Vector2)_groundCloseCheck.position, _closeGroundCheckSize);
 
-            var wallLineDest = new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y, wallCheck.position.z);
+            var wallLineDest = new Vector3(wallCheck.position.x + transform.right.x * wallCheckDistance, wallCheck.position.y, wallCheck.position.z);
             Gizmos.DrawLine(wallCheck.position, wallLineDest);
+            
+            Vector2 checkPos = transform.position;
+            var slopeCheckDest = checkPos + (Vector2)transform.right * _horizontalSlopeCheckDistance;
+            Gizmos.DrawLine(checkPos, slopeCheckDest);
         }
     }
 }
