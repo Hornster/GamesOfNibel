@@ -15,8 +15,20 @@ public class PlayerController : MonoBehaviour
     //--Private Variables Exposed to the Inspector.
     [SerializeField]
     private float movementSpeed;
-
+    /// <summary>
+    /// Used when player is forcing the character to change horizontal direction while airborne.
+    /// </summary>
     [SerializeField] private float _airborneAccelerationFactor = 0.4f;
+    /// <summary>
+    /// Used when there's no input from the player to force the character to gradually decrease
+    /// their horizontal velocity while airborne.Scales the influence of velocity on deceleration.
+    /// </summary>
+    [SerializeField] private float _airborneDecelVelInfluenceFactor = 0.4f;
+    /// <summary>
+    /// The time it takes for the character to stop horizontally while airborne from
+    /// their max horizontal (running) velocity.
+    /// </summary>
+    [SerializeField] private float _timeToStopAirborne = 0.7f;
 
     [SerializeField] private SkillsController _skillsController;
     [SerializeField] private CharacterRotator _characterRotator;
@@ -33,10 +45,20 @@ public class PlayerController : MonoBehaviour
     /// The velocity calculated from gravity, jump time and jump force.
     /// </summary>
     private float _jumpVelocity;
+    /// <summary>
+    /// Defined by division of movementSpeed/_timeToStopAirborne.
+    /// Used on character while they are airborne to make the gradually halt on the X axis.
+    /// </summary>
+    private float _airborneDeceleration;
 
     private void CalcJumpVelocity()
     {
         _jumpVelocity += _playerState.GravityManager.GetBaseJumpStartVelocity();
+    }
+
+    private void CalcAirborneDeceleration()
+    {
+        _airborneDeceleration = movementSpeed / _timeToStopAirborne;
     }
 
     private void Start()
@@ -52,6 +74,7 @@ public class PlayerController : MonoBehaviour
         _playerState.colliderSize = cc.size;
 
         CalcJumpVelocity();
+        CalcAirborneDeceleration();
     }
 
     private void Update()
@@ -135,6 +158,38 @@ public class PlayerController : MonoBehaviour
         return velocity;
     }
 
+    private void CorrectXVelocityWhileAirborne()
+    {
+        var currentVelocity = rb.velocity;
+        if (ValueComparator.IsEqual(_playerState.xInput, 0.0f))
+        {
+            float absVel = Mathf.Abs(currentVelocity.x);
+            float velSign = Mathf.Sign(currentVelocity.x);
+
+            absVel -= _airborneDeceleration * Time.deltaTime + absVel * _airborneDecelVelInfluenceFactor;
+
+            if (absVel < 0.0f)
+            {
+                absVel = 0.0f;
+            }
+
+            currentVelocity.x = absVel * velSign;
+        }
+        else
+        {
+            currentVelocity.x += movementSpeed * _playerState.xInput * _airborneAccelerationFactor;
+        }
+        
+
+        if (Mathf.Abs(currentVelocity.x) > movementSpeed)
+        {
+            currentVelocity.x = Mathf.Sign(currentVelocity.x) * movementSpeed;
+        }
+        //In the air
+        _playerState.newVelocity = currentVelocity;
+        rb.velocity = _playerState.newVelocity;
+    }
+
     private void ApplyMovement()
     {
         //rb.velocity = new Vector2(0.0f, 0.0f);
@@ -160,16 +215,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (!_playerState.isGrounded)
         {
-            var currentVelocity = rb.velocity;
-            currentVelocity.x += movementSpeed * _playerState.xInput * _airborneAccelerationFactor;
-
-            if (Mathf.Abs(currentVelocity.x) > movementSpeed)
-            {
-                currentVelocity.x = Mathf.Sign(currentVelocity.x) * movementSpeed;
-            }
-            //In the air
-            _playerState.newVelocity = currentVelocity;
-            rb.velocity = _playerState.newVelocity;
+            CorrectXVelocityWhileAirborne();
         }
 
         ChkWallSlide();
