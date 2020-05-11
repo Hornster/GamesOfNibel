@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Common;
+using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Player.Gravity;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,9 +12,11 @@ public class PlayerState : MonoBehaviour
 {
     //TODO Debug, remove later
     [SerializeField] private UnityEvent _doubleJumpReset;
+
     //TODO end debug
 
     public float xInput{ get; set; }
+    public float yInput { get; set; }
     public float slopeDownAngle{ get; set; }
     public float slopeDownAngleOld{ get; set; }
     public float slopeSideAngle{ get; set; }
@@ -47,6 +50,8 @@ public class PlayerState : MonoBehaviour
     public Vector2 newVelocity{ get; set; }
     public Vector2 colliderSize{ get; set; }
     public Vector2 slopeNormalPerp{ get; set; }
+
+    public GlideStages GlideStage { get; set; }
 
     public GravityManager GravityManager { get; private set; }
 

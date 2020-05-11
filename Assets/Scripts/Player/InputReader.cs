@@ -15,11 +15,17 @@ namespace Assets.Scripts.Player
         //Events
         private static UnityAction _jumpHandler;
         private static UnityAction<GlideStages> _glideHandler;
+        private static UnityAction<GroundCheckType> _changeGroundCollisionMaskHandler;
         private static UnityAction _helpToggleHandler;
         private static UnityAction _gameLeaveHandler;
 
         //Private variables
         private ButtonConfig _buttonConfig;
+        /// <summary>
+        /// Set to true when player pressed the jump button and is holding down button
+        /// to jump off the platform.
+        /// </summary>
+        private bool _isJumpOffPlatformActive;
 
         /// <summary>
         /// Stores the raw values of the input read from base axes.
@@ -35,6 +41,7 @@ namespace Assets.Scripts.Player
         {
             ChkAxes();
             ChkControls();
+            ChkSpecialCases();
         }
         /// <summary>
         /// Checks the state of the axes.
@@ -44,13 +51,36 @@ namespace Assets.Scripts.Player
             InputRaw = new Vector2(Input.GetAxisRaw(ButtonConfig.HorizontalAxisName), Input.GetAxisRaw(ButtonConfig.VerticalAxisName));
         }
         /// <summary>
+        /// Checks for special cases concerning controls.
+        /// </summary>
+        private void ChkSpecialCases()
+        {
+            if (_isJumpOffPlatformActive)
+            {
+                if (Input.GetKeyUp(_buttonConfig.JumpButton) || InputRaw.Y >= 0.0f)
+                {
+                    _isJumpOffPlatformActive = false;
+                    _changeGroundCollisionMaskHandler?.Invoke(GroundCheckType.Default);
+                }
+            }
+        }
+        /// <summary>
         /// Checks whether any special buttons have been pressed. If yes - calls proper handlers, if these are not null.
         /// </summary>
         private void ChkControls()
         {
             if (Input.GetKeyDown(_buttonConfig.JumpButton))
             {
-                _jumpHandler?.Invoke();
+                if (InputRaw.Y < 0.0f)
+                {
+                    //The player wants to drop from some droppable platform.
+                    _changeGroundCollisionMaskHandler?.Invoke(GroundCheckType.JumpingOffPlatform);
+                    _isJumpOffPlatformActive = true;
+                }
+                else
+                {
+                    _jumpHandler?.Invoke();
+                }
             }
 
             if (Input.GetKeyDown(_buttonConfig.GlideButton))
@@ -75,6 +105,9 @@ namespace Assets.Scripts.Player
                 _gameLeaveHandler?.Invoke();
             }
         }
+
+        #region EventRegistering
+
         /// <summary>
         /// Registers jump handler.
         /// </summary>
@@ -92,6 +125,14 @@ namespace Assets.Scripts.Player
             _glideHandler += handler;
         }
         /// <summary>
+        /// Registers handler from dropping down from one-way platform.
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void RegisterChangeCollisionMaskHandler(UnityAction<GroundCheckType> handler)
+        {
+            _changeGroundCollisionMaskHandler += handler;
+        }
+        /// <summary>
         /// Registers glide handler.
         /// </summary>
         /// <param name="handler"></param>
@@ -107,5 +148,7 @@ namespace Assets.Scripts.Player
         {
             _gameLeaveHandler += handler;
         }
+
+        #endregion EventRegistering
     }
 }

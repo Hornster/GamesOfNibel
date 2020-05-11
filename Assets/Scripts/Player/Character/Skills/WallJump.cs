@@ -47,7 +47,7 @@ namespace Assets.Scripts.Player.Character.Skills
         //todo DEBUG
         private void ChkSkillAvailablilty()
         {
-            if (_playerState.IsTouchingWall && !_playerState.isGrounded)
+            if (_playerState.IsTouchingWall && (!_playerState.isGrounded || !_playerState.canWalkOnSlope))
             {
                 _wallJumpAvailable?.Invoke();
             }

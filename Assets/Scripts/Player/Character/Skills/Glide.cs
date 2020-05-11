@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Player.Gravity.Constraints;
 using UnityEditor;
 using UnityEngine;
@@ -77,6 +78,29 @@ namespace Assets.Scripts.Player.Character.Skills
 
         public void UseSkill()
         {
+            var currentGlideState = _playerState.GlideStage;
+
+            if (_playerState.isGrounded)
+            {
+                _playerState.IsGliding = false;
+            }
+            else
+            {
+                switch (currentGlideState)
+                {
+                    //We do not take into account the GlideStages.Keep case.
+                    //For example, if the player double jumps, the gliding shall
+                    //be stopped until the player let's go the glide button
+                    //and presses it again.
+                    case GlideStages.GlideBegin:
+                        _playerState.IsGliding = true;
+                        break;
+                    case GlideStages.GlideStop:
+                        _playerState.IsGliding = false;
+                        break;
+                }
+            }
+            
             //This skill can be used only when the player is airborne.
             if (!_playerState.isGrounded && !_playerState.IsTouchingWall && _playerState.IsGliding)
             {

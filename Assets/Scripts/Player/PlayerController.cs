@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
 using Assets.Scripts.Player.Character;
@@ -40,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerState _playerState;
     private PlayerPhysics _playerPhysics;
-    
+
     /// <summary>
     /// The velocity calculated from gravity, jump time and jump force.
     /// </summary>
@@ -93,11 +90,12 @@ public class PlayerController : MonoBehaviour
         _playerPhysics.CheckCollisions();
         ApplyMovement();
     }
-    
+
     private void CheckInput()
     {
         var rawInput = InputReader.InputRaw;
         _playerState.xInput = rawInput.X;
+        _playerState.yInput = rawInput.Y;
     }
 
     private void RotatePlayer()
@@ -107,7 +105,7 @@ public class PlayerController : MonoBehaviour
             _characterRotator.TurnCharacterHorizontally();
         }
     }
-    
+
     private void Jump()
     {
         if (_playerState.canJump)
@@ -115,7 +113,7 @@ public class PlayerController : MonoBehaviour
             _playerState.canJump = false;
             _playerState.isJumping = true;
 
-            _playerState.newVelocity = new Vector2(rb.velocity.x, _jumpVelocity); 
+            _playerState.newVelocity = new Vector2(rb.velocity.x, _jumpVelocity);
             rb.velocity = new Vector2(rb.velocity.x, _jumpVelocity);
         }
         else if (_playerState.IsTouchingWall)
@@ -127,21 +125,11 @@ public class PlayerController : MonoBehaviour
             _skillsController.UseSkill(SkillType.DoubleJump);
         }
     }
-    
+
     private void Glide(GlideStages glideStage)
     {
-        switch (glideStage)
-        {
-            case GlideStages.GlideBegin:
-                _playerState.IsGliding = true;
-                break;
-            case GlideStages.GlideKeep:
-                _skillsController.UseSkill(SkillType.Glide);
-                break;
-            case GlideStages.GlideStop:
-                _playerState.IsGliding = false;
-                break;
-        }
+        _playerState.GlideStage = glideStage;
+        _skillsController.UseSkill(SkillType.Glide);
     }
     /// <summary>
     /// Check if the character's really close to ground.
@@ -179,7 +167,7 @@ public class PlayerController : MonoBehaviour
         {
             currentVelocity.x += movementSpeed * _playerState.xInput * _airborneAccelerationFactor;
         }
-        
+
 
         if (Mathf.Abs(currentVelocity.x) > movementSpeed)
         {

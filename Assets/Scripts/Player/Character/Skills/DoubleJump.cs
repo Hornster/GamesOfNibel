@@ -47,7 +47,6 @@ namespace Assets.Scripts.Player.Character.Skills
                 _characterRigidbody.velocity = dirVector*_initialVelocity;
 
                 _playerState.CanDoubleJump = false;
-                _playerState.IsGliding = false;
 
                 //todo DEBUG
                 _skillUsed?.Invoke();

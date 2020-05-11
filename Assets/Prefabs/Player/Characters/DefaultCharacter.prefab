@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 806982590}
   - component: {fileID: 806982591}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Glide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1149836953}
   - component: {fileID: 6052496438944943729}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BasicSkillsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1218396695}
   - component: {fileID: 1218396696}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WallSlideModifier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2086006906}
   - component: {fileID: 2086006907}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WallJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1588604636487212186}
   - component: {fileID: 1334000062465174223}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eye Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,7 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1753275036181363796}
   - component: {fileID: 1505746250139720151}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DoubleJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,7 +427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2765676036440023524}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3555151304681087138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5535999678530167676}
@@ -457,7 +457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7820508421514397964}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,7 +490,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8965374298834447871}
   - component: {fileID: 684875892252100308}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eye Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -570,7 +570,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1501832579077050595}
   - component: {fileID: 5104481810906382069}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left Pupil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -648,7 +648,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5535999677804198595}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -680,7 +680,7 @@ GameObject:
   - component: {fileID: 5535999678183602757}
   - component: {fileID: 5535999678183602756}
   - component: {fileID: 5535999678183602763}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DefaultCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -744,10 +744,11 @@ GameObject:
   - component: {fileID: 5535999678530167650}
   - component: {fileID: 5535999678530167648}
   - component: {fileID: 5535999678530167655}
+  - component: {fileID: 4849537263060530958}
   - component: {fileID: 5535999678530167654}
   - component: {fileID: 1426052490}
   - component: {fileID: 1044868125930535866}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CharacterBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -762,7 +763,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5535999678530167677}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.305, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children:
   - {fileID: 5535999677804198595}
@@ -898,12 +899,37 @@ MonoBehaviour:
   groundCheck: {fileID: 5535999677804198595}
   _groundCloseCheck: {fileID: 8124746411708311052}
   wallCheck: {fileID: 2765676036440023524}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 256
   noFriction: {fileID: 6200000, guid: 8d7d04a4abb1e044e98872f977e4a88c, type: 2}
   fullFritcion: {fileID: 6200000, guid: e85e3177551e52e40854a443c22e1ca5, type: 2}
   _characterRotator: {fileID: 1044868125930535866}
+  _collisionMaskManager: {fileID: 4849537263060530958}
+--- !u!114 &4849537263060530958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5535999678530167677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2457734a8a0dd764b965b065f14d2b8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerJumpsOffPlatform:
+    serializedVersion: 2
+    m_Bits: 2048
+  _defaultPlayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _wallCollisionLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  _defaultGroundCollisionMask:
+    serializedVersion: 2
+    m_Bits: 768
+  _dropFromPlatformColMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &5535999678530167654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -970,7 +996,7 @@ GameObject:
   - component: {fileID: 5535999678685711693}
   - component: {fileID: 5535999678685711694}
   - component: {fileID: 5535999678685711695}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -1051,7 +1077,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8051094316885920976}
   - component: {fileID: 7661973065394870285}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right Pupil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1129,7 +1155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8124746411708311052}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundConnectionCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1157,15 +1183,60 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5535999678183602757}
     m_Modifications:
+    - target: {fileID: 622266391927732991, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 798844289392469307, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259496520242301123, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900694159733649635, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4212565260334309680, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4381736600199654286, guid: ed828b82390b2eb4699baf4cbbb07698,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4790257747778364599, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796753842549487225, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796753843572653582, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4796753843839723852, guid: ed828b82390b2eb4699baf4cbbb07698,
         type: 3}
       propertyPath: m_Name
       value: SkillsDebug
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796753843839723852, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4796753843839723853, guid: ed828b82390b2eb4699baf4cbbb07698,
         type: 3}
@@ -1271,6 +1342,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9007829405864832907, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9037410883978158723, guid: ed828b82390b2eb4699baf4cbbb07698,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed828b82390b2eb4699baf4cbbb07698, type: 3}

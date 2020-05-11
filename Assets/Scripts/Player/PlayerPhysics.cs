@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player.Character;
 using UnityEditor;
@@ -10,6 +11,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    [RequireComponent(typeof(CollisionMasksManager))]
     public class PlayerPhysics : MonoBehaviour
     {
 
@@ -47,11 +49,7 @@ namespace Assets.Scripts.Player
         /// </summary>
         [SerializeField] private Transform wallCheck;
 
-        /// <summary>
-        /// What is treated by the character as collidable ground?
-        /// </summary>
-        [SerializeField]
-        private LayerMask whatIsGround;
+        
 
         //Component referencesddd
         [SerializeField]
@@ -60,6 +58,7 @@ namespace Assets.Scripts.Player
         private PhysicsMaterial2D fullFritcion;
 
         [SerializeField] private CharacterRotator _characterRotator;
+        [SerializeField] private CollisionMasksManager _collisionMaskManager;
         private Rigidbody2D rb;
         private PlayerState _playerState;
 
@@ -68,6 +67,8 @@ namespace Assets.Scripts.Player
             rb = GetComponent<Rigidbody2D>();
             _playerState = GetComponent<PlayerState>();
         }
+
+        
 
         public void CheckCollisions()
         {
@@ -78,8 +79,8 @@ namespace Assets.Scripts.Player
 
         private void CheckGround()
         {
-            _playerState.isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-            bool isCloseToGround = Physics2D.OverlapBox(_groundCloseCheck.position, _closeGroundCheckSize, 0.0f, whatIsGround);
+            _playerState.isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, _collisionMaskManager.WhatIsGround);
+            bool isCloseToGround = Physics2D.OverlapBox(_groundCloseCheck.position, _closeGroundCheckSize, 0.0f, _collisionMaskManager.WhatIsGround);
 
             if (_playerState.isGrounded == false)
             {
@@ -117,8 +118,8 @@ namespace Assets.Scripts.Player
 
         private void SlopeCheckHorizontal(Vector2 checkPos)
         {
-            var slopeHitFront = Physics2D.Raycast(checkPos, transform.right, _horizontalSlopeCheckDistance, whatIsGround);
-            var slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, _horizontalSlopeCheckDistance, whatIsGround);
+            var slopeHitFront = Physics2D.Raycast(checkPos, transform.right, _horizontalSlopeCheckDistance, _collisionMaskManager.WhatIsGround);
+            var slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, _horizontalSlopeCheckDistance, _collisionMaskManager.WhatIsGround);
 
             if (slopeHitFront)
             {
@@ -142,7 +143,7 @@ namespace Assets.Scripts.Player
         /// <param name="checkPos">Position which the testing ray will be cast from.</param>
         private void SlopeCheckVertical(Vector2 checkPos)
         {
-            var hit = Physics2D.Raycast(checkPos, Vector2.down, _verticalSlopeCheckDistance, whatIsGround);
+            var hit = Physics2D.Raycast(checkPos, Vector2.down, _verticalSlopeCheckDistance, _collisionMaskManager.WhatIsGround);
             Debug.DrawRay(checkPos, Vector2.down * _verticalSlopeCheckDistance, Color.black);
             if (hit)
             {
@@ -194,8 +195,8 @@ namespace Assets.Scripts.Player
         {
             //The character is rotating, so left side in the code would become right side.
             //Basically check for wall presence from both sides of the character...
-            bool isWallCloseFromRightSide = Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance, whatIsGround);
-            bool isWallCloseFromLeftSide = Physics2D.Raycast(wallCheck.position, Vector2.left, wallCheckDistance, whatIsGround);
+            bool isWallCloseFromRightSide = Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance, _collisionMaskManager.WallCollisionLayers);
+            bool isWallCloseFromLeftSide = Physics2D.Raycast(wallCheck.position, Vector2.left, wallCheckDistance, _collisionMaskManager.WallCollisionLayers);
             //...and take a logic sum of both. If at least one side is close to wall - character's
             //touching a wall.
             _playerState.IsTouchingWall = isWallCloseFromRightSide || isWallCloseFromLeftSide;
@@ -224,5 +225,6 @@ namespace Assets.Scripts.Player
             var slopeCheckDest = checkPos + (Vector2)transform.right * _horizontalSlopeCheckDistance;
             Gizmos.DrawLine(checkPos, slopeCheckDest);
         }
+        
     }
 }
