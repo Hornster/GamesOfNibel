@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 7696699921748548067}
   - component: {fileID: 7696699921748548069}
   - component: {fileID: 7696699921748548068}
-  m_Layer: 5
-  m_Name: DoubleJump
+  - component: {fileID: 4796753842890911782}
+  m_Layer: 10
+  m_Name: SkillUsageIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +26,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7696699921748548066}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -72,3 +73,18 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &4796753842890911782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7696699921748548066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d23d4165ebf324f853d48518a9155a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillReadyColor: {r: 1, g: 1, b: 1, a: 1}
+  _skillUsedColor: {r: 0, g: 0, b: 0, a: 1}
+  _skillUnavailableColor: {r: 0.4811321, g: 0.3018423, b: 0.3018423, a: 1}

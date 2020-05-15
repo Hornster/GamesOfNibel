@@ -405,7 +405,7 @@ MonoBehaviour:
   _skillUsed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5535999676738631025}
+      - m_Target: {fileID: 7247003837617443485}
         m_MethodName: SkillWasUsed
         m_Mode: 1
         m_Arguments:
@@ -945,7 +945,7 @@ MonoBehaviour:
   _doubleJumpReset:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5535999676738631025}
+      - m_Target: {fileID: 7247003837617443485}
         m_MethodName: SkillWasReset
         m_Mode: 1
         m_Arguments:
@@ -1183,60 +1183,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5535999678183602757}
     m_Modifications:
-    - target: {fileID: 622266391927732991, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 798844289392469307, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1259496520242301123, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2900694159733649635, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4212565260334309680, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4381736600199654286, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4790257747778364599, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796753842549487225, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796753843572653582, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4796753843839723852, guid: ed828b82390b2eb4699baf4cbbb07698,
         type: 3}
       propertyPath: m_Name
       value: SkillsDebug
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796753843839723852, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4796753843839723853, guid: ed828b82390b2eb4699baf4cbbb07698,
         type: 3}
@@ -1343,16 +1293,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9007829405864832907, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9037410883978158723, guid: ed828b82390b2eb4699baf4cbbb07698,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed828b82390b2eb4699baf4cbbb07698, type: 3}
 --- !u!224 &5535999678222445594 stripped
@@ -1361,9 +1301,9 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1027573144726947159}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5535999676738631025 stripped
+--- !u!114 &7247003837617443485 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4796753842890911782, guid: ed828b82390b2eb4699baf4cbbb07698,
+  m_CorrespondingSourceObject: {fileID: 7696699921088042954, guid: ed828b82390b2eb4699baf4cbbb07698,
     type: 3}
   m_PrefabInstance: {fileID: 1027573144726947159}
   m_PrefabAsset: {fileID: 0}

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 404590897291083358}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Wall Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 166225303995152616}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Glide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 7221491670025500967}
   - component: {fileID: 7528457470246837746}
   - component: {fileID: 6916813937273481656}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,21 +229,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &987797799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2900694159733649635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7d23d4165ebf324f853d48518a9155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillReadyColor: {r: 1, g: 1, b: 1, a: 1}
-  _skillUsedColor: {r: 0, g: 0, b: 0, a: 1}
-  _skillUnavailableColor: {r: 0.4811321, g: 0.3018423, b: 0.3018423, a: 1}
 --- !u!1 &4212565260334309680
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +240,7 @@ GameObject:
   - component: {fileID: 3552282096257816876}
   - component: {fileID: 7160500756847288826}
   - component: {fileID: 5313419285695728274}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1257524585849516388}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Double Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -447,7 +432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4796753842549487226}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: SkillUsage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,21 +461,6 @@ RectTransform:
   m_AnchoredPosition: {x: 20, y: -20}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &4796753842890911782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4796753843572653582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7d23d4165ebf324f853d48518a9155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillReadyColor: {r: 1, g: 1, b: 1, a: 1}
-  _skillUsedColor: {r: 0, g: 0, b: 0, a: 1}
-  _skillUnavailableColor: {r: 0.4811321, g: 0.3018423, b: 0.3018423, a: 1}
 --- !u!1 &4796753843839723852
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,7 +473,7 @@ GameObject:
   - component: {fileID: 4796753843839723848}
   - component: {fileID: 4796753843839723855}
   - component: {fileID: 4796753843839723854}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: SkillsDebug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,7 +613,7 @@ GameObject:
   - component: {fileID: 7799842598473067129}
   - component: {fileID: 4473312254752970992}
   - component: {fileID: 1263700535670903067}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -801,6 +771,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WallJump
       objectReference: {fileID: 0}
+    - target: {fileID: 7696699921748548066, guid: 53ad0ae37f9e51f48a860ae689a88f01,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7696699921748548067, guid: 53ad0ae37f9e51f48a860ae689a88f01,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -908,6 +883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7696699921748548068, guid: 53ad0ae37f9e51f48a860ae689a88f01, type: 3}
+    - {fileID: 4796753842890911782, guid: 53ad0ae37f9e51f48a860ae689a88f01, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 53ad0ae37f9e51f48a860ae689a88f01, type: 3}
 --- !u!1 &9007829405864832907 stripped
 GameObject:
@@ -1038,22 +1014,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7696699921748548068, guid: 53ad0ae37f9e51f48a860ae689a88f01,
-        type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53ad0ae37f9e51f48a860ae689a88f01, type: 3}
 --- !u!224 &4796753843572653583 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7696699921748548067, guid: 53ad0ae37f9e51f48a860ae689a88f01,
-    type: 3}
-  m_PrefabInstance: {fileID: 2900694158974543852}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4796753843572653582 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7696699921748548066, guid: 53ad0ae37f9e51f48a860ae689a88f01,
     type: 3}
   m_PrefabInstance: {fileID: 2900694158974543852}
   m_PrefabAsset: {fileID: 0}
@@ -1068,6 +1033,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Glide
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696699921748548066, guid: 53ad0ae37f9e51f48a860ae689a88f01,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7696699921748548067, guid: 53ad0ae37f9e51f48a860ae689a88f01,
         type: 3}
@@ -1181,12 +1151,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53ad0ae37f9e51f48a860ae689a88f01, type: 3}
---- !u!1 &2900694159733649635 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7696699921748548066, guid: 53ad0ae37f9e51f48a860ae689a88f01,
-    type: 3}
-  m_PrefabInstance: {fileID: 4796753842251245825}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2900694159733649634 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7696699921748548067, guid: 53ad0ae37f9e51f48a860ae689a88f01,
