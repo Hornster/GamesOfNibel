@@ -16,6 +16,11 @@ namespace Assets.Scripts.Player
         //Button bindings
         public KeyCode JumpButton { get; set; } = KeyCode.Space;
         public KeyCode GlideButton { get; set; } = KeyCode.LeftShift;
+        /// <summary>
+        /// A special type of button reserved for special actions in
+        /// given modes.
+        /// </summary>
+        public KeyCode ModeSpecialButton { get; set; } = KeyCode.X;
 
         public KeyCode HelpButton { get; set; } = KeyCode.H;
         public KeyCode LeaveButton { get; set; } = KeyCode.Escape;

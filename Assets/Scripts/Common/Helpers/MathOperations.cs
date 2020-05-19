@@ -30,5 +30,23 @@ namespace Assets.Scripts.Common.Helpers
 
             return layerIndex;
         }
+
+        /// <summary>
+        /// Converts the int value of given mask to its index in the editor.
+        /// </summary>
+        /// <param name="layerIndex">The index of the layer in Unity editor.</param>
+        /// <returns></returns>
+        public static int ConvertLayerIndexToLayerMaskValue(int layerIndex)
+        {
+            if (layerIndex > 1)
+            {
+                int layerValue = 1;
+                int moveValue = layerIndex;
+
+                layerIndex = layerValue << moveValue;
+            } 
+
+            return layerIndex;
+        }
     }
 }
