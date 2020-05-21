@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Common.Data
 {
-    public class TeamColors : MonoBehaviour
+    public class TeamColors
     {
         [SerializeField]
         private static Color _teamLilyColor = new Color(0.541176f, 0.5098039f, 0.92549f);

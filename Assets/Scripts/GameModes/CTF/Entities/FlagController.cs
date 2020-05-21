@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Assets.Scripts.GameModes.CTF.Entities
 {
     [RequireComponent(typeof(CircleCollider2D))]
-    public class FlagController : MonoBehaviour
+    public class FlagController : MonoBehaviour, IFlag
     {
         /// <summary>
         /// Defines what objects can pick up the flag.
@@ -42,6 +42,8 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         private Teams _carriedByTeam;
         /// <summary>
         /// Is the flag carried by someone or is it resting at spawn/on the ground?
+        /// Only neutral flags and these that have been dropped are not carried. Already captured
+        /// flag is being carried by the spawn that captured the flag.
         /// </summary>
         private bool _isCarried;
         
@@ -94,9 +96,9 @@ namespace Assets.Scripts.GameModes.CTF.Entities
                 var flagCarrierScript = colliderGameobject.GetComponent<IFlagCarrier>();
                 if (flagCarrierScript != null)
                 {
-                    if (flagCarrierScript.MyTeam != _carriedByTeam)
+                    if (flagCarrierScript.MyTeam != _carriedByTeam || flagCarrierScript.MyTeam != _myTeam)
                     {
-                        FlagWasTakenOver(colliderGameobject.transform);
+                        WasTakenOverBy(flagCarrierScript);
                         //TODO: Should the flag be taken away by player of the same team from the carrier?
                         //TODO: Should the flag be taken away when it directly collides with enemy? YES
                     }
@@ -108,10 +110,28 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// 
         /// </summary>
         /// <param name="takingEntity"></param>
-        private void FlagWasTakenOver(Transform takingEntity)
+        private void ReassignFlag(IFlagCarrier takingEntity)
         {
-            _flagCarrierTransform = takingEntity;
+            _flagCarrierTransform = takingEntity.MyTransform;
             _isCarried = true;
+            _carriedByTeam = takingEntity.MyTeam;
+        }
+        /// <summary>
+        /// Called when a player takes the flag from another player.
+        /// </summary>
+        /// <param name="newCarrier"></param>
+        public void WasTakenOverBy(IFlagCarrier newCarrier)
+        {
+            ReassignFlag(newCarrier);
+        }
+        /// <summary>
+        /// Called when the flag was delivered to a base and was captured.
+        /// </summary>
+        /// <param name="capturingEntity">Te entity that captured the flag.</param>
+        public void CaptureFlag(IFlagCarrier capturingEntity)
+        {
+            ReassignFlag(capturingEntity);
+            _myTeam = capturingEntity.MyTeam;
         }
     }
 }
