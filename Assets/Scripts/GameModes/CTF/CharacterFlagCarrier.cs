@@ -28,6 +28,7 @@ namespace Assets.Scripts.GameModes.CTF
         public bool HasFlag { get; private set; }
 
         //TODO Add taking over the flag from players that run next to yuo and have the flag with them.
+        //TODO Upon taking over neutral flag (picking up flag) HasFlag should be set to true. It isn't.
         /// <summary>
         /// Returns the carried flag. If no flag - returns null.
         /// Worth checking the HasFlag first.
