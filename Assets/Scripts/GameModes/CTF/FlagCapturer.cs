@@ -24,13 +24,20 @@ namespace Assets.Scripts.GameModes.CTF
         [SerializeField]
         private Teams _myTeam;
 
-        private Queue<IFlag> _capturedFlags;
+        private readonly Queue<IFlag> _capturedFlags = new Queue<IFlag>();
+        /// <summary>
+        /// The position of the first carried flag.
+        /// </summary>
+        [SerializeField]
+        private Transform _flagPosition;
 
         public Transform MyTransform => gameObject.transform;
+        public Transform FlagPosition => _flagPosition.transform;
         public Teams MyTeam => _myTeam;
         public bool HasFlag { get; private set; }
 
         //TODO Add capturing the flag from running players that collide with you.
+        
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
@@ -40,13 +47,21 @@ namespace Assets.Scripts.GameModes.CTF
                 if (flagCarrierComponent.MyTeam == _myTeam && flagCarrierComponent.HasFlag)
                 {
                     var takenOverFlag = flagCarrierComponent.TakeOverFlag();
-                    takenOverFlag.CaptureFlag(this);
-                    _capturedFlags.Enqueue(takenOverFlag);
-
-                    Debug.Log($"Team {_myTeam} captured flag.");
-                    _capturedFlag?.Invoke(1);//For now, only onne flag can be captured at any given time.
+                    CaptureFlag(takenOverFlag);
                 }
             }
+        }
+        /// <summary>
+        /// Captures the flag, setting this object as it's owner and changing the flag's properties.
+        /// </summary>
+        /// <param name="capturedFlag"></param>
+        private void CaptureFlag(IFlag capturedFlag)
+        {
+            capturedFlag.CaptureFlag(this);
+            _capturedFlags.Enqueue(capturedFlag);
+
+            Debug.Log($"Team {_myTeam} captured flag.");
+            _capturedFlag?.Invoke(1);//For now, only onne flag can be captured at any given time.
         }
 
         /// <summary>
@@ -65,6 +80,14 @@ namespace Assets.Scripts.GameModes.CTF
             var givenAwayFlag = _capturedFlags.Dequeue();
 
             return givenAwayFlag;
+        }
+        /// <summary>
+        /// Captures a flag that rolled close enough.
+        /// </summary>
+        /// <param name="flag"></param>
+        public void PickedUpFlag(IFlag flag)
+        {
+            CaptureFlag(flag);
         }
     }
 }

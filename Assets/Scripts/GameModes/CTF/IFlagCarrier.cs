@@ -19,6 +19,10 @@ namespace Assets.Scripts.GameModes.CTF
         /// </summary>
         Transform MyTransform { get; }
         /// <summary>
+        /// Gets the transform of the flag position while carrying.
+        /// </summary>
+        Transform FlagPosition { get; }
+        /// <summary>
         /// Which team does this carrier belong to?
         /// </summary>
         Teams MyTeam { get; }
@@ -31,5 +35,10 @@ namespace Assets.Scripts.GameModes.CTF
         /// </summary>
         /// <returns></returns>
         IFlag TakeOverFlag();
+        /// <summary>
+        /// Called when the carrier picks up a flag from the ground/air.
+        /// </summary>
+        /// <param name="flag"></param>
+        void PickedUpFlag(IFlag flag);
     }
 }

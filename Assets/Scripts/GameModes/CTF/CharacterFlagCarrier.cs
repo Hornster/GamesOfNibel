@@ -20,11 +20,18 @@ namespace Assets.Scripts.GameModes.CTF
         /// carrying any flag - is null.
         /// </summary>
         private IFlag _carriedFlag;
+
+        /// <summary>
+        /// The position of the first carried flag.
+        /// </summary>
+        [SerializeField]
+        private Transform _flagPosition;
         [SerializeField]
         private Teams _myTeam;
         public Teams MyTeam => _myTeam;
 
         public Transform MyTransform => gameObject.transform;
+        public Transform FlagPosition => _flagPosition.transform;
         public bool HasFlag { get; private set; }
 
         //TODO Add taking over the flag from players that run next to yuo and have the flag with them.
@@ -41,6 +48,15 @@ namespace Assets.Scripts.GameModes.CTF
             _carriedFlag = null;
 
             return carriedFlag;
+        }
+        /// <summary>
+        /// Picked up a flag from the ground/air/water/branch smasher.
+        /// </summary>
+        /// <param name="flag">Picked up flag.</param>
+        public void PickedUpFlag(IFlag flag)
+        {
+            HasFlag = true;
+            _carriedFlag = flag;
         }
     }
 }

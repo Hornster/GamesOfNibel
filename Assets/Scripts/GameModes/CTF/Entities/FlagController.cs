@@ -31,6 +31,8 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// </summary>
         [SerializeField]
         private Transform _homeSpawnTransform;
+
+        public Teams MyTeam => _myTeam;
         /// <summary>
         /// The team that this flag belongs to.
         /// </summary>
@@ -99,6 +101,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
                     if (flagCarrierScript.MyTeam != _carriedByTeam || flagCarrierScript.MyTeam != _myTeam)
                     {
                         WasTakenOverBy(flagCarrierScript);
+                        flagCarrierScript.PickedUpFlag(this);
                         //TODO: Should the flag be taken away by player of the same team from the carrier?
                         //TODO: Should the flag be taken away when it directly collides with enemy? YES
                     }
@@ -107,15 +110,17 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         }
 
         /// <summary>
-        /// 
+        /// Reassigns the flag to this object.
         /// </summary>
         /// <param name="takingEntity"></param>
         private void ReassignFlag(IFlagCarrier takingEntity)
         {
-            _flagCarrierTransform = takingEntity.MyTransform;
+            _flagCarrierTransform = takingEntity.FlagPosition;
             _isCarried = true;
             _carriedByTeam = takingEntity.MyTeam;
         }
+
+
         /// <summary>
         /// Called when a player takes the flag from another player.
         /// </summary>
@@ -124,6 +129,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         {
             ReassignFlag(newCarrier);
         }
+
         /// <summary>
         /// Called when the flag was delivered to a base and was captured.
         /// </summary>
@@ -132,6 +138,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         {
             ReassignFlag(capturingEntity);
             _myTeam = capturingEntity.MyTeam;
+            SetColor(_myTeam);
         }
     }
 }
