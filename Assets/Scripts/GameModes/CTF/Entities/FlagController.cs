@@ -96,7 +96,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             if (testLayers != 0)
             {
                 var flagCarrierScript = colliderGameobject.GetComponent<IFlagCarrier>();
-                if (flagCarrierScript != null)
+                if (flagCarrierScript != null && !_isCarried)
                 {
                     if (flagCarrierScript.MyTeam != _carriedByTeam || flagCarrierScript.MyTeam != _myTeam)
                     {
