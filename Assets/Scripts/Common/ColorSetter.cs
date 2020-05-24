@@ -15,20 +15,14 @@ namespace Assets.Scripts.Common
     public class ColorSetter : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
-        [SerializeField] private Teams _myTeam;
 
-        private void Start()
-        {
-           SetColor(_myTeam);
-        }
         /// <summary>
         /// Sets the color of the sprite accordingly to the team. Changes the team as well.
         /// </summary>
-        /// <param name="_myTeam"></param>
-        public void SetColor(Teams team)
+        /// <param name="color"></param>
+        public void SetColor(Color color)
         {
-            _myTeam = team;
-            _spriteRenderer.color = TeamColors.GetTeamColor(_myTeam);
+            _spriteRenderer.color = color;
         }
     }
 }

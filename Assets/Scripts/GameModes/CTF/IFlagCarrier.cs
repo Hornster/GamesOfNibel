@@ -33,8 +33,9 @@ namespace Assets.Scripts.GameModes.CTF
         /// <summary>
         /// Makes the carrier give the flag to the caller.
         /// </summary>
+        /// <param name="takerHash">The unique hash of the object that took the flag.</param>
         /// <returns></returns>
-        IFlag TakeOverFlag();
+        IFlag TakeOverFlag(int takerHash);
         /// <summary>
         /// Called when the carrier picks up a flag from the ground/air.
         /// </summary>

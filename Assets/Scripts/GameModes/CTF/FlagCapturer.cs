@@ -46,7 +46,7 @@ namespace Assets.Scripts.GameModes.CTF
             {
                 if (flagCarrierComponent.MyTeam == _myTeam && flagCarrierComponent.HasFlag)
                 {
-                    var takenOverFlag = flagCarrierComponent.TakeOverFlag();
+                    var takenOverFlag = flagCarrierComponent.TakeOverFlag(0);
                     CaptureFlag(takenOverFlag);
                 }
             }
@@ -69,7 +69,7 @@ namespace Assets.Scripts.GameModes.CTF
         /// Worth checking the HasFlag first.
         /// </summary>
         /// <returns></returns>
-        public IFlag TakeOverFlag()
+        public IFlag TakeOverFlag(int takerID)
         {
             if (_capturedFlags.Count <= 0)
             {
