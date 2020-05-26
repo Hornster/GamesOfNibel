@@ -102,8 +102,6 @@ namespace Assets.Scripts.GameModes.CTF.Entities
                     {
                         WasTakenOverBy(flagCarrierScript);
                         flagCarrierScript.PickedUpFlag(this);
-                        //TODO: Should the flag be taken away by player of the same team from the carrier?
-                        //TODO: Should the flag be taken away when it directly collides with enemy? YES
                     }
                 }
             }
