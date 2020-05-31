@@ -2,6 +2,7 @@
 using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
+using Assets.Scripts.Spawner;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,11 +27,6 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// The transform of the flag carrying player.
         /// </summary>
         private Transform _flagCarrierTransform;
-        /// <summary>
-        /// Transform of the area that spawned the flag.
-        /// </summary>
-        [SerializeField]
-        private Transform _homeSpawnTransform;
 
         public Teams MyTeam => _myTeam;
         /// <summary>
@@ -61,15 +57,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         {
             UpdatePosition();
         }
-
-        /// <summary>
-        /// Sets the color of the flag.
-        /// </summary>
-        /// <param name="teamColor"></param>
-        public void SetColor(Teams teamColor)
-        {
-            _flagSpriteRenderer.color = TeamColors.GetTeamColor(teamColor);
-        }
+        
         /// <summary>
         /// Updates the global position  of the flag to the carrying character's one.
         /// </summary>
@@ -83,7 +71,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             _flagTransform.position = posAboveCarrier;
         }
         /// <summary>
-        /// 
+        /// Checks if the entering collider can pickup the flag.
         /// </summary>
         private void OnTriggerEnter2D(Collider2D collider)
         {
@@ -95,9 +83,11 @@ namespace Assets.Scripts.GameModes.CTF.Entities
 
             if (testLayers != 0)
             {
+                //The colliding object is eliglibe for picking up the flag.
                 var flagCarrierScript = colliderGameobject.GetComponent<IFlagCarrier>();
                 if (flagCarrierScript != null && !_isCarried)
                 {
+                    //The object can pick up the flag from the ground or neutral spawn.
                     if (flagCarrierScript.MyTeam != _carriedByTeam || flagCarrierScript.MyTeam != _myTeam)
                     {
                         WasTakenOverBy(flagCarrierScript);
@@ -138,5 +128,26 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             _myTeam = capturingEntity.MyTeam;
             SetColor(_myTeam);
         }
+        /// <summary>
+        /// Sets the color of the flag.
+        /// </summary>
+        /// <param name="teamColor"></param>
+        public void SetColor(Teams teamColor)
+        {
+            _flagSpriteRenderer.color = TeamColors.GetTeamColor(teamColor);
+        }
+        /// <summary>
+        /// Changes the team which the flag belongs to.
+        /// </summary>
+        /// <param name="newTeam">New team of the flag.</param>
+        public void SetFlagData(FlagIniData flagIniData)
+        {
+            _myTeam = flagIniData.FlagTeam;
+            SetColor(_myTeam);
+        }
+        //TODO - upon creating of the flag:
+        //TODO set the respawn position in SetFlagData
+        //TODO set the respawn signal callback
+        //TODO upon capturing the flag, given base could send it's data in FlagIniData class to reconfigure the flag.
     }
 }
