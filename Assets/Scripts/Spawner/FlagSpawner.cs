@@ -17,6 +17,13 @@ namespace Assets.Scripts.Spawner
         /// </summary>
         [SerializeField]
         private Transform _spawningPosition;
+        /// <summary>
+        /// Called by the flag that belongs to this spawn when it has been unstuck.
+        /// </summary>
+        private void FlagHasBeenUnstuck()
+        {
+
+        }
 
         /// <summary>
         /// Called to spawn the flag at _spawningPosition.
@@ -26,6 +33,7 @@ namespace Assets.Scripts.Spawner
         {
             var newFlag = Instantiate(_spawningEntityPrefab, _spawningPosition);
             var flagController = newFlag.GetComponentInChildren<FlagController>();
+            flagIniData.FlagUnstuckSignal += FlagHasBeenUnstuck;
             flagController.SetFlagData(flagIniData);
         }
     }

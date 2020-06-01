@@ -25,5 +25,9 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// </summary>
         /// <param name="capturingEntity">The team that captured the flag.</param>
         void CaptureFlag(IFlagCarrier capturingEntity);
+        /// <summary>
+        /// Causes the carrier to drop carried flag.
+        /// </summary>
+        void DropCarriedFlag();
     }
 }

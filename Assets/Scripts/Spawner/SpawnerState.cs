@@ -11,9 +11,9 @@ namespace Assets.Scripts.Spawner
     public class FlagIniData
     {
         /// <summary>
-        /// Will be called by the flag when new flag should be spawned. For example, when the current one has been captured.
+        /// Callback for the flag - called when it gets reset because of staying on ground outside of any spawn for too long.
         /// </summary>
-        public UnityAction FlagRespawnSignal { get; set; }
+        public UnityAction FlagUnstuckSignal { get; set; }
         /// <summary>
         /// The team that the yet-to-spawn flag should be of.
         /// </summary>
