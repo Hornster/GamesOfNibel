@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Spawner
 {
-    public class FlagSpawner : MonoBehaviour, ISpawner
+    public class FlagSpawner : MonoBehaviour, IFlagSpawner
     {
         /// <summary>
         /// The entity that this spawner spawns.
@@ -22,7 +22,7 @@ namespace Assets.Scripts.Spawner
         /// </summary>
         private void FlagHasBeenUnstuck()
         {
-
+            Debug.Log($"Says spawner {this}: Neutral flag has been unstuck!");
         }
 
         /// <summary>

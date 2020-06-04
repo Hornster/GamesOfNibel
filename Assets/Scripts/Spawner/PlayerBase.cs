@@ -14,11 +14,11 @@ namespace Assets.Scripts.Spawner
         /// <summary>
         /// Spawner assigned to this base.
         /// </summary>
-        private ISpawner _mySpawner;
+        private IFlagSpawner _myFlagSpawner;
 
         public void SpawnEntity()
         {
-            _mySpawner.SpawnEntity(_myTeam);
+            _myFlagSpawner.SpawnEntity(_myTeam);
         }
         //TODO this won't do. Try to diverge player and flag spawners on higher abstraction level, like an interface.
     }

@@ -5,7 +5,7 @@ namespace Assets.Scripts.Spawner
     /// <summary>
     /// Defines what a regular spawner should have.
     /// </summary>
-    internal interface ISpawner
+    internal interface IFlagSpawner
     {
         /// <summary>
         /// Spawns NEW entity characteristic for the spawner.
