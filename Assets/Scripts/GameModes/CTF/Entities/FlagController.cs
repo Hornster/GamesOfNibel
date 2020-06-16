@@ -1,15 +1,23 @@
 ﻿
+using Assets.Scripts.Common;
 using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
+using Assets.Scripts.Spawner;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.GameModes.CTF.Entities
 {
     [RequireComponent(typeof(CircleCollider2D))]
     public class FlagController : MonoBehaviour, IFlag
     {
+        /// <summary>
+        /// The time after which the flag will reset itself back to its spawn.
+        /// </summary>
+        [SerializeField]
+        private float _awaitUnstuckTime;
         /// <summary>
         /// Defines what objects can pick up the flag.
         /// </summary>
@@ -23,21 +31,20 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         [SerializeField]
         private Transform _flagTransform;
         /// <summary>
-        /// The transform of the flag carrying player.
-        /// </summary>
-        private Transform _flagCarrierTransform;
-        /// <summary>
-        /// Transform of the area that spawned the flag.
-        /// </summary>
-        [SerializeField]
-        private Transform _homeSpawnTransform;
-
-        public Teams MyTeam => _myTeam;
-        /// <summary>
         /// The team that this flag belongs to.
         /// </summary>
         [SerializeField]
         private Teams _myTeam;
+        /// <summary>
+        /// The transform of the flag carrying player.
+        /// </summary>
+        private Transform _flagCarrierTransform;
+        /// <summary>
+        /// The transform of the spawner which the flag currently belongs to.
+        /// </summary>
+        private Transform _flagSpawnerTransform;
+
+        public Teams MyTeam => _myTeam;
         /// <summary>
         /// Indicates what team carries the flag.
         /// </summary>
@@ -48,28 +55,27 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// flag is being carried by the spawn that captured the flag.
         /// </summary>
         private bool _isCarried;
+        /// <summary>
+        /// Callback to the spawn - called when the flag has been unstuck.
+        /// </summary>
+        private UnityAction _notifySpawnFlagUnstuck;
+        private Timer _unstuckTimer;
         
         [SerializeField]
         private SpriteRenderer _flagSpriteRenderer;
 
         private void Start()
         {
+            _unstuckTimer = new Timer(_awaitUnstuckTime, ResetFlag);
             SetColor(_myTeam);
         }
 
         private void FixedUpdate()
         {
             UpdatePosition();
+            _unstuckTimer.Update();
         }
-
-        /// <summary>
-        /// Sets the color of the flag.
-        /// </summary>
-        /// <param name="teamColor"></param>
-        public void SetColor(Teams teamColor)
-        {
-            _flagSpriteRenderer.color = TeamColors.GetTeamColor(teamColor);
-        }
+        
         /// <summary>
         /// Updates the global position  of the flag to the carrying character's one.
         /// </summary>
@@ -83,7 +89,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             _flagTransform.position = posAboveCarrier;
         }
         /// <summary>
-        /// 
+        /// Checks if the entering collider can pickup the flag.
         /// </summary>
         private void OnTriggerEnter2D(Collider2D collider)
         {
@@ -95,13 +101,17 @@ namespace Assets.Scripts.GameModes.CTF.Entities
 
             if (testLayers != 0)
             {
+                //The colliding object is eliglibe for picking up the flag.
                 var flagCarrierScript = colliderGameobject.GetComponent<IFlagCarrier>();
                 if (flagCarrierScript != null && !_isCarried)
                 {
+                    //The object can pick up the flag from the ground or neutral spawn.
                     if (flagCarrierScript.MyTeam != _carriedByTeam || flagCarrierScript.MyTeam != _myTeam)
                     {
                         WasTakenOverBy(flagCarrierScript);
                         flagCarrierScript.PickedUpFlag(this);
+                        _unstuckTimer.Stop();
+                        _unstuckTimer.Reset();
                     }
                 }
             }
@@ -117,7 +127,18 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             _isCarried = true;
             _carriedByTeam = takingEntity.MyTeam;
         }
-
+        /// <summary>
+        /// Resets the flag back to its spawn.
+        /// </summary>
+        private void ResetFlag()
+        {
+            _flagTransform.position = _flagSpawnerTransform.position;
+            _flagCarrierTransform = null;
+            _isCarried = false;
+            _carriedByTeam = _myTeam;
+            _unstuckTimer.ResetAndStop();
+            _notifySpawnFlagUnstuck?.Invoke();
+        }
 
         /// <summary>
         /// Called when a player takes the flag from another player.
@@ -137,7 +158,41 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             ReassignFlag(capturingEntity);
             _myTeam = capturingEntity.MyTeam;
             SetColor(_myTeam);
+            _unstuckTimer.ResetAndStop();
         }
+        /// <summary>
+        /// Carried flag has been dropped on the floor.
+        /// </summary>
+        public void DropCarriedFlag()
+        {
+            _isCarried = false;
+            _unstuckTimer.Start();
+            _carriedByTeam = Teams.Neutral;
+            _flagCarrierTransform = null;
+        }
+
+        /// <summary>
+        /// Sets the color of the flag.
+        /// </summary>
+        /// <param name="teamColor"></param>
+        public void SetColor(Teams teamColor)
+        {
+            _flagSpriteRenderer.color = TeamColors.GetTeamColor(teamColor);
+        }
+        /// <summary>
+        /// Changes the team which the flag belongs to.
+        /// </summary>
+        /// <param name="flagIniData">Config data for the flag.</param>
+        public void SetFlagData(FlagIniData flagIniData)
+        {
+            _myTeam = flagIniData.FlagTeam;
+            SetColor(_myTeam);
+            _flagSpawnerTransform = flagIniData.FlagSpawnPosition;
+        }
+        //TODO - upon creating of the flag:
+        //TODO set the respawn position in SetFlagData
+        //TODO set the respawn signal callback
+        //TODO upon capturing the flag, given base could send it's data in FlagIniData class to reconfigure the flag.
         /// <summary>
         /// Called when the carrier dropped the flag.
         /// </summary>

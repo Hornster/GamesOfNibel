@@ -52,8 +52,7 @@ namespace Assets.Scripts.GameModes.CTF
             var color = TeamColors.GetTeamColor(_myTeam);
             _changeColor?.Invoke(color);
         }
-
-        //TODO The flag itself can be taken over by touching it. This most likely causes logic errors and blinking.
+        
         private void OnTriggerEnter2D(Collider2D collider)
         {
             var otherFlagCarrier = collider.gameObject.GetComponent<IFlagCarrier>();
