@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    /// <summary>
+    /// Singleton class that stores controls config.
+    /// </summary>
     public class ButtonConfig
     {
         //Axes names
@@ -16,6 +19,7 @@ namespace Assets.Scripts.Player
         //Button bindings
         public KeyCode JumpButton { get; set; } = KeyCode.Space;
         public KeyCode GlideButton { get; set; } = KeyCode.LeftShift;
+        public KeyCode FlagDropButton { get; set; } = KeyCode.F;
         /// <summary>
         /// A special type of button reserved for special actions in
         /// given modes.

@@ -90,6 +90,27 @@ namespace Assets.Scripts.GameModes.CTF
                 }
             }
         }
+        /// <summary>
+        /// Unassigns the flag from this carrier.
+        /// </summary>
+        private void ResetFlagCarryingState()
+        {
+            _carriedFlag = null;
+            HasFlag = false;
+        }
+        /// <summary>
+        /// Callback when the player decides to drop the flag by themselves.
+        /// </summary>
+        private void DropCarriedFlag()
+        {
+            if (HasFlag == false)
+            {
+                return; //The character hasn't got any flags. Cannot drop non-exiting flag right?
+            }
+
+            _carriedFlag.DropFlag();
+            ResetFlagCarryingState();
+        }
         
         /// <summary>
         /// Returns the carried flag. If no flag - returns null.
@@ -101,9 +122,8 @@ namespace Assets.Scripts.GameModes.CTF
         {
             _flagWasJustTaken = true;
             _flagTakerID = takerID;
-            HasFlag = false;
             var carriedFlag = _carriedFlag;
-            _carriedFlag = null;
+            ResetFlagCarryingState();
 
             return carriedFlag;
         }

@@ -138,5 +138,14 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             _myTeam = capturingEntity.MyTeam;
             SetColor(_myTeam);
         }
+        /// <summary>
+        /// Called when the carrier dropped the flag.
+        /// </summary>
+        public void DropFlag()
+        {
+            _isCarried = false;
+            _carriedByTeam = Teams.Neutral;
+            _flagCarrierTransform = null;
+        }
     }
 }

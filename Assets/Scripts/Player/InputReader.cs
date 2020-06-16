@@ -18,6 +18,7 @@ namespace Assets.Scripts.Player
         private static UnityAction<GroundCheckType> _changeGroundCollisionMaskHandler;
         private static UnityAction _helpToggleHandler;
         private static UnityAction _gameLeaveHandler;
+        private static UnityAction _dropFlagHandler;
 
         //Private variables
         private ButtonConfig _buttonConfig;
@@ -152,3 +153,5 @@ namespace Assets.Scripts.Player
         #endregion EventRegistering
     }
 }
+
+//TODO: Add drop flag event detection and handling, together with registering.
