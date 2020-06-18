@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 404726191}
   - component: {fileID: 404726192}
   - component: {fileID: 404726193}
+  - component: {fileID: 404726194}
   m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
@@ -315,16 +316,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f88c57d17493d4183e0d6eaf38fdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _awaitUnstuckTime: 0
+  _flagDropCooldown: 1
   _whatCanTakeFlag:
     serializedVersion: 2
     m_Bits: 4096
   _whatCanCaptureFlag:
     serializedVersion: 2
     m_Bits: 0
-  _flagTransform: {fileID: 1744747929}
-  _homeSpawnTransform: {fileID: 0}
+  _flagTransform: {fileID: 404726191}
   _myTeam: 2
   _flagSpriteRenderer: {fileID: 1627199723}
+--- !u!50 &404726194
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404726190}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: e0f26bdd46e4b40489a893d3d63854b7, type: 2}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1001 &465644439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -334,7 +357,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627543076, guid: 361ca711c3b0bc3418cc10627f502602, type: 3}
       propertyPath: _myTeam
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5535999678183602757, guid: 361ca711c3b0bc3418cc10627f502602,
         type: 3}

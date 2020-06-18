@@ -18,7 +18,10 @@ namespace Assets.Scripts.Player
         private static UnityAction<GroundCheckType> _changeGroundCollisionMaskHandler;
         private static UnityAction _helpToggleHandler;
         private static UnityAction _gameLeaveHandler;
-        private static UnityAction _dropFlagHandler;
+        /// <summary>
+        /// Handler for special activities that differ among the gamemodes, like flag drop.
+        /// </summary>
+        private static UnityAction _specialActivityGameModeHandler;
 
         //Private variables
         private ButtonConfig _buttonConfig;
@@ -105,6 +108,11 @@ namespace Assets.Scripts.Player
             {
                 _gameLeaveHandler?.Invoke();
             }
+
+            if (Input.GetKeyDown(_buttonConfig.ModeSpecialButton))
+            {
+                _specialActivityGameModeHandler?.Invoke();
+            }
         }
 
         #region EventRegistering
@@ -148,6 +156,14 @@ namespace Assets.Scripts.Player
         public static void RegisterGameEnd(UnityAction handler)
         {
             _gameLeaveHandler += handler;
+        }
+        /// <summary>
+        /// Registers the handler for special activity connected with currently selected game mode.
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void RegisterSpecialModeActivity(UnityAction handler)
+        {
+            _specialActivityGameModeHandler += handler;
         }
 
         #endregion EventRegistering

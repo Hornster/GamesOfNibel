@@ -29,6 +29,11 @@ namespace Assets.Scripts.Common
         /// Is the timer currently running.
         /// </summary>
         private bool _isRunning;
+
+        /// <summary>
+        /// Set to true when the time is up.
+        /// </summary>
+        public bool IsTimeUp { get; private set; } = false;
         /// <summary>
         /// 
         /// </summary>
@@ -51,6 +56,7 @@ namespace Assets.Scripts.Common
 
             if (_currentAwaitTime >= _maxAwaitTime)
             {
+                IsTimeUp = true;
                 _timeIsUp?.Invoke();
             }
         }
@@ -67,6 +73,7 @@ namespace Assets.Scripts.Common
         public void Reset()
         {
             _currentAwaitTime = 0.0f;
+            IsTimeUp = false;
         }
         /// <summary>
         /// Stops the timer. Does not reset it.

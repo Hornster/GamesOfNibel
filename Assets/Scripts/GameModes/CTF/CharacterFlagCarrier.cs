@@ -3,6 +3,7 @@ using System;
 using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.GameModes.CTF.Entities;
+using Assets.Scripts.Player;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -50,6 +51,7 @@ namespace Assets.Scripts.GameModes.CTF
         private void Start()
         {
             var color = TeamColors.GetTeamColor(_myTeam);
+            InputReader.RegisterSpecialModeActivity(DropCarriedFlag);
             _changeColor?.Invoke(color);
         }
         
@@ -107,7 +109,7 @@ namespace Assets.Scripts.GameModes.CTF
                 return; //The character hasn't got any flags. Cannot drop non-exiting flag right?
             }
 
-            _carriedFlag.DropFlag();
+            _carriedFlag.DropCarriedFlag(this.GetHashCode());
             ResetFlagCarryingState();
         }
         

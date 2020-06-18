@@ -4,13 +4,12 @@ using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Spawner;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.GameModes.CTF.Entities
 {
-    [RequireComponent(typeof(CircleCollider2D))]
+    [RequireComponent(typeof(CircleCollider2D), typeof(Rigidbody2D))]
     public class FlagController : MonoBehaviour, IFlag
     {
         /// <summary>
@@ -18,6 +17,11 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// </summary>
         [SerializeField]
         private float _awaitUnstuckTime;
+        /// <summary>
+        /// The amount of time it takes for the same player that just dropped the
+        /// flag to pick it up again, in seconds.
+        /// </summary>
+        [SerializeField] private float _flagDropCooldown = 1.0f;
         /// <summary>
         /// Defines what objects can pick up the flag.
         /// </summary>
@@ -60,12 +64,24 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// </summary>
         private UnityAction _notifySpawnFlagUnstuck;
         private Timer _unstuckTimer;
-        
+        private Rigidbody2D _rb;
+        /// <summary>
+        /// Measures time since the flag being dropped by a player.
+        /// </summary>
+        private Timer _flagDropTimer;
+        /// <summary>
+        /// The id of the last owner of the flag that dropped the flag.
+        /// </summary>
+        private int _lastOwnerID;
+
+
         [SerializeField]
         private SpriteRenderer _flagSpriteRenderer;
 
         private void Start()
         {
+            _rb = GetComponent<Rigidbody2D>();
+            DisableRigidbody();
             _unstuckTimer = new Timer(_awaitUnstuckTime, ResetFlag);
             SetColor(_myTeam);
         }
@@ -75,7 +91,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             UpdatePosition();
             _unstuckTimer.Update();
         }
-        
+
         /// <summary>
         /// Updates the global position  of the flag to the carrying character's one.
         /// </summary>
@@ -123,15 +139,33 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// <param name="takingEntity"></param>
         private void ReassignFlag(IFlagCarrier takingEntity)
         {
+            DisableRigidbody();
             _flagCarrierTransform = takingEntity.FlagPosition;
             _isCarried = true;
             _carriedByTeam = takingEntity.MyTeam;
+        }
+        /// <summary>
+        /// Disables the rigidbody of the flag.
+        /// </summary>
+        private void DisableRigidbody()
+        {
+            _rb.isKinematic = true;
+            _rb.velocity = Vector3.zero;
+        }
+        /// <summary>
+        /// Enables the rigidbody.
+        /// </summary>
+        private void EnableRigidbody()
+        {
+            _rb.isKinematic = false;
+            //TODO add velocity request from the character's rigidbody perhaps? Event-based
         }
         /// <summary>
         /// Resets the flag back to its spawn.
         /// </summary>
         private void ResetFlag()
         {
+            DisableRigidbody();
             _flagTransform.position = _flagSpawnerTransform.position;
             _flagCarrierTransform = null;
             _isCarried = false;
@@ -163,12 +197,14 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// <summary>
         /// Carried flag has been dropped on the floor.
         /// </summary>
-        public void DropCarriedFlag()
+        public void DropCarriedFlag(int droppingEntityId)
         {
+            EnableRigidbody();
             _isCarried = false;
             _unstuckTimer.Start();
             _carriedByTeam = Teams.Neutral;
             _flagCarrierTransform = null;
+            _lastOwnerID = droppingEntityId;
         }
 
         /// <summary>
@@ -193,14 +229,6 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         //TODO set the respawn position in SetFlagData
         //TODO set the respawn signal callback
         //TODO upon capturing the flag, given base could send it's data in FlagIniData class to reconfigure the flag.
-        /// <summary>
-        /// Called when the carrier dropped the flag.
-        /// </summary>
-        public void DropFlag()
-        {
-            _isCarried = false;
-            _carriedByTeam = Teams.Neutral;
-            _flagCarrierTransform = null;
-        }
+
     }
 }

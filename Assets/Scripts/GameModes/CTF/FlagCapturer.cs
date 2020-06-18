@@ -41,6 +41,7 @@ namespace Assets.Scripts.GameModes.CTF
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
+            //Check if a player has touched this capturing entity and if they have flag.
             var flagCarrierComponent = collider.gameObject.GetComponent<IFlagCarrier>();
             if (flagCarrierComponent != null)
             {
@@ -49,6 +50,15 @@ namespace Assets.Scripts.GameModes.CTF
                     var takenOverFlag = flagCarrierComponent.TakeOverFlag(0);
                     CaptureFlag(takenOverFlag);
                 }
+
+                return; //No need to go further.
+            }
+            //If we got here, then something else is colliding with the capturing entity.
+            //Check if a flag did not fell/roll over the capturing entity.
+            var flagComponent = collider.gameObject.GetComponent<IFlag>();
+            if (flagComponent != null)
+            {
+                CaptureFlag(flagComponent);
             }
         }
         /// <summary>
