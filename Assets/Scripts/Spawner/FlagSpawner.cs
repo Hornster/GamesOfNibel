@@ -41,6 +41,7 @@ namespace Assets.Scripts.Spawner
             var flagController = newFlag.GetComponentInChildren<FlagController>();
             flagIniData.FlagUnstuckSignal += FlagHasBeenUnstuck;
             flagIniData.FlagTeam = _teamModule.MyTeam;
+            flagIniData.FlagSpawnPosition = _spawningPosition;
             flagController.SetFlagData(flagIniData);
         }
     }
