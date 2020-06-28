@@ -54,7 +54,8 @@ namespace Assets.Scripts.GameModes.CTF
         {
             var flagData = new FlagIniData()
             {
-                FlagUnstuckSignal = NeutralFlagResetHandler
+                FlagUnstuckSignal = NeutralFlagResetHandler,
+                FlagCapturedSignal = NeutralFlagCapturedHandler
             };
 
             return flagData;

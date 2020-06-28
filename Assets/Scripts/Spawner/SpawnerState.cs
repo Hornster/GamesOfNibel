@@ -15,6 +15,10 @@ namespace Assets.Scripts.Spawner
         /// </summary>
         public UnityAction FlagUnstuckSignal { get; set; }
         /// <summary>
+        /// Signal from the flag that it has been just captured.
+        /// </summary>
+        public UnityAction FlagCapturedSignal { get; set; }
+        /// <summary>
         /// The team that the yet-to-spawn flag should be of.
         /// </summary>
         public Teams FlagTeam { get; set; }

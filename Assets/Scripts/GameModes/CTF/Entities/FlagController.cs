@@ -57,6 +57,10 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// Callback to the spawn - called when the flag has been unstuck.
         /// </summary>
         private UnityAction _notifySpawnFlagUnstuck;
+        /// <summary>
+        /// Called when the flag has been captured.
+        /// </summary>
+        private UnityAction _notifySpawnFlagCaptured;
         private Timer _unstuckTimer;
         private Rigidbody2D _rb;
         /// <summary>
@@ -188,6 +192,8 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             _myTeam.MyTeam = capturingEntity.MyTeam;
             SetColor(_myTeam.MyTeam);
             _unstuckTimer.ResetAndStop();
+
+            _notifySpawnFlagCaptured?.Invoke();
         }
         /// <summary>
         /// Carried flag has been dropped on the floor.
@@ -219,6 +225,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             SetColor(_myTeam.MyTeam);
             _flagSpawnerTransform = flagIniData.FlagSpawnPosition;
             _notifySpawnFlagUnstuck = flagIniData.FlagUnstuckSignal;
+            _notifySpawnFlagCaptured = flagIniData.FlagCapturedSignal;
         }
         //TODO - upon creating of the flag:
         //TODO set the respawn position in SetFlagData
