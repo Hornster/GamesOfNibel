@@ -1,5 +1,6 @@
 ﻿
 using System;
+using Assets.Scripts.Common;
 using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.GameModes.CTF.Entities;
@@ -41,8 +42,8 @@ namespace Assets.Scripts.GameModes.CTF
         [SerializeField]
         private Transform _flagPosition;
         [SerializeField]
-        private Teams _myTeam;
-        public Teams MyTeam => _myTeam;
+        private TeamModule _myTeam;
+        public Teams MyTeam => _myTeam.MyTeam;
 
         public Transform MyTransform => gameObject.transform;
         public Transform FlagPosition => _flagPosition.transform;
@@ -50,7 +51,7 @@ namespace Assets.Scripts.GameModes.CTF
 
         private void Start()
         {
-            var color = TeamColors.GetTeamColor(_myTeam);
+            var color = TeamColors.GetTeamColor(_myTeam.MyTeam);
             InputReader.RegisterSpecialModeActivity(DropCarriedFlag);
             _changeColor?.Invoke(color);
         }
@@ -109,7 +110,7 @@ namespace Assets.Scripts.GameModes.CTF
                 return; //The character hasn't got any flags. Cannot drop non-exiting flag right?
             }
 
-            _carriedFlag.DropCarriedFlag(this.GetHashCode());
+            _carriedFlag.DropCarriedFlag();
             ResetFlagCarryingState();
         }
         

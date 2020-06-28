@@ -1,4 +1,5 @@
 ﻿
+using Assets.Scripts.Common;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.GameModes.CTF.Entities;
 using UnityEngine;
@@ -7,6 +8,11 @@ namespace Assets.Scripts.Spawner
 {
     public class FlagSpawner : MonoBehaviour, IFlagSpawner
     {
+
+        /// <summary>
+        /// Stores info about the team this spawn belongs to.
+        /// </summary>
+        [SerializeField] private TeamModule _teamModule;
         /// <summary>
         /// The entity that this spawner spawns.
         /// </summary>
@@ -31,9 +37,10 @@ namespace Assets.Scripts.Spawner
         /// <param name="flagIniData">Team of the flag.</param>
         public void SpawnEntity(FlagIniData flagIniData)
         {
-            var newFlag = Instantiate(_spawningEntityPrefab, _spawningPosition);
+            var newFlag = Instantiate(_spawningEntityPrefab, _spawningPosition.position, Quaternion.identity);
             var flagController = newFlag.GetComponentInChildren<FlagController>();
             flagIniData.FlagUnstuckSignal += FlagHasBeenUnstuck;
+            flagIniData.FlagTeam = _teamModule.MyTeam;
             flagController.SetFlagData(flagIniData);
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.GameModes.CTF.Entities;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace Assets.Scripts.GameModes.CTF
         /// </summary>
         [SerializeField] private UnityEvent<int> _capturedFlag;
         [SerializeField]
-        private Teams _myTeam;
+        private TeamModule _myTeam;
 
         private readonly Queue<IFlag> _capturedFlags = new Queue<IFlag>();
         /// <summary>
@@ -33,10 +34,8 @@ namespace Assets.Scripts.GameModes.CTF
 
         public Transform MyTransform => gameObject.transform;
         public Transform FlagPosition => _flagPosition.transform;
-        public Teams MyTeam => _myTeam;
+        public Teams MyTeam => _myTeam.MyTeam;
         public bool HasFlag { get; private set; }
-
-        //TODO Add capturing the flag from running players that collide with you.
         
 
         private void OnTriggerEnter2D(Collider2D collider)
@@ -45,7 +44,7 @@ namespace Assets.Scripts.GameModes.CTF
             var flagCarrierComponent = collider.gameObject.GetComponent<IFlagCarrier>();
             if (flagCarrierComponent != null)
             {
-                if (flagCarrierComponent.MyTeam == _myTeam && flagCarrierComponent.HasFlag)
+                if (flagCarrierComponent.MyTeam == _myTeam.MyTeam && flagCarrierComponent.HasFlag)
                 {
                     var takenOverFlag = flagCarrierComponent.TakeOverFlag(0);
                     CaptureFlag(takenOverFlag);
@@ -58,7 +57,10 @@ namespace Assets.Scripts.GameModes.CTF
             var flagComponent = collider.gameObject.GetComponent<IFlag>();
             if (flagComponent != null)
             {
-                CaptureFlag(flagComponent);
+                if (flagComponent.IsCarried == false)
+                {
+                    CaptureFlag(flagComponent);
+                }
             }
         }
         /// <summary>

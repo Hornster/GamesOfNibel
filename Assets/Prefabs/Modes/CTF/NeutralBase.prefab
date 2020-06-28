@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1802774658077057468}
   - component: {fileID: 1802774658077057459}
+  - component: {fileID: 3719747377445167292}
   m_Layer: 0
   m_Name: SpawnArea
   m_TagString: Untagged
@@ -70,7 +71,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 290051c6374d1e740abbf8e1e26326cc, type: 3}
-  m_Color: {r: 1, g: 0.989954, b: 0, a: 0.09803922}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.09803922}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -80,6 +81,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3719747377445167292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802774658077057469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a183a6261271df469c396ffeb1bbd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _teamModule: {fileID: 3638308603743299039}
+  _spawningEntityPrefab: {fileID: 2237946120781604325, guid: aed28352c559b8e42803cfea6347e0df,
+    type: 3}
+  _spawningPosition: {fileID: 1927472733785251564}
 --- !u!1 &1802774658152930630
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1802774658394306757}
+  - component: {fileID: 3638308603743299039}
   m_Layer: 0
   m_Name: NeutralBase
   m_TagString: Untagged
@@ -145,6 +163,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3638308603743299039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802774658394306758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039dca90c3af4d3408c2484b3d3926ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myTeam: 2
 --- !u!1 &1802774658851160220
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +333,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 907688fde66244348abb5c27ace53cf9, type: 3}
-  m_Color: {r: 0.8093767, g: 1, b: 0.4009434, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -382,7 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2749acb5b5099b4479c522364d2c0417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _myTeam: 2
+  _myTeam: {fileID: 3638308603743299039}
   _flagPosition: {fileID: 1927472733785251564}
 --- !u!1 &1802774659129699069
 GameObject:
@@ -453,7 +484,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8d7285825d438dc49aad58befce587f9, type: 3}
-  m_Color: {r: 0.91639024, g: 1, b: 0.495283, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

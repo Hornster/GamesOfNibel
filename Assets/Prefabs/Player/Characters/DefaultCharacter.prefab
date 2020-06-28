@@ -680,6 +680,7 @@ GameObject:
   - component: {fileID: 5535999678183602757}
   - component: {fileID: 5535999678183602756}
   - component: {fileID: 5535999678183602763}
+  - component: {fileID: 7686857009796243035}
   m_Layer: 10
   m_Name: DefaultCharacter
   m_TagString: Untagged
@@ -730,6 +731,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 5535999678685711693}
   _character: {fileID: 5535999678530167676}
+--- !u!114 &7686857009796243035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5535999678183602758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039dca90c3af4d3408c2484b3d3926ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myTeam: 0
 --- !u!1 &5535999678530167677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,6 +1378,11 @@ PrefabInstance:
       propertyPath: _changeColor.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 281876159}
+    - target: {fileID: 7974315080731372064, guid: cceab15c9534099439fd7ac7aa333e64,
+        type: 3}
+      propertyPath: _myTeam
+      value: 
+      objectReference: {fileID: 7686857009796243035}
     - target: {fileID: 7974315080731372065, guid: cceab15c9534099439fd7ac7aa333e64,
         type: 3}
       propertyPath: m_Name

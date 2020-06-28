@@ -65,7 +65,7 @@ namespace Assets.Scripts.Common
         /// </summary>
         public void Start()
         {
-            _isRunning = false;
+            _isRunning = true;
         }
         /// <summary>
         /// Resets the timer to 0. Does not change the running state.

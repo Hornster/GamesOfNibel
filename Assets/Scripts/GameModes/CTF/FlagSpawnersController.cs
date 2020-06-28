@@ -6,7 +6,7 @@ using Random = System.Random;
 
 namespace Assets.Scripts.GameModes.CTF
 {
-    public class FlagSpawnersController
+    public class FlagSpawnersController : MonoBehaviour
     {
         /// <summary>
         /// Array of available neutral flag spawners.
@@ -35,6 +35,7 @@ namespace Assets.Scripts.GameModes.CTF
         /// </summary>
         private void NeutralFlagCapturedHandler()
         {
+            Debug.Log("New flag will spawn in " + _flagRespawnTime + " seconds.");
             _isNeutralFlagSpawned = false;
             _neutralFlagRespawnTimer.Start();
         }
@@ -68,6 +69,8 @@ namespace Assets.Scripts.GameModes.CTF
             int whichSpawn = _randomGenerator.Next(0, _neutralFlagSpawnerModules.Length);
 
             _neutralFlagSpawnerModules[whichSpawn].SpawnEntity(PrepareFlagData());
+
+            Debug.Log("Neutral flag respawned.");
         }
 
         private void FixedUpdate()
@@ -80,8 +83,11 @@ namespace Assets.Scripts.GameModes.CTF
 
         private void Start()
         {
+            _neutralFlagSpawnerModules = GetComponentsInChildren<IFlagSpawner>();
             _neutralFlagRespawnTimer = new Timer(_flagRespawnTime, SpawnNeutralFlagHandler);
             _randomGenerator = new Random();
+
+            NeutralFlagCapturedHandler();
         }
     }
 }

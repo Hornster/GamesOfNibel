@@ -15,6 +15,10 @@ namespace Assets.Scripts.GameModes.CTF.Entities
     {
         Teams MyTeam { get; }
         /// <summary>
+        /// Is the flag carried by a player? Or any other thing that has the IFlagCarrier module?
+        /// </summary>
+        bool IsCarried { get; }
+        /// <summary>
         /// Sets the new owner of this flag.
         /// </summary>
         /// <param name="newCarrier">The data of the new carrier of the flag.</param>
@@ -28,6 +32,6 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// <summary>
         /// Causes the carrier to drop carried flag.
         /// </summary>
-        void DropCarriedFlag(int droppingEntityId);
+        void DropCarriedFlag();
     }
 }

@@ -38,7 +38,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// The team that this flag belongs to.
         /// </summary>
         [SerializeField]
-        private Teams _myTeam;
+        private TeamModule _myTeam;
         /// <summary>
         /// The transform of the flag carrying player.
         /// </summary>
@@ -48,17 +48,11 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// </summary>
         private Transform _flagSpawnerTransform;
 
-        public Teams MyTeam => _myTeam;
+        public Teams MyTeam => _myTeam.MyTeam;
         /// <summary>
         /// Indicates what team carries the flag.
         /// </summary>
         private Teams _carriedByTeam;
-        /// <summary>
-        /// Is the flag carried by someone or is it resting at spawn/on the ground?
-        /// Only neutral flags and these that have been dropped are not carried. Already captured
-        /// flag is being carried by the spawn that captured the flag.
-        /// </summary>
-        private bool _isCarried;
         /// <summary>
         /// Callback to the spawn - called when the flag has been unstuck.
         /// </summary>
@@ -70,9 +64,11 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// </summary>
         private Timer _flagDropTimer;
         /// <summary>
-        /// The id of the last owner of the flag that dropped the flag.
+        /// Is the flag carried by someone or is it resting at spawn/on the ground?
+        /// Only neutral flags and these that have been dropped are not carried. Already captured
+        /// flag is being carried by the spawn that captured the flag.
         /// </summary>
-        private int _lastOwnerID;
+        public bool IsCarried { get; private set; }
 
 
         [SerializeField]
@@ -83,7 +79,6 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             _rb = GetComponent<Rigidbody2D>();
             DisableRigidbody();
             _unstuckTimer = new Timer(_awaitUnstuckTime, ResetFlag);
-            SetColor(_myTeam);
         }
 
         private void FixedUpdate()
@@ -97,7 +92,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// </summary>
         private void UpdatePosition()
         {
-            if (_isCarried == false)
+            if (IsCarried == false)
             {
                 return;
             }
@@ -119,10 +114,10 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             {
                 //The colliding object is eliglibe for picking up the flag.
                 var flagCarrierScript = colliderGameobject.GetComponent<IFlagCarrier>();
-                if (flagCarrierScript != null && !_isCarried)
+                if (flagCarrierScript != null && !IsCarried)
                 {
                     //The object can pick up the flag from the ground or neutral spawn.
-                    if (flagCarrierScript.MyTeam != _carriedByTeam || flagCarrierScript.MyTeam != _myTeam)
+                    if (flagCarrierScript.MyTeam != _carriedByTeam || flagCarrierScript.MyTeam != _myTeam.MyTeam)
                     {
                         WasTakenOverBy(flagCarrierScript);
                         flagCarrierScript.PickedUpFlag(this);
@@ -141,7 +136,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         {
             DisableRigidbody();
             _flagCarrierTransform = takingEntity.FlagPosition;
-            _isCarried = true;
+            IsCarried = true;
             _carriedByTeam = takingEntity.MyTeam;
         }
         /// <summary>
@@ -168,8 +163,8 @@ namespace Assets.Scripts.GameModes.CTF.Entities
             DisableRigidbody();
             _flagTransform.position = _flagSpawnerTransform.position;
             _flagCarrierTransform = null;
-            _isCarried = false;
-            _carriedByTeam = _myTeam;
+            IsCarried = false;
+            _carriedByTeam = _myTeam.MyTeam;
             _unstuckTimer.ResetAndStop();
             _notifySpawnFlagUnstuck?.Invoke();
         }
@@ -190,21 +185,20 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         public void CaptureFlag(IFlagCarrier capturingEntity)
         {
             ReassignFlag(capturingEntity);
-            _myTeam = capturingEntity.MyTeam;
-            SetColor(_myTeam);
+            _myTeam.MyTeam = capturingEntity.MyTeam;
+            SetColor(_myTeam.MyTeam);
             _unstuckTimer.ResetAndStop();
         }
         /// <summary>
         /// Carried flag has been dropped on the floor.
         /// </summary>
-        public void DropCarriedFlag(int droppingEntityId)
+        public void DropCarriedFlag()
         {
             EnableRigidbody();
-            _isCarried = false;
+            IsCarried = false;
             _unstuckTimer.Start();
             _carriedByTeam = Teams.Neutral;
             _flagCarrierTransform = null;
-            _lastOwnerID = droppingEntityId;
         }
 
         /// <summary>
@@ -221,9 +215,10 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         /// <param name="flagIniData">Config data for the flag.</param>
         public void SetFlagData(FlagIniData flagIniData)
         {
-            _myTeam = flagIniData.FlagTeam;
-            SetColor(_myTeam);
+            _myTeam.MyTeam = flagIniData.FlagTeam;
+            SetColor(_myTeam.MyTeam);
             _flagSpawnerTransform = flagIniData.FlagSpawnPosition;
+            _notifySpawnFlagUnstuck = flagIniData.FlagUnstuckSignal;
         }
         //TODO - upon creating of the flag:
         //TODO set the respawn position in SetFlagData
