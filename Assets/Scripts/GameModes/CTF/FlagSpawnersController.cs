@@ -11,7 +11,6 @@ namespace Assets.Scripts.GameModes.CTF
         /// <summary>
         /// Array of available neutral flag spawners.
         /// </summary>
-        [SerializeField]
         private IFlagSpawner[] _neutralFlagSpawnerModules;
         /// <summary>
         /// The time it takes to create a new flag. Counting from most recent capture of the flag.
