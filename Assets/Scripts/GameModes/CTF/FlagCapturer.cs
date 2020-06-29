@@ -19,6 +19,11 @@ namespace Assets.Scripts.GameModes.CTF
     public class FlagCapturer : MonoBehaviour, IFlagCarrier, IFlagCapturedObserver
     {
         /// <summary>
+        /// Handler for capturing the flag event. Provides the team that captured the flag and
+        /// amount of captured flags to the listener.
+        /// </summary>
+        private UnityAction<Teams, int> _flagCapturedHandler;
+        /// <summary>
         /// Called when flags have been captured by this object.
         /// Passes amount of captured flags as an argument.
         /// </summary>
@@ -46,7 +51,7 @@ namespace Assets.Scripts.GameModes.CTF
             var flagCarrierComponent = collider.gameObject.GetComponent<IFlagCarrier>();
             if (flagCarrierComponent != null)
             {
-                if (flagCarrierComponent.MyTeam == _myTeam.MyTeam && flagCarrierComponent.HasFlag)
+                 if (flagCarrierComponent.MyTeam == _myTeam.MyTeam && flagCarrierComponent.HasFlag)
                 {
                     var takenOverFlag = flagCarrierComponent.TakeOverFlag(0);
                     CaptureFlag(takenOverFlag);
@@ -68,7 +73,7 @@ namespace Assets.Scripts.GameModes.CTF
         /// <summary>
         /// Captures the flag, setting this object as it's owner and changing the flag's properties.
         /// </summary>
-        /// <param name="capturedFlag"></param>
+        /// <param name="capturedFlag">The captured flag interface.</param>
         private void CaptureFlag(IFlag capturedFlag)
         {
             capturedFlag.CaptureFlag(this);
@@ -76,6 +81,7 @@ namespace Assets.Scripts.GameModes.CTF
 
             Debug.Log($"Team {_myTeam} captured flag.");
             _capturedFlag?.Invoke(1);//For now, only one flag can be captured at any given time.
+            _flagCapturedHandler?.Invoke(this.MyTeam, 1);   //For now only one flag can be captured at any given time.
         }
 
         /// <summary>
@@ -106,8 +112,7 @@ namespace Assets.Scripts.GameModes.CTF
 
         public void RegisterObserver(UnityAction<Teams, int> handler)
         {
-            //
-            throw new NotImplementedException();
+            _flagCapturedHandler += handler;
         }
     }
 }

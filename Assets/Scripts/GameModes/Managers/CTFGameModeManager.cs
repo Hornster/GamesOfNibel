@@ -1,10 +1,14 @@
 ﻿using Assets.Scripts.Common;
 using Assets.Scripts.Common.Enums;
 using System.Collections.Generic;
+using Assets.Scripts.GameModes.CTF.Observers;
 using UnityEngine;
 
 namespace Assets.Scripts.GameModes.Managers
 {
+    /// <summary>
+    /// Manages the capture the flag game mode play.
+    /// </summary>
     public class CtfGameModeManager : MonoBehaviour
     {
         /// <summary>
@@ -26,6 +30,7 @@ namespace Assets.Scripts.GameModes.Managers
 
         private void Start()
         {
+            RegisterFlagCaptureHandler();
             _roundTimer = new Timer(_startTime, StartRound);
             _roundTimer.Start();
             _scoreCount.Add(Teams.Lily, 0);
@@ -65,15 +70,25 @@ namespace Assets.Scripts.GameModes.Managers
         /// <summary>
         /// Called when a team scored a point.
         /// </summary>
-        public void TeamScoredPoint(Teams whichTeam, int pointsAmount)
+        private void TeamScoredPoint(Teams whichTeam, int pointsAmount)
         {
             if (_scoreCount.TryGetValue(whichTeam, out var currentPoints))
             {
                 _scoreCount[whichTeam] += pointsAmount;
+                ChkVictoryCondition(whichTeam);
             }
             else
             {
                 Debug.LogError($"How on Nibel did you get here?! There's no such team as {whichTeam}!!!");
+            }
+        }
+
+        private void RegisterFlagCaptureHandler()
+        {
+            var flagCapturers = GetComponentsInChildren<IFlagCapturedObserver>();
+            foreach (var flagCapturer in flagCapturers)
+            {
+                flagCapturer.RegisterObserver(TeamScoredPoint);
             }
         }
         /// <summary>

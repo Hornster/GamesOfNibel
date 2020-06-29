@@ -8,6 +8,9 @@ using UnityEngine.Events;
 
 namespace Assets.Scripts.GameModes.CTF.Observers
 {
+    /// <summary>
+    /// Defines setting for an observed object that concerns flag capturing.
+    /// </summary>
     public interface IFlagCapturedObserver
     {
         /// <summary>

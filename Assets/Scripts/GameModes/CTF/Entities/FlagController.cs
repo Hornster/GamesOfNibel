@@ -78,7 +78,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         [SerializeField]
         private SpriteRenderer _flagSpriteRenderer;
 
-        private void Start()
+        private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
             DisableRigidbody();
