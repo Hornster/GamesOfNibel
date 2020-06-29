@@ -1,7 +1,9 @@
 ﻿
 using Assets.Scripts.Common;
+using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Spawner;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = System.Random;
 
 namespace Assets.Scripts.GameModes.CTF
@@ -12,6 +14,7 @@ namespace Assets.Scripts.GameModes.CTF
         /// Array of available neutral flag spawners.
         /// </summary>
         private IFlagSpawner[] _neutralFlagSpawnerModules;
+        
         /// <summary>
         /// The time it takes to create a new flag. Counting from most recent capture of the flag.
         /// </summary>
@@ -35,6 +38,7 @@ namespace Assets.Scripts.GameModes.CTF
         private void NeutralFlagCapturedHandler()
         {
             Debug.Log("New flag will spawn in " + _flagRespawnTime + " seconds.");
+
             _isNeutralFlagSpawned = false;
             _neutralFlagRespawnTimer.Start();
         }

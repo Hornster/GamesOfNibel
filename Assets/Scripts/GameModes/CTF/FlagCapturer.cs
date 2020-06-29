@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Assets.Scripts.Common;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.GameModes.CTF.Entities;
+using Assets.Scripts.GameModes.CTF.Observers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,13 +16,14 @@ namespace Assets.Scripts.GameModes.CTF
     /// Defines the behavior of entities that can capture a flag, like bases.
     /// </summary>
     [RequireComponent(typeof(Collider2D))]
-    public class FlagCapturer : MonoBehaviour, IFlagCarrier
+    public class FlagCapturer : MonoBehaviour, IFlagCarrier, IFlagCapturedObserver
     {
         /// <summary>
         /// Called when flags have been captured by this object.
         /// Passes amount of captured flags as an argument.
         /// </summary>
-        [SerializeField] private UnityEvent<int> _capturedFlag;
+        [SerializeField]
+        private UnityEvent<int> _capturedFlag;
         [SerializeField]
         private TeamModule _myTeam;
 
@@ -73,7 +75,7 @@ namespace Assets.Scripts.GameModes.CTF
             _capturedFlags.Enqueue(capturedFlag);
 
             Debug.Log($"Team {_myTeam} captured flag.");
-            _capturedFlag?.Invoke(1);//For now, only onne flag can be captured at any given time.
+            _capturedFlag?.Invoke(1);//For now, only one flag can be captured at any given time.
         }
 
         /// <summary>
@@ -100,6 +102,12 @@ namespace Assets.Scripts.GameModes.CTF
         public void PickedUpFlag(IFlag flag)
         {
             CaptureFlag(flag);
+        }
+
+        public void RegisterObserver(UnityAction<Teams, int> handler)
+        {
+            //
+            throw new NotImplementedException();
         }
     }
 }

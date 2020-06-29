@@ -65,7 +65,7 @@ namespace Assets.Scripts.GameModes.Managers
         /// <summary>
         /// Called when a team scored a point.
         /// </summary>
-        private void TeamScoredPoint(Teams whichTeam, int pointsAmount)
+        public void TeamScoredPoint(Teams whichTeam, int pointsAmount)
         {
             if (_scoreCount.TryGetValue(whichTeam, out var currentPoints))
             {
