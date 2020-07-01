@@ -7,6 +7,7 @@ using Assets.Scripts.Common;
 using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.GUI.Gamemodes.CTF.SingleControls;
+using Assets.Scripts.InspectorSerialization.Interfaces;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -22,17 +23,34 @@ namespace Assets.Scripts.GUI.Gamemodes.CTF
         /// The message showed to all players.
         /// </summary>
         [SerializeField]
+        private ITextControlContainer _informationMsgContainer;
         private IGuiTextControl _informationMessage;
+
         /// <summary>
         /// Score for the lily team.
         /// </summary>
-        [SerializeField] 
+        [SerializeField]
+        private ITextControlContainer _teamLilyScoreContainer;
         private IGuiTextControl _teamLilyScore;
         /// <summary>
         /// Score for the lotus team.
         /// </summary>
-        [SerializeField] 
+        [SerializeField]
+        private ITextControlContainer _teamLotusScoreContainer;
         private IGuiTextControl _teamLotusScore;
+
+        private void Start()
+        {
+            _informationMessage = _informationMsgContainer.Interface;
+            _teamLilyScore = _teamLilyScoreContainer.Interface;
+            _teamLotusScore = _teamLotusScoreContainer.Interface;
+
+            _informationMessage.HideMessage(true);
+            _teamLilyScore.ChangeColor(TeamColors.GetTeamColor(Teams.Lily));
+            _teamLotusScore.ChangeColor(TeamColors.GetTeamColor(Teams.Lotus));
+            _teamLilyScore.ShowMessage(0.ToString());//Reset the flag count.
+            _teamLotusScore.ShowMessage(0.ToString());//Reset the flag count.
+        }
         /// <summary>
         /// Changes the color of provided text.
         /// </summary>

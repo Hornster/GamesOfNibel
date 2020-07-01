@@ -331,6 +331,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &461289602 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6530322339786928291, guid: 040ea9756faad894596ea50f576fd4e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 6530322341067417149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &461289603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461289602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9bbd3fd958e354f817567c8ce7bce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _informationMsgContainer:
+    ObjectField: {fileID: 6530322341067417153}
+    ResultType: 
+  _teamLilyScoreContainer:
+    ObjectField: {fileID: 6530322341067417157}
+    ResultType: 
+  _teamLotusScoreContainer:
+    ObjectField: {fileID: 6530322341067417155}
+    ResultType: 
 --- !u!1 &468672495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,6 +1200,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameController
       objectReference: {fileID: 0}
+    - target: {fileID: 3467314889313947829, guid: ca6e68cd77c311f4e80fd63cae92d0de,
+        type: 3}
+      propertyPath: _guiController
+      value: 
+      objectReference: {fileID: 461289603}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca6e68cd77c311f4e80fd63cae92d0de, type: 3}
 --- !u!1 &3467314888961387426 stripped

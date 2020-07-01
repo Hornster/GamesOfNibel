@@ -38,14 +38,18 @@ namespace Assets.Scripts.GUI.Gamemodes.CTF.SingleControls
         /// Old value of the alpha channel of the fading text.
         /// </summary>
         private float _oldAlphaValue;
+        /// <summary>
+        /// When the text needs to be shown, is set to true. Is set to false when the text shall disappear.
+        /// </summary>
+        private bool _isActive = false;
 
         private void Awake()
         {
             _textControl = GetComponent<TMP_Text>();
             _timer = GetComponent<Timer>();
             _timer.MaxAwaitTime = _messageShowingTime;
-            _timer.RegisterTimeoutHandler(HideMessage);
-            _timer.RegisterPeriodicHandler(FadeMessage);
+
+            _oldAlphaValue = _textControl.color.a;
         }
         /// <summary>
         /// Gradually makes the message fade away.
@@ -62,14 +66,27 @@ namespace Assets.Scripts.GUI.Gamemodes.CTF.SingleControls
             _textControl.alpha = _oldAlphaValue * currentFadeFactor;
         }
         /// <summary>
+        /// Handler for hiding the message. A kind of adapter.
+        /// </summary>
+        private void HandleHideMessage()
+        {
+            HideMessage();
+        }
+        /// <summary>
         /// Hides the message control.
         /// </summary>
-        private void HideMessage()
+        /// <param name="instant">Set to true if the fading sequence shall be omitted.</param>
+        public void HideMessage(bool instant = false)
         {
-            _textControl.alpha = 0.0f; //Hide the message.
-            if (_fadingTime > 0.0f) //If fading is defined, prepare the control for it.
+            _timer.ClearTimeoutHandlers();
+            if (_fadingTime > 0.0f && instant == false) //If fading is defined, prepare the control for it.
             {
+                _timer.RegisterPeriodicHandler(FadeMessage);
                 ResetTimer(_fadingTime);
+            }
+            else
+            {
+                _textControl.alpha = 0.0f; //Hide the message.
             }
         }
         /// <summary>
@@ -90,9 +107,12 @@ namespace Assets.Scripts.GUI.Gamemodes.CTF.SingleControls
         {
             if (_messageShowingTime > 0.0f)
             {
+                _timer.ClearPeriodicHandler();
+                _timer.RegisterTimeoutHandler(HandleHideMessage);
                 ResetTimer(_messageShowingTime);
             }
-            _textControl.alpha = 1.0f;  //Show the message.
+            _textControl.alpha = _oldAlphaValue;  //Show the message.
+            _textControl.text = newValue;
         }
         /// <summary>
         /// Changes the color of the control to provided one.

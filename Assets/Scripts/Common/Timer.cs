@@ -104,6 +104,7 @@ namespace Assets.Scripts.Common
         {
             _timeRanOutHandler += timeoutHandler;
         }
+        
         /// <summary>
         /// The registered event handlers will be called every frame as long as the timer is running.
         /// </summary>
@@ -111,6 +112,21 @@ namespace Assets.Scripts.Common
         public void RegisterPeriodicHandler(UnityAction<float> periodicHandler)
         {
             _periodicCallHandler += periodicHandler;
+        }
+
+        /// <summary>
+        /// Clears all handlers connected to the timeout event.
+        /// </summary>
+        public void ClearTimeoutHandlers()
+        {
+            _timeRanOutHandler = null;
+        }
+        /// <summary>
+        /// Clears all handlers connected to the event.
+        /// </summary>
+        public void ClearPeriodicHandler()
+        {
+            _periodicCallHandler = null;
         }
     }
 }

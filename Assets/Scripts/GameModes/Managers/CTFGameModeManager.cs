@@ -2,6 +2,7 @@
 using Assets.Scripts.Common.Enums;
 using System.Collections.Generic;
 using Assets.Scripts.GameModes.CTF.Observers;
+using Assets.Scripts.GUI.Gamemodes.CTF;
 using UnityEngine;
 
 namespace Assets.Scripts.GameModes.Managers
@@ -22,6 +23,11 @@ namespace Assets.Scripts.GameModes.Managers
         /// </summary>
         [SerializeField]
         private int _victoryPointsRequired;
+        /// <summary>
+        /// Reference to the gui controller. Used to show the game state to the players.
+        /// </summary>
+        [SerializeField]
+        private CtfGuiController _guiController;
 
         private Timer _roundTimer;
         /// <summary>
@@ -42,27 +48,29 @@ namespace Assets.Scripts.GameModes.Managers
         /// <summary>
         /// Victory has been achieved - report it.
         /// </summary>
-        /// <param name="whatTeam">What team has recently stored a point?</param>
-        private void ReportVictory(Teams whatTeam)
+        /// <param name="whichTeam">What team has recently stored a point?</param>
+        private void ReportVictory(Teams whichTeam)
         {
-            Debug.Log($"Team {whatTeam} is victorious!!");
+            Debug.Log($"Team {whichTeam} is victorious!!");
+            //var victoryMsg = 
+            _guiController.PrintMessage(whichTeam, "LOLOLOLOLOLOLOLOL");
         }
         /// <summary>
         /// Checks the victory condition for N captures.
         /// </summary>
-        /// <param name="whatTeam">What team has recently stored a point?</param>
-        private void ChkVictoryCondition(Teams whatTeam)
+        /// <param name="whichTeam">What team has recently stored a point?</param>
+        private void ChkVictoryCondition(Teams whichTeam)
         {
-            if (_scoreCount.TryGetValue(whatTeam, out var currentPoints))
+            if (_scoreCount.TryGetValue(whichTeam, out var currentPoints))
             {
                 if (currentPoints >= _victoryPointsRequired)
                 {
-                    ReportVictory(whatTeam);
+                    ReportVictory(whichTeam);
                 }
             }
             else
             {
-                Debug.LogError($"How on Nibel did you get here?! There's no such team as {whatTeam}!!!");
+                Debug.LogError($"How on Nibel did you get here?! There's no such team as {whichTeam}!!!");
             }
         }
         /// <summary>
@@ -72,7 +80,10 @@ namespace Assets.Scripts.GameModes.Managers
         {
             if (_scoreCount.TryGetValue(whichTeam, out var currentPoints))
             {
-                _scoreCount[whichTeam] += pointsAmount;
+                currentPoints += pointsAmount;
+                _scoreCount[whichTeam] = currentPoints;
+
+                _guiController.UpdatePoints(whichTeam, currentPoints);
                 ChkVictoryCondition(whichTeam);
             }
             else
