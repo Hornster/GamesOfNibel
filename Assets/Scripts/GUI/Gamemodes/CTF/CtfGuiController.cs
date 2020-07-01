@@ -59,7 +59,7 @@ namespace Assets.Scripts.GUI.Gamemodes.CTF
 
         private void HideMessage()
         {
-            _informationMessage.
+            //_informationMessage.
         }
         /// <summary>
         /// Pops up the provided message.
