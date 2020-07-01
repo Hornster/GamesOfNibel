@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Assets.Scripts.Common;
 using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
+using Assets.Scripts.GUI.Gamemodes.CTF.SingleControls;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -17,50 +18,32 @@ namespace Assets.Scripts.GUI.Gamemodes.CTF
     /// </summary>
     public class CtfGuiController : MonoBehaviour, ICtfGuiInterface
     {
-        private Timer _informationTimer;
         /// <summary>
         /// The message showed to all players.
         /// </summary>
         [SerializeField]
-        private TMP_Text _informationMessage;
+        private IGuiTextControl _informationMessage;
         /// <summary>
         /// Score for the lily team.
         /// </summary>
         [SerializeField] 
-        private TMP_Text _teamLilyScore;
+        private IGuiTextControl _teamLilyScore;
         /// <summary>
         /// Score for the lotus team.
         /// </summary>
         [SerializeField] 
-        private TMP_Text _teamLotusScore;
-
-        [SerializeField] private float infoMsgShowingTime;
-        [SerializeField] private float infoMsgFadingTime;
+        private IGuiTextControl _teamLotusScore;
         /// <summary>
         /// Changes the color of provided text.
         /// </summary>
         /// <param name="whichMessage">Which control to switch color.</param>
         /// <param name="whichTeam">To what color should the control switch its color.</param>
-        private void SwitchMsgColor(TMP_Text whichMessage, Teams whichTeam)
+        private void SwitchMsgColor(IGuiTextControl whichMessage, Teams whichTeam)
         {
-            var whatColor = TeamColors.GetTeamColor(whichTeam);
-            whichMessage.color = whatColor;
+            var newColor = TeamColors.GetTeamColor(whichTeam);
+            whichMessage.ChangeColor(newColor);
         }
-
-        private void Start()
-        {
-            _informationTimer = new Timer(infoMsgShowingTime, HideMessage);
-        }
-
-        private void FixedUpdate()
-        {
-            _informationTimer.Update();
-        }
-
-        private void HideMessage()
-        {
-            //_informationMessage.
-        }
+        
         /// <summary>
         /// Pops up the provided message.
         /// </summary>
@@ -69,13 +52,26 @@ namespace Assets.Scripts.GUI.Gamemodes.CTF
         public void PrintMessage(Teams whichTeam, string message)
         {
             SwitchMsgColor(_informationMessage, whichTeam);
-            _informationTimer.Reset();
-            _informationTimer.Start();
+            _informationMessage.ShowMessage(message);
         }
-
+        /// <summary>
+        /// Updates the points of given team.
+        /// </summary>
+        /// <param name="whichTeam"></param>
+        /// <param name="value"></param>
         public void UpdatePoints(Teams whichTeam, int value)
         {
-            throw new NotImplementedException();
+            switch(whichTeam)
+            {
+                case Teams.Lotus:
+                    _teamLotusScore.ShowMessage(value.ToString());
+                    break;
+                case Teams.Lily:
+                    _teamLilyScore.ShowMessage(value.ToString());
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(whichTeam), whichTeam, "Provided team cannot have their points increased in CTF mode!");
+            }
         }
     }
 }

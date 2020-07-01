@@ -9,7 +9,8 @@ using UnityEngine.Events;
 
 namespace Assets.Scripts.GameModes.CTF.Entities
 {
-    [RequireComponent(typeof(CircleCollider2D), typeof(Rigidbody2D))]
+    [RequireComponent(typeof(CircleCollider2D), typeof(Rigidbody2D), 
+        typeof(Timer))]
     public class FlagController : MonoBehaviour, IFlag
     {
         /// <summary>
@@ -81,14 +82,15 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
+            _unstuckTimer = GetComponent<Timer>();
             DisableRigidbody();
-            _unstuckTimer = new Timer(_awaitUnstuckTime, ResetFlag);
+            _unstuckTimer.RegisterTimeoutHandler(ResetFlag);
+            _unstuckTimer.MaxAwaitTime = _awaitUnstuckTime;
         }
 
         private void FixedUpdate()
         {
             UpdatePosition();
-            _unstuckTimer.Update();
         }
 
         /// <summary>
@@ -202,7 +204,7 @@ namespace Assets.Scripts.GameModes.CTF.Entities
         {
             EnableRigidbody();
             IsCarried = false;
-            _unstuckTimer.Start();
+            _unstuckTimer.StartTimer();
             _carriedByTeam = Teams.Neutral;
             _flagCarrierTransform = null;
         }

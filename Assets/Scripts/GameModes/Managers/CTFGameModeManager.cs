@@ -9,6 +9,7 @@ namespace Assets.Scripts.GameModes.Managers
     /// <summary>
     /// Manages the capture the flag game mode play.
     /// </summary>
+    [RequireComponent(typeof(Timer))]
     public class CtfGameModeManager : MonoBehaviour
     {
         /// <summary>
@@ -32,14 +33,11 @@ namespace Assets.Scripts.GameModes.Managers
         {
             RegisterFlagCaptureHandler();
             _roundTimer = new Timer(_startTime, StartRound);
-            _roundTimer.Start();
+            _roundTimer.RegisterTimeoutHandler(StartRound);
+            _roundTimer.MaxAwaitTime = _startTime;
+            _roundTimer.StartTimer();
             _scoreCount.Add(Teams.Lily, 0);
             _scoreCount.Add(Teams.Lotus, 0);
-        }
-
-        private void FixedUpdate()
-        {
-            _roundTimer.Update();
         }
         /// <summary>
         /// Victory has been achieved - report it.
