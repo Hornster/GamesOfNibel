@@ -43,7 +43,7 @@ namespace Assets.Scripts.GameModes.CTF
         public Transform FlagPosition => _flagPosition.transform;
         public Teams MyTeam => _myTeam.MyTeam;
         public bool HasFlag { get; private set; }
-        
+
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
@@ -51,7 +51,7 @@ namespace Assets.Scripts.GameModes.CTF
             var flagCarrierComponent = collider.gameObject.GetComponent<IFlagCarrier>();
             if (flagCarrierComponent != null)
             {
-                 if (flagCarrierComponent.MyTeam == _myTeam.MyTeam && flagCarrierComponent.HasFlag)
+                if (flagCarrierComponent.MyTeam == _myTeam.MyTeam && flagCarrierComponent.HasFlag)
                 {
                     var takenOverFlag = flagCarrierComponent.TakeOverFlag(0);
                     CaptureFlag(takenOverFlag);
