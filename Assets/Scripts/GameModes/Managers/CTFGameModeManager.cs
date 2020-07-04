@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Common;
 using Assets.Scripts.Common.Enums;
 using System.Collections.Generic;
+using Assets.Scripts.Common.Localization;
 using Assets.Scripts.GameModes.CTF.Observers;
 using Assets.Scripts.GUI.Gamemodes.CTF;
 using UnityEngine;
@@ -28,6 +29,11 @@ namespace Assets.Scripts.GameModes.Managers
         /// </summary>
         [SerializeField]
         private CtfGuiController _guiController;
+        /// <summary>
+        /// Set to true as long as the match is being played. When match ending requirements are met, the match ends and
+        /// the flag is set to false/
+        /// </summary>
+        private bool _isMatchOn;
 
         private Timer _roundTimer;
         /// <summary>
@@ -38,12 +44,13 @@ namespace Assets.Scripts.GameModes.Managers
         private void Start()
         {
             RegisterFlagCaptureHandler();
-            _roundTimer = new Timer(_startTime, StartRound);
+            _roundTimer = GetComponent<Timer>();
             _roundTimer.RegisterTimeoutHandler(StartRound);
             _roundTimer.MaxAwaitTime = _startTime;
             _roundTimer.StartTimer();
             _scoreCount.Add(Teams.Lily, 0);
             _scoreCount.Add(Teams.Lotus, 0);
+            _isMatchOn = true;
         }
         /// <summary>
         /// Victory has been achieved - report it.
@@ -51,9 +58,18 @@ namespace Assets.Scripts.GameModes.Managers
         /// <param name="whichTeam">What team has recently stored a point?</param>
         private void ReportVictory(Teams whichTeam)
         {
+            _isMatchOn = false;
             Debug.Log($"Team {whichTeam} is victorious!!");
-            //var victoryMsg = 
-            _guiController.PrintMessage(whichTeam, "LOLOLOLOLOLOLOLOL");
+            var locale = LocalizationManager.GetInstance();
+            var victoryMsg = locale.CtfLocale.GetVictoryQuote(whichTeam);
+            _guiController.PrintMessage(whichTeam, victoryMsg);
+        }
+        /// <summary>
+        /// Ends the match, returns to menu.
+        /// </summary>
+        private void EndMatch()
+        {
+            //TODO
         }
         /// <summary>
         /// Checks the victory condition for N captures.
@@ -78,6 +94,11 @@ namespace Assets.Scripts.GameModes.Managers
         /// </summary>
         private void TeamScoredPoint(Teams whichTeam, int pointsAmount)
         {
+            if (_isMatchOn == false)
+            {
+                return; //Do not check for points if the match has ended already. No point in that.
+            }
+
             if (_scoreCount.TryGetValue(whichTeam, out var currentPoints))
             {
                 currentPoints += pointsAmount;

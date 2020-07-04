@@ -12,17 +12,20 @@ namespace Assets.Scripts.Common.Localization
     public class LocalizationManager
     {
         private static LocalizationManager _instance;
-        private CtfGameModeMessages CtfLocale { get; }
+        public CtfGameModeMessages CtfLocale { get; }
 
         /// <summary>
         /// Returns the instance of this singleton.
         /// </summary>
         /// <returns></returns>
-        public LocalizationManager GetInstance()
+        public static LocalizationManager GetInstance()
         {
             return _instance ?? (_instance = new LocalizationManager());
         }
         //Singleton constructor is private.
-        private LocalizationManager(){}
+        private LocalizationManager()
+        {
+            CtfLocale = new CtfGameModeMessages();
+        }
     }
 }

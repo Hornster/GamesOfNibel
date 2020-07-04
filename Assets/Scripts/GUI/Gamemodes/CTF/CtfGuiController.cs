@@ -93,5 +93,3 @@ namespace Assets.Scripts.GUI.Gamemodes.CTF
         }
     }
 }
-//TODO - Every message control should have its own controller. It should know for how long
-//TODO - the message shall be shown and in what color.
