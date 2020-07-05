@@ -47,9 +47,14 @@ public class PlayerState : MonoBehaviour
     /// If there are any restrictions towards Y velocity - this flag should be set to true.
     /// </summary>
     public bool IsFallngVelocityCapped { get; set; }
-    public Vector2 newVelocity{ get; set; }
-    public Vector2 colliderSize{ get; set; }
-    public Vector2 slopeNormalPerp{ get; set; }
+    public Vector2 NewVelocity{ get; set; }
+    public Vector2 ColliderSize{ get; set; }
+    public Vector2 SlopeNormalPerp{ get; set; }
+    /// <summary>
+    /// The normal of the slope the character is standing on, read from horizontal slope raycast check.
+    /// When no collision found - set to [0;0]
+    /// </summary>
+    public Vector2 SlopeHorizontalNormal { get; set; }
 
     public GlideStages GlideStage { get; set; }
 

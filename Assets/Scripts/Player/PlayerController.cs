@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
         InputReader.RegisterJumpHandler(Jump);
         InputReader.RegisterGlideHandler(Glide);
 
-        _playerState.colliderSize = cc.size;
+        _playerState.ColliderSize = cc.size;
 
         CalcJumpVelocity();
         CalcAirborneDeceleration();
@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
             _playerState.canJump = false;
             _playerState.isJumping = true;
 
-            _playerState.newVelocity = new Vector2(rb.velocity.x, _jumpVelocity);
+            _playerState.NewVelocity = new Vector2(rb.velocity.x, _jumpVelocity);
             rb.velocity = new Vector2(rb.velocity.x, _jumpVelocity);
         }
         else if (_playerState.IsTouchingWall)
@@ -174,31 +174,45 @@ public class PlayerController : MonoBehaviour
             currentVelocity.x = Mathf.Sign(currentVelocity.x) * movementSpeed;
         }
         //In the air
-        _playerState.newVelocity = currentVelocity;
-        rb.velocity = _playerState.newVelocity;
+        _playerState.NewVelocity = currentVelocity;
+        rb.velocity = _playerState.NewVelocity;
     }
 
     private void ApplyMovement()
     {
-        //rb.velocity = new Vector2(0.0f, 0.0f);
-        //return;
-        //TODO Do it like this - make a switch. When isGround == false - switch = false.
-        //TODO When IsDeeplyGrounded == true - switch = true. Player keeps falling UNTIL THIS SWITCH IS FREAKING TRUE.
         if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)
         {
-            var newVelocity = ChkHowCloseToGround(new Vector2(movementSpeed * _playerState.xInput, _playerState.newVelocity.y));
+            var newVelocity = ChkHowCloseToGround(new Vector2(movementSpeed * _playerState.xInput, _playerState.NewVelocity.y));
             //On flat ground
-            _playerState.newVelocity = newVelocity;
+            _playerState.NewVelocity = newVelocity;
             rb.velocity = newVelocity;
         }
         else if (_playerState.isGrounded && _playerState.isOnSlope && !_playerState.isJumping && _playerState.canWalkOnSlope)
         {
-            //On slope
+            //On walkable slope
             //-xInput since the normal is rotated counterclockwise
             if (_playerState.IsStandingOnGround)
             {
-                _playerState.newVelocity = new Vector2(movementSpeed * _playerState.slopeNormalPerp.x * -_playerState.xInput, movementSpeed * _playerState.slopeNormalPerp.y * -_playerState.xInput);
-                rb.velocity = _playerState.newVelocity;
+                _playerState.NewVelocity = new Vector2(movementSpeed * _playerState.SlopeNormalPerp.x * -_playerState.xInput, movementSpeed * _playerState.SlopeNormalPerp.y * -_playerState.xInput);
+                rb.velocity = _playerState.NewVelocity;
+            }
+        }
+        else if (_playerState.isGrounded && _playerState.isOnSlope /*&& !_playerState.isJumping*/ &&
+                 !_playerState.canWalkOnSlope)
+        {
+            if (ValueComparator.IsEqual(_playerState.xInput, 0f) == false
+            && ValueComparator.IsEqual(_playerState.SlopeHorizontalNormal.x, 0f) == false)
+            {
+                //On unwalkable slope (too steep)
+                var xInputSign = Mathf.Sign(_playerState.xInput);
+                var xSlopeDirection = Mathf.Sign(_playerState.SlopeHorizontalNormal.x);    //X part of character's velocity is directed accordingly to the slope.
+
+                if (ValueComparator.IsEqual(xInputSign, xSlopeDirection))
+                {
+                    //Player wants to move away from the slope, that is acceptable.
+                    _playerState.NewVelocity = new Vector2(rb.velocity.x + movementSpeed * _playerState.xInput, rb.velocity.y);
+                    rb.velocity = _playerState.NewVelocity;
+                }
             }
         }
         else if (!_playerState.isGrounded)

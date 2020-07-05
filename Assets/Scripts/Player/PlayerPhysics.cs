@@ -14,7 +14,6 @@ namespace Assets.Scripts.Player
     [RequireComponent(typeof(CollisionMasksManager))]
     public class PlayerPhysics : MonoBehaviour
     {
-
         [SerializeField]
         private float _verticalSlopeCheckDistance;
         [SerializeField]
@@ -61,6 +60,14 @@ namespace Assets.Scripts.Player
         [SerializeField] private CollisionMasksManager _collisionMaskManager;
         private Rigidbody2D rb;
         private PlayerState _playerState;
+        /// <summary>
+        /// Set to true when there's an unclimbable slope detected to the front of the character.
+        /// </summary>
+        private bool _unclimbableSlopeOnFront;
+        /// <summary>
+        /// Set to true when there's an unclimbable slope detected to the back of the character.
+        /// </summary>
+        private bool _unclimbableSlopeOnBack;
 
         private void Start()
         {
@@ -72,9 +79,13 @@ namespace Assets.Scripts.Player
 
         public void CheckCollisions()
         {
+            _unclimbableSlopeOnFront = false;
+            _unclimbableSlopeOnBack = false;
+
             CheckGround();
             SlopeCheck();
             WallCheck();
+            ChkEdgeCases();
         }
 
         private void CheckGround()
@@ -108,7 +119,7 @@ namespace Assets.Scripts.Player
 
         private void SlopeCheck()
         {
-            float scaledColliderSize = (_playerState.colliderSize.y * transform.localScale.y);
+            float scaledColliderSize = (_playerState.ColliderSize.y * transform.localScale.y);
             Vector2 checkPos = transform.position - new Vector3(0, scaledColliderSize / 2, 0);
 
             SlopeCheckHorizontal(checkPos);
@@ -121,21 +132,31 @@ namespace Assets.Scripts.Player
             var slopeHitFront = Physics2D.Raycast(checkPos, transform.right, _horizontalSlopeCheckDistance, _collisionMaskManager.WhatIsGround);
             var slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, _horizontalSlopeCheckDistance, _collisionMaskManager.WhatIsGround);
 
+            if (slopeHitBack)
+            {
+                _unclimbableSlopeOnBack = true;
+            }
+
             if (slopeHitFront)
             {
+                _unclimbableSlopeOnFront = true;
                 _playerState.isOnSlope = true;
                 _playerState.slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+                _playerState.SlopeHorizontalNormal = slopeHitFront.normal;
             }
             else if (slopeHitBack)
             {
                 _playerState.isOnSlope = true;
                 _playerState.slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+                _playerState.SlopeHorizontalNormal = slopeHitBack.normal;
             }
             else
             {
                 _playerState.slopeSideAngle = 0.0f;
                 _playerState.isOnSlope = false;
+                _playerState.SlopeHorizontalNormal = Vector2.zero;
             }
+
         }
         /// <summary>
         /// Checks for the slope right beneath the player.
@@ -147,7 +168,7 @@ namespace Assets.Scripts.Player
             Debug.DrawRay(checkPos, Vector2.down * _verticalSlopeCheckDistance, Color.black);
             if (hit)
             {
-                _playerState.slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+                _playerState.SlopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
 
                 _playerState.slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
@@ -158,7 +179,7 @@ namespace Assets.Scripts.Player
 
                 _playerState.slopeDownAngleOld = _playerState.slopeDownAngle;
 
-                Debug.DrawRay(hit.point, _playerState.slopeNormalPerp, Color.red);
+                Debug.DrawRay(hit.point, _playerState.SlopeNormalPerp, Color.red);
                 Debug.DrawRay(hit.point, hit.normal, Color.yellow);
             }
 
@@ -173,11 +194,11 @@ namespace Assets.Scripts.Player
             //A special case. When the player is standing on 100% horizontal ground
             //AND is standing right next to perfectly vertical wall (90° towards flat ground),
             //then the character shouldn't treat the wall as unclimbable slope (what it was doing).
-            if (ValueComparator.IsEqual(_playerState.slopeDownAngle, 0.0f) 
-                && ValueComparator.IsEqual(_playerState.slopeSideAngle, 90.0f))
-            {
-                _playerState.canWalkOnSlope = true;
-            }
+            //if (ValueComparator.IsEqual(_playerState.slopeDownAngle, 0.0f) 
+            //    && ValueComparator.IsEqual(_playerState.slopeSideAngle, 90.0f))
+            //{
+            //    _playerState.canWalkOnSlope = true;
+            //}
 
             if (_playerState.isOnSlope && ValueComparator.IsEqual(_playerState.xInput, 0.0f) && _playerState.canWalkOnSlope)
             {
@@ -212,6 +233,18 @@ namespace Assets.Scripts.Player
                 _playerState.IsWallSliding = false;
             }
         }
+        /// <summary>
+        /// Checks for these pesky edge cases that happen rarely but when they do they break the gameplay, most likely.
+        /// </summary>
+        private void ChkEdgeCases()
+        {
+            //Check if the character is hanging in between two unclimbable slopes that are too short for a wall jump.
+            if (_playerState.isGrounded && _unclimbableSlopeOnBack && _unclimbableSlopeOnFront)
+            {
+                _playerState.canJump = true;
+            }
+        }
+
 
         private void OnDrawGizmos()
         {
