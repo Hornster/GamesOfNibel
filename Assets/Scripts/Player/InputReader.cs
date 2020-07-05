@@ -169,5 +169,3 @@ namespace Assets.Scripts.Player
         #endregion EventRegistering
     }
 }
-
-//TODO: Add drop flag event detection and handling, together with registering.
