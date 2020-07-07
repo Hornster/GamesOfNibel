@@ -4343,6 +4343,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4849537263060530958, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: _minimalHoldingTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5188044400096497605, guid: 361ca711c3b0bc3418cc10627f502602,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -4477,6 +4482,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345780914977339693, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: _minimalHoldingTime
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361ca711c3b0bc3418cc10627f502602, type: 3}

@@ -15,7 +15,8 @@ namespace Assets.Scripts.Player
         //Events
         private static UnityAction _jumpHandler;
         private static UnityAction<GlideStages> _glideHandler;
-        private static UnityAction<GroundCheckType> _changeGroundCollisionMaskHandler;
+        private static UnityAction _jumpingOffPlatformsStartHandler;
+        private static UnityAction _jumpingOffPlatformsEndHandler;
         private static UnityAction _helpToggleHandler;
         private static UnityAction _gameLeaveHandler;
         /// <summary>
@@ -64,7 +65,7 @@ namespace Assets.Scripts.Player
                 if (Input.GetKeyUp(_buttonConfig.JumpButton) || InputRaw.Y >= 0.0f)
                 {
                     _isJumpOffPlatformActive = false;
-                    _changeGroundCollisionMaskHandler?.Invoke(GroundCheckType.Default);
+                    _jumpingOffPlatformsEndHandler?.Invoke();
                 }
             }
         }
@@ -78,7 +79,7 @@ namespace Assets.Scripts.Player
                 if (InputRaw.Y < 0.0f)
                 {
                     //The player wants to drop from some droppable platform.
-                    _changeGroundCollisionMaskHandler?.Invoke(GroundCheckType.JumpingOffPlatform);
+                    _jumpingOffPlatformsStartHandler?.Invoke();
                     _isJumpOffPlatformActive = true;
                 }
                 else
@@ -137,9 +138,17 @@ namespace Assets.Scripts.Player
         /// Registers handler from dropping down from one-way platform.
         /// </summary>
         /// <param name="handler"></param>
-        public static void RegisterChangeCollisionMaskHandler(UnityAction<GroundCheckType> handler)
+        public static void RegisterJumpOffPlatformStartHandler(UnityAction handler)
         {
-            _changeGroundCollisionMaskHandler += handler;
+            _jumpingOffPlatformsStartHandler += handler;
+        }
+        /// <summary>
+        /// Registers handler from dropping down from one-way platform.
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void RegisterJumpOffPlatformEndHandler(UnityAction handler)
+        {
+            _jumpingOffPlatformsEndHandler += handler;
         }
         /// <summary>
         /// Registers glide handler.
