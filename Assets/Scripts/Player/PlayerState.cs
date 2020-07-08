@@ -20,6 +20,11 @@ public class PlayerState : MonoBehaviour
     public float slopeDownAngle{ get; set; }
     public float slopeDownAngleOld{ get; set; }
     public float slopeSideAngle{ get; set; }
+    /// <summary>
+    /// The distance by which the character shall move towards the ground the next frame to
+    /// stay consistently close to the ground.
+    /// </summary>
+    public float DistanceToGround { get; set; }
     public float MaxFallingVelocityY { get; set; }
     public int facingDirection { get; set; } = 1;
     public bool isGrounded{ get; set; }

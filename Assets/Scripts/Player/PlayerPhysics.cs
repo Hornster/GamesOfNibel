@@ -28,6 +28,11 @@ namespace Assets.Scripts.Player
         /// </summary>
         [SerializeField]
         private float _maxClimbableAngle;
+        /// <summary>
+        /// Offset from the ground - minimal distance the character will try to keep from the ground.
+        /// </summary>
+        [SerializeField]
+        private float _skinWidth = 0.01f;
 
         [SerializeField] private Vector2 _closeGroundCheckSize;
 
@@ -49,7 +54,7 @@ namespace Assets.Scripts.Player
 
         
 
-        //Component referencesddd
+        //Component references
         [SerializeField]
         private PhysicsMaterial2D noFriction;
         [SerializeField]
@@ -68,6 +73,7 @@ namespace Assets.Scripts.Player
         /// </summary>
         private bool _unclimbableSlopeOnBack;
 
+
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -81,12 +87,44 @@ namespace Assets.Scripts.Player
             _unclimbableSlopeOnFront = false;
             _unclimbableSlopeOnBack = false;
 
-            CheckGround();
+            CheckGround();      //Check if the player is touching the ground or, simply, is close enough to it.
+            MoveCloserToGround();//Check distance to the ground to move the player as close to the ground as possible.
             SlopeCheck();
             WallCheck();
             ChkEdgeCases();
         }
 
+        private Vector2 GetCheckPos()
+        {
+            float scaledColliderSize = (_playerState.ColliderSize.y * transform.localScale.y);
+            return transform.position - new Vector3(0, scaledColliderSize / 2, 0);
+        }
+        /// <summary>
+        /// Moves the character closer to he ground.
+        /// </summary>
+        private void MoveCloserToGround()
+        {
+            if (_playerState.IsStandingOnGround == false || _playerState.isJumping || _playerState.canWalkOnSlope == false)
+            {
+                _playerState.DistanceToGround = 0.0f;
+                Debug.Log($"Distance to ground: {_playerState.DistanceToGround}.");
+                return; // No need to check anything if the player is NOT standing on the ground.
+                        // What would they be moved towards?
+            }
+            
+            var hit = Physics2D.Raycast(GetCheckPos(), Vector2.down, _verticalSlopeCheckDistance, _collisionMaskManager.WhatIsGround);
+            if (hit)
+            {
+                //Player is above the ground and we can move them closer towards it.
+                _playerState.DistanceToGround = hit.distance - _skinWidth;
+
+            }
+            else
+            {
+                _playerState.DistanceToGround = 0.0f;
+            }
+            Debug.Log($"Distance to ground: {_playerState.DistanceToGround}.");
+        }
         private void CheckGround()
         {
             _playerState.isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, _collisionMaskManager.WhatIsGround);
@@ -118,8 +156,7 @@ namespace Assets.Scripts.Player
 
         private void SlopeCheck()
         {
-            float scaledColliderSize = (_playerState.ColliderSize.y * transform.localScale.y);
-            Vector2 checkPos = transform.position - new Vector3(0, scaledColliderSize / 2, 0);
+            var checkPos = GetCheckPos();
 
             SlopeCheckHorizontal(checkPos);
             SlopeCheckVertical(checkPos);
@@ -256,3 +293,8 @@ namespace Assets.Scripts.Player
         
     }
 }
+
+//TODO - how to repair levitation bug, hopefully:
+//TODO: - 1. Do below steps only if the player is standing on the ground.
+//TODO: - 2. Cast a vertical ray towards the ground. Get the hit data. Of hit is null - do nothing.
+//TODO: - 3. If hit is not null, position the player as close to the ground as possible minus offset (skin).

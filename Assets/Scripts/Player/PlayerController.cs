@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private SkillsController _skillsController;
     [SerializeField] private CharacterRotator _characterRotator;
+    [SerializeField] private Transform _characterBody;
 
 
     //--Component References
@@ -178,8 +179,14 @@ public class PlayerController : MonoBehaviour
         rb.velocity = _playerState.NewVelocity;
     }
 
+    private void RepositionToGround()
+    {
+        var newPos = new Vector2(_characterBody.position.x, _characterBody.position.y - _playerState.DistanceToGround);
+        _characterBody.position = newPos;
+    }
     private void ApplyMovement()
     {
+        RepositionToGround();   //Move the player closer to the ground, if applicable.
         if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)
         {
             var newVelocity = ChkHowCloseToGround(new Vector2(movementSpeed * _playerState.xInput, _playerState.NewVelocity.y));
@@ -194,10 +201,11 @@ public class PlayerController : MonoBehaviour
             if (_playerState.IsStandingOnGround)
             {
                 _playerState.NewVelocity = new Vector2(movementSpeed * _playerState.SlopeNormalPerp.x * -_playerState.xInput, movementSpeed * _playerState.SlopeNormalPerp.y * -_playerState.xInput);
+                //_playerState.NewVelocity = new Vector2(_playerState.NewVelocity.x, _playerState.NewVelocity.y -_playerState.DistanceToGround);
                 rb.velocity = _playerState.NewVelocity;
             }
         }
-        else if (_playerState.isGrounded && _playerState.isOnSlope /*&& !_playerState.isJumping*/ &&
+        else if (_playerState.isGrounded && _playerState.isOnSlope  &&
                  !_playerState.canWalkOnSlope)
         {
             if (ValueComparator.IsEqual(_playerState.xInput, 0f) == false

@@ -974,6 +974,7 @@ MonoBehaviour:
   _timeToStopAirborne: 0.4
   _skillsController: {fileID: 6052496438944943729}
   _characterRotator: {fileID: 1044868125930535866}
+  _characterBody: {fileID: 5535999678530167676}
 --- !u!114 &5535999678530167655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -992,6 +993,7 @@ MonoBehaviour:
   groundCheckRadius: 0.45
   wallCheckDistance: 1
   _maxClimbableAngle: 100
+  _skinWidth: 0.01
   _closeGroundCheckSize: {x: 0.5, y: 0.1}
   groundCheck: {fileID: 5535999677804198595}
   _groundCloseCheck: {fileID: 8124746411708311052}
