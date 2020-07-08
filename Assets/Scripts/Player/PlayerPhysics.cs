@@ -189,6 +189,10 @@ namespace Assets.Scripts.Player
             else
             {
                 _playerState.canWalkOnSlope = true;
+                if (_playerState.IsStandingOnGround == false)
+                {
+                    _playerState.isJumping = false;
+                }
             }
 
             if (_playerState.isOnSlope && ValueComparator.IsEqual(_playerState.xInput, 0.0f) && _playerState.canWalkOnSlope)
