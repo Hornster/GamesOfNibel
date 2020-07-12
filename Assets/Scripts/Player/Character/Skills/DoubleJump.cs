@@ -32,7 +32,7 @@ namespace Assets.Scripts.Player.Character.Skills
         private void Start()
         {
             float gravity = _playerState.GravityManager.GetRefGravityValue();
-            float jumpTime = _playerState.GravityManager.GetBaseJumptTime();
+            float jumpTime = _playerState.GravityManager.GetBaseJumpTime();
             _initialVelocity = _jumpHeight / jumpTime + 0.5f * gravity * jumpTime;
         }
         /// <summary>

@@ -29,6 +29,11 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private float _maxClimbableAngle;
         /// <summary>
+        /// Values above that angle indicate that the ground stopped being a slope and began being regular wall.
+        /// </summary>
+        [SerializeField] 
+        private float _minimalWallAngle;
+        /// <summary>
         /// Offset from the ground - minimal distance the character will try to keep from the ground.
         /// </summary>
         [SerializeField]
@@ -162,7 +167,18 @@ namespace Assets.Scripts.Player
             SlopeCheckVertical(checkPos);
 
         }
-
+        /// <summary>
+        /// Returns false if the character is on a slope. True when they are on a wall.
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        private void IsOnWall(float angle)
+        {
+            if (angle >= _minimalWallAngle)
+            {
+                _playerState.isGrounded = false;
+            }
+        }
         private void SlopeCheckHorizontal(Vector2 checkPos)
         {
             var slopeHitFront = Physics2D.Raycast(checkPos, transform.right, _horizontalSlopeCheckDistance, _collisionMaskManager.WhatIsGround);
@@ -293,8 +309,3 @@ namespace Assets.Scripts.Player
         
     }
 }
-
-//TODO - how to repair levitation bug, hopefully:
-//TODO: - 1. Do below steps only if the player is standing on the ground.
-//TODO: - 2. Cast a vertical ray towards the ground. Get the hit data. Of hit is null - do nothing.
-//TODO: - 3. If hit is not null, position the player as close to the ground as possible minus offset (skin).

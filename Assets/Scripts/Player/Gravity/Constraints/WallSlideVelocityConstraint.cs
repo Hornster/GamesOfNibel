@@ -23,7 +23,8 @@ namespace Assets.Scripts.Player.Gravity.Constraints
 
         public Vector2 ChkForConstraint(Vector2 currentVelocity)
         {
-            if (_playerState.IsTouchingWall && !_playerState.isGrounded)
+            if (_playerState.IsTouchingWall ||
+                (_playerState.canWalkOnSlope == false && _playerState.isOnSlope))
             {
                 if (currentVelocity.y < _maxFallingVelocityY)
                 {   //If we are here - the velocity was greater than the constraint allows for.

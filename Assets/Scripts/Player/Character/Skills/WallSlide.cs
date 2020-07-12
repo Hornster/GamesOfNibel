@@ -28,7 +28,7 @@ namespace Assets.Scripts.Player.Character.Skills
         /// <summary>
         /// Which wall slide attributes shall be applied?
         /// </summary>
-        [SerializeField] private WallSlideType[] _wallSlideType;//TODO This is debug. Remove it later on.
+        [SerializeField] private WallSlideType[] _activeWallSlideTypes;//TODO This is debug. Remove it later on.
         /// <summary>
         /// Defines what influence types the wall slide has on the player.
         /// Check WallSlideType enum for details.
@@ -55,7 +55,11 @@ namespace Assets.Scripts.Player.Character.Skills
             switch (effect)
             {
                 case WallSlideType.GravityDecrease:
-                    _playerState.GravityManager.AddOneFrameGravityModifier(_gravityScale, this.GetHashCode());
+                    if (_rb.velocity.y <= 0)
+                    {
+                        //Apply the effect only when the player is descending
+                        _playerState.GravityManager.AddOneFrameGravityModifier(_gravityScale, this.GetHashCode());  
+                    }
                     break;
             }
         }
@@ -64,7 +68,7 @@ namespace Assets.Scripts.Player.Character.Skills
         /// </summary>
         private void CreateMaxVelocityConstraint()
         {
-            foreach (var wallSlideType in _wallSlideTypes)
+            foreach (var wallSlideType in _activeWallSlideTypes)
             {
                 if (wallSlideType == WallSlideType.MaxVelocityCap)
                 {
@@ -76,7 +80,7 @@ namespace Assets.Scripts.Player.Character.Skills
         private void Start()
         {
             _wallSlideTypes = Enum.GetValues(typeof(WallSlideType)).Cast<WallSlideType>();
-            foreach (var type in _wallSlideType)
+            foreach (var type in _activeWallSlideTypes)
             {
                 AddType(type);
             }
@@ -86,18 +90,17 @@ namespace Assets.Scripts.Player.Character.Skills
 
         public void UseSkill()
         {
-            if (_playerState.IsWallSliding == false)
+            if (_playerState.IsWallSliding || (_playerState.isOnSlope && _playerState.canWalkOnSlope == false))
             {
-                return;
-            }
-
-            foreach (var type in _wallSlideTypes)
-            {
-                if (((int)type & _influenceTypes) != 0)
+                foreach (var type in _activeWallSlideTypes)
                 {
-                    ApplyEffect(type);
+                    if (((int)type & _influenceTypes) != 0)
+                    {
+                        ApplyEffect(type);
+                    }
                 }
             }
+            
         }
     }
 }

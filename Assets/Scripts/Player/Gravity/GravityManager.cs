@@ -134,7 +134,7 @@ namespace Assets.Scripts.Player.Gravity
         /// Returns the time it takes the character to reach higher point in regular jump, in seconds.
         /// </summary>
         /// <returns></returns>
-        public float GetBaseJumptTime()
+        public float GetBaseJumpTime()
         {
             return _baseJumpTime;
         }
