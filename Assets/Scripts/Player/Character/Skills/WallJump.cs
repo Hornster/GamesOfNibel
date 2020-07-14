@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Common.Helpers;
+﻿using Assets.Scripts.Common;
+using Assets.Scripts.Common.Helpers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,10 +34,10 @@ namespace Assets.Scripts.Player.Character.Skills
         {
             float angleInRadians = Mathf.Deg2Rad * _jumpAngle;
             float angleSin = Mathf.Sin(angleInRadians);
-            float jumpTime = _playerState.GravityManager.GetBaseJumpTime();
+            float jumpTime = GlobalGravityManager.GetBaseJumpTime();
             _wallJumpDirection = new Vector2(Mathf.Cos(angleInRadians), angleSin);
             _wallJumpVelocity = _jumpHeight / jumpTime;
-            _wallJumpVelocity += 0.5f* _playerState.GravityManager.GetRefGravityValue() * jumpTime;
+            _wallJumpVelocity += 0.5f* GlobalGravityManager.GetBaseGravityValue() * jumpTime;
             _wallJumpVelocity /= _wallJumpDirection.y;
         }
         private void Start()

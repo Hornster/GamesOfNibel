@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Common;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.Player.Character.Skills
@@ -31,8 +32,8 @@ namespace Assets.Scripts.Player.Character.Skills
 
         private void Start()
         {
-            float gravity = _playerState.GravityManager.GetRefGravityValue();
-            float jumpTime = _playerState.GravityManager.GetBaseJumpTime();
+            float gravity = GlobalGravityManager.GetBaseGravityValue();
+            float jumpTime = GlobalGravityManager.GetBaseJumpTime();
             _initialVelocity = _jumpHeight / jumpTime + 0.5f * gravity * jumpTime;
         }
         /// <summary>

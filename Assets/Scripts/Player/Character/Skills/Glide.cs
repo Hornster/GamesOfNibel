@@ -56,7 +56,7 @@ namespace Assets.Scripts.Player.Character.Skills
         private void Start()
         {
             var maxVelocityConstraint = new GlideVelocityConstraint(_playerState, _maxFallingSpeed);
-            _playerState.GravityManager.ApplyMaxVelocityConstraint(maxVelocityConstraint);
+            _playerState.LocalGravityManager.ApplyMaxVelocityConstraint(maxVelocityConstraint);
         }
 
         private void FixedUpdate()

@@ -1,22 +1,22 @@
 ﻿using System.Collections.Specialized;
 using System.Collections.Generic;
+using Assets.Scripts.Common;
 using Assets.Scripts.Player.Gravity.Constraints;
 using UnityEngine;
 
 namespace Assets.Scripts.Player.Gravity
 {
-    public class GravityManager :MonoBehaviour
+    public class LocalGravityManager :MonoBehaviour
     {
         /// <summary>
         /// How long will it take to reach max height jumping off the ground vertically.
         /// </summary>
-        [SerializeField]
-        private float _baseJumpTime = 1.5f;
+        
+        private float _baseJumpTime;
         /// <summary>
         /// How high can the character jump from the ground vertically.
         /// </summary>
-        [SerializeField]
-        private float _baseJumpHeight = 3.0f;
+        private float _baseJumpHeight;
         /// <summary>
         /// What default gravity value affects the target?
         /// </summary>
@@ -42,10 +42,16 @@ namespace Assets.Scripts.Player.Gravity
 
         private void Awake()
         {
-            _referenceGravityValue = (2 * _baseJumpHeight) / (_baseJumpTime * _baseJumpTime);
-            _currentGravityValue = _referenceGravityValue;
             Debug.Log("Resetting the " + _influencedRigidbody + " to 0.");
             _influencedRigidbody.gravityScale = 0.0f;
+        }
+
+        private void Start()
+        {
+            _baseJumpHeight = GlobalGravityManager.GetBaseJumpHeight();
+            _baseJumpTime = GlobalGravityManager.GetBaseJumpTime();
+            _referenceGravityValue = GlobalGravityManager.GetBaseGravityValue();
+            _currentGravityValue = _referenceGravityValue;
         }
         /// <summary>
         /// Recalculates the current gravity multiplier basing of stored multipliers.
@@ -140,3 +146,7 @@ namespace Assets.Scripts.Player.Gravity
         }
     }
 }
+
+//TODO Divide the gravity manager to global and local ones. Global would provide info to all local ones and
+//TODO all other components that required the info. Local ones would be responsible for applying
+//TODO constraints to gameobjects these belong to.

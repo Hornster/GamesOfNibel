@@ -58,7 +58,7 @@ namespace Assets.Scripts.Player.Character.Skills
                     if (_rb.velocity.y <= 0)
                     {
                         //Apply the effect only when the player is descending
-                        _playerState.GravityManager.AddOneFrameGravityModifier(_gravityScale, this.GetHashCode());  
+                        _playerState.LocalGravityManager.AddOneFrameGravityModifier(_gravityScale, this.GetHashCode());  
                     }
                     break;
             }
@@ -73,7 +73,7 @@ namespace Assets.Scripts.Player.Character.Skills
                 if (wallSlideType == WallSlideType.MaxVelocityCap)
                 {
                     var velocityConstraint = new WallSlideVelocityConstraint(_playerState, _maxVelocityCap);
-                    _playerState.GravityManager.ApplyMaxVelocityConstraint(velocityConstraint);
+                    _playerState.LocalGravityManager.ApplyMaxVelocityConstraint(velocityConstraint);
                 }
             }
         }

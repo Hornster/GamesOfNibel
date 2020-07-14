@@ -7,7 +7,7 @@ using UnityEngine.Events;
 /// <summary>
 /// Contains all necessary info about the player's physics and movement.
 /// </summary>
-[RequireComponent(typeof(GravityManager))]
+[RequireComponent(typeof(LocalGravityManager))]
 public class PlayerState : MonoBehaviour
 {
     //TODO Debug, remove later
@@ -63,11 +63,11 @@ public class PlayerState : MonoBehaviour
 
     public GlideStages GlideStage { get; set; }
 
-    public GravityManager GravityManager { get; private set; }
+    public LocalGravityManager LocalGravityManager { get; private set; }
 
     private void Awake()
     {
-        GravityManager = GetComponent<GravityManager>();
+        LocalGravityManager = GetComponent<LocalGravityManager>();
     }
     /// <summary>
     /// Should be called whenever the character stops touching the ground.

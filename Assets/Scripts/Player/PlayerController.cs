@@ -3,12 +3,13 @@ using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
 using Assets.Scripts.Player.Character;
 using Assets.Scripts.Player.Character.Skills;
+using Assets.Scripts.Player.Effects;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerPhysics), typeof(PlayerState))]
 public class PlayerController : MonoBehaviour
 {
-
+    [Header("Config values")]
     //--Private Variables Exposed to the Inspector.
     [SerializeField]
     private float movementSpeed;
@@ -27,8 +28,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [SerializeField] private float _timeToStopAirborne = 0.7f;
 
+    [Header("Required references")]
+
     [SerializeField] private SkillsController _skillsController;
     [SerializeField] private CharacterRotator _characterRotator;
+    [SerializeField] private PlayerEffectManager _effectManager;
     [SerializeField] private Transform _characterBody;
 
 
@@ -51,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
     private void CalcJumpVelocity()
     {
-        _jumpVelocity += _playerState.GravityManager.GetBaseJumpStartVelocity();
+        _jumpVelocity += _playerState.LocalGravityManager.GetBaseJumpStartVelocity();
     }
 
     private void CalcAirborneDeceleration()
@@ -205,7 +209,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = _playerState.NewVelocity;
             }
         }
-        else if (_playerState.isGrounded && _playerState.isOnSlope  &&
+        else if (_playerState.isGrounded && _playerState.isOnSlope &&
                  !_playerState.canWalkOnSlope)
         {
             if (ValueComparator.IsEqual(_playerState.xInput, 0f) == false
@@ -229,5 +233,7 @@ public class PlayerController : MonoBehaviour
         }
 
         ChkWallSlide();
+
+        _effectManager.ApplyEffects(rb);
     }
 }
