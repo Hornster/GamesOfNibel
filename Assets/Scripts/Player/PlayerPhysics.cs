@@ -167,18 +167,6 @@ namespace Assets.Scripts.Player
             SlopeCheckVertical(checkPos);
 
         }
-        /// <summary>
-        /// Returns false if the character is on a slope. True when they are on a wall.
-        /// </summary>
-        /// <param name="angle"></param>
-        /// <returns></returns>
-        private void IsOnWall(float angle)
-        {
-            if (angle >= _minimalWallAngle)
-            {
-                _playerState.isGrounded = false;
-            }
-        }
         private void SlopeCheckHorizontal(Vector2 checkPos)
         {
             var slopeHitFront = Physics2D.Raycast(checkPos, transform.right, _horizontalSlopeCheckDistance, _collisionMaskManager.WhatIsGround);

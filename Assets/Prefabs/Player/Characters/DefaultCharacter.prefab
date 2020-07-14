@@ -996,7 +996,7 @@ MonoBehaviour:
   wallCheckDistance: 1
   _maxClimbableAngle: 100
   _minimalWallAngle: 0
-  _skinWidth: 0.01
+  _skinWidth: 0.1
   _closeGroundCheckSize: {x: 0.5, y: 0.1}
   groundCheck: {fileID: 5535999677804198595}
   _groundCloseCheck: {fileID: 8124746411708311052}
@@ -1043,8 +1043,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c368945a3ebb6694c87dfc4a6b552565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseJumpTime: 0.5
-  _baseJumpHeight: 4
   _influencedRigidbody: {fileID: 5535999678530167650}
 --- !u!114 &1044868125930535866
 MonoBehaviour:
@@ -1144,7 +1142,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
