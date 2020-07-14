@@ -27,6 +27,7 @@ namespace Assets.Scripts.Player.Effects
 
         private void Start()
         {
+            _direction = _direction.normalized;
             var refGravity = GlobalGravityManager.GetBaseGravityValue();
             var jumpTime = Mathf.Sqrt((2*_maxJumpHeight)/refGravity);
             _launchVelocity = _maxJumpHeight/jumpTime + 0.5f * GlobalGravityManager.GetBaseGravityValue() * jumpTime;
@@ -43,7 +44,7 @@ namespace Assets.Scripts.Player.Effects
         public void OnDrawGizmos()
         {
             var position = transform.position;
-            Debug.DrawRay(position, _direction * _maxJumpHeight);
+            Debug.DrawRay(position, _direction.normalized * _maxJumpHeight);
         }
     }
 }
