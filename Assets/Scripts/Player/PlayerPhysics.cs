@@ -230,7 +230,7 @@ namespace Assets.Scripts.Player
             else
             {
                 _playerState.canWalkOnSlope = true;
-                if (_playerState.IsStandingOnGround == false)
+                if (_playerState.IsStandingOnGround == false && rb.velocity.y <= 0.0f)
                 {
                     _playerState.isJumping = false;
                 }

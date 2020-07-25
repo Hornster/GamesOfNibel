@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common.Enums;
 using UnityEngine;
 using UnityEngine.Events;
+using Input = UnityEngine.Input;
 using Vector2 = System.Numerics.Vector2;
 
 namespace Assets.Scripts.Player
@@ -14,6 +16,7 @@ namespace Assets.Scripts.Player
     {
         //Events
         private static UnityAction _jumpHandler;
+        private static UnityAction _prematureJumpEndHandler;
         private static UnityAction<GlideStages> _glideHandler;
         private static UnityAction _jumpingOffPlatformsStartHandler;
         private static UnityAction _jumpingOffPlatformsEndHandler;
@@ -87,6 +90,10 @@ namespace Assets.Scripts.Player
                     _jumpHandler?.Invoke();
                 }
             }
+            else if (Input.GetKeyUp(_buttonConfig.JumpButton))
+            {
+                _prematureJumpEndHandler?.Invoke();
+            }
 
             if (Input.GetKeyDown(_buttonConfig.GlideButton))
             {
@@ -125,6 +132,14 @@ namespace Assets.Scripts.Player
         public static void RegisterJumpHandler(UnityAction handler)
         {
             _jumpHandler += handler;
+        }
+        /// <summary>
+        /// Allows for registration of prematurely jump ending by releasing the jump key too fast.
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void RegisterPrematureJumpEndHandler(UnityAction handler)
+        {
+            _prematureJumpEndHandler += handler;
         }
         /// <summary>
         /// Registers glide handler.

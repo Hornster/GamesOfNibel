@@ -27,6 +27,11 @@ public class PlayerController : MonoBehaviour
     /// their max horizontal (running) velocity.
     /// </summary>
     [SerializeField] private float _timeToStopAirborne = 0.7f;
+    /// <summary>
+    /// Value by which the current vertical velocity will be multiplied when the player jumps and
+    /// prematurely releases the jump button.
+    /// </summary>
+    [SerializeField] private float _prematureJumpEndScale = 0.5f;
 
     [Header("Required references")]
 
@@ -71,6 +76,7 @@ public class PlayerController : MonoBehaviour
         _playerState = GetComponent<PlayerState>();
 
         InputReader.RegisterJumpHandler(Jump);
+        InputReader.RegisterPrematureJumpEndHandler(PrematurelyEndJump);
         InputReader.RegisterGlideHandler(Glide);
 
         _playerState.ColliderSize = cc.size;
@@ -110,7 +116,16 @@ public class PlayerController : MonoBehaviour
             _characterRotator.TurnCharacterHorizontally();
         }
     }
-
+    /// <summary>
+    /// Called when the player releases the space quickly.
+    /// </summary>
+    private void PrematurelyEndJump()
+    {
+        if (_playerState.isJumping)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * _prematureJumpEndScale);
+        }
+    }
     private void Jump()
     {
         if (_playerState.canJump)

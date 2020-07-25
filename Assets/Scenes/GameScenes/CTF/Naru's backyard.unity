@@ -2253,6 +2253,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GravityManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3080127029852737656, guid: fb2d33e31bd1e5046be2f638bef7e872,
+        type: 3}
+      propertyPath: _baseJumpHeight
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3080127029852737657, guid: fb2d33e31bd1e5046be2f638bef7e872,
         type: 3}
       propertyPath: m_LocalPosition.x
