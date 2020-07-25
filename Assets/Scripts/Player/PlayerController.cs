@@ -9,32 +9,16 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerPhysics), typeof(PlayerState))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("Config values")]
-    //--Private Variables Exposed to the Inspector.
-    [SerializeField]
-    private float movementSpeed;
-    /// <summary>
-    /// Used when player is forcing the character to change horizontal direction while airborne.
-    /// </summary>
-    [SerializeField] private float _airborneAccelerationFactor = 0.4f;
-    /// <summary>
-    /// Used when there's no input from the player to force the character to gradually decrease
-    /// their horizontal velocity while airborne.Scales the influence of velocity on deceleration.
-    /// </summary>
-    [SerializeField] private float _airborneDecelVelInfluenceFactor = 0.4f;
-    /// <summary>
-    /// The time it takes for the character to stop horizontally while airborne from
-    /// their max horizontal (running) velocity.
-    /// </summary>
-    [SerializeField] private float _timeToStopAirborne = 0.7f;
     /// <summary>
     /// Value by which the current vertical velocity will be multiplied when the player jumps and
     /// prematurely releases the jump button.
     /// </summary>
+    [Header("Config values")]
+    //--Private Variables Exposed to the Inspector.
     [SerializeField] private float _prematureJumpEndScale = 0.5f;
 
-    [Header("Required references")]
-
+    [Header("Required references")] 
+    [SerializeField] private PlayerMovementApplier _movementApplier;
     [SerializeField] private SkillsController _skillsController;
     [SerializeField] private CharacterRotator _characterRotator;
     [SerializeField] private PlayerEffectManager _effectManager;
@@ -52,21 +36,12 @@ public class PlayerController : MonoBehaviour
     /// The velocity calculated from gravity, jump time and jump force.
     /// </summary>
     private float _jumpVelocity;
-    /// <summary>
-    /// Defined by division of movementSpeed/_timeToStopAirborne.
-    /// Used on character while they are airborne to make the gradually halt on the X axis.
-    /// </summary>
-    private float _airborneDeceleration;
 
     private void CalcJumpVelocity()
     {
         _jumpVelocity += _playerState.LocalGravityManager.GetBaseJumpStartVelocity();
     }
 
-    private void CalcAirborneDeceleration()
-    {
-        _airborneDeceleration = movementSpeed / _timeToStopAirborne;
-    }
 
     private void Start()
     {
@@ -82,7 +57,6 @@ public class PlayerController : MonoBehaviour
         _playerState.ColliderSize = cc.size;
 
         CalcJumpVelocity();
-        CalcAirborneDeceleration();
     }
 
     private void Update()
@@ -151,52 +125,7 @@ public class PlayerController : MonoBehaviour
         _playerState.GlideStage = glideStage;
         _skillsController.UseSkill(SkillType.Glide);
     }
-    /// <summary>
-    /// Check if the character's really close to ground.
-    /// If yes - reset the Y velocity.
-    /// </summary>
-    /// <param name="velocity">Current velocity of the player.</param>
-    private Vector2 ChkHowCloseToGround(Vector2 velocity)
-    {
-        if (_playerState.IsStandingOnGround)
-        {
-            velocity.y = 0.0f;
-        }
-
-        return velocity;
-    }
-
-    private void CorrectXVelocityWhileAirborne()
-    {
-        var currentVelocity = rb.velocity;
-        if (ValueComparator.IsEqual(_playerState.xInput, 0.0f))
-        {
-            float absVel = Mathf.Abs(currentVelocity.x);
-            float velSign = Mathf.Sign(currentVelocity.x);
-
-            absVel -= _airborneDeceleration * Time.deltaTime + absVel * _airborneDecelVelInfluenceFactor;
-
-            if (absVel < 0.0f)
-            {
-                absVel = 0.0f;
-            }
-
-            currentVelocity.x = absVel * velSign;
-        }
-        else
-        {
-            currentVelocity.x += movementSpeed * _playerState.xInput * _airborneAccelerationFactor;
-        }
-
-
-        if (Mathf.Abs(currentVelocity.x) > movementSpeed)
-        {
-            currentVelocity.x = Mathf.Sign(currentVelocity.x) * movementSpeed;
-        }
-        //In the air
-        _playerState.NewVelocity = currentVelocity;
-        rb.velocity = _playerState.NewVelocity;
-    }
+    
 
     private void RepositionToGround()
     {
@@ -206,46 +135,8 @@ public class PlayerController : MonoBehaviour
     private void ApplyMovement()
     {
         RepositionToGround();   //Move the player closer to the ground, if applicable.
-        if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)
-        {
-            var newVelocity = ChkHowCloseToGround(new Vector2(movementSpeed * _playerState.xInput, _playerState.NewVelocity.y));
-            //On flat ground
-            _playerState.NewVelocity = newVelocity;
-            rb.velocity = newVelocity;
-        }
-        else if (_playerState.isGrounded && _playerState.isOnSlope && !_playerState.isJumping && _playerState.canWalkOnSlope)
-        {
-            //On walkable slope
-            //-xInput since the normal is rotated counterclockwise
-            if (_playerState.IsStandingOnGround)
-            {
-                _playerState.NewVelocity = new Vector2(movementSpeed * _playerState.SlopeNormalPerp.x * -_playerState.xInput, movementSpeed * _playerState.SlopeNormalPerp.y * -_playerState.xInput);
-                //_playerState.NewVelocity = new Vector2(_playerState.NewVelocity.x, _playerState.NewVelocity.y -_playerState.DistanceToGround);
-                rb.velocity = _playerState.NewVelocity;
-            }
-        }
-        else if (_playerState.isGrounded && _playerState.isOnSlope &&
-                 !_playerState.canWalkOnSlope)
-        {
-            if (ValueComparator.IsEqual(_playerState.xInput, 0f) == false
-            && ValueComparator.IsEqual(_playerState.SlopeHorizontalNormal.x, 0f) == false)
-            {
-                //On unwalkable slope (too steep)
-                var xInputSign = Mathf.Sign(_playerState.xInput);
-                var xSlopeDirection = Mathf.Sign(_playerState.SlopeHorizontalNormal.x);    //X part of character's velocity is directed accordingly to the slope.
-
-                if (ValueComparator.IsEqual(xInputSign, xSlopeDirection))
-                {
-                    //Player wants to move away from the slope, that is acceptable.
-                    _playerState.NewVelocity = new Vector2(rb.velocity.x + movementSpeed * _playerState.xInput, rb.velocity.y);
-                    rb.velocity = _playerState.NewVelocity;
-                }
-            }
-        }
-        else if (!_playerState.isGrounded)
-        {
-            CorrectXVelocityWhileAirborne();
-        }
+        
+        _movementApplier.ApplyMovement(Time.deltaTime);
 
         ChkWallSlide();
 
