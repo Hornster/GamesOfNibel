@@ -1607,27 +1607,36 @@ PrefabInstance:
     - target: {fileID: 5069618047901706736, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 0
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 5069618047901706736, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5069618047901706736, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5069618047901706736, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5069618047901706736, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069618047901706736, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
+        type: 3}
+      propertyPath: m_text
+      value: '(H)elp
+
+        GamesOfNibel V0.1. 1
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 5069618048077136067, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
