@@ -349,7 +349,7 @@ MonoBehaviour:
   _dropFromPlatformColMask:
     serializedVersion: 2
     m_Bits: 256
-  _minimalHoldingTime: 0.5
+  _minimalHoldingTime: 0.3
   _influencedObject: {fileID: 5535999678530167677}
 --- !u!1 &2956517970021060706
 GameObject:
@@ -858,7 +858,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5535999678530167677}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -25.5, y: 20, z: 0}
+  m_LocalPosition: {x: -37, y: 181.3, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children:
   - {fileID: 1595115733855640394}
@@ -1096,10 +1096,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 20
   _accelerationTime: 0.2
-  _runningTime: 0
-  _timeToStopAirborne: 0.4
-  _airborneAccelerationFactor: 0.15
-  _airborneDecelVelInfluenceFactor: 0
+  _accelerationTimeAirborne: 0.2
+  _decelerationTimeAirborne: 0.2
   _playerState: {fileID: 5535999678530167654}
   rb: {fileID: 5535999678530167650}
 --- !u!1 &5535999678685711688

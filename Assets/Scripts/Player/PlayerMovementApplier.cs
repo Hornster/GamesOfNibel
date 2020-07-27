@@ -19,23 +19,14 @@ namespace Assets.Scripts.Player
         private float _movementSpeed;
         [SerializeField] private float _accelerationTime = 0.5f;
         /// <summary>
-        /// The time which the player was running for.
+        /// How long should it take for the player in the air to fully accelerate? In seconds.
         /// </summary>
-        [SerializeField] private float _runningTime = 0f;
+        [SerializeField] private float _accelerationTimeAirborne = 0.4f;
         /// <summary>
         /// The time it takes for the character to stop horizontally while airborne from
         /// their max horizontal (running) velocity.
         /// </summary>
-        [SerializeField] private float _timeToStopAirborne = 0.7f;
-        /// <summary>
-        /// Used when player is forcing the character to change horizontal direction while airborne.
-        /// </summary>
-        [SerializeField] private float _airborneAccelerationFactor = 0.4f;
-        /// <summary>
-        /// Used when there's no input from the player to force the character to gradually decrease
-        /// their horizontal velocity while airborne.Scales the influence of velocity on deceleration.
-        /// </summary>
-        [SerializeField] private float _airborneDecelVelInfluenceFactor = 0.4f;
+        [SerializeField] private float _decelerationTimeAirborne = 0.7f;
         /// <summary>
         /// The state of the player.
         /// </summary>
@@ -50,19 +41,29 @@ namespace Assets.Scripts.Player
         /// </summary>
         private int _oldMovementDirection;
         /// <summary>
-        /// Defined by division of _movementSpeed/_timeToStopAirborne.
+        /// Defined by division of _movementSpeed/_decelerationTimeAirborne.
         /// Used on character while they are airborne to make the gradually halt on the X axis.
         /// </summary>
         private float _airborneDeceleration;
+        /// <summary>
+        /// Defined by division of _movementSpeed/_accelerationTimeAirborne.
+        /// Used on character while they are airborne to make the gradually halt on the X axis.
+        /// </summary>
+        private float _airborneAcceleration;
+        /// <summary>
+        /// The time which the player was running for.
+        /// </summary>
+        private float _runningTime = 0f;
 
         private void Start()
         {
             _oldMovementDirection = _playerState.facingDirection;
-            CalcAirborneDeceleration();
+            CalcAirborneVelChangeValues();
         }
-        private void CalcAirborneDeceleration()
+        private void CalcAirborneVelChangeValues()
         {
-            _airborneDeceleration = _movementSpeed / _timeToStopAirborne;
+            _airborneDeceleration = _movementSpeed / _decelerationTimeAirborne;
+            _airborneAcceleration = _movementSpeed / _accelerationTimeAirborne;
         }
         /// <summary>
         /// Resets the ground acceleration time measurement.
@@ -77,7 +78,24 @@ namespace Assets.Scripts.Player
         /// </summary>
         private float AccelerateOnGround()
         {
-            return Mathf.Lerp(0.0f, _movementSpeed, _runningTime/_accelerationTime);
+            _runningTime = _runningTime * _accelerationTime + Time.deltaTime;
+            return Mathf.Lerp(0.0f, _movementSpeed, _runningTime / _accelerationTime);
+        }
+        /// <summary>
+        /// Returns the current player running velocity accordingly to the acceleration time.
+        /// </summary>
+        private float DecelerateAirborne()
+        {
+            _runningTime = _runningTime * _decelerationTimeAirborne - Time.deltaTime;
+            return Mathf.Lerp(0.0f, _movementSpeed, _runningTime / _decelerationTimeAirborne);
+        }
+        /// <summary>
+        /// Returns the current player running velocity accordingly to the acceleration time.
+        /// </summary>
+        private float AccelerateAirborne()
+        {
+            _runningTime = _runningTime * _accelerationTimeAirborne + Time.deltaTime;
+            return Mathf.Lerp(0.0f, _movementSpeed, _runningTime / _accelerationTimeAirborne);
         }
         /// <summary>
         /// Updates the ground acceleration.
@@ -106,7 +124,88 @@ namespace Assets.Scripts.Player
 
             return velocity;
         }
-        private void CorrectXVelocityWhileAirborne()
+
+        public void ApplyMovementPrototype(float lastFrameTime)
+        {
+            _runningTime = Mathf.Abs(rb.velocity.x / _movementSpeed);
+
+            if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)
+            {
+                float horizontalVelocity = AccelerateOnGround();
+                var newVelocity = ChkHowCloseToGround(new Vector2(horizontalVelocity * _playerState.xInput, _playerState.NewVelocity.y));
+                //On flat ground
+                _playerState.NewVelocity = newVelocity;
+                rb.velocity = newVelocity;
+            }
+            else if (_playerState.isGrounded && _playerState.isOnSlope && !_playerState.isJumping && _playerState.canWalkOnSlope)
+            {
+                //On walkable slope
+                //-xInput since the normal is rotated counterclockwise
+                if (_playerState.IsStandingOnGround)
+                {
+                    float horizontalVelocity = AccelerateOnGround();
+                    _playerState.NewVelocity = new Vector2(horizontalVelocity * _playerState.SlopeNormalPerp.x * -_playerState.xInput, _movementSpeed * _playerState.SlopeNormalPerp.y * -_playerState.xInput);
+                    //_playerState.NewVelocity = new Vector2(_playerState.NewVelocity.x, _playerState.NewVelocity.y -_playerState.DistanceToGround);
+                    rb.velocity = _playerState.NewVelocity;
+                }
+            }
+            else if (_playerState.isGrounded && _playerState.isOnSlope &&
+                     !_playerState.canWalkOnSlope)
+            {
+                if (ValueComparator.IsEqual(_playerState.xInput, 0f) == false
+                && ValueComparator.IsEqual(_playerState.SlopeHorizontalNormal.x, 0f) == false)
+                {
+                    //On unwalkable slope (too steep)
+                    var xInputSign = Mathf.Sign(_playerState.xInput);
+                    var xSlopeDirection = Mathf.Sign(_playerState.SlopeHorizontalNormal.x);    //X part of character's velocity is directed accordingly to the slope.
+
+                    if (ValueComparator.IsEqual(xInputSign, xSlopeDirection))
+                    {
+                        float horizontalVelocity = AccelerateOnGround();
+                        //Player wants to move away from the slope, that is acceptable.
+                        _playerState.NewVelocity = new Vector2(rb.velocity.x + horizontalVelocity * _playerState.xInput, rb.velocity.y);
+                        rb.velocity = _playerState.NewVelocity;
+                    }
+                }
+            }
+            else if (!_playerState.isGrounded)
+            {
+                CorrectXVelocityWhileAirbornePrototype(lastFrameTime);
+            }
+        }
+        /// <summary>
+        /// Influences horizontal velocity of the player when they are in the air.
+        /// </summary>
+        /// <param name="lastFrameTime"></param>
+        private void CorrectXVelocityWhileAirbornePrototype(float lastFrameTime)
+        {
+            var currentVelocity = rb.velocity;
+            var xInputSign = Mathf.Sign(_playerState.xInput);
+            var velocitySign = Mathf.Sign(currentVelocity.x);
+            
+            if (ValueComparator.IsEqual(_playerState.xInput, 0.0f) ||
+                (ValueComparator.IsEqual(xInputSign, velocitySign) == false && 
+                 ValueComparator.IsEqual(currentVelocity.x, 0.0f) == false))
+            {
+                float velSign = Mathf.Sign(currentVelocity.x);
+                currentVelocity.x = DecelerateAirborne() * velSign;
+            }
+            else
+            {
+                float newVelocityHorizontal = AccelerateAirborne();
+                currentVelocity.x = newVelocityHorizontal * _playerState.xInput;
+            }
+
+
+            if (Mathf.Abs(currentVelocity.x) > _movementSpeed)
+            {
+                currentVelocity.x = Mathf.Sign(currentVelocity.x) * _movementSpeed;
+            }
+            //In the air
+            _playerState.NewVelocity = currentVelocity;
+            rb.velocity = _playerState.NewVelocity;
+        }
+        private void CorrectXVelocityWhileAirborne(float lastFrameTime)
         {
             var currentVelocity = rb.velocity;
             if (ValueComparator.IsEqual(_playerState.xInput, 0.0f))
@@ -114,7 +213,7 @@ namespace Assets.Scripts.Player
                 float absVel = Mathf.Abs(currentVelocity.x);
                 float velSign = Mathf.Sign(currentVelocity.x);
 
-                absVel -= _airborneDeceleration * Time.deltaTime + absVel * _airborneDecelVelInfluenceFactor;
+                absVel -= _airborneDeceleration * lastFrameTime;
 
                 if (absVel < 0.0f)
                 {
@@ -125,7 +224,7 @@ namespace Assets.Scripts.Player
             }
             else
             {
-                currentVelocity.x += _movementSpeed * _playerState.xInput * _airborneAccelerationFactor;
+                currentVelocity.x += _movementSpeed * _playerState.xInput * _airborneAcceleration * lastFrameTime;
             }
 
 
@@ -186,7 +285,7 @@ namespace Assets.Scripts.Player
             }
             else if (!_playerState.isGrounded)
             {
-                CorrectXVelocityWhileAirborne();
+                CorrectXVelocityWhileAirborne(lastFrameTime);
             }
         }
 

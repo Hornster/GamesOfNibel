@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
     {
         RepositionToGround();   //Move the player closer to the ground, if applicable.
         
-        _movementApplier.ApplyMovement(Time.deltaTime);
+        _movementApplier.ApplyMovementPrototype(Time.deltaTime);
 
         ChkWallSlide();
 
