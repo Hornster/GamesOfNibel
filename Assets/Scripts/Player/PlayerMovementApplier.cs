@@ -66,50 +66,30 @@ namespace Assets.Scripts.Player
             _airborneAcceleration = _movementSpeed / _accelerationTimeAirborne;
         }
         /// <summary>
-        /// Resets the ground acceleration time measurement.
-        /// </summary>
-        private void ResetGroundAcceleration()
-        {
-            _oldMovementDirection = _playerState.facingDirection;
-            _runningTime = 0.0f;
-        }
-        /// <summary>
         /// Returns the current player running velocity accordingly to the acceleration time.
         /// </summary>
-        private float AccelerateOnGround()
+        private float AccelerateOnGround(float lastFrameTime)
         {
-            _runningTime = _runningTime * _accelerationTime + Time.deltaTime;
+            _runningTime = _runningTime * _accelerationTime + lastFrameTime;
             return Mathf.Lerp(0.0f, _movementSpeed, _runningTime / _accelerationTime);
         }
         /// <summary>
         /// Returns the current player running velocity accordingly to the acceleration time.
         /// </summary>
-        private float DecelerateAirborne()
+        private float DecelerateAirborne(float lastFrameTime)
         {
-            _runningTime = _runningTime * _decelerationTimeAirborne - Time.deltaTime;
+            _runningTime = _runningTime * _decelerationTimeAirborne - lastFrameTime;
             return Mathf.Lerp(0.0f, _movementSpeed, _runningTime / _decelerationTimeAirborne);
         }
         /// <summary>
         /// Returns the current player running velocity accordingly to the acceleration time.
         /// </summary>
-        private float AccelerateAirborne()
+        private float AccelerateAirborne(float lastFrameTime)
         {
-            _runningTime = _runningTime * _accelerationTimeAirborne + Time.deltaTime;
+            _runningTime = _runningTime * _accelerationTimeAirborne + lastFrameTime;
             return Mathf.Lerp(0.0f, _movementSpeed, _runningTime / _accelerationTimeAirborne);
         }
-        /// <summary>
-        /// Updates the ground acceleration.
-        /// </summary>
-        /// <param name="lastFrameTime">Time it took to complete last frame. Will be added to the acceleration time.</param>
-        private void UpdateGroundAccelerationTime(float lastFrameTime)
-        {
-            if (_playerState.facingDirection != _oldMovementDirection || ValueComparator.IsEqual(_playerState.xInput, 0.0f))
-            {
-                ResetGroundAcceleration();
-            }
-
-            _runningTime += lastFrameTime;
-        }
+       
         /// <summary>
         /// Check if the character's really close to ground.
         /// If yes - reset the Y velocity.
@@ -125,74 +105,26 @@ namespace Assets.Scripts.Player
             return velocity;
         }
 
-        public void ApplyMovementPrototype(float lastFrameTime)
-        {
-            _runningTime = Mathf.Abs(rb.velocity.x / _movementSpeed);
-
-            if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)
-            {
-                float horizontalVelocity = AccelerateOnGround();
-                var newVelocity = ChkHowCloseToGround(new Vector2(horizontalVelocity * _playerState.xInput, _playerState.NewVelocity.y));
-                //On flat ground
-                _playerState.NewVelocity = newVelocity;
-                rb.velocity = newVelocity;
-            }
-            else if (_playerState.isGrounded && _playerState.isOnSlope && !_playerState.isJumping && _playerState.canWalkOnSlope)
-            {
-                //On walkable slope
-                //-xInput since the normal is rotated counterclockwise
-                if (_playerState.IsStandingOnGround)
-                {
-                    float horizontalVelocity = AccelerateOnGround();
-                    _playerState.NewVelocity = new Vector2(horizontalVelocity * _playerState.SlopeNormalPerp.x * -_playerState.xInput, _movementSpeed * _playerState.SlopeNormalPerp.y * -_playerState.xInput);
-                    //_playerState.NewVelocity = new Vector2(_playerState.NewVelocity.x, _playerState.NewVelocity.y -_playerState.DistanceToGround);
-                    rb.velocity = _playerState.NewVelocity;
-                }
-            }
-            else if (_playerState.isGrounded && _playerState.isOnSlope &&
-                     !_playerState.canWalkOnSlope)
-            {
-                if (ValueComparator.IsEqual(_playerState.xInput, 0f) == false
-                && ValueComparator.IsEqual(_playerState.SlopeHorizontalNormal.x, 0f) == false)
-                {
-                    //On unwalkable slope (too steep)
-                    var xInputSign = Mathf.Sign(_playerState.xInput);
-                    var xSlopeDirection = Mathf.Sign(_playerState.SlopeHorizontalNormal.x);    //X part of character's velocity is directed accordingly to the slope.
-
-                    if (ValueComparator.IsEqual(xInputSign, xSlopeDirection))
-                    {
-                        float horizontalVelocity = AccelerateOnGround();
-                        //Player wants to move away from the slope, that is acceptable.
-                        _playerState.NewVelocity = new Vector2(rb.velocity.x + horizontalVelocity * _playerState.xInput, rb.velocity.y);
-                        rb.velocity = _playerState.NewVelocity;
-                    }
-                }
-            }
-            else if (!_playerState.isGrounded)
-            {
-                CorrectXVelocityWhileAirbornePrototype(lastFrameTime);
-            }
-        }
         /// <summary>
         /// Influences horizontal velocity of the player when they are in the air.
         /// </summary>
         /// <param name="lastFrameTime"></param>
-        private void CorrectXVelocityWhileAirbornePrototype(float lastFrameTime)
+        private void CorrectXVelocityWhileAirborne(float lastFrameTime)
         {
             var currentVelocity = rb.velocity;
             var xInputSign = Mathf.Sign(_playerState.xInput);
             var velocitySign = Mathf.Sign(currentVelocity.x);
-            
+
             if (ValueComparator.IsEqual(_playerState.xInput, 0.0f) ||
-                (ValueComparator.IsEqual(xInputSign, velocitySign) == false && 
+                (ValueComparator.IsEqual(xInputSign, velocitySign) == false &&
                  ValueComparator.IsEqual(currentVelocity.x, 0.0f) == false))
             {
                 float velSign = Mathf.Sign(currentVelocity.x);
-                currentVelocity.x = DecelerateAirborne() * velSign;
+                currentVelocity.x = DecelerateAirborne(lastFrameTime) * velSign;
             }
             else
             {
-                float newVelocityHorizontal = AccelerateAirborne();
+                float newVelocityHorizontal = AccelerateAirborne(lastFrameTime);
                 currentVelocity.x = newVelocityHorizontal * _playerState.xInput;
             }
 
@@ -205,48 +137,13 @@ namespace Assets.Scripts.Player
             _playerState.NewVelocity = currentVelocity;
             rb.velocity = _playerState.NewVelocity;
         }
-        private void CorrectXVelocityWhileAirborne(float lastFrameTime)
-        {
-            var currentVelocity = rb.velocity;
-            if (ValueComparator.IsEqual(_playerState.xInput, 0.0f))
-            {
-                float absVel = Mathf.Abs(currentVelocity.x);
-                float velSign = Mathf.Sign(currentVelocity.x);
-
-                absVel -= _airborneDeceleration * lastFrameTime;
-
-                if (absVel < 0.0f)
-                {
-                    absVel = 0.0f;
-                }
-
-                currentVelocity.x = absVel * velSign;
-            }
-            else
-            {
-                currentVelocity.x += _movementSpeed * _playerState.xInput * _airborneAcceleration * lastFrameTime;
-            }
-
-
-            if (Mathf.Abs(currentVelocity.x) > _movementSpeed)
-            {
-                currentVelocity.x = Mathf.Sign(currentVelocity.x) * _movementSpeed;
-            }
-            //In the air
-            _playerState.NewVelocity = currentVelocity;
-            rb.velocity = _playerState.NewVelocity;
-        }
-        /// <summary>
-        /// Applies movement to the player.
-        /// </summary>
-        /// <param name="lastFrameTime">Time of the last frame.</param>
         public void ApplyMovement(float lastFrameTime)
         {
-            UpdateGroundAccelerationTime(lastFrameTime);
+            _runningTime = Mathf.Abs(rb.velocity.x / _movementSpeed);
 
             if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)
             {
-                float horizontalVelocity = AccelerateOnGround();
+                float horizontalVelocity = AccelerateOnGround(lastFrameTime);
                 var newVelocity = ChkHowCloseToGround(new Vector2(horizontalVelocity * _playerState.xInput, _playerState.NewVelocity.y));
                 //On flat ground
                 _playerState.NewVelocity = newVelocity;
@@ -258,9 +155,8 @@ namespace Assets.Scripts.Player
                 //-xInput since the normal is rotated counterclockwise
                 if (_playerState.IsStandingOnGround)
                 {
-                    float horizontalVelocity = AccelerateOnGround();
+                    float horizontalVelocity = AccelerateOnGround(lastFrameTime);
                     _playerState.NewVelocity = new Vector2(horizontalVelocity * _playerState.SlopeNormalPerp.x * -_playerState.xInput, _movementSpeed * _playerState.SlopeNormalPerp.y * -_playerState.xInput);
-                    //_playerState.NewVelocity = new Vector2(_playerState.NewVelocity.x, _playerState.NewVelocity.y -_playerState.DistanceToGround);
                     rb.velocity = _playerState.NewVelocity;
                 }
             }
@@ -276,7 +172,7 @@ namespace Assets.Scripts.Player
 
                     if (ValueComparator.IsEqual(xInputSign, xSlopeDirection))
                     {
-                        float horizontalVelocity = AccelerateOnGround();
+                        float horizontalVelocity = AccelerateOnGround(lastFrameTime);
                         //Player wants to move away from the slope, that is acceptable.
                         _playerState.NewVelocity = new Vector2(rb.velocity.x + horizontalVelocity * _playerState.xInput, rb.velocity.y);
                         rb.velocity = _playerState.NewVelocity;
@@ -288,6 +184,5 @@ namespace Assets.Scripts.Player
                 CorrectXVelocityWhileAirborne(lastFrameTime);
             }
         }
-
     }
 }
