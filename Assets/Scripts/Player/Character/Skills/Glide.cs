@@ -93,6 +93,7 @@ namespace Assets.Scripts.Player.Character.Skills
                     //be stopped until the player let's go the glide button
                     //and presses it again.
                     case GlideStages.GlideBegin:
+                    case GlideStages.GlideKeep:
                         _playerState.IsGliding = true;
                         break;
                     case GlideStages.GlideStop:
