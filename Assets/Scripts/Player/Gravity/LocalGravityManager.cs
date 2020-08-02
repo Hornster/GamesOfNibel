@@ -146,7 +146,3 @@ namespace Assets.Scripts.Player.Gravity
         }
     }
 }
-
-//TODO Divide the gravity manager to global and local ones. Global would provide info to all local ones and
-//TODO all other components that required the info. Local ones would be responsible for applying
-//TODO constraints to gameobjects these belong to.

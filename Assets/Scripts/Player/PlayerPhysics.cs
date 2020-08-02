@@ -31,7 +31,7 @@ namespace Assets.Scripts.Player
         /// <summary>
         /// Values above that angle indicate that the ground stopped being a slope and began being regular wall.
         /// </summary>
-        [SerializeField] 
+        [SerializeField]
         private float _minimalWallAngle;
         /// <summary>
         /// Offset from the ground - minimal distance the character will try to keep from the ground.
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Player
         /// </summary>
         [SerializeField] private Transform wallCheck;
 
-        
+
 
         //Component references
         [SerializeField]
@@ -85,7 +85,7 @@ namespace Assets.Scripts.Player
             _playerState = GetComponent<PlayerState>();
         }
 
-        
+
 
         public void CheckCollisions()
         {
@@ -116,7 +116,7 @@ namespace Assets.Scripts.Player
                 return; // No need to check anything if the player is NOT standing on the ground.
                         // What would they be moved towards?
             }
-            
+
             var hit = Physics2D.Raycast(GetCheckPos(), Vector2.down, _verticalSlopeCheckDistance, _collisionMaskManager.WhatIsGround);
             if (hit)
             {
@@ -157,6 +157,8 @@ namespace Assets.Scripts.Player
             {
                 _playerState.canJump = false;
             }
+            Debug.Log($"is grounded/standing on ground?: {_playerState.isGrounded}, {_playerState.IsStandingOnGround}");
+
         }
 
         private void SlopeCheck()
@@ -221,6 +223,7 @@ namespace Assets.Scripts.Player
 
                 Debug.DrawRay(hit.point, _playerState.SlopeNormalPerp, Color.red);
                 Debug.DrawRay(hit.point, hit.normal, Color.yellow);
+                Debug.Log("is on slope.");
             }
 
             if (_playerState.slopeDownAngle > maxSlopeAngle || _playerState.slopeSideAngle > maxSlopeAngle)
@@ -289,11 +292,11 @@ namespace Assets.Scripts.Player
 
             var wallLineDest = new Vector3(wallCheck.position.x + transform.right.x * wallCheckDistance, wallCheck.position.y, wallCheck.position.z);
             Gizmos.DrawLine(wallCheck.position, wallLineDest);
-            
+
             Vector2 checkPos = transform.position;
             var slopeCheckDest = checkPos + (Vector2)transform.right * _horizontalSlopeCheckDistance;
             Gizmos.DrawLine(checkPos, slopeCheckDest);
         }
-        
+
     }
 }
