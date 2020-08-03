@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour
         {
             _playerState.canJump = false;
             _playerState.isJumping = true;
+            _playerState.CharacterStoppedTouchingTheGround();
 
             _playerState.NewVelocity = new Vector2(rb.velocity.x, _jumpVelocity);
             rb.velocity = new Vector2(rb.velocity.x, _jumpVelocity);
@@ -141,5 +142,7 @@ public class PlayerController : MonoBehaviour
         ChkWallSlide();
 
         _effectManager.ApplyEffects(rb);
+
+        Debug.Log($"Velocity: {_playerState.NewVelocity.magnitude}");
     }
 }

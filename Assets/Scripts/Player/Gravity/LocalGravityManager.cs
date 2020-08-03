@@ -42,7 +42,6 @@ namespace Assets.Scripts.Player.Gravity
 
         private void Awake()
         {
-            Debug.Log("Resetting the " + _influencedRigidbody + " to 0.");
             _influencedRigidbody.gravityScale = 0.0f;
         }
 

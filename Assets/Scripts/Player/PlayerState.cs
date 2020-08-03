@@ -77,7 +77,6 @@ public class PlayerState : MonoBehaviour
         isGrounded = false;
         IsStandingOnGround = false;
     }
-
     /// <summary>
     /// Checks if one-use skills can be reset. If yes - calls resetting method.
     /// </summary>

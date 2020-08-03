@@ -60,6 +60,11 @@ namespace Assets.Scripts.Player
             _oldMovementDirection = _playerState.facingDirection;
             CalcAirborneVelChangeValues();
         }
+
+        private void UpdateTimer(float lastFrameTIme)
+        {
+
+        }
         private void CalcAirborneVelChangeValues()
         {
             _airborneDeceleration = _movementSpeed / _decelerationTimeAirborne;
@@ -111,6 +116,10 @@ namespace Assets.Scripts.Player
         /// <param name="lastFrameTime"></param>
         private void CorrectXVelocityWhileAirborne(float lastFrameTime)
         {
+            //This is a special case and requires recalculation of the running time.
+            //We care only about the horizontal velocity here.
+            _runningTime = Mathf.Abs(rb.velocity.x / _movementSpeed);
+
             var currentVelocity = rb.velocity;
             var xInputSign = Mathf.Sign(_playerState.xInput);
             var velocitySign = Mathf.Sign(currentVelocity.x);
@@ -139,7 +148,7 @@ namespace Assets.Scripts.Player
         }
         public void ApplyMovement(float lastFrameTime)
         {
-            _runningTime = Mathf.Abs(rb.velocity.x / _movementSpeed);
+            _runningTime = Mathf.Abs(rb.velocity.magnitude / _movementSpeed);
 
             if (_playerState.isGrounded && !_playerState.isOnSlope && !_playerState.isJumping)
             {
@@ -155,8 +164,8 @@ namespace Assets.Scripts.Player
                 //-xInput since the normal is rotated counterclockwise
                 if (_playerState.IsStandingOnGround)
                 {
-                    float horizontalVelocity = AccelerateOnGround(lastFrameTime);
-                    _playerState.NewVelocity = new Vector2(horizontalVelocity * _playerState.SlopeNormalPerp.x * -_playerState.xInput, _movementSpeed * _playerState.SlopeNormalPerp.y * -_playerState.xInput);
+                    float velocity = AccelerateOnGround(lastFrameTime);
+                    _playerState.NewVelocity = new Vector2(velocity * _playerState.SlopeNormalPerp.x * -_playerState.xInput, velocity * _playerState.SlopeNormalPerp.y * -_playerState.xInput);
                     rb.velocity = _playerState.NewVelocity;
                 }
             }
@@ -186,3 +195,11 @@ namespace Assets.Scripts.Player
         }
     }
 }
+
+//TODO: Wychodzimy z założenia że domyślnie każda czynność (akceleracja, deceleracja) zabiera 1 sekundę.
+//TODO: Jeżeli chcemy, by zabierała inną ilość czasu, to skalujemy przez dzielnik. Dzielniki < 1 przyspieszają, > 1 zwalniają wykonanie czynności.
+//TODO: 1. Update timer if necessary.
+//TODO: 2. Reset timer if needed.
+//TODO: 3. Check what condition suits. Are we accelerating? Decelerating? Call proper method.
+//TODO: 4. Scale measured time using the divisor provided in the inspector (unity) and apply to Lerp.
+//TODO: 5. Assign new velocity value.

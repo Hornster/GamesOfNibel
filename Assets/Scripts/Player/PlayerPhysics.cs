@@ -38,6 +38,16 @@ namespace Assets.Scripts.Player
         /// </summary>
         [SerializeField]
         private float _skinWidth = 0.01f;
+        /// <summary>
+        /// How close the character has to be to the ground to be considered standing on it.
+        /// </summary>
+        [SerializeField] private float _closeToGroundThreshold = 0.1f;
+        /// <summary>
+        /// If the player is phasing through some half-solid objects, like a platform they can jump off,
+        /// this determines how high should they be pushed up when the ground detection ray triggers inside of the
+        /// platform.
+        /// </summary>
+        [SerializeField] private float _safeGuardOffset = 0.4f;
 
         [SerializeField] private Vector2 _closeGroundCheckSize;
 
@@ -46,11 +56,6 @@ namespace Assets.Scripts.Player
         /// </summary>
         [SerializeField]
         private Transform groundCheck;
-        /// <summary>
-        /// Used to test how close to the ground the character is. If they are close enough,
-        /// the Y velocity shall be set to 0.
-        /// </summary>
-        [SerializeField] private Transform _groundCloseCheck;
         /// <summary>
         /// Start position for additional ray that checks if the character touches a long enough part of wall for
         /// climbing/wall jumping.
@@ -93,7 +98,7 @@ namespace Assets.Scripts.Player
             _unclimbableSlopeOnBack = false;
 
             CheckGround();      //Check if the player is touching the ground or, simply, is close enough to it.
-            MoveCloserToGround();//Check distance to the ground to move the player as close to the ground as possible.
+            //MoveCloserToGround();//Check distance to the ground to move the player as close to the ground as possible.
             SlopeCheck();
             WallCheck();
             ChkEdgeCases();
@@ -109,41 +114,62 @@ namespace Assets.Scripts.Player
         /// </summary>
         private void MoveCloserToGround()
         {
-            if (_playerState.IsStandingOnGround == false || _playerState.isJumping || _playerState.canWalkOnSlope == false)
-            {
-                _playerState.DistanceToGround = 0.0f;
-                Debug.Log($"Distance to ground: {_playerState.DistanceToGround}.");
-                return; // No need to check anything if the player is NOT standing on the ground.
-                        // What would they be moved towards?
-            }
-
-            var hit = Physics2D.Raycast(GetCheckPos(), Vector2.down, _verticalSlopeCheckDistance, _collisionMaskManager.WhatIsGround);
-            if (hit)
-            {
-                //Player is above the ground and we can move them closer towards it.
-                _playerState.DistanceToGround = hit.distance - _skinWidth;
-
-            }
-            else
-            {
-                _playerState.DistanceToGround = 0.0f;
-            }
-            Debug.Log($"Distance to ground: {_playerState.DistanceToGround}.");
-        }
-        private void CheckGround()
-        {
-            _playerState.isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, _collisionMaskManager.WhatIsGround);
-            bool isCloseToGround = Physics2D.OverlapBox(_groundCloseCheck.position, _closeGroundCheckSize, 0.0f, _collisionMaskManager.WhatIsGround);
+            var checkPos = GetCheckPos();
+            var groundHit = Physics2D.Raycast(checkPos, Vector2.down, groundCheckRadius, _collisionMaskManager.WhatIsGround);
 
             if (_playerState.isGrounded == false)
             {
                 _playerState.CharacterStoppedTouchingTheGround();
             }
 
-            if (isCloseToGround)
+            if (groundHit)
             {
-                _playerState.IsStandingOnGround = true;
+                _playerState.isGrounded = true;
+                //if (ValueComparator.IsEqual(groundHit.distance, 0.0f))
+                //{
+                //    _playerState.DistanceToGround = _safeGuardOffset;
+                //}
+                if (groundHit.distance <= _closeToGroundThreshold)
+                {
+                    _playerState.IsStandingOnGround = true;
+                }
             }
+            else
+            {
+                _playerState.isGrounded = false;
+                _playerState.DistanceToGround = 0.0f;
+            }
+
+            if (_playerState.IsStandingOnGround == false || _playerState.isJumping || _playerState.canWalkOnSlope == false)
+            {
+                _playerState.DistanceToGround = 0.0f;
+                return; // No need to check anything if the player is NOT standing on the ground.
+                        // What would they be moved towards?
+            }
+
+            //Player is above the ground and we can move them closer towards it.
+            _playerState.DistanceToGround = groundHit.distance - _skinWidth;
+
+            
+            checkPos.x += 0.01f;    //soft padding that the ray can be visible among other rays
+            Debug.DrawRay(checkPos, Vector2.down*groundCheckRadius, Color.blue);
+        }
+        private void CheckGround()
+        {
+            //_playerState.isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, _collisionMaskManager.WhatIsGround);
+            //bool isCloseToGround = Physics2D.OverlapBox(_groundCloseCheck.position, _closeGroundCheckSize, 0.0f, _collisionMaskManager.WhatIsGround);
+
+            
+            if (_playerState.isGrounded == false)
+            {
+                _playerState.CharacterStoppedTouchingTheGround();
+            }
+
+            //if (isCloseToGround)
+            //{
+            //    _playerState.IsStandingOnGround = true;
+            //}
+            MoveCloserToGround();//Check distance to the ground to move the player as close to the ground as possible.
 
             if (rb.velocity.y <= 0.0f)
             {
@@ -157,7 +183,6 @@ namespace Assets.Scripts.Player
             {
                 _playerState.canJump = false;
             }
-            Debug.Log($"is grounded/standing on ground?: {_playerState.isGrounded}, {_playerState.IsStandingOnGround}");
 
         }
 
@@ -223,7 +248,6 @@ namespace Assets.Scripts.Player
 
                 Debug.DrawRay(hit.point, _playerState.SlopeNormalPerp, Color.red);
                 Debug.DrawRay(hit.point, hit.normal, Color.yellow);
-                Debug.Log("is on slope.");
             }
 
             if (_playerState.slopeDownAngle > maxSlopeAngle || _playerState.slopeSideAngle > maxSlopeAngle)
@@ -287,8 +311,9 @@ namespace Assets.Scripts.Player
 
         private void OnDrawGizmos()
         {
+            Gizmos.color = Color.white;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-            Gizmos.DrawWireCube((Vector2)_groundCloseCheck.position, _closeGroundCheckSize);
+            //Gizmos.DrawWireCube((Vector2)_groundCloseCheck.position, _closeGroundCheckSize);
 
             var wallLineDest = new Vector3(wallCheck.position.x + transform.right.x * wallCheckDistance, wallCheck.position.y, wallCheck.position.z);
             Gizmos.DrawLine(wallCheck.position, wallLineDest);
@@ -296,7 +321,11 @@ namespace Assets.Scripts.Player
             Vector2 checkPos = transform.position;
             var slopeCheckDest = checkPos + (Vector2)transform.right * _horizontalSlopeCheckDistance;
             Gizmos.DrawLine(checkPos, slopeCheckDest);
+
         }
 
     }
 }
+//TODO: Add 2 more rays to bottom and one more to wall detection.
+//TODO: Each ray would have it's own game object. These would be in hierarchy as childs of a controller
+//TODO:The controller would seek out the rays with GetComponentsInChildren
