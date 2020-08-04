@@ -4,6 +4,7 @@ using Assets.Scripts.Player;
 using Assets.Scripts.Player.Character;
 using Assets.Scripts.Player.Character.Skills;
 using Assets.Scripts.Player.Effects;
+using Assets.Scripts.Player.Physics;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerPhysics), typeof(PlayerState))]

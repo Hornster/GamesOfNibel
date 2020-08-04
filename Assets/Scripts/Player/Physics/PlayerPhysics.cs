@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Helpers;
+﻿using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player.Character;
-using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Player
+namespace Assets.Scripts.Player.Physics
 {
     public class PlayerPhysics : MonoBehaviour
     {
+        [Header("Config values")]
         [SerializeField]
         private float _verticalSlopeCheckDistance;
         [SerializeField]
@@ -42,18 +36,13 @@ namespace Assets.Scripts.Player
         /// How close the character has to be to the ground to be considered standing on it.
         /// </summary>
         [SerializeField] private float _closeToGroundThreshold = 0.1f;
-        /// <summary>
-        /// If the player is phasing through some half-solid objects, like a platform they can jump off,
-        /// this determines how high should they be pushed up when the ground detection ray triggers inside of the
-        /// platform.
-        /// </summary>
-        [SerializeField] private float _safeGuardOffset = 0.4f;
 
         [SerializeField] private Vector2 _closeGroundCheckSize;
 
         /// <summary>
         /// Defines where will the collision and slope checking rays be coming from.
         /// </summary>
+        [Header("Required references")]
         [SerializeField]
         private Transform groundCheck;
         /// <summary>
@@ -72,6 +61,8 @@ namespace Assets.Scripts.Player
 
         [SerializeField] private CharacterRotator _characterRotator;
         [SerializeField] private CollisionMasksManager _collisionMaskManager;
+        [SerializeField] private RaycastController _groundRaysController;
+        [SerializeField] private RaycastController _wallRaysController;
         private Rigidbody2D rb;
         private PlayerState _playerState;
         /// <summary>
@@ -115,7 +106,7 @@ namespace Assets.Scripts.Player
         private void MoveCloserToGround()
         {
             var checkPos = GetCheckPos();
-            var groundHit = Physics2D.Raycast(checkPos, Vector2.down, groundCheckRadius, _collisionMaskManager.WhatIsGround);
+            var groundHit = _groundRaysController.CastAllRays(Vector2.down, _collisionMaskManager.WhatIsGround);//Physics2D.Raycast(checkPos, Vector2.down, groundCheckRadius, _collisionMaskManager.WhatIsGround);
 
             if (_playerState.isGrounded == false)
             {
@@ -329,3 +320,5 @@ namespace Assets.Scripts.Player
 //TODO: Add 2 more rays to bottom and one more to wall detection.
 //TODO: Each ray would have it's own game object. These would be in hierarchy as childs of a controller
 //TODO:The controller would seek out the rays with GetComponentsInChildren
+//TODO: Wall jump can be done basing on the timer as well. Game remembers that the character was holding the wall
+//TODO: and measures time, for example allowing the player to jump up to 0.2 seconds after letting go the wall.
