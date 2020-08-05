@@ -37,6 +37,11 @@ public class PlayerState : MonoBehaviour
     public bool canJump{ get; set; }
     public bool isOnSlope{ get; set; }
     public bool isJumping{ get; set; }
+    /// <summary>
+    /// Used to lift the player off the ground. Initial jump state, where the player is jumping
+    /// but the collision with the ground may still be present.
+    /// </summary>
+    public bool IsBeginningJump { get; set; }
     public bool canWalkOnSlope{ get; set; }
     /// <summary>
     /// Holds a climbable wall.
@@ -87,6 +92,15 @@ public class PlayerState : MonoBehaviour
             ResetOneUseSkills();
         }
         
+    }
+    /// <summary>
+    /// Called when the player jumps from the walkable ground.
+    /// </summary>
+    public void PlayerJumps()
+    {
+        canJump = false;
+        isJumping = true;
+        IsBeginningJump = true;
     }
     /// <summary>
     /// Resets all basic movement one-time skills.

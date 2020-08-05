@@ -124,10 +124,11 @@ namespace Assets.Scripts.Player.Physics
                 {
                     _playerState.IsStandingOnGround = true;
                 }
+                
             }
             else
             {
-                _playerState.isGrounded = false;
+                _playerState.CharacterStoppedTouchingTheGround();
                 _playerState.DistanceToGround = 0.0f;
             }
 
@@ -151,16 +152,24 @@ namespace Assets.Scripts.Player.Physics
             //bool isCloseToGround = Physics2D.OverlapBox(_groundCloseCheck.position, _closeGroundCheckSize, 0.0f, _collisionMaskManager.WhatIsGround);
 
             
-            if (_playerState.isGrounded == false)
-            {
-                _playerState.CharacterStoppedTouchingTheGround();
-            }
+            //if (_playerState.isGrounded == false)
+            //{
+            //    _playerState.CharacterStoppedTouchingTheGround();
+            //}
 
             //if (isCloseToGround)
             //{
             //    _playerState.IsStandingOnGround = true;
             //}
             MoveCloserToGround();//Check distance to the ground to move the player as close to the ground as possible.
+            if (_playerState.isGrounded == false)
+            {
+                //As soon as we let go the ground, we need to be prepared for touching it.
+                //Otherwise, jumping on slope under high angle while running towards that slope
+                //would end up in us slide upwards up to the moment when this flag changes back to false.
+                //Which by default happens upon velocity.y reaching 0 from positive value.
+                _playerState.IsBeginningJump = false;
+            }
 
             if (rb.velocity.y <= 0.0f)
             {
@@ -248,7 +257,8 @@ namespace Assets.Scripts.Player.Physics
             else
             {
                 _playerState.canWalkOnSlope = true;
-                if (_playerState.IsStandingOnGround == false && rb.velocity.y <= 0.0f)
+                if (_playerState.IsStandingOnGround == false && rb.velocity.y <= 0.0f
+                || _playerState.IsStandingOnGround && _playerState.IsBeginningJump == false)
                 {
                     _playerState.isJumping = false;
                 }

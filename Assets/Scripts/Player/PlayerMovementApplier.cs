@@ -158,7 +158,7 @@ namespace Assets.Scripts.Player
                 _playerState.NewVelocity = newVelocity;
                 rb.velocity = newVelocity;
             }
-            else if (_playerState.isGrounded && _playerState.isOnSlope && !_playerState.isJumping && _playerState.canWalkOnSlope)
+            else if (_playerState.isGrounded && _playerState.isOnSlope && !_playerState.IsBeginningJump && _playerState.canWalkOnSlope)
             {
                 //On walkable slope
                 //-xInput since the normal is rotated counterclockwise
