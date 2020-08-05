@@ -142,7 +142,5 @@ public class PlayerController : MonoBehaviour
         ChkWallSlide();
 
         _effectManager.ApplyEffects(rb);
-
-        Debug.Log($"Velocity: {_playerState.NewVelocity.magnitude}");
     }
 }
