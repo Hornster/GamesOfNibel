@@ -110,25 +110,31 @@ namespace Assets.Scripts.Player.Physics
 
             if (_playerState.isGrounded == false)
             {
-                _playerState.CharacterStoppedTouchingTheGround();
+                _playerState.CharacterStoppedTouchingGround();
             }
 
             if (groundHit)
             {
                 _playerState.isGrounded = true;
-                //if (ValueComparator.IsEqual(groundHit.distance, 0.0f))
-                //{
-                //    _playerState.DistanceToGround = _safeGuardOffset;
-                //}
+                
                 if (groundHit.distance <= _closeToGroundThreshold)
                 {
-                    _playerState.IsStandingOnGround = true;
+                    _playerState.CharacterFirmlyTouchedGround();
                 }
-                
+
+                var whatIsPlatformLayer = MathOperations.ConvertLayerMaskValueToIndex(_collisionMaskManager.WhatIsPlatform);
+                if (_playerState.IsPhasingThroughPlatform 
+                    && groundHit.collider.gameObject.layer == whatIsPlatformLayer
+                    && _playerState.IsAscending)
+                {
+                    //If we hit a platform while ascending, we shouldn't be pulled towards it to be able to fly through it.
+                    _playerState.DistanceToGround = 0.0f;
+                    _playerState.CharacterStoppedTouchingGround();
+                }
             }
             else
             {
-                _playerState.CharacterStoppedTouchingTheGround();
+                _playerState.CharacterStoppedTouchingGround();
                 _playerState.DistanceToGround = 0.0f;
             }
 
@@ -141,26 +147,9 @@ namespace Assets.Scripts.Player.Physics
 
             //Player is above the ground and we can move them closer towards it.
             _playerState.DistanceToGround = groundHit.distance - _skinWidth;
-
-            
-            checkPos.x += 0.01f;    //soft padding that the ray can be visible among other rays
-            Debug.DrawRay(checkPos, Vector2.down*groundCheckRadius, Color.blue);
         }
         private void CheckGround()
         {
-            //_playerState.isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, _collisionMaskManager.WhatIsGround);
-            //bool isCloseToGround = Physics2D.OverlapBox(_groundCloseCheck.position, _closeGroundCheckSize, 0.0f, _collisionMaskManager.WhatIsGround);
-
-            
-            //if (_playerState.isGrounded == false)
-            //{
-            //    _playerState.CharacterStoppedTouchingTheGround();
-            //}
-
-            //if (isCloseToGround)
-            //{
-            //    _playerState.IsStandingOnGround = true;
-            //}
             MoveCloserToGround();//Check distance to the ground to move the player as close to the ground as possible.
             if (_playerState.isGrounded == false)
             {
@@ -173,7 +162,7 @@ namespace Assets.Scripts.Player.Physics
 
             if (rb.velocity.y <= 0.0f)
             {
-                _playerState.isJumping = false;
+                _playerState.MaxJumpHeightReached();
             }
             if (_playerState.isGrounded && !_playerState.isJumping && _playerState.slopeDownAngle <= maxSlopeAngle)
             {
@@ -260,7 +249,7 @@ namespace Assets.Scripts.Player.Physics
                 if (_playerState.IsStandingOnGround == false && rb.velocity.y <= 0.0f
                 || _playerState.IsStandingOnGround && _playerState.IsBeginningJump == false)
                 {
-                    _playerState.isJumping = false;
+                    _playerState.MaxJumpHeightReached();
                 }
             }
 
@@ -313,8 +302,6 @@ namespace Assets.Scripts.Player.Physics
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-            //Gizmos.DrawWireCube((Vector2)_groundCloseCheck.position, _closeGroundCheckSize);
 
             var wallLineDest = new Vector3(wallCheck.position.x + transform.right.x * wallCheckDistance, wallCheck.position.y, wallCheck.position.z);
             Gizmos.DrawLine(wallCheck.position, wallLineDest);

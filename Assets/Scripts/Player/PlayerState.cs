@@ -38,6 +38,10 @@ public class PlayerState : MonoBehaviour
     public bool isOnSlope{ get; set; }
     public bool isJumping{ get; set; }
     /// <summary>
+    /// Is the player increasing their Y position (going up) by other means than walking up a slope? Like jumping, for example?
+    /// </summary>
+    public bool IsAscending { get; set; }
+    /// <summary>
     /// Used to lift the player off the ground. Initial jump state, where the player is jumping
     /// but the collision with the ground may still be present.
     /// </summary>
@@ -53,6 +57,10 @@ public class PlayerState : MonoBehaviour
     public bool IsWallSliding { get; set; }
     public bool CanDoubleJump { get; set; }
     public bool IsGliding { get; set; }
+    /// <summary>
+    /// Set to true whenever player is ascending and has phased through a platform.
+    /// </summary>
+    public bool IsPhasingThroughPlatform { get; set; }
     /// <summary>
     /// If there are any restrictions towards Y velocity - this flag should be set to true.
     /// </summary>
@@ -74,10 +82,16 @@ public class PlayerState : MonoBehaviour
     {
         LocalGravityManager = GetComponent<LocalGravityManager>();
     }
+
+    public void CharacterFirmlyTouchedGround()
+    {
+        IsStandingOnGround = true;
+        //IsPhasingThroughPlatform = false;
+    }
     /// <summary>
     /// Should be called whenever the character stops touching the ground.
     /// </summary>
-    public void CharacterStoppedTouchingTheGround()
+    public void CharacterStoppedTouchingGround()
     {
         isGrounded = false;
         IsStandingOnGround = false;
@@ -93,6 +107,12 @@ public class PlayerState : MonoBehaviour
         }
         
     }
+
+    public void PlayerWallJumps()
+    {
+        isJumping = true;
+        IsAscending = true;
+    }
     /// <summary>
     /// Called when the player jumps from the walkable ground.
     /// </summary>
@@ -101,6 +121,16 @@ public class PlayerState : MonoBehaviour
         canJump = false;
         isJumping = true;
         IsBeginningJump = true;
+        IsAscending = true;
+    }
+    /// <summary>
+    /// Called whenever the player reaches the max height of their jump.
+    /// </summary>
+    public void MaxJumpHeightReached()
+    {
+        isJumping = false;
+        IsAscending = false;
+        IsPhasingThroughPlatform = false;
     }
     /// <summary>
     /// Resets all basic movement one-time skills.

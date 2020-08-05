@@ -41,6 +41,11 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private LayerMask _dropFromPlatformColMask;
         /// <summary>
+        /// What layer defines the ground as droppable platforms?
+        /// </summary>
+        [SerializeField]
+        private LayerMask _whatIsPlatform;
+        /// <summary>
         /// The minimal time the character will not be trying to stay on any platforms after initiating the drop.
         /// In seconds.
         /// </summary>
@@ -73,7 +78,10 @@ namespace Assets.Scripts.Player
         /// Used to access the _wallCollisionLayers mask from the outside.
         /// </summary>
         public LayerMask WallCollisionLayers => _wallCollisionLayers; //Auto properties are not visible in the inspector!
-
+        /// <summary>
+        /// Layers that define the ground as droppable platforms.
+        /// </summary>
+        public LayerMask WhatIsPlatform => _whatIsPlatform; //Auto properties are not visible in the inspector!
         private void Start()
         {
             _whatIsGround = _defaultGroundCollisionMask;

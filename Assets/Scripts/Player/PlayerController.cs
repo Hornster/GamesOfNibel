@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
         if (_playerState.canJump)
         {
             _playerState.PlayerJumps();
-            //_playerState.CharacterStoppedTouchingTheGround();
+            //_playerState.CharacterStoppedTouchingGround();
 
             _playerState.NewVelocity = new Vector2(rb.velocity.x, _jumpVelocity);
             rb.velocity = new Vector2(rb.velocity.x, _jumpVelocity);

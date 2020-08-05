@@ -77,7 +77,7 @@ namespace Assets.Scripts.Player.Character.Skills
 
                 _characterRigidbody.velocity = new Vector2(newXVelocity, newYVelocity);
 
-                _playerState.isJumping = true;
+                _playerState.PlayerWallJumps();
             }
         }
     }
