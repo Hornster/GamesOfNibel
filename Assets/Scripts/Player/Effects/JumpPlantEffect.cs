@@ -36,9 +36,10 @@ namespace Assets.Scripts.Player.Effects
         /// Changes the current velocity of the player, sending them in _direction with _launchVelocity.
         /// </summary>
         /// <param name="rb"></param>
-        public void InfluencePlayer(Rigidbody2D rb)
+        public void InfluencePlayer(PlayerState playerState, Rigidbody2D rb)
         {
             rb.velocity = _direction * _launchVelocity;
+            playerState.PlayerJumps();
         }
 
         public void OnDrawGizmos()

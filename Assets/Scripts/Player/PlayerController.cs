@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Common;
+using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
 using Assets.Scripts.Player.Character;
@@ -51,7 +52,10 @@ public class PlayerController : MonoBehaviour
         _playerPhysics = GetComponent<PlayerPhysics>();
         _playerState = GetComponent<PlayerState>();
 
-        InputReader.RegisterJumpHandler(Jump);
+        _playerState.RegisterDoubleJumpHandler(DoubleJump);
+
+        InputReader.RegisterJumpHandler(NoteJumpRequest);//Order matters!
+        InputReader.RegisterJumpHandler(Jump);//Order matters!
         InputReader.RegisterPrematureJumpEndHandler(PrematurelyEndJump);
         InputReader.RegisterGlideHandler(Glide);
 
@@ -74,6 +78,12 @@ public class PlayerController : MonoBehaviour
     {
         RotatePlayer();
         _playerPhysics.CheckCollisions();
+
+        if (_playerState.IsJumpRequestRemembered)
+        {
+            Jump(); //The player wanted to jump, there's a chance that the floor will be nearby soon.
+        }
+
         ApplyMovement();
     }
 
@@ -101,26 +111,39 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * _prematureJumpEndScale);
         }
     }
+    /// <summary>
+    /// The player wanted to jump - keep that in mind for the time defined in the config (PlayerState) class.
+    /// </summary>
+    private void NoteJumpRequest()
+    {
+        _playerState.PlayerRequestedJump();
+    }
     private void Jump()
     {
-        if (_playerState.canJump)
-        {
+        if (_playerState.IsJumpRequestRemembered && _playerState.canJump || _playerState.IsStandingOnGroundRemembered)
+        {//If the player is standing on the ground or was standing on it merely several frames ago (or any time setup in the config)
+
             _playerState.PlayerJumps();
-            //_playerState.CharacterStoppedTouchingGround();
 
             _playerState.NewVelocity = new Vector2(rb.velocity.x, _jumpVelocity);
             rb.velocity = new Vector2(rb.velocity.x, _jumpVelocity);
         }
-        else if (_playerState.IsTouchingWall)
-        {
+        else if (_playerState.IsTouchingWall || _playerState.IsTouchingWallRemembered)
+        {//...or if the player is or WAS holding the wall just a moment ago, do the wall jump.
             _skillsController.UseSkill(SkillType.WallJump);
         }
-        else if (_playerState.CanDoubleJump)
+    }
+    /// <summary>
+    /// Performs double jump.
+    /// </summary>
+    private void DoubleJump()
+    {
+        //Double jump is blocked until regular/wall jump await time has passed. Thus, this needs to be called as timeout event.
+        if (_playerState.CanDoubleJump)
         {
             _skillsController.UseSkill(SkillType.DoubleJump);
         }
     }
-
     private void Glide(GlideStages glideStage)
     {
         _playerState.GlideStage = glideStage;
@@ -141,6 +164,6 @@ public class PlayerController : MonoBehaviour
 
         ChkWallSlide();
 
-        _effectManager.ApplyEffects(rb);
+        _effectManager.ApplyEffects(_playerState, rb);
     }
 }

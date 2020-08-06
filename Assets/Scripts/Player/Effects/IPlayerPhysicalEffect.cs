@@ -11,6 +11,6 @@ namespace Assets.Scripts.Player.Effects
         /// Directly influences the player's body.
         /// </summary>
         /// <param name="rb"></param>
-        void InfluencePlayer(Rigidbody2D rb);
+        void InfluencePlayer(PlayerState playerState, Rigidbody2D rb);
     }
 }

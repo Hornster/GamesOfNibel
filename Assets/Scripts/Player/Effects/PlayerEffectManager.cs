@@ -21,11 +21,12 @@ namespace Assets.Scripts.Player.Effects
         /// Applies the effects.
         /// </summary>
         /// <param name="playerRigidbody">The rigidbody of the player's character.</param>
-        public void ApplyEffects(Rigidbody2D playerRigidbody)
+        /// <param name="playerState">The state of the player that can be modified by the effect.</param>
+        public void ApplyEffects(PlayerState playerState, Rigidbody2D playerRigidbody)
         {
             foreach (var effect in _activeEffects)
             {
-                effect.InfluencePlayer(playerRigidbody);
+                effect.InfluencePlayer(playerState, playerRigidbody);
             }
 
             _activeEffects.Clear();

@@ -117,8 +117,9 @@ namespace Assets.Scripts.Player.Physics
             {
                 _playerState.isGrounded = true;
                 
-                if (groundHit.distance <= _closeToGroundThreshold)
+                if (groundHit.distance <= _closeToGroundThreshold && _playerState.IsBeginningJump == false)
                 {
+                    //We are close enough to the ground to walk on it and are not jumping already
                     _playerState.CharacterFirmlyTouchedGround();
                 }
 

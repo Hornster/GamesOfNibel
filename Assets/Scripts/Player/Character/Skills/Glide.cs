@@ -80,7 +80,7 @@ namespace Assets.Scripts.Player.Character.Skills
         {
             var currentGlideState = _playerState.GlideStage;
 
-            if (_playerState.isGrounded)
+            if (_playerState.isGrounded || _playerState.IsTouchingWall)
             {
                 _playerState.IsGliding = false;
             }
