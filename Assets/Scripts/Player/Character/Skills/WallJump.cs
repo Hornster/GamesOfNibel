@@ -61,23 +61,34 @@ namespace Assets.Scripts.Player.Character.Skills
         {
             ChkSkillAvailablilty();
         }
+        /// <summary>
+        /// Performs the jump.
+        /// </summary>
+        /// <param name="facingDirection">Which way is the character facing?</param>
+        private void PerformWallJump(int facingDirection)
+        {
+            _characterRigidbody.velocity = Vector2.zero;
+            //Since the horizontal velocity is being assigned directly, we need to assign
+            //it this way here, too.
+            float newYVelocity = _wallJumpDirection.y * _wallJumpVelocity;
+            float newXVelocity = _wallJumpDirection.x * _wallJumpVelocity;
+            newXVelocity *= facingDirection;
 
+            _characterRigidbody.velocity = new Vector2(newXVelocity, newYVelocity);
+
+            _playerState.PlayerWallJumps();
+        }
         public void UseSkill()
         {
             //wall hop
             if (_playerState.IsTouchingWall //If the player is holding a climbable wall...
-                || (_playerState.isGrounded && _playerState.canWalkOnSlope == false)) //...or is on too steep slope to walk on.
+                || (_playerState.isGrounded && _playerState.canWalkOnSlope == false))//...or is on too steep slope to walk on...
             {
-                _characterRigidbody.velocity = Vector2.zero;
-                //Since the horizontal velocity is being assigned directly, we need to assign
-                //it this way here, too.
-                float newYVelocity = _wallJumpDirection.y * _wallJumpVelocity;
-                float newXVelocity = _wallJumpDirection.x * _wallJumpVelocity;
-                newXVelocity *= (-_playerState.facingDirection);
-
-                _characterRigidbody.velocity = new Vector2(newXVelocity, newYVelocity);
-
-                _playerState.PlayerWallJumps();
+                PerformWallJump(-_playerState.facingDirection);
+            }
+            else if (_playerState.IsTouchingWallRemembered)//...or we were touching the wall just a moment ago. 
+            {
+                PerformWallJump(_playerState.facingDirection);
             }
         }
     }

@@ -73,7 +73,16 @@ namespace Assets.Scripts.Player.Physics
         /// Set to true when there's an unclimbable slope detected to the back of the character.
         /// </summary>
         private bool _unclimbableSlopeOnBack;
-
+        /// <summary>
+        /// Set to true when the character walked off the ground and the
+        /// player state has been already informed about the fact. False otherwise.
+        /// </summary>
+        private bool _isStateInformedNoCollisionGround;   //Helps changing polling into event, since ground detection is continuous, not event-based.
+        /// <summary>
+        /// Set to true when the character stopped touching the wall and the
+        /// player state has been already informed about the fact. False otherwise.
+        /// </summary>
+        private bool _isStateInformedNoCollisionWall;   //Helps changing polling into event, since wall detection is continuous, not event-based.
 
         private void Start()
         {
@@ -105,12 +114,19 @@ namespace Assets.Scripts.Player.Physics
         /// </summary>
         private void MoveCloserToGround()
         {
-            var checkPos = GetCheckPos();
             var groundHit = _groundRaysController.CastAllRays(Vector2.down, _collisionMaskManager.WhatIsGround);//Physics2D.Raycast(checkPos, Vector2.down, groundCheckRadius, _collisionMaskManager.WhatIsGround);
 
             if (_playerState.isGrounded == false)
             {
                 _playerState.CharacterStoppedTouchingGround();
+
+                if (_playerState.isJumping == false && _isStateInformedNoCollisionGround == false)
+                {//If the player jumped off the ground then we do not need to measure the time for the jump offset - they jumped already.
+                    //But since the collisions are fully raycast-based, they are continuously checked and need to be converted to event.
+                    //Hence the _isStateInformedNoCollisionGround. I know, stinks, I know...
+                    _playerState.PlayerWalkedOffGround();
+                    _isStateInformedNoCollisionGround = true;
+                }
             }
 
             if (groundHit)
@@ -121,6 +137,7 @@ namespace Assets.Scripts.Player.Physics
                 {
                     //We are close enough to the ground to walk on it and are not jumping already
                     _playerState.CharacterFirmlyTouchedGround();
+                    _isStateInformedNoCollisionGround = false;
                 }
 
                 var whatIsPlatformLayer = MathOperations.ConvertLayerMaskValueToIndex(_collisionMaskManager.WhatIsPlatform);
@@ -159,6 +176,7 @@ namespace Assets.Scripts.Player.Physics
                 //would end up in us slide upwards up to the moment when this flag changes back to false.
                 //Which by default happens upon velocity.y reaching 0 from positive value.
                 _playerState.IsBeginningJump = false;
+
             }
 
             if (rb.velocity.y <= 0.0f)
@@ -278,6 +296,25 @@ namespace Assets.Scripts.Player.Physics
                 var angle = Vector2.Angle(raycastResult.normal, Vector2.up);
 
                 _playerState.IsTouchingWall = angle <= _maxClimbableAngle;
+
+                if (angle <= _maxClimbableAngle)
+                {
+                    _playerState.CharacterTouchedTheWall();
+                    _isStateInformedNoCollisionWall = false;
+                }
+                else if(_isStateInformedNoCollisionWall == false)
+                {
+                    _playerState.PlayerLetGoWall();
+                    _isStateInformedNoCollisionWall = true;
+                }
+            }
+            else
+            {
+                if (_isStateInformedNoCollisionWall == false)
+                {
+                    _playerState.PlayerLetGoWall();
+                    _isStateInformedNoCollisionWall = true;
+                }
             }
             
             if (_playerState.IsTouchingWall && _playerState.isGrounded == false && rb.velocity.y < 0)

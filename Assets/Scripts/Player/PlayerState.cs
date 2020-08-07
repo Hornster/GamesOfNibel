@@ -101,6 +101,10 @@ public class PlayerState : MonoBehaviour
     /// Time, in seconds, after which the fact that the player was touching the ground is forgotten.
     /// </summary>
     [SerializeField] private float _groundTouchMemoryTimeout = 0.1f;
+    /// <summary>
+    /// Time, in seconds, after which the fact that the player was touching the wall is forgotten.
+    /// </summary>
+    [SerializeField] private float _wallTouchMemoryTimeout = 0.1f;
 
     /// <summary>
     /// Measures the time from last jump input from player.
@@ -111,6 +115,10 @@ public class PlayerState : MonoBehaviour
     /// Measures the time since last ground, or wall, touching by the player.
     /// </summary>
     [SerializeField] private Timer _groundTouchMemoryTimer;
+    /// <summary>
+    /// Measures the time since the most recent wall holding by the player.
+    /// </summary>
+    [SerializeField] private Timer _wallTouchMemoryTimer;
 
     private void Awake()
     {
@@ -118,9 +126,11 @@ public class PlayerState : MonoBehaviour
         _jumpMemoryTimer.MaxAwaitTime = _jumpRequestMemoryTimeout;
         _jumpMemoryTimer.RegisterTimeoutHandler(TimeoutForJumpMemory);
 
-        //No need to attach timeout handler - these are attached upon calling the timer later on as it is
-        //used by two cases.
         _groundTouchMemoryTimer.MaxAwaitTime = _groundTouchMemoryTimeout;
+        _groundTouchMemoryTimer.RegisterTimeoutHandler(TimeoutForGroundStandingMemory);
+
+        _wallTouchMemoryTimer.MaxAwaitTime = _wallTouchMemoryTimeout;
+        _wallTouchMemoryTimer.RegisterTimeoutHandler(TimeoutForHoldingWallMemory);
     }
     /// <summary>
     /// Registers the double jump timer which is called each time the jump memory timeout happens.
@@ -136,6 +146,16 @@ public class PlayerState : MonoBehaviour
     {
         IsStandingOnGround = true;
         IsStandingOnGroundRemembered = true;
+        _groundTouchMemoryTimer.Stop();
+    }
+    /// <summary>
+    /// Called when the character is touching a climbable wall.
+    /// </summary>
+    public void CharacterTouchedTheWall()
+    {
+        IsTouchingWall = true;
+        IsTouchingWallRemembered = true;
+        _wallTouchMemoryTimer.Stop();
     }
     /// <summary>
     /// Should be called whenever the character stops touching the ground.
@@ -165,7 +185,7 @@ public class PlayerState : MonoBehaviour
         IsJumpRequestRemembered = false;
 
         _jumpMemoryTimer.Stop();//We jumped already, no need to jump twice.
-        _groundTouchMemoryTimer.Stop();
+        _wallTouchMemoryTimer.Stop();
     }
     /// <summary>
     /// Called when the player jumps from the walkable ground.
@@ -181,6 +201,7 @@ public class PlayerState : MonoBehaviour
         
         _jumpMemoryTimer.Stop();//We jumped already, no need to jump twice.
         _groundTouchMemoryTimer.Stop();
+        _wallTouchMemoryTimer.Stop();
     }
     /// <summary>
     /// Called whenever the player reaches the max height of their jump.
@@ -205,8 +226,6 @@ public class PlayerState : MonoBehaviour
     /// </summary>
     public void PlayerWalkedOffGround()
     {
-        _groundTouchMemoryTimer.ClearTimeoutHandlers();
-        _groundTouchMemoryTimer.RegisterTimeoutHandler(TimeoutForGroundStandingMemory);
         _groundTouchMemoryTimer.Reset();
         _groundTouchMemoryTimer.StartTimer();
     }
@@ -215,10 +234,8 @@ public class PlayerState : MonoBehaviour
     /// </summary>
     public void PlayerLetGoWall()
     {
-        _groundTouchMemoryTimer.ClearTimeoutHandlers();
-        _groundTouchMemoryTimer.RegisterTimeoutHandler(TimeoutForHoldingWallMemory);
-        _groundTouchMemoryTimer.Reset();
-        _groundTouchMemoryTimer.StartTimer();
+        _wallTouchMemoryTimer.Reset();
+        _wallTouchMemoryTimer.StartTimer();
     }
     
     /// <summary>
@@ -245,7 +262,7 @@ public class PlayerState : MonoBehaviour
     private void TimeoutForHoldingWallMemory()
     {
         IsTouchingWallRemembered = false;
-        _groundTouchMemoryTimer.Stop();
+        _wallTouchMemoryTimer.Stop();
     }
     /// <summary>
     /// Called by wall holding timeout memory timer when the time walking off the ground has passed.
@@ -253,6 +270,7 @@ public class PlayerState : MonoBehaviour
     private void TimeoutForGroundStandingMemory()
     {
         IsStandingOnGroundRemembered = false;
+        _groundTouchMemoryTimer.Stop();
     }
     //todo DEBUG
     private void NotifyDebugWatchers()
