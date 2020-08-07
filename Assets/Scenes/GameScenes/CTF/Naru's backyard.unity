@@ -1607,12 +1607,12 @@ PrefabInstance:
     - target: {fileID: 5069618047901706736, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 28
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 5069618047901706736, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5069618047901706736, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
@@ -1634,7 +1634,7 @@ PrefabInstance:
       propertyPath: m_text
       value: '(H)elp
 
-        GamesOfNibel V0.1. 1
+        GamesOfNibel V0.1.3
 
 '
       objectReference: {fileID: 0}
@@ -3706,6 +3706,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DefaultCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535999678530167676, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -25.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361ca711c3b0bc3418cc10627f502602, type: 3}
