@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.GUI.Menu.Interface;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.GUI.Menu
@@ -6,7 +7,7 @@ namespace Assets.Scripts.GUI.Menu
     /// <summary>
     /// Manages single button.
     /// </summary>
-    public class CustomButton : MonoBehaviour
+    public class CustomButton : MonoBehaviour, ICustomMenuControl
     {
         /// <summary>
         /// All events that shall be called upon clicking the button.
@@ -26,9 +27,13 @@ namespace Assets.Scripts.GUI.Menu
         [SerializeField]
         private string _pressedParamName = "pressed";
         /// <summary>
+        /// The ID of this control. Ought to be unique in the controller that this control belongs to.
+        /// </summary>
+        public int ControlId { get; set; }
+        /// <summary>
         /// Deselects the button.
         /// </summary>
-        public void DeselectButton()
+        public void DeselectControl()
         {
             _animator.SetBool(_idleParamName, true);
             _animator.SetBool(_selectedParamName, false);
@@ -36,7 +41,7 @@ namespace Assets.Scripts.GUI.Menu
         /// <summary>
         /// Selects the button.
         /// </summary>
-        public void SelectButton()
+        public void SelectControl()
         {
             _animator.SetBool(_idleParamName, false);
             _animator.SetBool(_selectedParamName, true);
@@ -44,18 +49,10 @@ namespace Assets.Scripts.GUI.Menu
         /// <summary>
         /// Called upon pressing the button.
         /// </summary>
-        public void ButtonPressed()
+        public void ControlPressed()
         {
             _animator.SetBool(_pressedParamName, true);
             _assignedEvents?.Invoke();
-        }
-        /// <summary>
-        /// Called at the end of button pressing animation to change the animation state back to selected.
-        /// </summary>
-        private void ButtonAnimPressedEnded()
-        {
-            _animator.SetBool(_pressedParamName, false);
-            //_animator.SetBool(_selectedParamName, true);
         }
     }
 }
