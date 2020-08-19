@@ -1202,21 +1202,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuBackgroundImage
       objectReference: {fileID: 0}
-    - target: {fileID: 188741324708699861, guid: e9269a42a53ac3b4285d9021b436450e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 188741324867287988, guid: e9269a42a53ac3b4285d9021b436450e,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 188741324867287989, guid: e9269a42a53ac3b4285d9021b436450e,
-        type: 3}
-      propertyPath: m_RenderMode
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 188741324867287989, guid: e9269a42a53ac3b4285d9021b436450e,
         type: 3}
       propertyPath: m_Camera
