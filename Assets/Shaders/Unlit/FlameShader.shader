@@ -26,6 +26,9 @@
                 "RenderType" = "Transparent"
                 "Queue" = "Transparent+0"
             }
+
+            
+
             Stencil{
                 Ref[_Stencil]
                 Comp[_StencilComp]
@@ -35,6 +38,7 @@
             }
             ColorMask[_ColorMask]
 
+            
             Pass
             {
                 Name "Universal Forward"
