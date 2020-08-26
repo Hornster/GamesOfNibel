@@ -3,3 +3,6 @@ Character slope climbing 2D - https://www.youtube.com/watch?v=QPiZSTEuZnw
 Collision detection explained better perhaps? (WARNING JS) - https://www.youtube.com/watch?v=ZJZ00LSlvlY
 
 http://devmag.org.za/2011/07/04/how-to-design-levels-for-a-platformer/ - level design process
+
+
+https://www.youtube.com/watch?v=glSsaRpHKos - cool flame shader
