@@ -126,15 +126,16 @@ namespace Assets.Scripts.GUI.Menu
         private void ChkControlSelectionInput()
         {
             var currentInput = GUIInputReader.PlayerInput;
-            if (currentInput.y > _sensitivity && _controlSwitched == false)
+            if ((currentInput.y > _sensitivity || currentInput.x > _sensitivity) && _controlSwitched == false)
             {
                 SwitchControls(_currentSelectedIndex - 1);
-            } else if(currentInput.y < -_sensitivity && _controlSwitched == false)
+            } else if((currentInput.y < -_sensitivity || currentInput.x < -_sensitivity) && _controlSwitched == false)
 
             {
                 SwitchControls(_currentSelectedIndex + 1);
             }
-            else if(ValueComparator.IsEqual(currentInput.y, 0.0f))
+            else if(ValueComparator.IsEqual(currentInput.y, 0.0f)
+                    && ValueComparator.IsEqual(currentInput.x, 0.0f))
             {
                 _controlSwitched = false;
             }

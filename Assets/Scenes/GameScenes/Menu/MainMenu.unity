@@ -1216,7 +1216,7 @@ MonoBehaviour:
   m_Content: {fileID: 65465731}
   m_Horizontal: 1
   m_Vertical: 0
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -4921,17 +4921,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ChkScrollbarValue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 50984149}
         m_MethodName: SelectThisControl
         m_Mode: 1
@@ -6771,7 +6760,18 @@ MonoBehaviour:
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1739138022}
+        m_MethodName: SelectThisControl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1315743910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6816,6 +6816,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 642331385}
     m_Modifications:
+    - target: {fileID: 4442953304864330337, guid: 9a6b7f0173a2d434ba330a3209723bd5,
+        type: 3}
+      propertyPath: m_ChildAlignment
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4442953304864330342, guid: 9a6b7f0173a2d434ba330a3209723bd5,
         type: 3}
       propertyPath: m_Name
@@ -8961,7 +8966,7 @@ Animator:
   m_GameObject: {fileID: 1739138017}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bf2201df41747124e9f263000069833a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3b8c37724c0c83c4caaa17d4fd5448d0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

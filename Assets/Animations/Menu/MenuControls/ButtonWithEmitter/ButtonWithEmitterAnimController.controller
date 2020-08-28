@@ -23,7 +23,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8fcb02dde0c200b46872ddd4c2fa3adf, type: 2}
+  m_Motion: {fileID: 7400000, guid: 7a865a3e46675a84ebab34b68b601df3, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -107,7 +107,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e1e306fe6dd96ed4794796059dbf2758, type: 2}
+  m_Motion: {fileID: 7400000, guid: 708af11b643d5ed4786d5c30e4ff1251, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -135,7 +135,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 491f1a016ca4f65479f8632f90c0b4bc, type: 2}
+  m_Motion: {fileID: 7400000, guid: c236f1627f1a72943b9f8d50b2db508a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -147,7 +147,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ButtonAnimController
+  m_Name: ButtonWithEmitterAnimController
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: selected
