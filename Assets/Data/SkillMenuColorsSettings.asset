@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc01d35c54b300d4e9d55b2474cce670, type: 3}
   m_Name: SkillMenuColorsSettings
   m_EditorClassIdentifier: 
-  EnabledSkill: {r: 0, g: 0, b: 0, a: 0}
-  DisabledSkill: {r: 0, g: 0, b: 0, a: 0}
-  EnabledSkillNeeded: {r: 0, g: 0, b: 0, a: 0}
-  DisabledSkillNeeded: {r: 0, g: 0, b: 0, a: 0}
+  EnabledSkill: {r: 1, g: 1, b: 1, a: 1}
+  DisabledSkill: {r: 0.41568628, g: 0.41568628, b: 0.41568628, a: 1}
+  EnabledSkillNeeded: {r: 0.59607846, g: 0.88235295, b: 0.4745098, a: 1}
+  DisabledSkillNeeded: {r: 0.9490196, g: 0.08627451, b: 0.101960786, a: 1}
