@@ -1395,6 +1395,7 @@ GameObject:
   - component: {fileID: 314038620}
   - component: {fileID: 314038622}
   - component: {fileID: 314038621}
+  - component: {fileID: 314038623}
   m_Layer: 0
   m_Name: MapSelectionMenuNew
   m_TagString: Untagged
@@ -1511,6 +1512,19 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &314038623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314038616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 022e0a4d4dd6b79439c65562ce523a3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _debugMapData: {fileID: 11400000, guid: 3d0d0d19a3f5583478124ac8521fcc77, type: 2}
 --- !u!1001 &319773651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5186,6 +5200,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062468934}
   m_CullTransparentMesh: 0
+--- !u!1 &1099278798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1099278799}
+  m_Layer: 0
+  m_Name: MapModCreator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1099278799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099278798}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.19696648, y: 0.433551, z: 3345.719}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1101893683 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6182309191686992686, guid: 0b1e9820257dd2c43848c803cc6a4853,
