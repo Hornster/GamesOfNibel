@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 /// <summary>
@@ -12,15 +13,17 @@ public class MapDataAssetBundleConstants : ScriptableObject
     /// The first part of the path in the asset bundle.
     /// </summary>
     [Header("Before sceneId")]
-    public readonly string MapsFolderLocation = "Assets/AssetBundles/Maps/";
+    public readonly string MapsFolderLocation = "Assets" + Path.DirectorySeparatorChar 
+                                                         + "AssetBundles" + Path.DirectorySeparatorChar 
+                                                         + "Maps" + Path.DirectorySeparatorChar;
 
     [Header("SceneId placeholder")] 
     public readonly string ScenePlaceholder = "$SceneName$";
 
     [Header("After sceneId")]
-    public readonly string PreviewImageFolderName = "PreviewImg/";
-    public readonly string ThumbnailImageFolderName = "ThumbnailImg/";
-    public readonly string SceneFolderName = "Scene/";
+    public readonly string PreviewImageFolderName = "PreviewImg" + Path.DirectorySeparatorChar;
+    public readonly string ThumbnailImageFolderName = "ThumbnailImg" + Path.DirectorySeparatorChar;
+    public readonly string SceneFolderName = "Scene" + Path.DirectorySeparatorChar;
 }
 // The parts present here are constants that shall not be changed.
 // Their usage order shall remain unchanged, too.

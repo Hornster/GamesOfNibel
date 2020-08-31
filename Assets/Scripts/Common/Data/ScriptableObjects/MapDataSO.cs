@@ -14,7 +14,9 @@ public class MapDataSO : ScriptableObject
     public GameplayModesEnum GameplayMode;
     public string Description;
     public SkillType[] RequiredSkills;
-    public string SceneId;
-    [NonSerialized]
-    public MapDataAssetBundleConstants MapAssetBundleConstants;
+    /// <summary>
+    /// Property renders this value invisible to the inspector. It is used upon saving the map mod.
+    /// </summary>
+    public string SceneId { get; set; }
+
 }

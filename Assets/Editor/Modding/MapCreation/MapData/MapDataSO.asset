@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfe4aea585791f448f5c9fc61e67106, type: 3}
   m_Name: MapDataSO
   m_EditorClassIdentifier: 
-  ShownName: 
+  ShownName: f0ckin snails
   PreviewImgPath: 
   ThumbnailImgPath: 
   Authors: []
   GameplayMode: 0
   Description: 
   RequiredSkills: 
-  SceneId: 
-  MapAssetBundleConstants: {fileID: 11400000, guid: 53eb7e63772834345b3cd1007e84b2e3,
-    type: 2}
