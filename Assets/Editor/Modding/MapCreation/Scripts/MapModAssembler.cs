@@ -59,7 +59,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
                 _allRequirementsMet = false;
                 GUILayout.Label("A reference to the MapDataScriptableObject has to be provided. It contains additional map info.");
             }
-            if (_mapName.Length <= 0)
+            if (_mapName?.Length <= 0)
             {
                 _allRequirementsMet = false;
                 GUILayout.Label("Your map must have a name.");
@@ -76,12 +76,12 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             
             ChkInputData();
 
-            _mapDataSO.SceneId = _scene.name;
 
             if (GUILayout.Button("Create map mod"))
             {
                 if (_allRequirementsMet)
                 {
+                    _mapDataSO.SceneId = _scene.name;
                     CreateMapMod();
                 }
             }
