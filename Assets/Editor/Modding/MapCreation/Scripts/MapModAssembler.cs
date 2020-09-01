@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Assets.Editor.Modding.MapCreation.Scripts.Util;
 using UnityEditor;
 using UnityEngine;
 
@@ -86,15 +87,27 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
                 }
             }
         }
+        /// <summary>
+        /// Creates and returns an output path for the asset bundle.
+        /// </summary>
+        /// <returns></returns>
         private string GetOutputPath()
         {
             return _mapAssetBundleConstants.MapsFolderLocation + _scene.name;
         }
-
+        /// <summary>
+        /// Gets the name, together with relative path, of the provided asset.
+        /// </summary>
+        /// <param name="asset"></param>
+        /// <returns></returns>
         private string GetAssetName(Object asset)
         {
             return AssetDatabase.GetAssetOrScenePath(asset);
         }
+        /// <summary>
+        /// Returns a list of asset names, together with relative paths, that should be included in the bundle.
+        /// </summary>
+        /// <returns></returns>
         private List<string> GetAssetsNames()
         {
             var names = new List<string>();
@@ -111,7 +124,10 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             
             return names;
         }
-
+        /// <summary>
+        /// Returns a list of addressables for all assets that shall be included in the bundle.
+        /// </summary>
+        /// <returns></returns>
         private List<string> GetAssetsAddressables()
         {
             var addressables = new List<string>();
@@ -128,6 +144,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             
             return addressables;
         }
+        
         private void CreateMapMod()
         {
             var baseDir = GetOutputPath();
@@ -148,6 +165,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             CreateJSONInfoFile(baseDir);
             BuildPipeline.BuildAssetBundles(baseDir, assetBundleBuilds.ToArray(), BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
 
+            AssetBundleReporter.AssignAssetsToBundle(ref assetBundleBuild.assetNames, assetBundleBuild.assetBundleName, assetBundleBuild.assetBundleVariant);
         }
         /// <summary>
         /// Writes down the data about the map into a JSON file that's located in the main
@@ -172,3 +190,4 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
 //https://www.youtube.com/watch?v=1zROlULebXg - creating build pipeline for asset bundles
 //https://www.turiyaware.com/blog/creating-a-moddable-unity-game - modding with unity
 //https://www.youtube.com/watch?v=491TSNwXTIg - how to make editor window unity
+//https://answers.unity.com/questions/1206997/mark-asset-as-assetbundle-from-script.html - how to mark asset as bundle
