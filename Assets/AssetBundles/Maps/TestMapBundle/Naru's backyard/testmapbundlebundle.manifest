@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3012973340
+CRC: 792898131
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a99ccca42dd0bea14c587347478dfd43
+    Hash: 16f7a77e98ae339014b0c16f13e453ec
   TypeTreeHash:
     serializedVersion: 2
     Hash: c26c25f46e58039e7afa36ba8f92dde6
@@ -138,5 +138,5 @@ ClassTypes:
 - Class: 251
   Script: {instanceID: 0}
 Assets:
-- Assets/Scenes/GameScenes/CTF/Naru's backyard.unity
+- Assets/Scenes/GameScenes/CTF/Naru's backyard/Naru's backyard.unity
 Dependencies: []

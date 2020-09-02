@@ -16,7 +16,7 @@ namespace Assets.Scripts.Common.Helpers
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        static string RemoveSpecialCharacters(string source)
+        public static string RemoveSpecialCharacters(string source)
         {
             var stringBuilder = new StringBuilder(source.Length);
             foreach (var c in source)

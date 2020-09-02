@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: MapDataSO
   m_EditorClassIdentifier: 
   ShownName: f0ckin snails
+  Authors:
+  - YOUR MOTHER!
+  GameplayMode: 0
+  Description: YEEEEEHAW!
+  RequiredSkills: 0000000001000000
   PreviewImgPath: 
   ThumbnailImgPath: 
-  Authors: []
-  GameplayMode: 0
-  Description: 
-  RequiredSkills: 0000000001000000
+  SceneId: 

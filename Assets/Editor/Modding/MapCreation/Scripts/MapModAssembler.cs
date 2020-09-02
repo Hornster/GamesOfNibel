@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Assets.Editor.Modding.MapCreation.Scripts.Util;
+using Assets.Scripts.Common.Helpers;
 using UnityEditor;
 using UnityEngine;
 
@@ -93,7 +94,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         /// <returns></returns>
         private string GetOutputPath()
         {
-            return _mapAssetBundleConstants.MapsFolderLocation + _scene.name;
+            return _mapAssetBundleConstants.MapsFolderLocation + _mapName + Path.DirectorySeparatorChar + _scene.name;
         }
         /// <summary>
         /// Gets the name, together with relative path, of the provided asset.
@@ -105,33 +106,58 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             return AssetDatabase.GetAssetOrScenePath(asset);
         }
         /// <summary>
-        /// Returns a list of asset names, together with relative paths, that should be included in the bundle.
+        /// Returns the name of the scene asset, together with relative path.
         /// </summary>
         /// <returns></returns>
-        private List<string> GetAssetsNames()
+        private string GetSceneAssetName()
+        {
+                var sceneName = GetAssetName(_scene);
+                
+                return sceneName;
+        }
+        /// <summary>
+        /// Returns a list containing the names of the preview and thumbnail images for the bundle, together with relative paths.
+        /// If no images were provided - the list is empty.
+        /// </summary>
+        /// <param name="mapDataSo">Map data object. If there are any preview images available for this map, their
+        /// paths will be assigned to this object on the run.</param>
+        /// <returns></returns>
+        private List<string> GetMapImagesNames(MapDataSO mapDataSo)
         {
             var names = new List<string>();
-            names.Add(GetAssetName(_scene));
+
             if (_previewImage != null)
             {
-                names.Add(GetAssetName(_previewImage));
+                var previewImgName = GetAssetName(_previewImage);
+                names.Add(previewImgName);
+                mapDataSo.PreviewImgPath = previewImgName;
             }
 
             if (_thumbnailImage != null)
             {
-                names.Add(GetAssetName(_thumbnailImage));
+                var thumbnailImgName = GetAssetName(_thumbnailImage);
+                names.Add(thumbnailImgName);
+                mapDataSo.ThumbnailImgPath = thumbnailImgName;
             }
-            
+
             return names;
         }
         /// <summary>
-        /// Returns a list of addressables for all assets that shall be included in the bundle.
+        /// Returns the addressable of the scene.
         /// </summary>
         /// <returns></returns>
-        private List<string> GetAssetsAddressables()
+        private string GetSceneAddressable()
+        {
+            return _mapAssetBundleConstants.SceneFolderName + _scene.name;
+        }
+        /// <summary>
+        /// Returns a list of addressables for preview and thumbnail images that shall be included in the bundle.
+        /// If neither were provided - returns an empty list.
+        /// </summary>
+        /// <returns></returns>
+        private List<string> GetPreviewImagesAddressables()
         {
             var addressables = new List<string>();
-            addressables.Add(_mapAssetBundleConstants.SceneFolderName + _scene.name);
             if (_previewImage != null)
             {
                 addressables.Add(_mapAssetBundleConstants.PreviewImageFolderName + _previewImage.name);
@@ -144,49 +170,77 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             
             return addressables;
         }
-        
-        private void CreateMapMod()
+        /// <summary>
+        /// Manages creation of the preview images asset bundle for the map mod.
+        /// </summary>
+        /// <param name="assetBundleCreator">Bundle creator instance.</param>
+        /// <param name="baseDir">Base direction for the bundle to be saved in.</param>
+        private void CreatePreviewImagesBundle(AssetBundleCreator assetBundleCreator, string baseDir)
         {
-            var baseDir = GetOutputPath();
-            var assetBundleBuilds = new List<AssetBundleBuild>();
-            var assetBundleBuild = new AssetBundleBuild();
+            //Set new asset bundle.
+            assetBundleCreator.CreateNewBundle(_mapName + _mapAssetBundleConstants.PreviewImagesBundleSuffix);
 
-            assetBundleBuild.assetBundleName = _mapName + "Bundle";
-            assetBundleBuild.assetNames = GetAssetsNames().ToArray();
-            assetBundleBuild.addressableNames = GetAssetsAddressables().ToArray();
+            //Set the names of the preview images...
+            var assetBundleNames = GetMapImagesNames(_mapDataSO);
+            assetBundleCreator.SetAssetNames(assetBundleNames);
 
-            assetBundleBuilds.Add(assetBundleBuild);
+            //...the addressables...
+            var assetAddressables = GetPreviewImagesAddressables();
+            assetBundleCreator.SetAddressableNames(assetAddressables);
 
-            if (!Directory.Exists(baseDir))
-            {
-                Directory.CreateDirectory(baseDir);
-            }
-
-            CreateJSONInfoFile(baseDir);
-            BuildPipeline.BuildAssetBundles(baseDir, assetBundleBuilds.ToArray(), BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
-
-            AssetBundleReporter.AssignAssetsToBundle(ref assetBundleBuild.assetNames, assetBundleBuild.assetBundleName, assetBundleBuild.assetBundleVariant);
+            //...and save the bundle with the preview images.
+            assetBundleCreator.SaveBundle(baseDir + _mapAssetBundleConstants.PreviewImagesBundleFolder);
         }
         /// <summary>
-        /// Writes down the data about the map into a JSON file that's located in the main
-        /// directory of the map.
+        /// Sequence of instructions for creating a single scene bundle.
         /// </summary>
-        /// <param name="baseDir">Base directory where the mod is being saved.</param>
-        private void CreateJSONInfoFile(string baseDir)
+        /// <param name="assetBundleCreator"></param>
+        /// <param name="baseDir"></param>
+        private void CreateSceneBundle(AssetBundleCreator assetBundleCreator, string baseDir)
         {
-            if (_scene != null)
-            {
-                _mapDataSO.SceneId = _scene.name;
-            }
+            var assetBundleNames = new List<string>();
+            var assetAddressables = new List<string>();
 
-            var jsonMapData = JsonUtility.ToJson(_mapDataSO);
-            var jsonPath = baseDir + ".json";
-            File.WriteAllText(jsonPath, jsonMapData);
+            //Set new asset bundle.
+            assetBundleCreator.CreateNewBundle(_mapName);
+
+            //Set the name of the scene...
+            var sceneName = GetAssetName(_scene);
+            _mapDataSO.SceneId = sceneName;
+            assetBundleNames.Add(sceneName);
+            assetBundleCreator.SetAssetNames(assetBundleNames);
+
+            //...the addressable...
+            assetAddressables.Add(GetSceneAddressable());
+            assetBundleCreator.SetAddressableNames(assetAddressables);
+
+            //...and save the bundle for the scene alone.
+            assetBundleCreator.SaveBundle(baseDir);
         }
+        /// <summary>
+        /// Manages the creation of the map mod - preview images and the scene itself.
+        /// </summary>
+        private void CreateMapMod()
+        {
+            //Clear fields that are not set in the inspector. These fields are
+            //set here, to create JSON file that describes the bundle.
+            _mapDataSO.ResetInnerFields();
 
+            //First, setup the bundle that contains the preview and thumbnail images of the map.
+            _mapName = StringManipulator.RemoveSpecialCharacters(_mapName);
+
+            var assetBundleCreator = new AssetBundleCreator();
+            var baseDir = GetOutputPath();
+            
+            CreatePreviewImagesBundle(assetBundleCreator, baseDir);
+            CreateSceneBundle(assetBundleCreator, baseDir);
+
+            assetBundleCreator.CreateJSONInfoFile(_mapDataSO, baseDir, _mapName);
+        }
     }
 }
-
+//TODO: assets and scenes cannot be in the same bundle for some reason. First create bundle with images, then create the scene. DONE
+//TODO: Test above thing.
 //https://www.youtube.com/watch?v=1zROlULebXg - creating build pipeline for asset bundles
 //https://www.turiyaware.com/blog/creating-a-moddable-unity-game - modding with unity
 //https://www.youtube.com/watch?v=491TSNwXTIg - how to make editor window unity
