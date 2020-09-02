@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 2853005812
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 887cf7e6cb4ce87ebc839ba996a0e546
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c90fc19e2679e5295d10bd00f33cb4c3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Scenes/GameScenes/CTF/Naru's backyard/DumbThumbnail.png
+- Assets/Scenes/GameScenes/CTF/Naru's backyard/LessDumbPreview.png
+Dependencies: []

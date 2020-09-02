@@ -14,12 +14,22 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
     public class MapData
     {
         public string ShownName { get; set; }
+        public List<string> Authors { get; set; }
         public Image PreviewImg { get; set; }
         public Image ThumbnailImg { get; set; }
-        public List<string> Authors { get; set; }
         public GameplayModesEnum GameplayMode { get; set; }
         public string Description { get; set; }
         public List<SkillType> RequiredSkills { get; set; }
         public string SceneId { get; set; }
+
+        public void ReadData(MapDataSO mapData)
+        {
+            ShownName = mapData.ShownName;
+            Authors = mapData.Authors.ToList();
+            GameplayMode = mapData.GameplayMode;
+            Description = mapData.Description;
+            RequiredSkills = mapData.RequiredSkills.ToList();
+            SceneId = mapData.SceneId;
+        }
     }
 }

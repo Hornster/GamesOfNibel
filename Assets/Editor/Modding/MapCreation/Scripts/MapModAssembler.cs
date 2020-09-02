@@ -177,19 +177,26 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         /// <param name="baseDir">Base direction for the bundle to be saved in.</param>
         private void CreatePreviewImagesBundle(AssetBundleCreator assetBundleCreator, string baseDir)
         {
+            var assetBundleName = _mapName + _mapAssetBundleConstants.PreviewImagesBundleSuffix;
             //Set new asset bundle.
-            assetBundleCreator.CreateNewBundle(_mapName + _mapAssetBundleConstants.PreviewImagesBundleSuffix);
+            assetBundleCreator.CreateNewBundle(assetBundleName);
 
             //Set the names of the preview images...
             var assetBundleNames = GetMapImagesNames(_mapDataSO);
+            if (assetBundleNames.Count <= 0)
+            {
+                return; //No need for creation of images preview if none are existent.
+            }
             assetBundleCreator.SetAssetNames(assetBundleNames);
-
+            
             //...the addressables...
             var assetAddressables = GetPreviewImagesAddressables();
             assetBundleCreator.SetAddressableNames(assetAddressables);
 
             //...and save the bundle with the preview images.
-            assetBundleCreator.SaveBundle(baseDir + _mapAssetBundleConstants.PreviewImagesBundleFolder);
+            var previewBaseDir = Path.Combine(baseDir + _mapAssetBundleConstants.PreviewImagesBundleFolder);
+            assetBundleCreator.SaveBundle(previewBaseDir);
+            _mapDataSO.PreviewBundlePath = Path.Combine(previewBaseDir, assetBundleName);
         }
         /// <summary>
         /// Sequence of instructions for creating a single scene bundle.
@@ -216,6 +223,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
 
             //...and save the bundle for the scene alone.
             assetBundleCreator.SaveBundle(baseDir);
+            _mapDataSO.SceneBundlePath = Path.Combine(baseDir, _mapName);
         }
         /// <summary>
         /// Manages the creation of the map mod - preview images and the scene itself.

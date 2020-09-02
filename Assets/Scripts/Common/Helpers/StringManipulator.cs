@@ -25,7 +25,8 @@ namespace Assets.Scripts.Common.Helpers
                     || c <= 'Z' && c >= 'A'
                     || c <= '9' && c >= '0'
                     || c == '-'
-                    || c == ' ')
+                    || c == ' '
+                    || c == '\'')
                 {
                     stringBuilder.Append(c);
                 }

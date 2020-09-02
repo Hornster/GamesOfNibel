@@ -14,6 +14,13 @@ public class MapDataSO : ScriptableObject, IModJsonInfoFile
     public string Description;
     public SkillType[] RequiredSkills;
 
+    [HideInInspector] 
+    public string SceneBundlePath;
+    /// <summary>
+    /// Path on disk to the bundle containing preview images.
+    /// </summary>
+    [HideInInspector]
+    public string PreviewBundlePath;
     /// <summary>
     /// Stores path to the preview image for the map.
     /// Inner field (is set during bundle asset building).
@@ -40,6 +47,8 @@ public class MapDataSO : ScriptableObject, IModJsonInfoFile
         PreviewImgPath = "";
         ThumbnailImgPath = "";
         SceneId = "";
+        SceneBundlePath = "";
+        PreviewBundlePath = "";
 
         //This is MY CODE and I'm going to put ANY MONSTROSITIES I WANT in here 'kay? 'kay.
     }

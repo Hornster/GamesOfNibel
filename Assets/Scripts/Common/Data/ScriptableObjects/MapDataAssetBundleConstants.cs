@@ -29,7 +29,7 @@ public class MapDataAssetBundleConstants : ScriptableObject
     /// Constant path chunk added to the main map mod base directory designated for the preview images
     /// bundle to be stored in there.
     /// </summary>
-    public readonly string PreviewImagesBundleFolder = "Preview" + Path.DirectorySeparatorChar;
+    public readonly string PreviewImagesBundleFolder = "Preview";
     /// <summary>
     /// Suffix for the preview images bundle name for given map.
     /// </summary>
