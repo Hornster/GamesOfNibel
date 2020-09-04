@@ -13,11 +13,12 @@ public class MapDataAssetBundleConstants : ScriptableObject
     /// The first part of the path in the asset bundle.
     /// </summary>
     [Header("Before sceneId")]
-    public readonly string MapsFolderLocation = "Assets" + Path.DirectorySeparatorChar 
+    public readonly string MapsFolderLocation = "Assets" + Path.DirectorySeparatorChar
+                                                         + "Mods" + Path.DirectorySeparatorChar
                                                          + "AssetBundles" + Path.DirectorySeparatorChar 
                                                          + "Maps" + Path.DirectorySeparatorChar;
 
-    [Header("SceneId placeholder")] 
+    [Header("ScenePath placeholder")] 
     public readonly string ScenePlaceholder = "$SceneName$";
 
     [Header("After sceneId")]

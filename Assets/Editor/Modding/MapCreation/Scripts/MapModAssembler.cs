@@ -59,7 +59,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             if (_mapAssetBundleConstants == null)
             {
                 _allRequirementsMet = false;
-                GUILayout.Label("A reference to the MapDataScriptableObject has to be provided. It contains additional map info.");
+                GUILayout.Label("A reference to the MapDataAssetBundleConstants has to be provided. It contains additional map info.");
             }
             if (_mapName?.Length <= 0)
             {
@@ -83,7 +83,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             {
                 if (_allRequirementsMet)
                 {
-                    _mapDataSO.SceneId = _scene.name;
+                    _mapDataSO.ScenePath = _scene.name;
                     CreateMapMod();
                 }
             }
@@ -155,19 +155,34 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         /// If neither were provided - returns an empty list.
         /// </summary>
         /// <returns></returns>
-        private List<string> GetPreviewImagesAddressables()
+        private List<string> GetPreviewImagesAddressables(MapDataSO mapDataSo)
         {
             var addressables = new List<string>();
+            //if (_previewImage != null)
+            //{
+            //    var previewAddressable = _mapAssetBundleConstants.PreviewImageFolderName + _previewImage.name;
+            //    addressables.Add(previewAddressable);
+            //    _mapDataSO.PreviewImgPath = previewAddressable.ToLowerInvariant();//Unity saves names of the addressables in lower cases.
+            //}
+
+            //if (_thumbnailImage != null)
+            //{
+            //    var thumbnailAddressable = _mapAssetBundleConstants.ThumbnailImageFolderName + _thumbnailImage.name;
+            //    addressables.Add(thumbnailAddressable);
+            //    _mapDataSO.ThumbnailImgPath = thumbnailAddressable.ToLowerInvariant();//Unity saves names of the addressables in lower cases.
+            //}
             if (_previewImage != null)
             {
-                addressables.Add(_mapAssetBundleConstants.PreviewImageFolderName + _previewImage.name);
+                var previewImgName = GetAssetName(_previewImage);
+                addressables.Add(previewImgName);
             }
 
             if (_thumbnailImage != null)
             {
-                addressables.Add(_mapAssetBundleConstants.ThumbnailImageFolderName + _thumbnailImage.name);
+                var thumbnailImgName = GetAssetName(_thumbnailImage);
+                addressables.Add(thumbnailImgName);
             }
-            
+
             return addressables;
         }
         /// <summary>
@@ -190,7 +205,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             assetBundleCreator.SetAssetNames(assetBundleNames);
             
             //...the addressables...
-            var assetAddressables = GetPreviewImagesAddressables();
+            var assetAddressables = GetPreviewImagesAddressables(_mapDataSO);
             assetBundleCreator.SetAddressableNames(assetAddressables);
 
             //...and save the bundle with the preview images.
@@ -213,7 +228,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
 
             //Set the name of the scene...
             var sceneName = GetAssetName(_scene);
-            _mapDataSO.SceneId = sceneName;
+            _mapDataSO.ScenePath = sceneName;
             assetBundleNames.Add(sceneName);
             assetBundleCreator.SetAssetNames(assetBundleNames);
 

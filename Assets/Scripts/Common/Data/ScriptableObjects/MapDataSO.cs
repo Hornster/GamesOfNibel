@@ -22,13 +22,13 @@ public class MapDataSO : ScriptableObject, IModJsonInfoFile
     [HideInInspector]
     public string PreviewBundlePath;
     /// <summary>
-    /// Stores path to the preview image for the map.
+    /// Stores path to the preview image for the map inside the asset bundle.
     /// Inner field (is set during bundle asset building).
     /// </summary>
     [HideInInspector]
     public string PreviewImgPath;
     /// <summary>
-    /// Stores path to the thumbnail image for the map.
+    /// Stores path to the thumbnail image for the map inside the asset bundle.
     /// Inner field (is set during bundle asset building).
     /// </summary>
     [HideInInspector]
@@ -38,7 +38,7 @@ public class MapDataSO : ScriptableObject, IModJsonInfoFile
     /// Inner field (is set during bundle asset building).
     /// </summary>
     [HideInInspector]
-    public string SceneId;
+    public string ScenePath;
     /// <summary>
     /// Resets fields that are not shown to the user as these are used to create json file.
     /// </summary>
@@ -46,7 +46,7 @@ public class MapDataSO : ScriptableObject, IModJsonInfoFile
     {
         PreviewImgPath = "";
         ThumbnailImgPath = "";
-        SceneId = "";
+        ScenePath = "";
         SceneBundlePath = "";
         PreviewBundlePath = "";
 
