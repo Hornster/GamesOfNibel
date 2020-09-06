@@ -3,7 +3,7 @@ CRC: 2039644413
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6575680ccc716caad85675c50fe02506
+    Hash: 2bc6c7f6893cfc30581415c8dc3c3030
   TypeTreeHash:
     serializedVersion: 2
     Hash: c26c25f46e58039e7afa36ba8f92dde6
@@ -138,5 +138,5 @@ ClassTypes:
 - Class: 251
   Script: {instanceID: 0}
 Assets:
-- Assets/Scenes/GameScenes/CTF/Naru's backyard/Naru's backyard.unity
+- Assets/Scenes/GameScenes/Naru's backyard/Naru's backyard.unity
 Dependencies: []

@@ -106,16 +106,6 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             return AssetDatabase.GetAssetOrScenePath(asset);
         }
         /// <summary>
-        /// Returns the name of the scene asset, together with relative path.
-        /// </summary>
-        /// <returns></returns>
-        private string GetSceneAssetName()
-        {
-                var sceneName = GetAssetName(_scene);
-                
-                return sceneName;
-        }
-        /// <summary>
         /// Returns a list containing the names of the preview and thumbnail images for the bundle, together with relative paths.
         /// If no images were provided - the list is empty.
         /// </summary>
@@ -143,14 +133,6 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             return names;
         }
         /// <summary>
-        /// Returns the addressable of the scene.
-        /// </summary>
-        /// <returns></returns>
-        private string GetSceneAddressable()
-        {
-            return _mapAssetBundleConstants.SceneFolderName + _scene.name;
-        }
-        /// <summary>
         /// Returns a list of addressables for preview and thumbnail images that shall be included in the bundle.
         /// If neither were provided - returns an empty list.
         /// </summary>
@@ -158,19 +140,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         private List<string> GetPreviewImagesAddressables(MapDataSO mapDataSo)
         {
             var addressables = new List<string>();
-            //if (_previewImage != null)
-            //{
-            //    var previewAddressable = _mapAssetBundleConstants.PreviewImageFolderName + _previewImage.name;
-            //    addressables.Add(previewAddressable);
-            //    _mapDataSO.PreviewImgPath = previewAddressable.ToLowerInvariant();//Unity saves names of the addressables in lower cases.
-            //}
-
-            //if (_thumbnailImage != null)
-            //{
-            //    var thumbnailAddressable = _mapAssetBundleConstants.ThumbnailImageFolderName + _thumbnailImage.name;
-            //    addressables.Add(thumbnailAddressable);
-            //    _mapDataSO.ThumbnailImgPath = thumbnailAddressable.ToLowerInvariant();//Unity saves names of the addressables in lower cases.
-            //}
+             
             if (_previewImage != null)
             {
                 var previewImgName = GetAssetName(_previewImage);
@@ -233,7 +203,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             assetBundleCreator.SetAssetNames(assetBundleNames);
 
             //...the addressable...
-            assetAddressables.Add(GetSceneAddressable());
+            assetAddressables.Add(sceneName);
             assetBundleCreator.SetAddressableNames(assetAddressables);
 
             //...and save the bundle for the scene alone.

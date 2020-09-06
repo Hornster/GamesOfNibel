@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Assets.Scripts.GUI.Menu.MapSelection;
@@ -82,12 +83,6 @@ namespace Assets.Scripts.Mods.Maps
                 {
                     Debug.Log(assetName);
                 }
-                
-                if (previewBundle == null)
-                {//If no asset bundle was found, no need to perform further operations for this file.
-                    //TODO: report error about not found map.
-                    continue;
-                }
 
                 newMapData.ReadData(mapInfo);
                 if (previewBundle.Contains(mapInfo.PreviewImgPath))
@@ -109,11 +104,21 @@ namespace Assets.Scripts.Mods.Maps
             return loadedBundles;
         }
         /// <summary>
-        /// Loads the scene bundle on demand.
+        /// Loads the scene bundle on demand. If managed to load it - returns the bundle.
+        /// Returned bundle is already checked against the presence of the target map (scene) in it.
         /// </summary>
-        public void LoadMapSceneBundle(MapData mapData)
+        public AssetBundle LoadMapSceneBundle(MapData mapData)
         {
-            //TODO
+            var loadedMapBundle = AssetBundle.LoadFromFile(mapData.SceneBundlePath);
+            var sceneNames = loadedMapBundle.GetAllScenePaths();
+            //if (loadedMapBundle.Contains(mapData.ScenePath))
+            //{
+                return loadedMapBundle;
+            //}
+            //else
+            {
+            //    throw new Exception($"Could not load map from asset bundle at {mapData.SceneBundlePath}. Please make sure that the bundle is present.");
+            }
         }
     }
 }
