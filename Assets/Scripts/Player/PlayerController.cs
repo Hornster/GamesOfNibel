@@ -131,7 +131,6 @@ public class PlayerController : MonoBehaviour
         else if (_playerState.IsTouchingWall || _playerState.IsTouchingWallRemembered)
         {//...or if the player is or WAS holding the wall just a moment ago, do the wall jump.
             _skillsController.UseSkill(SkillType.WallJump);
-            Debug.Log("Wall jump!");
         }
     }
     /// <summary>
@@ -143,7 +142,6 @@ public class PlayerController : MonoBehaviour
         if (_playerState.CanDoubleJump)
         {
             _skillsController.UseSkill(SkillType.DoubleJump);
-            Debug.Log("DOUBLE jump!");
         }
     }
     private void Glide(GlideStages glideStage)

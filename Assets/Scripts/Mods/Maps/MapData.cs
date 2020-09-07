@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Common.Enums;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Assets.Scripts.GUI.Menu.MapSelection
+namespace Assets.Scripts.Mods.Maps
 {
     /// <summary>
     /// Stores data of a single loaded map.

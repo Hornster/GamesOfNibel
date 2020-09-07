@@ -193,7 +193,6 @@ namespace Assets.Scripts.GUI.Menu
         /// <param name="newIndex">Index of a control that shall be selected.</param>
         public void SwitchControls(int newIndex)
         {
-            Debug.Log($"Switching from {_currentSelectedIndex} to {newIndex}.");
             if (_currentSelectedIndex == newIndex)
             {
                 return; //No need to change anything if indexes are the same.

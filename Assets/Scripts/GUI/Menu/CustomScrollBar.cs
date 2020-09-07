@@ -66,7 +66,6 @@ namespace Assets.Scripts.GUI.Menu
         /// </summary>
         public void SelectThisControl()
         {
-            Debug.Log($"Forced selection event for scrollbar!");
             _forcedSelectionEvent?.Invoke(ControlId);
         }
     }

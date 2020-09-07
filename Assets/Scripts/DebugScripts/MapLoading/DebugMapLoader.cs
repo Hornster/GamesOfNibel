@@ -19,13 +19,13 @@ namespace Assets.Scripts.DebugScripts.MapLoading
         [SerializeField] private Image _prevewImage;
         [SerializeField] private Image _thumbnailImage;
 
-        [SerializeField] private AssetBundleLoader _assetBundleLoader;
+        [SerializeField] private MapAssetBundleLoader _mapAssetBundleLoader;
 
         private MapData _loadedMap;
 
         private void Start()
         {
-            var images = _assetBundleLoader.LoadMapAssetBundle();
+            var images = _mapAssetBundleLoader.LoadMapAssetBundle();
 
             _prevewImage.sprite = images[0].PreviewImg;
             _thumbnailImage.sprite = images[0].ThumbnailImg;
@@ -40,7 +40,7 @@ namespace Assets.Scripts.DebugScripts.MapLoading
 
         void LoadMap()
         {
-            var sceneBundle = _assetBundleLoader.LoadMapSceneBundle(_loadedMap);
+            var sceneBundle = _mapAssetBundleLoader.LoadMapSceneBundle(_loadedMap);
             SceneManager.LoadScene(_loadedMap.ScenePath);
         }
         void AppExit()

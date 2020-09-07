@@ -3,6 +3,7 @@
     Properties
     {
         [NoScaleOffset] _MainTex("_MainTex", 2D) = "white" {}
+        [NoScaleOffset]Texture2D_906780E9("MaskTexture", 2D) = "white" {}
         [HDR]Color_D25B2F83("BaseColor", Color) = (2.044308, 7.968627, 7.968627, 1)
         Vector1_5D8C30A("DistortionAmounts", Float) = 0.1
         Vector2_F89F6FDB("DistortionSpeed", Vector) = (0, -0.2, 0, 0)
@@ -11,12 +12,14 @@
         Vector1_444105F2("DissolveScale", Float) = 1.9
         Vector1_45E24A1A("DissolveAngle", Float) = 3.69
         Vector1_B0C7E46C("DissolvePower", Float) = 0.5
-        _Stencil("_Stencil", Float) = 0
-        _StencilOp("_StencilOp", Float) = 1
-        _StencilComp("_StencilComp", Float) = 8
-        _StencilReadMask("_StencilReadMask", Float) = 255
-        _StencilWriteMask("_StencilWriteMask", Float) = 255
-        _ColorMask("_ColorMask", Float) = 15
+        _Stencil("Stencil ID", Float) = 0
+        _StencilComp("StencilComp", Float) = 8
+        _StencilOp("StencilOp", Float) = 0
+        _StencilReadMask("StencilReadMask", Float) = 255
+        _StencilWriteMask("StencilWriteMask", Float) = 255
+        _ColorMask("ColorMask", Float) = 15
+
+        Vector1_CE26F4AA("BrightnessPower", Float) = 10
     }
         SubShader
         {
@@ -27,7 +30,15 @@
                 "Queue" = "Transparent+0"
             }
 
-            
+            Pass
+            {
+                Name "Universal Forward"
+                Tags
+                {
+                    "LightMode" = "UniversalForward"
+                }
+
+            ZTest[unity_GUIZTestMode]
 
             Stencil{
                 Ref[_Stencil]
@@ -37,15 +48,6 @@
                 WriteMask[_StencilWriteMask]
             }
             ColorMask[_ColorMask]
-
-            
-            Pass
-            {
-                Name "Universal Forward"
-                Tags
-                {
-                    "LightMode" = "UniversalForward"
-                }
 
             // Render State
             Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
@@ -125,9 +127,12 @@
             float _StencilReadMask;
             float _StencilWriteMask;
             float _ColorMask;
+            float Vector1_CE26F4AA;
             CBUFFER_END
             TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); float4 _MainTex_TexelSize;
+            TEXTURE2D(Texture2D_906780E9); SAMPLER(samplerTexture2D_906780E9); float4 Texture2D_906780E9_TexelSize;
             SAMPLER(_SampleTexture2D_A487BAE3_Sampler_3_Linear_Repeat);
+            SAMPLER(_SampleTexture2D_57E03179_Sampler_3_Linear_Repeat);
 
             // Graph Functions
 
@@ -279,15 +284,25 @@
                 Unity_Multiply_float(_GradientNoise_49BEC5FB_Out_2, _Power_AE954BD6_Out_2, _Multiply_1CBE5BB9_Out_2);
                 float4 _Multiply_11FBF49E_Out_2;
                 Unity_Multiply_float(_SampleTexture2D_A487BAE3_RGBA_0, (_Multiply_1CBE5BB9_Out_2.xxxx), _Multiply_11FBF49E_Out_2);
+                float4 _SampleTexture2D_57E03179_RGBA_0 = SAMPLE_TEXTURE2D(Texture2D_906780E9, samplerTexture2D_906780E9, IN.uv0.xy);
+                float _SampleTexture2D_57E03179_R_4 = _SampleTexture2D_57E03179_RGBA_0.r;
+                float _SampleTexture2D_57E03179_G_5 = _SampleTexture2D_57E03179_RGBA_0.g;
+                float _SampleTexture2D_57E03179_B_6 = _SampleTexture2D_57E03179_RGBA_0.b;
+                float _SampleTexture2D_57E03179_A_7 = _SampleTexture2D_57E03179_RGBA_0.a;
+                float4 _Multiply_CE6129D4_Out_2;
+                Unity_Multiply_float(_Multiply_11FBF49E_Out_2, _SampleTexture2D_57E03179_RGBA_0, _Multiply_CE6129D4_Out_2);
+                float _Property_9D24B5F2_Out_0 = Vector1_CE26F4AA;
+                float4 _Multiply_5A448973_Out_2;
+                Unity_Multiply_float(_Multiply_CE6129D4_Out_2, (_Property_9D24B5F2_Out_0.xxxx), _Multiply_5A448973_Out_2);
                 float4 _Multiply_D2160EC4_Out_2;
-                Unity_Multiply_float(_Property_FF70338C_Out_0, _Multiply_11FBF49E_Out_2, _Multiply_D2160EC4_Out_2);
+                Unity_Multiply_float(_Property_FF70338C_Out_0, _Multiply_5A448973_Out_2, _Multiply_D2160EC4_Out_2);
                 surface.Albedo = (_Multiply_D2160EC4_Out_2.xyz);
                 surface.Normal = IN.TangentSpaceNormal;
                 surface.Emission = IsGammaSpace() ? float3(0, 0, 0) : SRGBToLinear(float3(0, 0, 0));
                 surface.Metallic = 0;
                 surface.Smoothness = 0.5;
                 surface.Occlusion = 1;
-                surface.Alpha = (_Multiply_11FBF49E_Out_2).x;
+                surface.Alpha = (_Multiply_5A448973_Out_2).x;
                 surface.AlphaClipThreshold = 0;
                 return surface;
             }
@@ -542,9 +557,12 @@
                 float _StencilReadMask;
                 float _StencilWriteMask;
                 float _ColorMask;
+                float Vector1_CE26F4AA;
                 CBUFFER_END
                 TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); float4 _MainTex_TexelSize;
+                TEXTURE2D(Texture2D_906780E9); SAMPLER(samplerTexture2D_906780E9); float4 Texture2D_906780E9_TexelSize;
                 SAMPLER(_SampleTexture2D_A487BAE3_Sampler_3_Linear_Repeat);
+                SAMPLER(_SampleTexture2D_57E03179_Sampler_3_Linear_Repeat);
 
                 // Graph Functions
 
@@ -689,7 +707,17 @@
                     Unity_Multiply_float(_GradientNoise_49BEC5FB_Out_2, _Power_AE954BD6_Out_2, _Multiply_1CBE5BB9_Out_2);
                     float4 _Multiply_11FBF49E_Out_2;
                     Unity_Multiply_float(_SampleTexture2D_A487BAE3_RGBA_0, (_Multiply_1CBE5BB9_Out_2.xxxx), _Multiply_11FBF49E_Out_2);
-                    surface.Alpha = (_Multiply_11FBF49E_Out_2).x;
+                    float4 _SampleTexture2D_57E03179_RGBA_0 = SAMPLE_TEXTURE2D(Texture2D_906780E9, samplerTexture2D_906780E9, IN.uv0.xy);
+                    float _SampleTexture2D_57E03179_R_4 = _SampleTexture2D_57E03179_RGBA_0.r;
+                    float _SampleTexture2D_57E03179_G_5 = _SampleTexture2D_57E03179_RGBA_0.g;
+                    float _SampleTexture2D_57E03179_B_6 = _SampleTexture2D_57E03179_RGBA_0.b;
+                    float _SampleTexture2D_57E03179_A_7 = _SampleTexture2D_57E03179_RGBA_0.a;
+                    float4 _Multiply_CE6129D4_Out_2;
+                    Unity_Multiply_float(_Multiply_11FBF49E_Out_2, _SampleTexture2D_57E03179_RGBA_0, _Multiply_CE6129D4_Out_2);
+                    float _Property_9D24B5F2_Out_0 = Vector1_CE26F4AA;
+                    float4 _Multiply_5A448973_Out_2;
+                    Unity_Multiply_float(_Multiply_CE6129D4_Out_2, (_Property_9D24B5F2_Out_0.xxxx), _Multiply_5A448973_Out_2);
+                    surface.Alpha = (_Multiply_5A448973_Out_2).x;
                     surface.AlphaClipThreshold = 0;
                     return surface;
                 }
@@ -895,9 +923,12 @@
                     float _StencilReadMask;
                     float _StencilWriteMask;
                     float _ColorMask;
+                    float Vector1_CE26F4AA;
                     CBUFFER_END
                     TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); float4 _MainTex_TexelSize;
+                    TEXTURE2D(Texture2D_906780E9); SAMPLER(samplerTexture2D_906780E9); float4 Texture2D_906780E9_TexelSize;
                     SAMPLER(_SampleTexture2D_A487BAE3_Sampler_3_Linear_Repeat);
+                    SAMPLER(_SampleTexture2D_57E03179_Sampler_3_Linear_Repeat);
 
                     // Graph Functions
 
@@ -1042,7 +1073,17 @@
                         Unity_Multiply_float(_GradientNoise_49BEC5FB_Out_2, _Power_AE954BD6_Out_2, _Multiply_1CBE5BB9_Out_2);
                         float4 _Multiply_11FBF49E_Out_2;
                         Unity_Multiply_float(_SampleTexture2D_A487BAE3_RGBA_0, (_Multiply_1CBE5BB9_Out_2.xxxx), _Multiply_11FBF49E_Out_2);
-                        surface.Alpha = (_Multiply_11FBF49E_Out_2).x;
+                        float4 _SampleTexture2D_57E03179_RGBA_0 = SAMPLE_TEXTURE2D(Texture2D_906780E9, samplerTexture2D_906780E9, IN.uv0.xy);
+                        float _SampleTexture2D_57E03179_R_4 = _SampleTexture2D_57E03179_RGBA_0.r;
+                        float _SampleTexture2D_57E03179_G_5 = _SampleTexture2D_57E03179_RGBA_0.g;
+                        float _SampleTexture2D_57E03179_B_6 = _SampleTexture2D_57E03179_RGBA_0.b;
+                        float _SampleTexture2D_57E03179_A_7 = _SampleTexture2D_57E03179_RGBA_0.a;
+                        float4 _Multiply_CE6129D4_Out_2;
+                        Unity_Multiply_float(_Multiply_11FBF49E_Out_2, _SampleTexture2D_57E03179_RGBA_0, _Multiply_CE6129D4_Out_2);
+                        float _Property_9D24B5F2_Out_0 = Vector1_CE26F4AA;
+                        float4 _Multiply_5A448973_Out_2;
+                        Unity_Multiply_float(_Multiply_CE6129D4_Out_2, (_Property_9D24B5F2_Out_0.xxxx), _Multiply_5A448973_Out_2);
+                        surface.Alpha = (_Multiply_5A448973_Out_2).x;
                         surface.AlphaClipThreshold = 0;
                         return surface;
                     }
@@ -1250,9 +1291,12 @@
                         float _StencilReadMask;
                         float _StencilWriteMask;
                         float _ColorMask;
+                        float Vector1_CE26F4AA;
                         CBUFFER_END
                         TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); float4 _MainTex_TexelSize;
+                        TEXTURE2D(Texture2D_906780E9); SAMPLER(samplerTexture2D_906780E9); float4 Texture2D_906780E9_TexelSize;
                         SAMPLER(_SampleTexture2D_A487BAE3_Sampler_3_Linear_Repeat);
+                        SAMPLER(_SampleTexture2D_57E03179_Sampler_3_Linear_Repeat);
 
                         // Graph Functions
 
@@ -1400,11 +1444,21 @@
                             Unity_Multiply_float(_GradientNoise_49BEC5FB_Out_2, _Power_AE954BD6_Out_2, _Multiply_1CBE5BB9_Out_2);
                             float4 _Multiply_11FBF49E_Out_2;
                             Unity_Multiply_float(_SampleTexture2D_A487BAE3_RGBA_0, (_Multiply_1CBE5BB9_Out_2.xxxx), _Multiply_11FBF49E_Out_2);
+                            float4 _SampleTexture2D_57E03179_RGBA_0 = SAMPLE_TEXTURE2D(Texture2D_906780E9, samplerTexture2D_906780E9, IN.uv0.xy);
+                            float _SampleTexture2D_57E03179_R_4 = _SampleTexture2D_57E03179_RGBA_0.r;
+                            float _SampleTexture2D_57E03179_G_5 = _SampleTexture2D_57E03179_RGBA_0.g;
+                            float _SampleTexture2D_57E03179_B_6 = _SampleTexture2D_57E03179_RGBA_0.b;
+                            float _SampleTexture2D_57E03179_A_7 = _SampleTexture2D_57E03179_RGBA_0.a;
+                            float4 _Multiply_CE6129D4_Out_2;
+                            Unity_Multiply_float(_Multiply_11FBF49E_Out_2, _SampleTexture2D_57E03179_RGBA_0, _Multiply_CE6129D4_Out_2);
+                            float _Property_9D24B5F2_Out_0 = Vector1_CE26F4AA;
+                            float4 _Multiply_5A448973_Out_2;
+                            Unity_Multiply_float(_Multiply_CE6129D4_Out_2, (_Property_9D24B5F2_Out_0.xxxx), _Multiply_5A448973_Out_2);
                             float4 _Multiply_D2160EC4_Out_2;
-                            Unity_Multiply_float(_Property_FF70338C_Out_0, _Multiply_11FBF49E_Out_2, _Multiply_D2160EC4_Out_2);
+                            Unity_Multiply_float(_Property_FF70338C_Out_0, _Multiply_5A448973_Out_2, _Multiply_D2160EC4_Out_2);
                             surface.Albedo = (_Multiply_D2160EC4_Out_2.xyz);
                             surface.Emission = IsGammaSpace() ? float3(0, 0, 0) : SRGBToLinear(float3(0, 0, 0));
-                            surface.Alpha = (_Multiply_11FBF49E_Out_2).x;
+                            surface.Alpha = (_Multiply_5A448973_Out_2).x;
                             surface.AlphaClipThreshold = 0;
                             return surface;
                         }
@@ -1612,9 +1666,12 @@
                             float _StencilReadMask;
                             float _StencilWriteMask;
                             float _ColorMask;
+                            float Vector1_CE26F4AA;
                             CBUFFER_END
                             TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); float4 _MainTex_TexelSize;
+                            TEXTURE2D(Texture2D_906780E9); SAMPLER(samplerTexture2D_906780E9); float4 Texture2D_906780E9_TexelSize;
                             SAMPLER(_SampleTexture2D_A487BAE3_Sampler_3_Linear_Repeat);
+                            SAMPLER(_SampleTexture2D_57E03179_Sampler_3_Linear_Repeat);
 
                             // Graph Functions
 
@@ -1761,10 +1818,20 @@
                                 Unity_Multiply_float(_GradientNoise_49BEC5FB_Out_2, _Power_AE954BD6_Out_2, _Multiply_1CBE5BB9_Out_2);
                                 float4 _Multiply_11FBF49E_Out_2;
                                 Unity_Multiply_float(_SampleTexture2D_A487BAE3_RGBA_0, (_Multiply_1CBE5BB9_Out_2.xxxx), _Multiply_11FBF49E_Out_2);
+                                float4 _SampleTexture2D_57E03179_RGBA_0 = SAMPLE_TEXTURE2D(Texture2D_906780E9, samplerTexture2D_906780E9, IN.uv0.xy);
+                                float _SampleTexture2D_57E03179_R_4 = _SampleTexture2D_57E03179_RGBA_0.r;
+                                float _SampleTexture2D_57E03179_G_5 = _SampleTexture2D_57E03179_RGBA_0.g;
+                                float _SampleTexture2D_57E03179_B_6 = _SampleTexture2D_57E03179_RGBA_0.b;
+                                float _SampleTexture2D_57E03179_A_7 = _SampleTexture2D_57E03179_RGBA_0.a;
+                                float4 _Multiply_CE6129D4_Out_2;
+                                Unity_Multiply_float(_Multiply_11FBF49E_Out_2, _SampleTexture2D_57E03179_RGBA_0, _Multiply_CE6129D4_Out_2);
+                                float _Property_9D24B5F2_Out_0 = Vector1_CE26F4AA;
+                                float4 _Multiply_5A448973_Out_2;
+                                Unity_Multiply_float(_Multiply_CE6129D4_Out_2, (_Property_9D24B5F2_Out_0.xxxx), _Multiply_5A448973_Out_2);
                                 float4 _Multiply_D2160EC4_Out_2;
-                                Unity_Multiply_float(_Property_FF70338C_Out_0, _Multiply_11FBF49E_Out_2, _Multiply_D2160EC4_Out_2);
+                                Unity_Multiply_float(_Property_FF70338C_Out_0, _Multiply_5A448973_Out_2, _Multiply_D2160EC4_Out_2);
                                 surface.Albedo = (_Multiply_D2160EC4_Out_2.xyz);
-                                surface.Alpha = (_Multiply_11FBF49E_Out_2).x;
+                                surface.Alpha = (_Multiply_5A448973_Out_2).x;
                                 surface.AlphaClipThreshold = 0;
                                 return surface;
                             }

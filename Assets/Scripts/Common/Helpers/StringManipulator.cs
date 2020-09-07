@@ -34,5 +34,25 @@ namespace Assets.Scripts.Common.Helpers
 
             return stringBuilder.ToString();
         }
+        /// <summary>
+        /// Joins provided strings with provided dividing phrase.
+        /// </summary>
+        /// <param name="dividingPhrase">Will be put after every string in provided list except for the last one.</param>
+        /// <param name="strings">What should be joined.</param>
+        /// <returns></returns>
+        public static string JoinStrings(string dividingPhrase, List<string> strings)
+        {
+            var stringBuilder = new StringBuilder();
+
+            foreach (var part in strings)
+            {
+                stringBuilder.Append(part);
+                stringBuilder.Append(dividingPhrase);
+            }
+
+            stringBuilder.Remove(stringBuilder.Length - dividingPhrase.Length, dividingPhrase.Length);
+
+            return stringBuilder.ToString();
+        }
     }
 }
