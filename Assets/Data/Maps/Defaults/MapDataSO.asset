@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfe4aea585791f448f5c9fc61e67106, type: 3}
   m_Name: MapDataSO
   m_EditorClassIdentifier: 
-  ShownName: 
+  ShownMapName: 
   Authors: []
   GameplayMode: 0
   Description: 
   RequiredSkills: 
+  PreviewImg: {fileID: 0}
+  ThumbnailImg: {fileID: 0}
+  MapAssetBundleConstants: {fileID: 0}
+  Scene: {fileID: 0}
   SceneBundlePath: 
   PreviewBundlePath: 
   PreviewImgPath: 

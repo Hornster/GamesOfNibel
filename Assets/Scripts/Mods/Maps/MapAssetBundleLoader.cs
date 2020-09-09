@@ -120,10 +120,13 @@ namespace Assets.Scripts.Mods.Maps
         /// <returns></returns>
         private Sprite LoadSinglePreviewImage(AssetBundle previewBundle, string path)
         {
-            if (previewBundle.Contains(path))
+            if (previewBundle != null)
             {
-                var previewImg = previewBundle.LoadAsset<Sprite>(path);
-                return previewImg;
+                if (previewBundle.Contains(path))
+                {
+                    var previewImg = previewBundle.LoadAsset<Sprite>(path);
+                    return previewImg;
+                }
             }
 
             return _mapDefaults.DefaultMapPreview;
@@ -141,11 +144,8 @@ namespace Assets.Scripts.Mods.Maps
                 var newMapData = mapper.MapDataFromRawMapData(mapInfo);
                 var previewBundle = AssetBundle.LoadFromFile(mapInfo.PreviewBundlePath);
 
-                if (previewBundle != null)
-                {
-                    newMapData.PreviewImg = LoadSinglePreviewImage(previewBundle, mapInfo.PreviewImgPath);
-                    newMapData.ThumbnailImg = LoadSinglePreviewImage(previewBundle, mapInfo.ThumbnailImgPath);
-                }
+                newMapData.PreviewImg = LoadSinglePreviewImage(previewBundle, mapInfo.PreviewImgPath);
+                newMapData.ThumbnailImg = LoadSinglePreviewImage(previewBundle, mapInfo.ThumbnailImgPath);
 
                 loadedBundles.Add(newMapData);
             }

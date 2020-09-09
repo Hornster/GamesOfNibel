@@ -1,27 +1,32 @@
 ﻿using System;
 using Assets.Scripts.Common.Enums;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Common.Data.ScriptableObjects.MapSelection
 {
+    /// <summary>
+    /// Input point for map mod assembler - stores all required data about given map. EDITOR ONLY!!!
+    /// </summary>
     [CreateAssetMenu(fileName = "MapDataSO", menuName = "ScriptableObjects/MapDataSO", order = 1)]
     public class MapDataSO : ScriptableObject
     {
+        [Header("Map description")]
         public string ShownMapName;
         public string[] Authors;
         public GameplayModesEnum GameplayMode;
         public string Description;
         public SkillType[] RequiredSkills;
 
-
-        public Sprite PreviewImg => _previewImg;
-        public Sprite ThumbnailImg => _thumbnailImg;
-        //The sprite references below have to be visible in the inspector but should not be serialized to JSON.
-        //These will be visible to the code via properties.
-        [SerializeField]
-        private Sprite _previewImg;
-        [SerializeField]
-        private Sprite _thumbnailImg;
+        [Header("Preview images")]
+        public Sprite PreviewImg;
+        public Sprite ThumbnailImg;
+        /// <summary>
+        /// Constants for bundle assets.
+        /// </summary>
+        [Header("Required references")]
+        public MapDataAssetBundleConstants MapAssetBundleConstants;
+        public SceneAsset Scene;
 
         [HideInInspector] 
         public string SceneBundlePath;

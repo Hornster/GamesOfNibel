@@ -10813,6 +10813,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: MapAssetBundleLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 8104468778621450458, guid: 749cc42e47bfeaf4180c5f6fb9b7d269,
+        type: 3}
+      propertyPath: _mapDefaults
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c7ff6d4671ae1549911866f02d8f362,
+        type: 2}
     - target: {fileID: 8104468778621450459, guid: 749cc42e47bfeaf4180c5f6fb9b7d269,
         type: 3}
       propertyPath: m_LocalPosition.x

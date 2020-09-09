@@ -13,9 +13,9 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         //private string _mapName;
         private MapDataSO _mapDataSO;
 
-        private MapDataAssetBundleConstants _mapAssetBundleConstants;
+        //private MapDataAssetBundleConstants _mapAssetBundleConstants;
 
-        private SceneAsset _scene;
+        //private SceneAsset _scene;
         //private Sprite _previewImage;
         //private Sprite _thumbnailImage;
 
@@ -46,7 +46,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         private void ChkInputData()
         {
             _allRequirementsMet = true;
-            if (_scene == null)
+            if (_mapDataSO?.Scene == null)
             {
                 _allRequirementsMet = false;
                 GUILayout.Label("A reference to the scene is required.");
@@ -63,25 +63,15 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
                 GUILayout.Label("Your map must have a name.");
             }
 
-            if (_mapAssetBundleConstants == null)
+            if (_mapDataSO?.MapAssetBundleConstants == null)
             {
                 _allRequirementsMet = false;
                 GUILayout.Label("A reference to the MapDataAssetBundleConstants has to be provided. It contains additional map info.");
             }
-            //if (_mapName?.Length <= 0)
-            //{
-            //    _allRequirementsMet = false;
-            //    GUILayout.Label("Your map must have a name.");
-            //}
         }
         void OnGUI()
         {
-            //_mapName = EditorGUILayout.TextField("Map name", _mapName);
             _mapDataSO = (MapDataSO) EditorGUILayout.ObjectField("Map data SO:", _mapDataSO, typeof(MapDataSO), IsAllowedSceneObject(_mapDataSO));
-            _mapAssetBundleConstants = (MapDataAssetBundleConstants) EditorGUILayout.ObjectField("Map bundle constants:", _mapAssetBundleConstants, typeof(MapDataAssetBundleConstants), IsAllowedSceneObject(_mapAssetBundleConstants));
-            _scene = (SceneAsset)EditorGUILayout.ObjectField("Map scene: ", _scene, typeof(SceneAsset), IsAllowedSceneObject(_scene));
-            //_previewImage = (Sprite)EditorGUILayout.ObjectField("Map preview Image:", _previewImage, typeof(Sprite), IsAllowedSceneObject(_previewImage));
-            //_thumbnailImage = (Sprite)EditorGUILayout.ObjectField("Map thumbnail Image:", _thumbnailImage, typeof(Sprite), IsAllowedSceneObject(_thumbnailImage));
             
             ChkInputData();
 
@@ -90,7 +80,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             {
                 if (_allRequirementsMet)
                 {
-                    _mapDataSO.ScenePath = _scene.name;
+                    _mapDataSO.ScenePath = _mapDataSO.Scene.name;
                     CreateMapMod();
                 }
             }
@@ -101,7 +91,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         /// <returns></returns>
         private string GetOutputPath()
         {
-            return _mapAssetBundleConstants.MapsFolderLocation + _mapDataSO.ShownMapName + Path.DirectorySeparatorChar + _scene.name;
+            return _mapDataSO.MapAssetBundleConstants.MapsFolderLocation + _mapDataSO.ShownMapName + Path.DirectorySeparatorChar + _mapDataSO.Scene.name;
         }
         /// <summary>
         /// Gets the name, together with relative path, of the provided asset.
@@ -169,7 +159,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         /// <param name="baseDir">Base direction for the bundle to be saved in.</param>
         private void CreatePreviewImagesBundle(AssetBundleCreator assetBundleCreator, string baseDir)
         {
-            var assetBundleName = _mapDataSO.ShownMapName + _mapAssetBundleConstants.PreviewImagesBundleSuffix;
+            var assetBundleName = _mapDataSO.ShownMapName + _mapDataSO.MapAssetBundleConstants.PreviewImagesBundleSuffix;
             //Set new asset bundle.
             assetBundleCreator.CreateNewBundle(assetBundleName);
 
@@ -186,7 +176,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             assetBundleCreator.SetAddressableNames(assetAddressables);
 
             //...and save the bundle with the preview images.
-            var previewBaseDir = Path.Combine(baseDir + _mapAssetBundleConstants.PreviewImagesBundleFolder);
+            var previewBaseDir = Path.Combine(baseDir + _mapDataSO.MapAssetBundleConstants.PreviewImagesBundleFolder);
             assetBundleCreator.SaveBundle(previewBaseDir);
             _mapDataSO.PreviewBundlePath = Path.Combine(previewBaseDir, assetBundleName);
         }
@@ -204,7 +194,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             assetBundleCreator.CreateNewBundle(_mapDataSO.ShownMapName);
 
             //Set the name of the scene...
-            var sceneName = GetAssetName(_scene);
+            var sceneName = GetAssetName(_mapDataSO.Scene);
             _mapDataSO.ScenePath = sceneName;
             assetBundleNames.Add(sceneName);
             assetBundleCreator.SetAssetNames(assetBundleNames);
