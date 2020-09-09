@@ -24,7 +24,7 @@ namespace Assets.Scripts.Mods.Maps
         public void SetMapData(MapData mapData)
         {
             MapData = mapData;
-            _textArea.text = mapData.ShownName;
+            _textArea.text = mapData.ShownMapName;
             _thumbnail.sprite = mapData.ThumbnailImg;
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Assets.Editor.Modding.MapCreation.Scripts.Util;
+using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Common.Helpers;
 using UnityEditor;
 using UnityEngine;
@@ -9,14 +10,14 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
 {
     public class MapModAssembler : EditorWindow
     {
-        private string _mapName;
+        //private string _mapName;
         private MapDataSO _mapDataSO;
 
         private MapDataAssetBundleConstants _mapAssetBundleConstants;
 
         private SceneAsset _scene;
-        private Sprite _previewImage;
-        private Sprite _thumbnailImage;
+        //private Sprite _previewImage;
+        //private Sprite _thumbnailImage;
 
         /// <summary>
         /// Were all requirements met upon trying to create the map mod? Updated
@@ -53,7 +54,13 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             if (_mapDataSO == null)
             {
                 _allRequirementsMet = false;
-                GUILayout.Label("A reference to the MapDataScriptableObject has to be provided. It contains additional map info.");
+                GUILayout.Label("A reference to the MapDataScriptableObject (MapDataSO) has to be provided.");
+            }
+
+            if (_mapDataSO?.ShownMapName.Length <= 0)
+            {
+                _allRequirementsMet = false;
+                GUILayout.Label("Your map must have a name.");
             }
 
             if (_mapAssetBundleConstants == null)
@@ -61,20 +68,20 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
                 _allRequirementsMet = false;
                 GUILayout.Label("A reference to the MapDataAssetBundleConstants has to be provided. It contains additional map info.");
             }
-            if (_mapName?.Length <= 0)
-            {
-                _allRequirementsMet = false;
-                GUILayout.Label("Your map must have a name.");
-            }
+            //if (_mapName?.Length <= 0)
+            //{
+            //    _allRequirementsMet = false;
+            //    GUILayout.Label("Your map must have a name.");
+            //}
         }
         void OnGUI()
         {
-            _mapName = EditorGUILayout.TextField("Map name", _mapName);
+            //_mapName = EditorGUILayout.TextField("Map name", _mapName);
             _mapDataSO = (MapDataSO) EditorGUILayout.ObjectField("Map data SO:", _mapDataSO, typeof(MapDataSO), IsAllowedSceneObject(_mapDataSO));
             _mapAssetBundleConstants = (MapDataAssetBundleConstants) EditorGUILayout.ObjectField("Map bundle constants:", _mapAssetBundleConstants, typeof(MapDataAssetBundleConstants), IsAllowedSceneObject(_mapAssetBundleConstants));
             _scene = (SceneAsset)EditorGUILayout.ObjectField("Map scene: ", _scene, typeof(SceneAsset), IsAllowedSceneObject(_scene));
-            _previewImage = (Sprite)EditorGUILayout.ObjectField("Map preview Image:", _previewImage, typeof(Sprite), IsAllowedSceneObject(_previewImage));
-            _thumbnailImage = (Sprite)EditorGUILayout.ObjectField("Map thumbnail Image:", _thumbnailImage, typeof(Sprite), IsAllowedSceneObject(_thumbnailImage));
+            //_previewImage = (Sprite)EditorGUILayout.ObjectField("Map preview Image:", _previewImage, typeof(Sprite), IsAllowedSceneObject(_previewImage));
+            //_thumbnailImage = (Sprite)EditorGUILayout.ObjectField("Map thumbnail Image:", _thumbnailImage, typeof(Sprite), IsAllowedSceneObject(_thumbnailImage));
             
             ChkInputData();
 
@@ -94,7 +101,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         /// <returns></returns>
         private string GetOutputPath()
         {
-            return _mapAssetBundleConstants.MapsFolderLocation + _mapName + Path.DirectorySeparatorChar + _scene.name;
+            return _mapAssetBundleConstants.MapsFolderLocation + _mapDataSO.ShownMapName + Path.DirectorySeparatorChar + _scene.name;
         }
         /// <summary>
         /// Gets the name, together with relative path, of the provided asset.
@@ -116,16 +123,16 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         {
             var names = new List<string>();
 
-            if (_previewImage != null)
+            if (_mapDataSO.PreviewImg != null)
             {
-                var previewImgName = GetAssetName(_previewImage);
+                var previewImgName = GetAssetName(_mapDataSO.PreviewImg);
                 names.Add(previewImgName);
                 mapDataSo.PreviewImgPath = previewImgName;
             }
 
-            if (_thumbnailImage != null)
+            if (_mapDataSO.ThumbnailImg != null)
             {
-                var thumbnailImgName = GetAssetName(_thumbnailImage);
+                var thumbnailImgName = GetAssetName(_mapDataSO.ThumbnailImg);
                 names.Add(thumbnailImgName);
                 mapDataSo.ThumbnailImgPath = thumbnailImgName;
             }
@@ -141,15 +148,15 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         {
             var addressables = new List<string>();
              
-            if (_previewImage != null)
+            if (_mapDataSO.PreviewImg != null)
             {
-                var previewImgName = GetAssetName(_previewImage);
+                var previewImgName = GetAssetName(_mapDataSO.PreviewImg);
                 addressables.Add(previewImgName);
             }
 
-            if (_thumbnailImage != null)
+            if (_mapDataSO.ThumbnailImg != null)
             {
-                var thumbnailImgName = GetAssetName(_thumbnailImage);
+                var thumbnailImgName = GetAssetName(_mapDataSO.ThumbnailImg);
                 addressables.Add(thumbnailImgName);
             }
 
@@ -162,7 +169,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         /// <param name="baseDir">Base direction for the bundle to be saved in.</param>
         private void CreatePreviewImagesBundle(AssetBundleCreator assetBundleCreator, string baseDir)
         {
-            var assetBundleName = _mapName + _mapAssetBundleConstants.PreviewImagesBundleSuffix;
+            var assetBundleName = _mapDataSO.ShownMapName + _mapAssetBundleConstants.PreviewImagesBundleSuffix;
             //Set new asset bundle.
             assetBundleCreator.CreateNewBundle(assetBundleName);
 
@@ -194,7 +201,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             var assetAddressables = new List<string>();
 
             //Set new asset bundle.
-            assetBundleCreator.CreateNewBundle(_mapName);
+            assetBundleCreator.CreateNewBundle(_mapDataSO.ShownMapName);
 
             //Set the name of the scene...
             var sceneName = GetAssetName(_scene);
@@ -208,7 +215,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
 
             //...and save the bundle for the scene alone.
             assetBundleCreator.SaveBundle(baseDir);
-            _mapDataSO.SceneBundlePath = Path.Combine(baseDir, _mapName);
+            _mapDataSO.SceneBundlePath = Path.Combine(baseDir, _mapDataSO.ShownMapName);
         }
         /// <summary>
         /// Manages the creation of the map mod - preview images and the scene itself.
@@ -220,7 +227,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             _mapDataSO.ResetInnerFields();
 
             //First, setup the bundle that contains the preview and thumbnail images of the map.
-            _mapName = StringManipulator.RemoveSpecialCharacters(_mapName);
+            _mapDataSO.ShownMapName = StringManipulator.RemoveSpecialCharacters(_mapDataSO.ShownMapName);
 
             var assetBundleCreator = new AssetBundleCreator();
             var baseDir = GetOutputPath();
@@ -228,7 +235,10 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             CreatePreviewImagesBundle(assetBundleCreator, baseDir);
             CreateSceneBundle(assetBundleCreator, baseDir);
 
-            assetBundleCreator.CreateJSONInfoFile(_mapDataSO, baseDir, _mapName);
+            var mapper = new DataMapper();
+            var serializableMapData = mapper.MapDataSOToRawMapData(_mapDataSO);
+
+            assetBundleCreator.CreateJSONInfoFile(serializableMapData, baseDir, serializableMapData.ShownMapName);
         }
     }
 }

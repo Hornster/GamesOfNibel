@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3980589282
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 76f83030d07d90b62ef6925e27c789a4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c90fc19e2679e5295d10bd00f33cb4c3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Debug/Scenes/FlagCaptureTest/FlagCaptureTestPreview.png
+- Assets/Debug/Scenes/FlagCaptureTest/FlagCaptureTestThumbnail.png
+Dependencies: []

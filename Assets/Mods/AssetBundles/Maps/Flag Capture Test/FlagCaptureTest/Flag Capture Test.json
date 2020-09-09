@@ -1,0 +1,14 @@
+{
+  "ShownMapName": "Flag Capture Test",
+  "Authors": [
+  ],
+  "GameplayMode": 0,
+  "Description": "Ulele",
+  "RequiredSkills": [
+  ],
+  "SceneBundlePath": "Assets\\Mods\\AssetBundles\\Maps\\Flag Capture Test\\FlagCaptureTest\\Flag Capture Test",
+  "PreviewBundlePath": "Assets\\Mods\\AssetBundles\\Maps\\Flag Capture Test\\FlagCaptureTestPreview\\Flag Capture TestPreviewImages",
+  "PreviewImgPath": "Assets/Debug/Scenes/FlagCaptureTest/FlagCaptureTestPreview.png",
+  "ThumbnailImgPath": "Assets/Debug/Scenes/FlagCaptureTest/FlagCaptureTestThumbnail.png",
+  "ScenePath": "Assets/Debug/Scenes/FlagCaptureTest/FlagCaptureTest.unity"
+}

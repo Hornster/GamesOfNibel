@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Mods.Maps;
@@ -41,6 +42,13 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         [SerializeField] private GameObject _skillControlsContainer;
         private readonly Dictionary<SkillType, SkillControlManager> _skillControls = new Dictionary<SkillType, SkillControlManager>();
 
+        /// <summary>
+        /// Used when corresponding piece of data from the map could not be loaded.
+        /// </summary>
+        [Header("Default values")] 
+        [SerializeField]
+        private MapSelectionDefaults _selectionDefaults;
+
         private void Start()
         {
             var controls = _skillControlsContainer.GetComponentsInChildren<SkillControlManager>();
@@ -55,14 +63,14 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         /// <param name="mapData"></param>
         private void UpdateMapDetails(MapData mapData)
         {
-            _mapName.text = mapData.ShownName;
-            _mapAuthors.text = StringManipulator.JoinStrings(", ", mapData.Authors);
-            _mapMode.text = mapData.GameplayMode.ToString();
-            _description.text = mapData.Description;
+            _mapName.text = mapData?.ShownMapName?.Length > 0 ? mapData.ShownMapName : _selectionDefaults.DefaultMapName;
+            _mapAuthors.text = mapData?.Authors?.Count > 0 ? StringManipulator.JoinStrings(", ", mapData.Authors) : _selectionDefaults.DefaultMapAuthors;
+            _mapMode.text = mapData != null ? mapData.GameplayMode.ToString() : _selectionDefaults.DefaultMapMode;
+            _description.text = mapData?.Description?.Length > 0 ? mapData.Description : _selectionDefaults.DefaultMapDescription;
         }
         private void UpdatePreviewImg(Sprite mapPreview)
         {
-            _previewImage.sprite = mapPreview;
+            _previewImage.sprite = mapPreview != null ? mapPreview : _selectionDefaults.DefaultMapPreview;
         }
         /// <summary>
         /// Updates all skills accordingly to required for currently PREVIEWED MAP required skill set.
@@ -91,7 +99,7 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         /// <param name="mapData">Data used to update the preview.</param>
         public void UpdatePreview(MapData mapData)
         {
-            UpdatePreviewImg(mapData.PreviewImg != null ? mapData.PreviewImg : _noPreviewPlaceholder);
+            UpdatePreviewImg(mapData?.PreviewImg);
             UpdateMapDetails(mapData);
             UpdateSkillsState(mapData);
         }

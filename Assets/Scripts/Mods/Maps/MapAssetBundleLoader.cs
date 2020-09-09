@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Common.Exceptions;
+using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.GUI.Menu.MapSelection;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +18,10 @@ namespace Assets.Scripts.Mods.Maps
         /// Used to serialize raw map data.
         /// </summary>
         [SerializeField] private MapDataSO _defaultSO;
+        /// <summary>
+        /// If part of info of the map is not found, this will be used to provide default values.
+        /// </summary>
+        [SerializeField] private MapSelectionDefaults _mapDefaults;
         /// <summary>
         /// Contains list of errors that emerged during last mod loading (searching for json files and reading mass data).
         /// Errors concerning single action (like selecting a map) are not contained in here and are simply thrown.
@@ -80,60 +86,65 @@ namespace Assets.Scripts.Mods.Maps
         /// </summary>
         /// <param name="potentialMaps">Read JSON files.</param>
         /// <returns></returns>
-        private List<MapDataSO> ParseJsonInfo(List<string> potentialMaps)
+        private List<RawMapData> ParseJsonInfo(List<string> potentialMaps)
         {
-            var mapsInfos = new List<MapDataSO>(potentialMaps.Count);
+            var mapsInfos = new List<RawMapData>(potentialMaps.Count);
 
             foreach (var potentialMap in potentialMaps)
             {
-                var readMapAttempt = Instantiate(_defaultSO);
+                //var readMapAttempt = Instantiate(_defaultSO);
                 try
                 {
-                    JsonUtility.FromJsonOverwrite(potentialMap, readMapAttempt);
+                    var readMapAttempt = JsonUtility.FromJson<RawMapData>(potentialMap);
+                    if (readMapAttempt != null)
+                    {
+                        mapsInfos.Add(readMapAttempt);
+                    }
                 }
                 catch (Exception ex)
                 {
                     ErrorsList.Add(new ModLoadingException($"Could not parse mod config file! Additional info: \n" + ex.Message));
                 }
                 //TODO: Add check if the map exists. Simply check if the file is present.
-                if (readMapAttempt != null)
-                {
-                    mapsInfos.Add(readMapAttempt);
-                }
+
             }
 
             return mapsInfos;
         }
         /// <summary>
+        /// Tries to load a preview sprite under provided address in provided asset bundle. If successful - returns
+        /// the loaded sprite. If failed - returns default sprite.
+        /// </summary>
+        /// <param name="previewBundle"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private Sprite LoadSinglePreviewImage(AssetBundle previewBundle, string path)
+        {
+            if (previewBundle.Contains(path))
+            {
+                var previewImg = previewBundle.LoadAsset<Sprite>(path);
+                return previewImg;
+            }
+
+            return _mapDefaults.DefaultMapPreview;
+        }
+        /// <summary>
         /// Loads scene bundle and reads data, including images, where available. 
         /// </summary>
         /// <param name="mapInfos">Raw info about images. Will be used to find and read from asset bundles.</param>
-        private List<MapData> LoadPreviewImagesBundle(List<MapDataSO> mapInfos)
+        private List<MapData> LoadPreviewImagesBundle(List<RawMapData> mapInfos)
         {
+            var mapper = new DataMapper();
             var loadedBundles = new List<MapData>();
             foreach (var mapInfo in mapInfos)
             {
-                var newMapData = new MapData();
+                var newMapData = mapper.MapDataFromRawMapData(mapInfo);
                 var previewBundle = AssetBundle.LoadFromFile(mapInfo.PreviewBundlePath);
 
-                if (previewBundle == null)
+                if (previewBundle != null)
                 {
-                    continue;//The bundle waas not loaded so no reason to read it.
-                }
-
-
-                newMapData.ReadData(mapInfo);
-                if (previewBundle.Contains(mapInfo.PreviewImgPath))
-                {
-                    //TODO despite saying that there's an image, it cannot load the asset. Eh.
-                    var previewImg = previewBundle.LoadAsset<Sprite>(mapInfo.PreviewImgPath);
-                    newMapData.PreviewImg = previewImg;
-                }
-
-                if (previewBundle.Contains(mapInfo.ThumbnailImgPath))
-                {
-                    var thumbnailImg = previewBundle.LoadAsset<Sprite>(mapInfo.ThumbnailImgPath);
-                    newMapData.ThumbnailImg = thumbnailImg;
+                    newMapData.PreviewImg = LoadSinglePreviewImage(previewBundle, mapInfo.PreviewImgPath);
+                    newMapData.ThumbnailImg = LoadSinglePreviewImage(previewBundle, mapInfo.ThumbnailImgPath);
                 }
 
                 loadedBundles.Add(newMapData);

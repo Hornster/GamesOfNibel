@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Common.Enums;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Mods.Maps
@@ -10,7 +12,7 @@ namespace Assets.Scripts.Mods.Maps
     /// </summary>
     public class MapData
     {
-        public string ShownName { get; set; }
+        public string ShownMapName { get; set; }
         public List<string> Authors { get; set; }
         public Sprite PreviewImg { get; set; }
         public Sprite ThumbnailImg { get; set; }
@@ -19,16 +21,5 @@ namespace Assets.Scripts.Mods.Maps
         public List<SkillType> RequiredSkills { get; set; }
         public string ScenePath { get; set; }
         public string SceneBundlePath { get; set; }
-
-        public void ReadData(MapDataSO mapData)
-        {
-            ShownName = mapData.ShownName;
-            Authors = mapData.Authors.ToList();
-            GameplayMode = mapData.GameplayMode;
-            Description = mapData.Description;
-            RequiredSkills = mapData.RequiredSkills.ToList();
-            ScenePath = mapData.ScenePath;
-            SceneBundlePath = mapData.SceneBundlePath;
-        }
     }
 }
