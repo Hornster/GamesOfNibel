@@ -57,7 +57,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
                 GUILayout.Label("A reference to the MapDataScriptableObject (MapDataSO) has to be provided.");
             }
 
-            if (_mapDataSO?.ShownMapName.Length <= 0)
+            if (_mapDataSO?.ShownMapName?.Length <= 0)
             {
                 _allRequirementsMet = false;
                 GUILayout.Label("Your map must have a name.");

@@ -30,6 +30,9 @@ namespace Assets.Scripts.GUI.Menu.Interface
         /// Called upon pressing/using the control.
         /// </summary>
         void ControlPressed();
-
+        /// <summary>
+        /// Called when the pointer left the control's area.
+        /// </summary>
+        void PointerLeftControl();
     }
 }

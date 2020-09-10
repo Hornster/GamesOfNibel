@@ -82,6 +82,14 @@ namespace Assets.Scripts.GUI.Menu
             _shaderDisabler.EnableShader();
         }
         /// <summary>
+        /// Calls the _onStoppedPointing event handler.
+        /// </summary>
+        public void PointerLeftControl()
+        {
+            DeselectControl();
+        }
+
+        /// <summary>
         /// Used to disable selection of this selectable control. (selection after pressing it)
         /// </summary>
         public void DisableSelection()

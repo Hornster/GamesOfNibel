@@ -19,11 +19,15 @@ namespace Assets.Scripts.GUI.Menu
         /// <summary>
         /// All events that shall be called upon clicking the button.
         /// </summary>
-        [Header("Required references")]
         [SerializeField] private UnityEvent _assignedEvents;
+        /// <summary>
+        /// Called when the button has been stopped being pointed at.
+        /// </summary>
+        [SerializeField] private UnityEvent _onStoppedPointingAt;
         /// <summary>
         /// Reference to the animator component.
         /// </summary>
+        [Header("Required references")]
         [SerializeField] private Animator _animator;
         /// <summary>
         /// Reference to the skill icon that shall have the color updated.
@@ -70,6 +74,15 @@ namespace Assets.Scripts.GUI.Menu
             _animator.SetBool(_pressedParamName, true);
             _assignedEvents?.Invoke();
         }
+
+        /// <summary>
+        /// For regular switch control does the same as deselect.
+        /// </summary>
+        public void PointerLeftControl()
+        {
+            _onStoppedPointingAt?.Invoke();
+        }
+
         /// <summary>
         /// Changes the color of this control to provided one.
         /// </summary>

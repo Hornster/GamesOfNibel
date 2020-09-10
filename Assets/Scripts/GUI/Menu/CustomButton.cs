@@ -12,11 +12,16 @@ namespace Assets.Scripts.GUI.Menu
         /// <summary>
         /// All events that shall be called upon clicking the button.
         /// </summary>
-        [Header("Required references")]
-        [SerializeField] private UnityEvent _assignedEvents;
+        [Header("Event handlers")]
+        [SerializeField] private UnityEvent _onPressed;
+        /// <summary>
+        /// Called when the button has been stopped being pointed at.
+        /// </summary>
+        [SerializeField] private UnityEvent _onStoppedPointingAt;
         /// <summary>
         /// Reference to the animator component.
         /// </summary>
+        [Header("Required references")]
         [SerializeField] private Animator _animator;
 
         [Header("Animator params")] 
@@ -52,7 +57,14 @@ namespace Assets.Scripts.GUI.Menu
         public void ControlPressed()
         {
             _animator.SetBool(_pressedParamName, true);
-            _assignedEvents?.Invoke();
+            _onPressed?.Invoke();
+        }
+        /// <summary>
+        /// For regular button does the same as deselect.
+        /// </summary>
+        public void PointerLeftControl()
+        {
+            _onStoppedPointingAt?.Invoke();
         }
     }
 }

@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Debug/Scenes/TestScene.unity
+    path: Assets/Debug/Scenes/TestScene/TestScene.unity
     guid: e6d5ee18814e61543a45b0d55067f3a8
   - enabled: 0
     path: Assets/Scenes/GameScenes/Tutorial/Bootcamp Movement.unity

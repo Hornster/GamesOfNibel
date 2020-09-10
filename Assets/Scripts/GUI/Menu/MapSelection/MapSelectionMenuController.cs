@@ -51,6 +51,7 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         {
             _previewedMap = mapControl;
             _previewManager.UpdatePreview(mapControl.MapData);
+            Debug.Log("Changed preview - pointed at.");
         }
         /// <summary>
         /// Called when given map has been selected as match one.
@@ -62,11 +63,15 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
             _selectedMap = mapControl;
         }
         /// <summary>
-        /// Called when player stopped pointing at given map.
+        /// Called when player stopped pointing at any map.
         /// </summary>
         private void StoppedPointingAtMap()
         {
-            //TODO
+            if (_selectedMap != null)
+            {
+                _previewManager.UpdatePreview(_selectedMap.MapData);
+                Debug.Log("Changed preview - stopped pointing at.");
+            }
         }
     }
 }

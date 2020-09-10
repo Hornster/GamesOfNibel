@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfe4aea585791f448f5c9fc61e67106, type: 3}
+  m_Name: TestSceneSO
+  m_EditorClassIdentifier: 
+  ShownMapName: Test Scene
+  Authors:
+  - Zilog-Z80
+  GameplayMode: 1
+  Description: When the winged hussars arrived A cry for help in time of need, await
+    relief from holy league 60 days of siege, outnumbered and weak Sent a message
+    to the sky, wounded soldiers left to die Will they hold the wall or will the
+    city fall Dedication Dedication They're outnumbered 15 to one And the battle's
+    begun Then the winged hussars arrived Coming down the mountainside Then the winged
+    hussars arrived Coming down they turned the tide As the days are passing by and
+    as the dead are piling high No escape and no salvation Trenches to explosive
+    halls are buried deep beneath the walls Plant the charges there and watch the
+    city fear Desperation Desperation It's a desperate race against the mine And
+    a race against time Then the winged hussars arrived Coming down the mountainside
+    Then the winged hussars arrived Coming down they turned the tide Cannonballs
+    are coming down from the sky Janissaries are you ready to die? We will seek our
+    vengeance eye for an eye You'll be stopped upon the steps of our gate On this
+    field you're only facing our hate But back home the sultan's sealing your fate
+    We remember In September That's the night Vienna was freed We made the enemy
+    bleed! Storm clouds, fire and steel Death from above make their enemy kneel
+  RequiredSkills: 000000000100000003000000
+  PreviewImg: {fileID: 21300000, guid: 676348676ce6bc446a6b2da33faeb96a, type: 3}
+  ThumbnailImg: {fileID: 0}
+  MapAssetBundleConstants: {fileID: 11400000, guid: 53eb7e63772834345b3cd1007e84b2e3,
+    type: 2}
+  Scene: {fileID: 102900000, guid: e6d5ee18814e61543a45b0d55067f3a8, type: 3}
+  SceneBundlePath: 
+  PreviewBundlePath: 
+  PreviewImgPath: Assets/Debug/Scenes/TestScene/TestScenePreview.png
+  ThumbnailImgPath: 
+  ScenePath: 

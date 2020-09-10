@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.GUI.Menu.Interface;
+using JetBrains.Annotations;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -47,6 +48,8 @@ namespace Assets.Scripts.GUI.Menu
         /// Reference to the UI caster. Enables the controls to react to the mouse.
         /// </summary>
         private GUIMouseCaster _guiMouseCaster;
+
+        private ICustomMenuControl _currentlyPointedAtControl;
         // Start is called before the first frame update
         void Start()
         {
@@ -156,6 +159,23 @@ namespace Assets.Scripts.GUI.Menu
             }
         }
         /// <summary>
+        /// Checks if the pointer left the currently pointed at control area. If so, forces reaction on the old control
+        /// and nulls it.
+        /// </summary>
+        private void PointerLeftCurrentControl()
+        {
+            if (_currentlyPointedAtControl != null)
+            {
+                var isButtonPresent = _controls.TryGetValue(_currentSelectedIndex, out var control);
+                if (isButtonPresent)
+                {
+                    control.PointerLeftControl();
+                }
+
+                _currentlyPointedAtControl = null;
+            }
+        }
+        /// <summary>
         /// Checks the mouse position and forces selection changes accordingly.
         /// </summary>
         /// <param name="isPressed">Is the left mouse control pressed (submit control)?</param>
@@ -167,10 +187,17 @@ namespace Assets.Scripts.GUI.Menu
 
             var hitControl = castResult.gameObject.GetComponent<ICustomMenuControl>();
 
-            if (hitControl == null) return;
+            if (hitControl == null)
+            {
+                PointerLeftCurrentControl();
+                return;
+            }
 
+            _currentlyPointedAtControl = hitControl;
             int controlId = hitControl.ControlId;
-
+            //TODO: add calling for pointer left. Remember last control that you can point at
+            //and if during next check that control could not be found in the returned hit stack - call
+            //pointerLeft for it before switching it.
             if (isPressed)
             {
                 PressControl(controlId);
@@ -193,10 +220,12 @@ namespace Assets.Scripts.GUI.Menu
         /// <param name="newIndex">Index of a control that shall be selected.</param>
         public void SwitchControls(int newIndex)
         {
-            if (_currentSelectedIndex == newIndex)
-            {
-                return; //No need to change anything if indexes are the same.
-            }
+            //if (_currentSelectedIndex == newIndex)
+            //{
+            //    return; //No need to change anything if indexes are the same.
+            //}
+
+            //PointerLeftCurrentControl();
             DeselectControl(_currentSelectedIndex);
             _currentSelectedIndex = newIndex;
             ChkIndexRange();

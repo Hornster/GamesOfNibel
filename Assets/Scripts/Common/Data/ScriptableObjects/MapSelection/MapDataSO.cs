@@ -26,6 +26,7 @@ namespace Assets.Scripts.Common.Data.ScriptableObjects.MapSelection
         /// </summary>
         [Header("Required references")]
         public MapDataAssetBundleConstants MapAssetBundleConstants;
+
         public SceneAsset Scene;
 
         [HideInInspector] 

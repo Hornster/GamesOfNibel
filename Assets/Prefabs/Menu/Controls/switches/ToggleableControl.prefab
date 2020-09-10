@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 5315743612008512227}
   - component: {fileID: 5315743612008512224}
   - component: {fileID: 5315743612008512225}
-  - component: {fileID: 98473351593547408}
+  - component: {fileID: 7302407682949794705}
   m_Layer: 0
   m_Name: SkillBg
   m_TagString: Untagged
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &98473351593547408
+--- !u!114 &7302407682949794705
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7466735b613f1e5438926b3b9eb3d4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _assignedEvents:
+  _onPressed:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5080205402494105201}
@@ -247,6 +247,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onStoppedPointingAt:
+    m_PersistentCalls:
+      m_Calls: []
   _animator: {fileID: 2535973262598521422}
   _idleParamName: idle
   _selectedParamName: selected
