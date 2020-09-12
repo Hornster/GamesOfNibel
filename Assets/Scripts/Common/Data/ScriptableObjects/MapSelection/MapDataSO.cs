@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Common.Enums;
 using UnityEditor;
 using UnityEngine;
 
@@ -27,7 +26,7 @@ namespace Assets.Scripts.Common.Data.ScriptableObjects.MapSelection
         [Header("Required references")]
         public MapDataAssetBundleConstants MapAssetBundleConstants;
 
-        public SceneAsset Scene;
+        //public SceneAsset Scene;
 
         [HideInInspector] 
         public string SceneBundlePath;

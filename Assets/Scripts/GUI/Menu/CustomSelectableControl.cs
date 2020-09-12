@@ -64,7 +64,8 @@ namespace Assets.Scripts.GUI.Menu
             _animator.SetBool(_idleParamName, true);
             _animator.SetBool(_pointedAtParamName, false);
             _animator.SetBool(_pressedParamName, false);
-            _onStoppedPointing?.Invoke();
+            //_onStoppedPointing?.Invoke();
+            Debug.Log("DeselectControl() called from " + _mapData.MapData.ShownMapName);
         }
 
         public void SelectControl()
@@ -72,6 +73,7 @@ namespace Assets.Scripts.GUI.Menu
             _animator.SetBool(_idleParamName, false);
             _animator.SetBool(_pointedAtParamName, true);
             _onPointedAt?.Invoke(this);
+            Debug.Log("SelectControl() called from " + _mapData.MapData.ShownMapName);
         }
 
         public void ControlPressed()
@@ -86,7 +88,7 @@ namespace Assets.Scripts.GUI.Menu
         /// </summary>
         public void PointerLeftControl()
         {
-            DeselectControl();
+            _onStoppedPointing?.Invoke();
         }
 
         /// <summary>

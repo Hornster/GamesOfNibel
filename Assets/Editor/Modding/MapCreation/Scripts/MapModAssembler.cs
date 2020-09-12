@@ -15,7 +15,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
 
         //private MapDataAssetBundleConstants _mapAssetBundleConstants;
 
-        //private SceneAsset _scene;
+        private SceneAsset _scene;
         //private Sprite _previewImage;
         //private Sprite _thumbnailImage;
 
@@ -46,7 +46,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         private void ChkInputData()
         {
             _allRequirementsMet = true;
-            if (_mapDataSO?.Scene == null)
+            if (_scene == null)
             {
                 _allRequirementsMet = false;
                 GUILayout.Label("A reference to the scene is required.");
@@ -72,7 +72,8 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         void OnGUI()
         {
             _mapDataSO = (MapDataSO) EditorGUILayout.ObjectField("Map data SO:", _mapDataSO, typeof(MapDataSO), IsAllowedSceneObject(_mapDataSO));
-            
+            _scene = (SceneAsset)EditorGUILayout.ObjectField("Scene file (asset):", _scene, typeof(SceneAsset), IsAllowedSceneObject(_scene));
+
             ChkInputData();
 
 
@@ -80,7 +81,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             {
                 if (_allRequirementsMet)
                 {
-                    _mapDataSO.ScenePath = _mapDataSO.Scene.name;
+                    _mapDataSO.ScenePath = _scene.name;
                     CreateMapMod();
                 }
             }
@@ -91,7 +92,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
         /// <returns></returns>
         private string GetOutputPath()
         {
-            return _mapDataSO.MapAssetBundleConstants.MapsFolderLocation + _mapDataSO.ShownMapName + Path.DirectorySeparatorChar + _mapDataSO.Scene.name;
+            return _mapDataSO.MapAssetBundleConstants.MapsFolderLocation + _mapDataSO.ShownMapName + Path.DirectorySeparatorChar + _scene.name;
         }
         /// <summary>
         /// Gets the name, together with relative path, of the provided asset.
@@ -194,7 +195,7 @@ namespace Assets.Editor.Modding.MapCreation.Scripts
             assetBundleCreator.CreateNewBundle(_mapDataSO.ShownMapName);
 
             //Set the name of the scene...
-            var sceneName = GetAssetName(_mapDataSO.Scene);
+            var sceneName = GetAssetName(_scene);
             _mapDataSO.ScenePath = sceneName;
             assetBundleNames.Add(sceneName);
             assetBundleCreator.SetAssetNames(assetBundleNames);
