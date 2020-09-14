@@ -11,28 +11,27 @@ namespace Assets.Scripts.GUI.Menu.Transitions
     public class MenuTransitionManager : MonoBehaviour
     {
         /// <summary>
-        /// All available menus.
-        /// </summary>
-        private Dictionary<MenuType, MenuVisibilityController> _availableMenus = new Dictionary<MenuType, MenuVisibilityController>();
-        /// <summary>
-        /// How long does it take to fade in or fade out.
-        /// </summary>
-        private float _transitionTime = 0.5f;
-        /// <summary>
         /// Reference to the gameobject that has menus as children.
         /// </summary>
         [Tooltip("Gameobject that has menus as children in it.")]
+        [SerializeField]
         private GameObject _menusParent;
-
-        private MenuTransitionController _transitionController;
+        [Tooltip("Which menu shall show up as first?")]
+        [SerializeField]
+        private MenuType _startingMenu = MenuType.WelcomeMenu;
+        /// <summary>
+        /// All available menus.
+        /// </summary>
+        private Dictionary<MenuType, MenuTransition> _availableMenus = new Dictionary<MenuType, MenuTransition>();
         private void Start()
         {
-            var foundMenus = _menusParent.GetComponentsInChildren<MenuVisibilityController>();
+            var foundMenus = _menusParent.GetComponentsInChildren<MenuTransition>();
             foreach (var menu in foundMenus)
             {
                 _availableMenus.Add(menu.MenuType, menu);
             }
 
+            PerformTransition(_startingMenu, _startingMenu);
         }
         /// <summary>
         /// Performs transition from given menu to given menu.
@@ -44,16 +43,17 @@ namespace Assets.Scripts.GUI.Menu.Transitions
             //TODO get the main gameobjects for the menus passed above. CanvasGroups can allow you to
             //TODO hide entire menus and disable raycasting for them.
             //TODO start fade out transition, when it finishes toggle both menus and start fade in transition.
-            //Fade out current menu.
-            StartCoroutine(FadeOut(_transitionController));
             //Get and change visibility of the current and next menu.
             var currentMenu = GetVisibilityControllerForMenu(fromMenu);
             currentMenu?.HideMenu();
 
             var nextMenu = GetVisibilityControllerForMenu(toMenu);
             nextMenu?.ShowMenu();
+            //Fade out current menu.
+            StartCoroutine(FadeOut(currentMenu));
+            
             //Fade in the next menu.
-            StartCoroutine(FadeIn(_transitionController));
+            StartCoroutine(FadeIn(nextMenu));
 
         }
         /// <summary>
@@ -61,7 +61,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         /// </summary>
         /// <param name="menuType"></param>
         /// <returns></returns>
-        private MenuVisibilityController GetVisibilityControllerForMenu(MenuType menuType)
+        private MenuTransition GetVisibilityControllerForMenu(MenuType menuType)
         {
             if (_availableMenus.TryGetValue(menuType, out var menu))
             {
@@ -71,19 +71,32 @@ namespace Assets.Scripts.GUI.Menu.Transitions
             return null;
         }
         /// <summary>
-        /// 
+        /// Manages the fade in sequence of the next menu.
         /// </summary>
         /// <returns></returns>
-        private IEnumerator FadeIn(MenuTransitionController transitionController)
+        private IEnumerator FadeIn(MenuTransition transition)
         {
-            //Play the fade in animation
-            float fadeInDuration = transitionController.FadeIn();
-            yield return new WaitForSeconds(fadeInDuration);
+            if (transition != null)
+            {
+                //Play the fade in animation
+                float fadeInDuration = transition.FadeIn();
+                yield return new WaitForSeconds(fadeInDuration);
+                transition.ShowMenu();
+            }
         }
-        private IEnumerator FadeOut(MenuTransitionController transitionController)
+        /// <summary>
+        /// Manages the fade out sequence of the current menu.
+        /// </summary>
+        /// <param name="transition"></param>
+        /// <returns></returns>
+        private IEnumerator FadeOut(MenuTransition transition)
         {
-            float fadeOutDuration = transitionController.FadeOut();
-            yield return new WaitForSeconds(fadeOutDuration);
+            if (transition != null)
+            {
+                float fadeOutDuration = transition.FadeOut();
+                yield return new WaitForSeconds(fadeOutDuration);
+                transition.HideMenu();
+            }
         }
     }
 

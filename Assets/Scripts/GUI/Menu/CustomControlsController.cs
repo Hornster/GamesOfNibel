@@ -41,6 +41,10 @@ namespace Assets.Scripts.GUI.Menu
         /// </summary>
         private bool _controlAlreadyPressed;
         /// <summary>
+        /// Is this script active?
+        /// </summary>
+        private bool _isActive;
+        /// <summary>
         /// Stores all controls connected to this control, together with their IDs. All of them.
         /// </summary>
         private Dictionary<int, ICustomMenuControl> _controls = new Dictionary<int, ICustomMenuControl>();
@@ -209,6 +213,10 @@ namespace Assets.Scripts.GUI.Menu
         }
         void Update()
         {
+            if (_isActive == false)
+            {
+                return;
+            }
             ChkControlSelectionInput();
             ChkControlPressInput();
             ChkMouseInput();
@@ -232,5 +240,15 @@ namespace Assets.Scripts.GUI.Menu
             SelectControl(_currentSelectedIndex);
             _controlSwitched = true;
         }
+        /// <summary>
+        /// Enaqbles and disables working of this script. Pass true to enable, false to disable.
+        /// </summary>
+        /// <param name="isActive"></param>
+        public void SetActive(bool isActive)
+        {
+            _isActive = isActive;
+        }
     }
 }
+//TODO Every button that causes change of UI layout (transition) has small script that
+//TODO gets the event from the control and sends event with parameters to the transition  manager.
