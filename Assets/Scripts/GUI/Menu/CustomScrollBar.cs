@@ -27,6 +27,8 @@ namespace Assets.Scripts.GUI.Menu
         /// Reference to the animator component.
         /// </summary>
         [SerializeField] private Animator _animator;
+
+        [SerializeField] private CustomControlsController _controlsController;
         [Header("Animator params")]
         [SerializeField]
         private string _isSelectedParamName = "IsSelected";
@@ -37,8 +39,11 @@ namespace Assets.Scripts.GUI.Menu
 
         private void Start()
         {
-            var controlsController = GetComponentInParent<CustomControlsController>();
-            _forcedSelectionEvent += controlsController.SwitchControls;
+            if (_controlsController == null)
+            {//Since Unity won't report a null exception here but some "value was not  in expected range" error...
+                Debug.LogError($"CustomControlsController reference was null in {this}!");
+            }
+            _forcedSelectionEvent += _controlsController.SwitchControls;
         }
         public void DeselectControl()
         {

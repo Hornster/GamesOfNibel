@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Common.CustomEvents;
 using Assets.Scripts.Common.Enums;
 using UnityEngine;
 
@@ -19,6 +20,9 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         [Tooltip("Which menu shall show up as first?")]
         [SerializeField]
         private MenuType _startingMenu = MenuType.WelcomeMenu;
+        [Tooltip("Used to send info about new set of controls found in the freshly selected menu.")]
+        [SerializeField]
+        private CustomControlsFinderUnityEvent _reportFoundControlsUponTransition;
         /// <summary>
         /// All available menus.
         /// </summary>
@@ -49,12 +53,27 @@ namespace Assets.Scripts.GUI.Menu.Transitions
 
             var nextMenu = GetVisibilityControllerForMenu(toMenu);
             nextMenu?.ShowMenu();
+            
+            ReportNewControls(nextMenu);
             //Fade out current menu.
             StartCoroutine(FadeOut(currentMenu));
             
             //Fade in the next menu.
             StartCoroutine(FadeIn(nextMenu));
 
+        }
+        /// <summary>
+        /// Sends info about found controls for new menu to all listening objects. If any controls were found, that is.
+        /// </summary>
+        /// <param name="newMenu"></param>
+        private void ReportNewControls(MenuTransition newMenu)
+        {
+            var foundControls = newMenu?.GetComponentInChildren<CustomControlsFinder>();
+
+            if (foundControls != null)
+            {
+                _reportFoundControlsUponTransition?.Invoke(foundControls);
+            }
         }
         /// <summary>
         /// Tries to retrieve given menu type. If fails, returns null.

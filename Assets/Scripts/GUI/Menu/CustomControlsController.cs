@@ -5,6 +5,7 @@ using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.GUI.Menu.Interface;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Events;
 using Debug = UnityEngine.Debug;
 
 namespace Assets.Scripts.GUI.Menu
@@ -47,7 +48,7 @@ namespace Assets.Scripts.GUI.Menu
         /// <summary>
         /// Stores all controls connected to this control, together with their IDs. All of them.
         /// </summary>
-        private Dictionary<int, ICustomMenuControl> _controls = new Dictionary<int, ICustomMenuControl>();
+        private Dictionary<int, ICustomMenuControl> _currentlyUsedControls = new Dictionary<int, ICustomMenuControl>();
         /// <summary>
         /// Reference to the UI caster. Enables the controls to react to the mouse.
         /// </summary>
@@ -61,16 +62,14 @@ namespace Assets.Scripts.GUI.Menu
 
             _controlsCount = 0;
 
-            var controls = GetComponentsInChildren<ICustomMenuControl>();
-            foreach (var control in controls)
-            {
-                _controls.Add(_controlsCount, control);
-                control.ControlId = _controlsCount;
-                _controlsCount++;
-            }
+            //var controls = GetComponentsInChildren<ICustomMenuControl>();
+            //foreach (var control in controls)
+            //{
+            //    _currentlyUsedControls.Add(_controlsCount, control);
+            //    control.ControlId = _controlsCount;
+            //    _controlsCount++;
+            //}
 
-            _currentSelectedIndex = 0;
-            SelectControl(_currentSelectedIndex);
 
             GUIInputReader.RegisterLMBPressedHandler(ChkMouseInput);
         }
@@ -80,7 +79,7 @@ namespace Assets.Scripts.GUI.Menu
         /// <param name="index"></param>
         private void SelectControl(int index)
         {
-            var isButtonPresent = _controls.TryGetValue(index, out var control);
+            var isButtonPresent = _currentlyUsedControls.TryGetValue(index, out var control);
             if (isButtonPresent)
             {
                 control.SelectControl();
@@ -92,7 +91,7 @@ namespace Assets.Scripts.GUI.Menu
         /// <param name="index"></param>
         private void DeselectControl(int index)
         {
-            var isButtonPresent = _controls.TryGetValue(index, out var control);
+            var isButtonPresent = _currentlyUsedControls.TryGetValue(index, out var control);
             if (isButtonPresent)
             {
                 control.DeselectControl();
@@ -104,7 +103,7 @@ namespace Assets.Scripts.GUI.Menu
         /// <param name="index">Index of pressed control.</param>
         private void PressControl(int index)
         {
-            var isButtonPresent = _controls.TryGetValue(index, out var control);
+            var isButtonPresent = _currentlyUsedControls.TryGetValue(index, out var control);
             if (isButtonPresent)
             {
                 control.ControlPressed();
@@ -132,20 +131,20 @@ namespace Assets.Scripts.GUI.Menu
         /// </summary>
         private void ChkControlSelectionInput()
         {
-            var currentInput = GUIInputReader.PlayerInput;
-            if ((currentInput.y > _sensitivity || currentInput.x > _sensitivity) && _controlSwitched == false)
-            {
-                SwitchControls(_currentSelectedIndex - 1);
-            } else if((currentInput.y < -_sensitivity || currentInput.x < -_sensitivity) && _controlSwitched == false)
+            //var currentInput = GUIInputReader.PlayerInput;
+            //if ((currentInput.y > _sensitivity || currentInput.x > _sensitivity) && _controlSwitched == false)
+            //{
+            //    SwitchControls(_currentSelectedIndex - 1);
+            //} else if((currentInput.y < -_sensitivity || currentInput.x < -_sensitivity) && _controlSwitched == false)
 
-            {
-                SwitchControls(_currentSelectedIndex + 1);
-            }
-            else if(ValueComparator.IsEqual(currentInput.y, 0.0f)
-                    && ValueComparator.IsEqual(currentInput.x, 0.0f))
-            {
-                _controlSwitched = false;
-            }
+            //{
+            //    SwitchControls(_currentSelectedIndex + 1);
+            //}
+            //else if(ValueComparator.IsEqual(currentInput.y, 0.0f)
+            //        && ValueComparator.IsEqual(currentInput.x, 0.0f))
+            //{
+            //    _controlSwitched = false;
+            //}
         }
         /// <summary>
         /// Checks if the player pressed selected control.
@@ -170,7 +169,7 @@ namespace Assets.Scripts.GUI.Menu
         {
             if (_currentlyPointedAtControl != null)
             {
-                var isButtonPresent = _controls.TryGetValue(_currentSelectedIndex, out var control);
+                var isButtonPresent = _currentlyUsedControls.TryGetValue(_currentSelectedIndex, out var control);
                 if (isButtonPresent)
                 {
                     control.PointerLeftControl();
@@ -213,10 +212,6 @@ namespace Assets.Scripts.GUI.Menu
         }
         void Update()
         {
-            if (_isActive == false)
-            {
-                return;
-            }
             ChkControlSelectionInput();
             ChkControlPressInput();
             ChkMouseInput();
@@ -241,12 +236,16 @@ namespace Assets.Scripts.GUI.Menu
             _controlSwitched = true;
         }
         /// <summary>
-        /// Enaqbles and disables working of this script. Pass true to enable, false to disable.
+        /// Event handler that allows for changing the controls this controller works with.
         /// </summary>
-        /// <param name="isActive"></param>
-        public void SetActive(bool isActive)
+        /// <param name="_controlsFinder">New set of controls. Will override the old set in this controller.</param>
+        public void ReplaceControls(CustomControlsFinder _controlsFinder)
         {
-            _isActive = isActive;
+            _currentlyUsedControls = _controlsFinder.FoundControls;
+            _controlsCount = _controlsFinder.ControlsCount;
+
+            SelectControl(_currentSelectedIndex);
+            _currentSelectedIndex = 0;
         }
     }
 }

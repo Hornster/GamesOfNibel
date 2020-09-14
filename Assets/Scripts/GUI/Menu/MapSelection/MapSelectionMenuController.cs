@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Mods.Maps;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.GUI.Menu.MapSelection
 {
@@ -16,6 +17,8 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         [SerializeField] private MapLoader _mapLoader;
         [SerializeField] private PreviewManager _previewManager;
 
+        [Tooltip("Can be used to perform actions when the previewed details of the map have been changed.")]
+        [SerializeField] private UnityEvent _onMapPointedAtChanged;
         /// <summary>
         /// The currently selected map. It will be launched when the player accepts the settings.
         /// </summary>
@@ -51,7 +54,7 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         {
             _previewedMap = mapControl;
             _previewManager.UpdatePreview(mapControl.MapData);
-            Debug.Log("Changed preview - pointed at.");
+            _onMapPointedAtChanged?.Invoke();
         }
         /// <summary>
         /// Called when given map has been selected as match one.
