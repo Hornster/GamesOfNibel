@@ -51,10 +51,22 @@ namespace Assets.Scripts.Mods.Maps
 
             if (loadedMapBundle == null)
             {
-                throw new ModLoadingException($"Unable to load map scene at {mapData.SceneBundlePath}! Check names integrity and whether are there files missing.");
+                throw new ModLoadingException($"Unable to load map bundle at {mapData.SceneBundlePath}! Check names integrity and whether are there files missing.");
             }
 
-            return loadedMapBundle;
+            var availableScenes = loadedMapBundle.GetAllScenePaths();
+
+            foreach (var availableScene in availableScenes)
+            {
+                if (availableScene.Equals(mapData.ScenePath))
+                {
+                    return loadedMapBundle;
+                }
+            }
+
+            throw new ModLoadingException(
+                $"Unable to load map scene at {mapData.ScenePath} in {mapData.SceneBundlePath} bundle! Check names integrity and whether are there files missing.");
+            
         }
         /// <summary>
         /// Resets the errors  list.

@@ -16,6 +16,11 @@ namespace Assets.Scripts.GUI.Menu
     public class CustomSelectableControl : MonoBehaviour, ICustomMenuControl
     {
         /// <summary>
+        /// Called when this control is selected (pointed at).
+        /// </summary>
+        [SerializeField]
+        private UnityEvent _onSelectedEvent;
+        /// <summary>
         /// Called when the control has been selected by clicking on it.
         /// Provides its data.
         /// </summary>
@@ -63,9 +68,8 @@ namespace Assets.Scripts.GUI.Menu
         {
             _animator.SetBool(_idleParamName, true);
             _animator.SetBool(_pointedAtParamName, false);
-            _animator.SetBool(_pressedParamName, false);
-            //_onStoppedPointing?.Invoke();
-            Debug.Log("DeselectControl() called from " + _mapData.MapData.ShownMapName);
+            _animator.ResetTrigger(_pressedParamName);
+            Debug.Log($"{ControlId} was deselected.");
         }
 
         public void SelectControl()
@@ -73,15 +77,16 @@ namespace Assets.Scripts.GUI.Menu
             _animator.SetBool(_idleParamName, false);
             _animator.SetBool(_pointedAtParamName, true);
             _onPointedAt?.Invoke(this);
-            Debug.Log("SelectControl() called from " + _mapData.MapData.ShownMapName);
+            Debug.Log($"{ControlId} was selected.");
         }
 
         public void ControlPressed()
         {
-            _animator.SetBool(_pressedParamName, true);
+            _animator.SetTrigger(_pressedParamName);
             _assignedEvents?.Invoke();
             _onSelected?.Invoke(this);
             _shaderDisabler.EnableShader();
+            Debug.Log($"{ControlId} was pressed.");
         }
         /// <summary>
         /// Calls the _onStoppedPointing event handler.
@@ -99,6 +104,10 @@ namespace Assets.Scripts.GUI.Menu
             _shaderDisabler.DisableShader();
         }
 
+        public void RegisterOnSelected(UnityAction handler)
+        {
+            _onSelectedEvent.AddListener(handler);
+        }
         public void RegisterOnSelected(UnityAction<CustomSelectableControl> handler)
         {
             _onSelected += handler;

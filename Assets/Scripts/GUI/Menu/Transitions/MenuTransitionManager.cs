@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Common.CustomCollections;
 using Assets.Scripts.Common.CustomEvents;
+using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
 using UnityEngine;
 
@@ -27,6 +29,14 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         /// All available menus.
         /// </summary>
         private Dictionary<MenuType, MenuTransition> _availableMenus = new Dictionary<MenuType, MenuTransition>();
+        /// <summary>
+        /// Stores the most recent transition.
+        /// </summary>
+        private MenuTransitionStepHistory _menuTransitionsHistory;
+        /// <summary>
+        /// Should the most recent transition be remembered so it can be optionally reversed later?
+        /// </summary>
+        private bool _rememberStep = true;
         private void Start()
         {
             var foundMenus = _menusParent.GetComponentsInChildren<MenuTransition>();
@@ -37,6 +47,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
 
             PerformTransition(_startingMenu, _startingMenu);
         }
+
         /// <summary>
         /// Performs transition from given menu to given menu.
         /// </summary>
@@ -53,6 +64,15 @@ namespace Assets.Scripts.GUI.Menu.Transitions
 
             var nextMenu = GetVisibilityControllerForMenu(toMenu);
             nextMenu?.ShowMenu();
+
+            if (_rememberStep)
+            {
+                _menuTransitionsHistory = new MenuTransitionStepHistory()
+                {
+                    TransitionFrom = fromMenu,
+                    TransitionTo = toMenu
+                };
+            }
             
             ReportNewControls(nextMenu);
             //Fade out current menu.
@@ -61,6 +81,16 @@ namespace Assets.Scripts.GUI.Menu.Transitions
             //Fade in the next menu.
             StartCoroutine(FadeIn(nextMenu));
 
+        }
+        /// <summary>
+        /// Causes the manager to revert the last made transition. Reverse transition will not be remembered.
+        /// </summary>
+        public void RevertLastTransition()
+        {
+            //Reverse the last made transition but do not remember doing this.
+            _rememberStep = false;
+            PerformTransition(_menuTransitionsHistory.TransitionTo, _menuTransitionsHistory.TransitionFrom);
+            _rememberStep = true;
         }
         /// <summary>
         /// Sends info about found controls for new menu to all listening objects. If any controls were found, that is.

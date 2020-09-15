@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Exceptions;
 using Assets.Scripts.Mods.Maps;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GUI.Menu.MapSelection
 {
@@ -20,6 +22,11 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         [Tooltip("Can be used to perform actions when the previewed details of the map have been changed.")]
         [SerializeField] private UnityEvent _onMapPointedAtChanged;
         /// <summary>
+        /// Will be called when something went wrong during selected map launching.
+        /// </summary>
+        [Tooltip("If something goes wrong with map launching, these handlers will be called.")]
+        [SerializeField] private UnityEvent _onMapLoadFailure;
+        /// <summary>
         /// The currently selected map. It will be launched when the player accepts the settings.
         /// </summary>
         private CustomSelectableControl _selectedMap;
@@ -30,8 +37,41 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         private void Awake()
         {
             var foundMaps = _mapLoader.LoadAvailableMaps();
-
+            
             RegisterEventHandlers(foundMaps);
+
+            //Select first available map by default, if it is available.
+            //if (foundMaps.Count > 0)
+            //{
+            //    foundMaps[0].SelectControl();
+            //    foundMaps[0].ControlPressed();
+            //}
+        }
+        /// <summary>
+        /// Begins loading of the selected map.
+        /// </summary>
+        public void LaunchSelectedMap()
+        {
+            if (_selectedMap != null)
+            {
+                try
+                {
+                    var mapData = _selectedMap.MapData;
+                    _mapLoader.TryLoadingMapBundle(mapData);
+                    SceneManager.LoadScene(mapData.ScenePath);
+                }
+                catch (ModLoadingException ex)
+                {
+                    Debug.LogError(ex);
+                    _onMapLoadFailure?.Invoke();
+                }
+            }
+            else
+            {
+                //Trying to load a map when none selected should not make any effects, INCLUDING transitions.
+                _onMapLoadFailure?.Invoke();
+            }
+           
         }
         /// <summary>
         /// Registers all event handlers for map selectable controls.

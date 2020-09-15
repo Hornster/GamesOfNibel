@@ -28,7 +28,6 @@ namespace Assets.Scripts.GUI.Menu
         /// </summary>
         [SerializeField] private Animator _animator;
 
-        [SerializeField] private CustomControlsController _controlsController;
         [Header("Animator params")]
         [SerializeField]
         private string _isSelectedParamName = "IsSelected";
@@ -37,14 +36,6 @@ namespace Assets.Scripts.GUI.Menu
         /// </summary>
         public int ControlId { get; set; }
 
-        private void Start()
-        {
-            if (_controlsController == null)
-            {//Since Unity won't report a null exception here but some "value was not  in expected range" error...
-                Debug.LogError($"CustomControlsController reference was null in {this}!");
-            }
-            _forcedSelectionEvent += _controlsController.SwitchControls;
-        }
         public void DeselectControl()
         {
             _animator.SetBool(_isSelectedParamName, false);
@@ -67,13 +58,5 @@ namespace Assets.Scripts.GUI.Menu
             _onStoppedPointingAt?.Invoke();
         }
 
-        /// <summary>
-        /// Forces selection of this control by invoking event handler. Make sure you connected the correct
-        /// handler(s).
-        /// </summary>
-        public void SelectThisControl()
-        {
-            _forcedSelectionEvent?.Invoke(ControlId);
-        }
     }
 }

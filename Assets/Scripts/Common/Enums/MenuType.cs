@@ -15,6 +15,10 @@ namespace Assets.Scripts.Common.Enums
         /// <summary>
         /// Self explanatory.
         /// </summary>
-        MapSelectionMenu
+        MapSelectionMenu,
+        /// <summary>
+        /// Can be used for example when there's a transition from a menu to a playable scene and backwards.
+        /// </summary>
+        None
     }
 }

@@ -131,20 +131,21 @@ namespace Assets.Scripts.GUI.Menu
         /// </summary>
         private void ChkControlSelectionInput()
         {
-            //var currentInput = GUIInputReader.PlayerInput;
-            //if ((currentInput.y > _sensitivity || currentInput.x > _sensitivity) && _controlSwitched == false)
-            //{
-            //    SwitchControls(_currentSelectedIndex - 1);
-            //} else if((currentInput.y < -_sensitivity || currentInput.x < -_sensitivity) && _controlSwitched == false)
+            var currentInput = GUIInputReader.PlayerInput;
+            if ((currentInput.y > _sensitivity || currentInput.x > _sensitivity) && _controlSwitched == false)
+            {
+                SwitchControls(_currentSelectedIndex - 1);
+            }
+            else if ((currentInput.y < -_sensitivity || currentInput.x < -_sensitivity) && _controlSwitched == false)
 
-            //{
-            //    SwitchControls(_currentSelectedIndex + 1);
-            //}
-            //else if(ValueComparator.IsEqual(currentInput.y, 0.0f)
-            //        && ValueComparator.IsEqual(currentInput.x, 0.0f))
-            //{
-            //    _controlSwitched = false;
-            //}
+            {
+                SwitchControls(_currentSelectedIndex + 1);
+            }
+            else if (ValueComparator.IsEqual(currentInput.y, 0.0f)
+                    && ValueComparator.IsEqual(currentInput.x, 0.0f))
+            {
+                _controlSwitched = false;
+            }
         }
         /// <summary>
         /// Checks if the player pressed selected control.
@@ -223,13 +224,12 @@ namespace Assets.Scripts.GUI.Menu
         /// <param name="newIndex">Index of a control that shall be selected.</param>
         public void SwitchControls(int newIndex)
         {
-            //if (_currentSelectedIndex == newIndex)
-            //{
-            //    return; //No need to change anything if indexes are the same.
-            //}
+            if (_currentSelectedIndex != newIndex)
+            {
+                DeselectControl(_currentSelectedIndex);
+            }
 
             //PointerLeftCurrentControl();
-            DeselectControl(_currentSelectedIndex);
             _currentSelectedIndex = newIndex;
             ChkIndexRange();
             SelectControl(_currentSelectedIndex);

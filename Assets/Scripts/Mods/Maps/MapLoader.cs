@@ -50,6 +50,14 @@ namespace Assets.Scripts.Mods.Maps
 
             return selectableControls;
         }
-
+        /// <summary>
+        /// Tries to load a single scene bundle under provided path. If not managed to load, throws exception of MapLoadingException type.
+        /// </summary>
+        /// <param name="mapData">Map which shall be loaded.</param>
+        /// <returns></returns>
+        public void TryLoadingMapBundle(MapData mapData)
+        {
+            _mapBundleLoader.LoadMapSceneBundle(mapData);
+        }
     }
 }

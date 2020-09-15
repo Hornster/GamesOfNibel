@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScenes/Tutorial/Bootcamp Movement.unity
     guid: 9298a6abe9f62e144bc26a3bb2e1648f
   - enabled: 0
-    path: Assets/Scenes/GameScenes/CTF/Naru's backyard/Naru's backyard.unity
+    path: Assets/Scenes/GameScenes/CTF/Naru's backyard/Naru's backyard Scene.unity
     guid: 1c68a8e5fa88ff34c8612e7f299fbc78
   - enabled: 0
     path: Assets/Scenes/GameScenes/Menu/MainMenu.unity

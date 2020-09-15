@@ -657,6 +657,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3179eac2fcaca346829e974a57cb7b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onSelectedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   _assignedEvents:
     m_PersistentCalls:
       m_Calls: []
@@ -665,7 +668,7 @@ MonoBehaviour:
   _shaderDisabler: {fileID: 2385134911342561932}
   _idleParamName: isIdle
   _pointedAtParamName: isPointedAt
-  _pressedParamName: isSelected
+  _pressedParamName: triggerSelection
 --- !u!1 &7299724714866860506
 GameObject:
   m_ObjectHideFlags: 0
