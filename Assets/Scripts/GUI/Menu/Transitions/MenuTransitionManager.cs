@@ -5,6 +5,7 @@ using Assets.Scripts.Common.CustomEvents;
 using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GUI.Menu.Transitions
 {
@@ -16,6 +17,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         /// <summary>
         /// Reference to the gameobject that has menus as children.
         /// </summary>
+        [Header("Menu transition")]
         [Tooltip("Gameobject that has menus as children in it.")]
         [SerializeField]
         private GameObject _menusParent;
@@ -25,6 +27,16 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         [Tooltip("Used to send info about new set of controls found in the freshly selected menu.")]
         [SerializeField]
         private CustomControlsFinderUnityEvent _reportFoundControlsUponTransition;
+
+        [Header("Scene transition")] 
+        [Tooltip("The time it takes for entire scene to fade away. Shall be equal to the length of the fade out animation.")]
+        [SerializeField]
+        private float _sceneFadeOutTime = 1f;
+        [Tooltip("What is the name of the trigger that causes the fade out scene animation to play.")]
+        [SerializeField] private string _sceneFadeOutTrigger = "fadeOut";
+        [Tooltip("Reference to the animator that manages entire scene transitions.")]
+        [SerializeField]
+        private Animator _sceneTransitionAnimator;
         /// <summary>
         /// All available menus.
         /// </summary>
@@ -81,6 +93,13 @@ namespace Assets.Scripts.GUI.Menu.Transitions
             //Fade in the next menu.
             StartCoroutine(FadeIn(nextMenu));
 
+        }
+        /// <summary>
+        /// Performs the fade out scene transition.
+        /// </summary>
+        public void PerformSceneTransition(string scenePath)
+        {
+            StartCoroutine(SceneFadeOut(scenePath));
         }
         /// <summary>
         /// Causes the manager to revert the last made transition. Reverse transition will not be remembered.
@@ -146,6 +165,17 @@ namespace Assets.Scripts.GUI.Menu.Transitions
                 yield return new WaitForSeconds(fadeOutDuration);
                 transition.HideMenu();
             }
+        }
+        /// <summary>
+        /// Performs the scene fade out.
+        /// </summary>
+        private IEnumerator SceneFadeOut(string scenePath)
+        {
+            _sceneTransitionAnimator.SetTrigger(_sceneFadeOutTrigger);
+
+            yield return new WaitForSeconds(_sceneFadeOutTime);
+
+            SceneManager.LoadScene(scenePath);
         }
     }
 

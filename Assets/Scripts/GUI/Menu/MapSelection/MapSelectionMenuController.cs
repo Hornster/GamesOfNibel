@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.CustomEvents;
 using Assets.Scripts.Common.Exceptions;
 using Assets.Scripts.Mods.Maps;
 using UnityEngine;
@@ -21,6 +23,8 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
 
         [Tooltip("Can be used to perform actions when the previewed details of the map have been changed.")]
         [SerializeField] private UnityEvent _onMapPointedAtChanged;
+        [Tooltip("Called when the user confirmed selected map and its loading sequence has been started.")]
+        [SerializeField] private StringUnityEvent _onMapLaunching;
         /// <summary>
         /// Will be called when something went wrong during selected map launching.
         /// </summary>
@@ -39,13 +43,6 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
             var foundMaps = _mapLoader.LoadAvailableMaps();
             
             RegisterEventHandlers(foundMaps);
-
-            //Select first available map by default, if it is available.
-            //if (foundMaps.Count > 0)
-            //{
-            //    foundMaps[0].SelectControl();
-            //    foundMaps[0].ControlPressed();
-            //}
         }
         /// <summary>
         /// Begins loading of the selected map.
@@ -58,7 +55,9 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
                 {
                     var mapData = _selectedMap.MapData;
                     _mapLoader.TryLoadingMapBundle(mapData);
-                    SceneManager.LoadScene(mapData.ScenePath);
+                    //SceneManager.LoadScene(mapData.ScenePath);
+                    //perform transitions and launch the map.
+                    _onMapLaunching?.Invoke(mapData.ScenePath);
                 }
                 catch (ModLoadingException ex)
                 {
