@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Assets.Editor.Modding.MapCreation.Scripts.Util;
+using Assets.Editor.Scripts.Modding.MapCreation.Scripts.Util;
 using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Common.Helpers;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Editor.Modding.MapCreation.Scripts
+namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
 {
     public class MapModAssembler : EditorWindow
     {

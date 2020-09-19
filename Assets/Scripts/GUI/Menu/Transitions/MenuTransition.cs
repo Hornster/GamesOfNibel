@@ -18,6 +18,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         [SerializeField] private string _fadeInTriggerName = "fadeIn";
         [Tooltip("Name of the fade out causing trigger in the animator.")]
         [SerializeField] private string _fadeOutTriggerName = "fadeOut";
+
         [SerializeField]
         [Tooltip("What type of menu is connected with this controller.")]
         private MenuType _menuType;

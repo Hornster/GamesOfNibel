@@ -30,11 +30,16 @@ namespace Assets.Scripts.GUI
         /// Stores raw input from submit control.
         /// </summary>
         public static float SubmitInput { get; private set; }
+        /// <summary>
+        /// Stores raw input from cancel control.
+        /// </summary>
+        public static float CancelInput { get; private set; }
 
         private void Update()
         {
             PlayerInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             SubmitInput = Input.GetAxisRaw("Submit");
+            CancelInput = Input.GetAxisRaw("Cancel");
             MousePosition = Input.mousePosition;
 
             ChkEventInput();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Common.CustomCollections;
 using Assets.Scripts.Common.CustomEvents;
 using Assets.Scripts.Common.Data;
+using Assets.Scripts.Common.Data.ScriptableObjects.Transitions;
 using Assets.Scripts.Common.Enums;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,42 +15,49 @@ namespace Assets.Scripts.GUI.Menu.Transitions
     /// </summary>
     public class MenuTransitionManager : MonoBehaviour
     {
+        [Header("Required references")] 
+        [SerializeField]
+        protected BackwardsTransitions _backwardsTransitions;
         /// <summary>
         /// Reference to the gameobject that has menus as children.
         /// </summary>
         [Header("Menu transition")]
         [Tooltip("Gameobject that has menus as children in it.")]
         [SerializeField]
-        private GameObject _menusParent;
+        protected GameObject _menusParent;
         [Tooltip("Which menu shall show up as first?")]
         [SerializeField]
-        private MenuType _startingMenu = MenuType.WelcomeMenu;
+        protected MenuType _startingMenu = MenuType.WelcomeMenu;
         [Tooltip("Used to send info about new set of controls found in the freshly selected menu.")]
         [SerializeField]
-        private CustomControlsFinderUnityEvent _reportFoundControlsUponTransition;
+        protected CustomControlsFinderUnityEvent _reportFoundControlsUponTransition;
 
         [Header("Scene transition")] 
         [Tooltip("The time it takes for entire scene to fade away. Shall be equal to the length of the fade out animation.")]
         [SerializeField]
-        private float _sceneFadeOutTime = 1f;
+        protected float _sceneFadeOutTime = 1f;
         [Tooltip("What is the name of the trigger that causes the fade out scene animation to play.")]
-        [SerializeField] private string _sceneFadeOutTrigger = "fadeOut";
+        [SerializeField] protected string _sceneFadeOutTrigger = "fadeOut";
         [Tooltip("Reference to the animator that manages entire scene transitions.")]
         [SerializeField]
-        private Animator _sceneTransitionAnimator;
+        protected Animator _sceneTransitionAnimator;
         /// <summary>
         /// All available menus.
         /// </summary>
-        private Dictionary<MenuType, MenuTransition> _availableMenus = new Dictionary<MenuType, MenuTransition>();
+        protected Dictionary<MenuType, MenuTransition> _availableMenus = new Dictionary<MenuType, MenuTransition>();
         /// <summary>
         /// Stores the most recent transition.
         /// </summary>
-        private MenuTransitionStepHistory _menuTransitionsHistory;
+        protected MenuTransitionStepHistory _menuTransitionsHistory;
         /// <summary>
         /// Should the most recent transition be remembered so it can be optionally reversed later?
         /// </summary>
-        private bool _rememberStep = true;
-        private void Start()
+        protected bool _rememberStep = true;
+        /// <summary>
+        /// Currently active menu.
+        /// </summary>
+        protected MenuType _currentMenu = MenuType.None;
+        protected void Start()
         {
             var foundMenus = _menusParent.GetComponentsInChildren<MenuTransition>();
             foreach (var menu in foundMenus)
@@ -57,21 +65,29 @@ namespace Assets.Scripts.GUI.Menu.Transitions
                 _availableMenus.Add(menu.MenuType, menu);
             }
 
-            PerformTransition(_startingMenu, _startingMenu);
+            PerformTransition(_startingMenu);
         }
-
         /// <summary>
-        /// Performs transition from given menu to given menu.
+        /// Performs transition from given menu to given menu, back or from the running match.
         /// </summary>
         /// <param name="fromMenu"></param>
         /// <param name="toMenu"></param>
-        public void PerformTransition(MenuType fromMenu, MenuType toMenu)
+        public void PerformMatchTransition(MenuType toMenu)
+        {
+            //TODO notatki w zeszycie
+        }
+        /// <summary>
+        /// Performs transition from given menu to given menu, in main menu.
+        /// </summary>
+        /// <param name="fromMenu"></param>
+        /// <param name="toMenu"></param>
+        public void PerformTransition(MenuType toMenu)
         {
             //TODO get the main gameobjects for the menus passed above. CanvasGroups can allow you to
             //TODO hide entire menus and disable raycasting for them.
             //TODO start fade out transition, when it finishes toggle both menus and start fade in transition.
             //Get and change visibility of the current and next menu.
-            var currentMenu = GetVisibilityControllerForMenu(fromMenu);
+            var currentMenu = GetVisibilityControllerForMenu(_currentMenu);
             currentMenu?.HideMenu();
 
             var nextMenu = GetVisibilityControllerForMenu(toMenu);
@@ -81,7 +97,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
             {
                 _menuTransitionsHistory = new MenuTransitionStepHistory()
                 {
-                    TransitionFrom = fromMenu,
+                    TransitionFrom = _currentMenu,
                     TransitionTo = toMenu
                 };
             }
@@ -93,6 +109,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
             //Fade in the next menu.
             StartCoroutine(FadeIn(nextMenu));
 
+            _currentMenu = toMenu;
         }
         /// <summary>
         /// Performs the fade out scene transition.
@@ -102,20 +119,29 @@ namespace Assets.Scripts.GUI.Menu.Transitions
             StartCoroutine(SceneFadeOut(scenePath));
         }
         /// <summary>
-        /// Causes the manager to revert the last made transition. Reverse transition will not be remembered.
+        /// Forces return to previous menu. Does not use history but uses the backwards transitions serialized object to determine
+        /// which menu shall the game return to.
+        /// </summary>
+        public virtual void PerformReturnTransition()
+        {
+            var targetMenu = _backwardsTransitions.GetMainMenuBackwardsTransition(_currentMenu);
+            PerformTransition(targetMenu);
+        }
+        /// <summary>
+        /// Causes the manager to revert the last made main menu transition. Reverse transition will not be remembered.
         /// </summary>
         public void RevertLastTransition()
         {
             //Reverse the last made transition but do not remember doing this.
             _rememberStep = false;
-            PerformTransition(_menuTransitionsHistory.TransitionTo, _menuTransitionsHistory.TransitionFrom);
+            PerformTransition( _menuTransitionsHistory.TransitionFrom);
             _rememberStep = true;
         }
         /// <summary>
         /// Sends info about found controls for new menu to all listening objects. If any controls were found, that is.
         /// </summary>
         /// <param name="newMenu"></param>
-        private void ReportNewControls(MenuTransition newMenu)
+        protected void ReportNewControls(MenuTransition newMenu)
         {
             var foundControls = newMenu?.GetComponentInChildren<CustomControlsFinder>();
 
@@ -129,7 +155,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         /// </summary>
         /// <param name="menuType"></param>
         /// <returns></returns>
-        private MenuTransition GetVisibilityControllerForMenu(MenuType menuType)
+        protected MenuTransition GetVisibilityControllerForMenu(MenuType menuType)
         {
             if (_availableMenus.TryGetValue(menuType, out var menu))
             {
@@ -142,7 +168,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         /// Manages the fade in sequence of the next menu.
         /// </summary>
         /// <returns></returns>
-        private IEnumerator FadeIn(MenuTransition transition)
+        protected IEnumerator FadeIn(MenuTransition transition)
         {
             if (transition != null)
             {
@@ -157,7 +183,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         /// </summary>
         /// <param name="transition"></param>
         /// <returns></returns>
-        private IEnumerator FadeOut(MenuTransition transition)
+        protected IEnumerator FadeOut(MenuTransition transition)
         {
             if (transition != null)
             {
@@ -169,7 +195,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         /// <summary>
         /// Performs the scene fade out.
         /// </summary>
-        private IEnumerator SceneFadeOut(string scenePath)
+        protected IEnumerator SceneFadeOut(string scenePath)
         {
             _sceneTransitionAnimator.SetTrigger(_sceneFadeOutTrigger);
 

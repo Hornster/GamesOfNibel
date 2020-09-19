@@ -29,7 +29,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         /// </summary>
         public void ReportTransition()
         {
-            _requestTransitionHandler?.Invoke(_currentMenu, _targetMenu);
+            _requestTransitionHandler?.Invoke(_targetMenu);
         }
 
         

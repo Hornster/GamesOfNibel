@@ -25,6 +25,11 @@ namespace Assets.Scripts.GUI.Menu
         [Range(0f, 1f)]
         private float _sensitivity;
         /// <summary>
+        /// Called when user inputs cancel command.
+        /// </summary>
+        [SerializeField]
+        private UnityEvent _onCancelPressed;
+        /// <summary>
         /// Amount of controls connected to this controller. Iterated from 0!
         /// </summary>
         private int _controlsCount;
@@ -42,6 +47,10 @@ namespace Assets.Scripts.GUI.Menu
         /// </summary>
         private bool _controlAlreadyPressed;
         /// <summary>
+        /// Set to true when cancel has been pressed.
+        /// </summary>
+        private bool _cancelAlreadyPressed;
+        /// <summary>
         /// Is this script active?
         /// </summary>
         private bool _isActive;
@@ -53,6 +62,7 @@ namespace Assets.Scripts.GUI.Menu
         /// Reference to the UI caster. Enables the controls to react to the mouse.
         /// </summary>
         private GUIMouseCaster _guiMouseCaster;
+
 
         private ICustomMenuControl _currentlyPointedAtControl;
         // Start is called before the first frame update
@@ -112,6 +122,13 @@ namespace Assets.Scripts.GUI.Menu
             _controlAlreadyPressed = true;
         }
         /// <summary>
+        /// Called when the user issued cancel command. For example, pressing the Escape key.
+        /// </summary>
+        private void Cancel()
+        {
+
+        }
+        /// <summary>
         /// Checks if the index is still within the available controls' range.
         /// </summary>
         private void ChkIndexRange()
@@ -160,6 +177,21 @@ namespace Assets.Scripts.GUI.Menu
             else if(ValueComparator.IsEqual(currentInput, 0.0f))
             {
                 _controlAlreadyPressed = false;
+            }
+        }
+
+        private void ChkControlCancelInput()
+        {
+            var cancelInput = GUIInputReader.CancelInput;
+            if (ValueComparator.IsEqual(cancelInput, 0f) == false && _cancelAlreadyPressed == false)
+            {
+                //TODO cancel - move backwards in menu hierarchy
+                _onCancelPressed?.Invoke();
+                _cancelAlreadyPressed = true;
+            }
+            else if(ValueComparator.IsEqual(cancelInput, 0f))
+            {
+                _cancelAlreadyPressed = false;
             }
         }
         /// <summary>
@@ -215,6 +247,7 @@ namespace Assets.Scripts.GUI.Menu
         {
             ChkControlSelectionInput();
             ChkControlPressInput();
+            ChkControlCancelInput();
             ChkMouseInput();
         }
 

@@ -1,11 +1,9 @@
-﻿using System.IO;
-using Assets.Scripts.Common.Data.ScriptableObjects;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
 using UnityEditor;
-using UnityEngine;
 
-namespace Assets.Editor.Modding.MapCreation.Scripts.Util
+namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts.Util
 {
     /// <summary>
     /// Used to update the inspector to include freshly created through code bundles.

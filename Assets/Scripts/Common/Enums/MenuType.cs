@@ -17,6 +17,14 @@ namespace Assets.Scripts.Common.Enums
         /// </summary>
         MapSelectionMenu,
         /// <summary>
+        /// Parent menu for various settings tabs.
+        /// </summary>
+        SettingsMenu,
+        /// <summary>
+        /// Menu available only during a match.
+        /// </summary>
+        PauseMenu,
+        /// <summary>
         /// Can be used for example when there's a transition from a menu to a playable scene and backwards.
         /// </summary>
         None
