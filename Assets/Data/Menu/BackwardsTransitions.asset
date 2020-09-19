@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e2e6bc96020494285cf281ad3fc368, type: 3}
   m_Name: BackwardsTransitions
   m_EditorClassIdentifier: 
+  _menuBackwardsTransitions:
+    keys: 0100000000000000
+    values: 0000000000000000
+  _inGameMenuBackwardsTransitions:
+    keys: 03000000
+    values: 04000000

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Exceptions;
 using UnityEngine;
@@ -14,33 +15,14 @@ namespace Assets.Scripts.Common.Data.ScriptableObjects.Transitions
         /// <summary>
         /// Key is the current menu, value is the menu the game shall return to. Dictionary for main menu.
         /// </summary>
-        private Dictionary<MenuType, MenuType> _menuBackwardsTransitions = new Dictionary<MenuType, MenuType>();
+        [SerializeField]
+        private MenuTypeMenuTypeDictionary _menuBackwardsTransitions = MenuTypeMenuTypeDictionary.New<MenuTypeMenuTypeDictionary>();
         /// <summary>
         /// Key is the current menu, value is the menu the game shall return to. Dictionary for in-game menu.
         /// </summary>
-        private Dictionary<MenuType, MenuType> _inGameMenuBackwardsTransitions = new Dictionary<MenuType, MenuType>();
+        [SerializeField]
+        private MenuTypeMenuTypeDictionary _inGameMenuBackwardsTransitions = MenuTypeMenuTypeDictionary.New<MenuTypeMenuTypeDictionary>();
 
-        private void Awake()
-        {
-            AddTransitionsForMainMenu();
-            AddTransitionsForIngameMenu();
-        }
-        /// <summary>
-        /// Declares all backwards transitions for main menu.
-        /// </summary>
-        private void AddTransitionsForMainMenu()
-        {
-            _menuBackwardsTransitions.Add(MenuType.WelcomeMenu, MenuType.WelcomeMenu);
-            _menuBackwardsTransitions.Add(MenuType.MapSelectionMenu, MenuType.WelcomeMenu);
-        }
-        /// <summary>
-        /// Declares all backwards transitions for ingame menu.
-        /// </summary>
-        private void AddTransitionsForIngameMenu()
-        {
-            _inGameMenuBackwardsTransitions.Add(MenuType.PauseMenu, MenuType.None);
-            _inGameMenuBackwardsTransitions.Add(MenuType.SettingsMenu, MenuType.PauseMenu);
-        }
         /// <summary>
         /// Gets the target menu for backwards transition from provided menu. If no equivalent found - throws exception of
         /// DictionaryEntryNotFoundException. 
@@ -49,7 +31,7 @@ namespace Assets.Scripts.Common.Data.ScriptableObjects.Transitions
         /// <returns></returns>
         public MenuType GetMainMenuBackwardsTransition(MenuType currentMenuType)
         {
-            if (_menuBackwardsTransitions.TryGetValue(currentMenuType, out var targetMenuType))
+            if (_menuBackwardsTransitions.dictionary.TryGetValue(currentMenuType, out var targetMenuType))
             {
                 return targetMenuType;
             }
@@ -64,7 +46,7 @@ namespace Assets.Scripts.Common.Data.ScriptableObjects.Transitions
         /// <returns></returns>
         public MenuType GetIngameMenuBackwardsTransition(MenuType currentMenuType)
         {
-            if (_inGameMenuBackwardsTransitions.TryGetValue(currentMenuType, out var targetMenuType))
+            if (_inGameMenuBackwardsTransitions.dictionary.TryGetValue(currentMenuType, out var targetMenuType))
             {
                 return targetMenuType;
             }
