@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Helpers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
@@ -18,6 +19,10 @@ namespace Assets.Scripts.GUI
         /// Handler for event where left mouse button has been pressed once.
         /// </summary>
         private static UnityAction<bool> _LMBPressed;
+        /// <summary>
+        /// Called when cancelling control, like escape key, has been pressed.
+        /// </summary>
+        private static UnityAction _onCancelEvent;
         /// <summary>
         /// Stores raw input from the player on horizontal and vertical axes. Updated as fast as Unity can.
         /// </summary>
@@ -35,6 +40,7 @@ namespace Assets.Scripts.GUI
         /// </summary>
         public static float CancelInput { get; private set; }
 
+        private bool _cancelEventTriggered = false;
         private void Update()
         {
             PlayerInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -43,6 +49,27 @@ namespace Assets.Scripts.GUI
             MousePosition = Input.mousePosition;
 
             ChkEventInput();
+            UpdateAxisToEvent();
+        }
+        /// <summary>
+        /// Updates state of inputs that are made of axes read and converts them to event calls. Thus, given
+        /// axis-based trigger is called only once.
+        /// </summary>
+        private void UpdateAxisToEvent()
+        {
+            if (ValueComparator.IsEqual(CancelInput, 0f) == false)
+            {
+                if (_cancelEventTriggered == false)
+                {
+                    _onCancelEvent?.Invoke();
+                    _cancelEventTriggered = true;
+                    Debug.Log("Event triggered!");
+                }
+            }
+            else
+            {
+                _cancelEventTriggered = false;
+            }
         }
 
         private void ChkEventInput()
@@ -59,6 +86,14 @@ namespace Assets.Scripts.GUI
         public static void RegisterLMBPressedHandler(UnityAction<bool> handler)
         {
             _LMBPressed += handler;
+        }
+        /// <summary>
+        /// Registers handler for cancel operation.
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void RegisterOnCancelHandler(UnityAction handler)
+        {
+            _onCancelEvent += handler;
         }
     }
 }

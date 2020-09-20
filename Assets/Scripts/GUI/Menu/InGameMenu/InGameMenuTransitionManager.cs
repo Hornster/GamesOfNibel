@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.GUI.Menu.Transitions;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.GUI.Menu.InGameMenu
 {

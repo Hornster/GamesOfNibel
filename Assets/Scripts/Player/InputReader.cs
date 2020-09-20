@@ -5,6 +5,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common.Enums;
+using Assets.Scripts.GUI.Menu.InGameMenu;
 using UnityEngine;
 using UnityEngine.Events;
 using Input = UnityEngine.Input;
@@ -34,6 +35,10 @@ namespace Assets.Scripts.Player
         /// to jump off the platform.
         /// </summary>
         private bool _isJumpOffPlatformActive;
+        /// <summary>
+        /// If set to true, will keep checking input from the player. Turning this to false disables checks.
+        /// </summary>
+        private bool _isEnabled = true;
 
         /// <summary>
         /// Stores the raw values of the input read from base axes.
@@ -43,10 +48,16 @@ namespace Assets.Scripts.Player
         private void Start()
         {
             _buttonConfig = ButtonConfig.GetInstance();
+            InGameMenuToggler.RegisterOnMenuToggledHandler(MenuToggled);
         }
 
         private void Update()
         {
+            if (_isEnabled == false)
+            {
+                return;
+            }
+
             ChkAxes();
             ChkControls();
             ChkSpecialCases();
@@ -121,6 +132,16 @@ namespace Assets.Scripts.Player
             {
                 _specialActivityGameModeHandler?.Invoke();
             }
+        }
+        /// <summary>
+        /// Used to toggle the input reader.
+        /// </summary>
+        /// <param name="inGameMenuToggled"> Is the in-game menu currently active?</param>
+        private void MenuToggled(bool inGameMenuToggled)
+        {
+            //Input reader is all about player movement during match. We do not want to use it when
+            //the menu is active.
+            _isEnabled = !inGameMenuToggled;
         }
 
         #region EventRegistering

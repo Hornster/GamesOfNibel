@@ -6,6 +6,7 @@ using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Data.ScriptableObjects.Transitions;
 using Assets.Scripts.Common.Enums;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GUI.Menu.Transitions
@@ -31,6 +32,11 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         [Tooltip("Used to send info about new set of controls found in the freshly selected menu.")]
         [SerializeField]
         protected CustomControlsFinderUnityEvent _reportFoundControlsUponTransition;
+        /// <summary>
+        /// Called when the ingame menu is turned off.
+        /// </summary>
+        [SerializeField]
+        protected UnityEvent _onInGameMenuTurnedOff;
 
         [Header("Scene transition")] 
         [Tooltip("The time it takes for entire scene to fade away. Shall be equal to the length of the fade out animation.")]
@@ -68,24 +74,12 @@ namespace Assets.Scripts.GUI.Menu.Transitions
             PerformTransition(_startingMenu);
         }
         /// <summary>
-        /// Performs transition from given menu to given menu, back or from the running match.
-        /// </summary>
-        /// <param name="fromMenu"></param>
-        /// <param name="toMenu"></param>
-        public void PerformMatchTransition(MenuType toMenu)
-        {
-            //TODO notatki w zeszycie
-        }
-        /// <summary>
         /// Performs transition from given menu to given menu, in main menu.
         /// </summary>
         /// <param name="fromMenu"></param>
         /// <param name="toMenu"></param>
         public void PerformTransition(MenuType toMenu)
         {
-            //TODO get the main gameobjects for the menus passed above. CanvasGroups can allow you to
-            //TODO hide entire menus and disable raycasting for them.
-            //TODO start fade out transition, when it finishes toggle both menus and start fade in transition.
             //Get and change visibility of the current and next menu.
             var currentMenu = GetVisibilityControllerForMenu(_currentMenu);
             currentMenu?.HideMenu();
@@ -110,6 +104,10 @@ namespace Assets.Scripts.GUI.Menu.Transitions
             StartCoroutine(FadeIn(nextMenu));
 
             _currentMenu = toMenu;
+            if (toMenu == MenuType.None)
+            {
+                _onInGameMenuTurnedOff?.Invoke();
+            }
         }
         /// <summary>
         /// Performs the fade out scene transition.

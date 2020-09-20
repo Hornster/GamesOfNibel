@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.CustomEvents;
+﻿
 using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Common.Helpers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,7 +21,7 @@ namespace Assets.Scripts.GUI.Menu.InGameMenu
         /// </summary>
         [Tooltip("Called when the ingame menu has to be shown.")]
         [SerializeField]
-        private MenuTransitionUnityEvent _menuTransitionEvent;
+        private InGameMenuTransitionManager _transitionManager;
         [Tooltip("Which menu is this script toggling.")]
         [SerializeField]
         private MenuType _toggledMenu = MenuType.PauseMenu;
@@ -34,13 +30,43 @@ namespace Assets.Scripts.GUI.Menu.InGameMenu
         /// </summary>
         private bool _isIngameMenuActive;
 
+        private void Start()
+        {
+            GUIInputReader.RegisterOnCancelHandler(ToggleIngameMenu);
+        }
+        /// <summary>
+        /// Toggles ingame menu. If it is enabled, causes the transition manager to return to previous menu.
+        /// </summary>
+        public void ToggleIngameMenu()
+        {
+            //Since the same button can activate the pause menu and cause return to previous menu
+            if (_isIngameMenuActive == false)
+            {
+                //activate the menu if it is not active
+                EnableInGameMenu();
+                Debug.Log("Enabling menu.");
+            }
+            else
+            {
+                //the menu is already active, so simply return to previous menu.
+                _transitionManager.PerformReturnTransition();
+            }
+        }
         /// <summary>
         /// Activates the game menu by sending call to menu transition manager.
         /// </summary>
         public void EnableInGameMenu()
         {
             _isIngameMenuActive = true;
-            _menuTransitionEvent?.Invoke(_toggledMenu);
+            _transitionManager.PerformTransition(_toggledMenu);
+            _onMenuToggle?.Invoke(_isIngameMenuActive);
+        }
+        /// <summary>
+        /// Shall be called when in game menu (pause menu) has been disabled.
+        /// </summary>
+        public void OnInGameMenuDisabled()
+        {
+            _isIngameMenuActive = false;
             _onMenuToggle?.Invoke(_isIngameMenuActive);
         }
         /// <summary>
@@ -53,7 +79,7 @@ namespace Assets.Scripts.GUI.Menu.InGameMenu
         }
     }
 }
-//TODO - add this as gameobject
-//TODO - make the input reader from player register toggling value and method here
-//TODO - register to menu transition manager for getting information when menu gets closed
-//TODO - make menu transition manager register here to  know when the menu needs to be launched
+//TODO - add this as gameobject DONE
+//TODO - make the input reader from player register toggling value and method here DONE
+//TODO - register to menu transition manager for getting information when menu gets closed DONE
+//TODO - make menu transition manager register here to  know when the menu needs to be launched DONE

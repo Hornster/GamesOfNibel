@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56343652d8398bf468f4da651d1a8855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _backwardsTransitions: {fileID: 11400000, guid: aa9d2b9cb4e95014d8139204e2597fc3,
+    type: 2}
   _menusParent: {fileID: 0}
   _startingMenu: 0
   _reportFoundControlsUponTransition:
@@ -59,6 +61,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onInGameMenuTurnedOff:
+    m_PersistentCalls:
+      m_Calls: []
   _sceneFadeOutTime: 1
   _sceneFadeOutTrigger: FadeOut
   _sceneTransitionAnimator: {fileID: 0}

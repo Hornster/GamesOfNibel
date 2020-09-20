@@ -277,8 +277,8 @@ namespace Assets.Scripts.GUI.Menu
             _currentlyUsedControls = _controlsFinder.FoundControls;
             _controlsCount = _controlsFinder.ControlsCount;
 
-            SelectControl(_currentSelectedIndex);
             _currentSelectedIndex = 0;
+            SelectControl(_currentSelectedIndex);
         }
     }
 }
