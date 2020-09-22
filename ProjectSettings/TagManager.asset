@@ -19,8 +19,8 @@ TagManager:
   - PlayerJumpingOffPlatform
   - Pickable
   - Carrier
-  - 
-  - 
+  - InGameMenuUI
+  - PlayerGUI
   - 
   - 
   - 

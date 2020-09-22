@@ -974,6 +974,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -100
       objectReference: {fileID: 0}
+    - target: {fileID: 6530322339497345333, guid: 040ea9756faad894596ea50f576fd4e5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6530322339497345335, guid: 040ea9756faad894596ea50f576fd4e5,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1084,6 +1089,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: CTFPlayerInterface
       objectReference: {fileID: 0}
+    - target: {fileID: 6530322339786928291, guid: 040ea9756faad894596ea50f576fd4e5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530322339987044400, guid: 040ea9756faad894596ea50f576fd4e5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6530322339987044402, guid: 040ea9756faad894596ea50f576fd4e5,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1148,6 +1163,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530322340758725081, guid: 040ea9756faad894596ea50f576fd4e5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6530322340758725083, guid: 040ea9756faad894596ea50f576fd4e5,
         type: 3}
@@ -1254,6 +1274,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 400
       objectReference: {fileID: 0}
+    - target: {fileID: 6530322340981411990, guid: 040ea9756faad894596ea50f576fd4e5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6530322341104616804, guid: 040ea9756faad894596ea50f576fd4e5,
         type: 3}
       propertyPath: m_RenderMode
@@ -1283,6 +1308,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ReferenceResolution.y
       value: 2160
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530322341104616808, guid: 040ea9756faad894596ea50f576fd4e5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6530322341104616811, guid: 040ea9756faad894596ea50f576fd4e5,
         type: 3}
@@ -1808,6 +1838,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 5069618047192576431, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5069618047192576433, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1852,6 +1887,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textAlignment
       value: 1025
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069618047218325312, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5069618047218325314, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
@@ -1930,6 +1970,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069618047901706734, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5069618047901706736, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
@@ -2010,20 +2055,40 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 5069618048077136064, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5069618048077136067, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: _followedObject
       value: 
       objectReference: {fileID: 1809617755}
+    - target: {fileID: 5069618048706627756, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5069618048756034974, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5069618048756034975, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5069618048791773816, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069618048791773817, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5069618048791773818, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
@@ -2049,6 +2114,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DebugController
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069618049136451018, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5069618049136451020, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
@@ -3457,7 +3527,7 @@ GameObject:
   - component: {fileID: 1225696989}
   - component: {fileID: 1225696988}
   - component: {fileID: 1225696990}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: PauseMenuBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3715,16 +3785,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: InGameMenuBase
       objectReference: {fileID: 0}
+    - target: {fileID: 3905225890264374130, guid: 1613e0e4c94897142ad2c9a982d8de47,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 3905225890264374134, guid: 1613e0e4c94897142ad2c9a982d8de47,
         type: 3}
       propertyPath: m_RenderMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3905225890264374134, guid: 1613e0e4c94897142ad2c9a982d8de47,
         type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1711468135}
+    - target: {fileID: 3905225890264374134, guid: 1613e0e4c94897142ad2c9a982d8de47,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3905225890264374134, guid: 1613e0e4c94897142ad2c9a982d8de47,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 27
+      objectReference: {fileID: 0}
     - target: {fileID: 3905225890264374135, guid: 1613e0e4c94897142ad2c9a982d8de47,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3845,10 +3930,20 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3905225890351000051, guid: 1613e0e4c94897142ad2c9a982d8de47,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 8505734102001374609, guid: 1613e0e4c94897142ad2c9a982d8de47,
         type: 3}
       propertyPath: m_Name
       value: PauseMenuCanvasGroup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8505734102001374609, guid: 1613e0e4c94897142ad2c9a982d8de47,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8505734102001374610, guid: 1613e0e4c94897142ad2c9a982d8de47,
         type: 3}
@@ -4217,7 +4312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1474172652}
   - component: {fileID: 1474172653}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: PauseMenuRequester
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4635,6 +4730,41 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -25.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5535999678685711688, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535999678685711694, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535999678685711694, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535999678685711694, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: far clip plane
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535999678685711694, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535999678685711694, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: orthographic size
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535999678685711694, guid: 361ca711c3b0bc3418cc10627f502602,
+        type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8021386712078592824, guid: 361ca711c3b0bc3418cc10627f502602,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -4893,6 +5023,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResumeButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1141246451150652481, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2020479394764155821, guid: 3c37c3678acab0448b6a6d250cea6280,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4998,6 +5133,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2478682627805565198, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2478682627805565200, guid: 3c37c3678acab0448b6a6d250cea6280,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -5033,6 +5173,11 @@ PrefabInstance:
       propertyPath: m_text
       value: Resume
       objectReference: {fileID: 0}
+    - target: {fileID: 4875220696044070876, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4977807889271702472, guid: 3c37c3678acab0448b6a6d250cea6280,
         type: 3}
       propertyPath: m_MinWidth
@@ -5042,6 +5187,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6364377184556843692, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 32767
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449496670748702134, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c37c3678acab0448b6a6d250cea6280, type: 3}
@@ -5139,7 +5294,7 @@ GameObject:
   - component: {fileID: 1862676415}
   - component: {fileID: 1862676419}
   - component: {fileID: 1862676416}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5524,7 +5679,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1919258589}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: GUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5833,6 +5988,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExitButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1141246451150652481, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2020479394764155821, guid: 3c37c3678acab0448b6a6d250cea6280,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5938,6 +6098,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2478682627805565198, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2478682627805565199, guid: 3c37c3678acab0448b6a6d250cea6280,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -5978,10 +6143,25 @@ PrefabInstance:
       propertyPath: m_text
       value: Leave
       objectReference: {fileID: 0}
+    - target: {fileID: 4875220696044070876, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 5490288082217903063, guid: 3c37c3678acab0448b6a6d250cea6280,
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6364377184556843692, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 32767
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449496670748702134, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c37c3678acab0448b6a6d250cea6280, type: 3}
