@@ -95,5 +95,11 @@ namespace Assets.Scripts.GUI
         {
             _onCancelEvent += handler;
         }
+
+        private void OnDestroy()
+        {
+            _LMBPressed = null;
+            _onCancelEvent = null;
+        }
     }
 }

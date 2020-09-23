@@ -212,5 +212,17 @@ namespace Assets.Scripts.Player
         }
 
         #endregion EventRegistering
+
+        private void OnDestroy()
+        {
+            _jumpHandler = null;
+            _prematureJumpEndHandler = null;
+            _glideHandler = null;
+            _jumpingOffPlatformsStartHandler = null;
+            _jumpingOffPlatformsEndHandler = null;
+            _helpToggleHandler = null;
+            _gameLeaveHandler = null;
+            _specialActivityGameModeHandler = null;
+        }
     }
 }

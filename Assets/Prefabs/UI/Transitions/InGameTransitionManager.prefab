@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backwardsTransitions: {fileID: 11400000, guid: aa9d2b9cb4e95014d8139204e2597fc3,
     type: 2}
+  _startingMenu: {fileID: 11400000, guid: 9bfcd340c0726764c9ee74ccc6472dfe, type: 2}
   _menusParent: {fileID: 0}
-  _startingMenu: 4
   _reportFoundControlsUponTransition:
     m_PersistentCalls:
       m_Calls:
@@ -57,7 +57,7 @@ PrefabInstance:
     - target: {fileID: 4958807407690477536, guid: 9e94845e4924bbf4b95b25f3753f99ee,
         type: 3}
       propertyPath: m_Name
-      value: TransitionManager
+      value: InGameTransitionManager
       objectReference: {fileID: 0}
     - target: {fileID: 4958807407690477550, guid: 9e94845e4924bbf4b95b25f3753f99ee,
         type: 3}

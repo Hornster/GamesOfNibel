@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -24,6 +25,7 @@ namespace Assets.Scripts.GUI
         /// </summary>
         [SerializeField] 
         private GraphicRaycaster _graphicRaycaster;
+
         /// <summary>
         /// Performs raycast on UI, returns closest result.
         /// </summary>

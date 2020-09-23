@@ -77,6 +77,11 @@ namespace Assets.Scripts.GUI.Menu.InGameMenu
         {
             _onMenuToggle += handler;
         }
+
+        private void OnDestroy()
+        {
+            _onMenuToggle = null;
+        }
     }
 }
 //TODO - add this as gameobject DONE

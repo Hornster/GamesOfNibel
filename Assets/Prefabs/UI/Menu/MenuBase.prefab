@@ -164,6 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _eventSystem: {fileID: 0}
   _graphicRaycaster: {fileID: 3905225890264374133}
+  _graphicsRaycasterHolder: {fileID: 3905225890264374130}
 --- !u!114 &3905225890351000053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sensitivity: 0.4
+  _onCancelPressed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &7333766084037016827
 PrefabInstance:
   m_ObjectHideFlags: 0

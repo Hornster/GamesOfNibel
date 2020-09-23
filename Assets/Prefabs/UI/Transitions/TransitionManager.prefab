@@ -45,8 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backwardsTransitions: {fileID: 11400000, guid: aa9d2b9cb4e95014d8139204e2597fc3,
     type: 2}
+  _startingMenu: {fileID: 11400000, guid: 9bfcd340c0726764c9ee74ccc6472dfe, type: 2}
   _menusParent: {fileID: 0}
-  _startingMenu: 0
   _reportFoundControlsUponTransition:
     m_PersistentCalls:
       m_Calls:

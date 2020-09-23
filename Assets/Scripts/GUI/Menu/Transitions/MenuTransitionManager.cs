@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Common.CustomCollections;
 using Assets.Scripts.Common.CustomEvents;
 using Assets.Scripts.Common.Data;
+using Assets.Scripts.Common.Data.ScriptableObjects.ScenePassData;
 using Assets.Scripts.Common.Data.ScriptableObjects.Transitions;
 using Assets.Scripts.Common.Enums;
 using UnityEngine;
@@ -19,6 +20,9 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         [Header("Required references")] 
         [SerializeField]
         protected BackwardsTransitions _backwardsTransitions;
+        [Tooltip("Holds info about what menu shall be loaded upon entering main menu.")]
+        [SerializeField]
+        protected ReturnFromSceneToMenuSO _startingMenu;
         /// <summary>
         /// Reference to the gameobject that has menus as children.
         /// </summary>
@@ -26,9 +30,6 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         [Tooltip("Gameobject that has menus as children in it.")]
         [SerializeField]
         protected GameObject _menusParent;
-        [Tooltip("Which menu shall show up as first?")]
-        [SerializeField]
-        protected MenuType _startingMenu = MenuType.WelcomeMenu;
         [Tooltip("Used to send info about new set of controls found in the freshly selected menu.")]
         [SerializeField]
         protected CustomControlsFinderUnityEvent _reportFoundControlsUponTransition;
@@ -71,7 +72,7 @@ namespace Assets.Scripts.GUI.Menu.Transitions
                 _availableMenus.Add(menu.MenuType, menu);
             }
 
-            PerformTransition(_startingMenu);
+            PerformTransition(_startingMenu.GetStartMenu());
         }
         /// <summary>
         /// Performs transition from given menu to given menu, in main menu.
@@ -200,6 +201,17 @@ namespace Assets.Scripts.GUI.Menu.Transitions
             yield return new WaitForSeconds(_sceneFadeOutTime);
 
             SceneManager.LoadScene(scenePath);
+        }
+        /// <summary>
+        /// Performs the scene fade out.
+        /// </summary>
+        protected IEnumerator SceneFadeOut(SceneId sceneId)
+        {
+            _sceneTransitionAnimator.SetTrigger(_sceneFadeOutTrigger);
+
+            yield return new WaitForSeconds(_sceneFadeOutTime);
+
+            SceneManager.LoadScene((int)sceneId);
         }
     }
 

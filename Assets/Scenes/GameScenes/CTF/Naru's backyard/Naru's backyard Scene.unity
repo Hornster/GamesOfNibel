@@ -5983,6 +5983,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1862676414}
     m_Modifications:
+    - target: {fileID: 535793237, guid: 3c37c3678acab0448b6a6d250cea6280, type: 3}
+      propertyPath: _currentMenu
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 535793237, guid: 3c37c3678acab0448b6a6d250cea6280, type: 3}
+      propertyPath: _targetMenu
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1141246451150652481, guid: 3c37c3678acab0448b6a6d250cea6280,
         type: 3}
       propertyPath: m_Name
@@ -6162,6 +6170,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6461311182597805939, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: _onPressed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6461311182597805939, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: _onPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6461311182597805939, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: _onPressed.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6461311182597805939, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: _onPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1914054462}
+    - target: {fileID: 6461311182597805939, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: _onPressed.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PerformReturnToMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6461311182597805939, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: _onPressed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6461311182597805939, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: _onPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1914054462}
+    - target: {fileID: 6461311182597805939, guid: 3c37c3678acab0448b6a6d250cea6280,
+        type: 3}
+      propertyPath: _onPressed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PerformReturnToMenu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c37c3678acab0448b6a6d250cea6280, type: 3}
@@ -6434,6 +6482,10 @@ PrefabInstance:
       propertyPath: _sceneTransitionAnimator
       value: 
       objectReference: {fileID: 1485408350}
+    - target: {fileID: 1871753547, guid: dbe2e24f0737f0943b4661c3d883b4ea, type: 3}
+      propertyPath: _sceneFadeOutTrigger
+      value: FadeOut
+      objectReference: {fileID: 0}
     - target: {fileID: 4205663704686168694, guid: dbe2e24f0737f0943b4661c3d883b4ea,
         type: 3}
       propertyPath: m_Name

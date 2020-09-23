@@ -19,5 +19,12 @@ namespace Assets.Scripts.GUI.Menu.InGameMenu
             var targetMenu = _backwardsTransitions.GetIngameMenuBackwardsTransition(_currentMenu);
             PerformTransition(targetMenu);
         }
+        /// <summary>
+        /// Performs transition to main menu.
+        /// </summary>
+        public void PerformReturnToMenu()
+        {
+            StartCoroutine(SceneFadeOut(_startingMenu.MenuSceneId));
+        }
     }
 }

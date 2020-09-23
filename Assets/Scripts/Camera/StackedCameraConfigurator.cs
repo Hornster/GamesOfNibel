@@ -10,7 +10,7 @@ namespace Assets.Scripts.Camera
     /// <summary>
     /// Configures provided camera in such a way that it can be stacked on top of other cameras.
     /// </summary>
-    public class StackedCamreaConfigurator : MonoBehaviour
+    public class StackedCameraConfigurator : MonoBehaviour
     {
         [Header("Required references")] 
         [Tooltip("Camera to configure.")]
