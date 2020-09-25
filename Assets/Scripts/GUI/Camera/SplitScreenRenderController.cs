@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -46,6 +47,11 @@ namespace Assets.Scripts.GUI.Camera
         /// </summary>
         private static SplitScreenRenderController _instance;
 
+        private void Start()
+        {
+            ResolutionDetector.RegisterOnScreenResolutionChange(ChangeRenderTextureSizes);
+        }
+
         public static SplitScreenRenderController GetInstance()
         {
             if (_instance == null)
@@ -71,7 +77,10 @@ namespace Assets.Scripts.GUI.Camera
 
             _registeredRenderOutputs.Add(renderOutputScript);
 
-            renderOutputScript.SetSourceCamera(playerCamera);
+            var canvasRect = _mainCanvas.rect;
+            var renderTextureSize = new Vector2Int((int)canvasRect.width, (int)canvasRect.height);
+
+            renderOutputScript.SetSourceCamera(playerCamera, renderTextureSize);
 
             ReconfigureSize();
         }
@@ -86,12 +95,23 @@ namespace Assets.Scripts.GUI.Camera
             mainCanvasRectWidth /= _registeredRenderOutputs.Count;
 
             var cameraViewportWidth = 1f / _registeredRenderOutputs.Count;
-                
+
             for (int i = 0; i < _registeredRenderOutputs.Count; i++)
             {
                 _registeredRenderOutputs[i].SetRenderOutputSize((int)mainCanvasRectWidth, (int)mainCanvasRectHeight);
                 _registeredRenderOutputs[i].SetRenderOutputPosition(i* mainCanvasRectWidth);
                 _registeredRenderOutputs[i].SetCameraViewport(cameraViewportWidth);
+            }
+        }
+        /// <summary>
+        /// Used to change the render texture sizes so they fit the new screen size.
+        /// </summary>
+        /// <param name="newTextureSize"></param>
+        private void ChangeRenderTextureSizes(Vector2Int newTextureSize)
+        {
+            for (int i = 0; i < _registeredRenderOutputs.Count; i++)
+            {
+                _registeredRenderOutputs[i].CreateRenderTexture(newTextureSize);
             }
         }
 

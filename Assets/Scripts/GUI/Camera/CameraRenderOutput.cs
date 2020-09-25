@@ -26,17 +26,16 @@ namespace Assets.Scripts.GUI.Camera
         {
             _renderOutput.texture = _renderTexture;
         }
+
         /// <summary>
-        /// Sets the render source camera to provided one.
+        /// Sets the render source camera to provided one. Makes sure that the render texture is created for it as well.
         /// </summary>
-        /// <param name="camera"></param>
-        public void SetSourceCamera(UnityEngine.Camera camera)
+        /// <param name="renderingCamera"></param>
+        /// <param name="renderTextureSize">Size of the render texture which the camera will be rendering to.</param>
+        public void SetSourceCamera(UnityEngine.Camera renderingCamera, Vector2Int renderTextureSize)
         {
-            var renderTexDesc = new RenderTextureDescriptor(3840,2160,GraphicsFormat.R8G8B8A8_UNorm, (int)DepthBits.Depth32);
-            
-            _renderTexture = new RenderTexture(renderTexDesc);
-            camera.targetTexture = _renderTexture;
-            _renderingCamera = camera;
+            _renderingCamera = renderingCamera;
+            CreateRenderTexture(renderTextureSize);
         }
 
         /// <summary>
@@ -59,6 +58,24 @@ namespace Assets.Scripts.GUI.Camera
         {
             _renderOutput.transform.localPosition = new Vector2(positionX, 0f);
         }
+        /// <summary>
+        /// Creates render texture for the camera of provided size.
+        /// </summary>
+        /// <param name="renderTextureSize">Size of the new render texture.</param>
+        public void CreateRenderTexture(Vector2Int renderTextureSize)
+        {
+            //Already created render texture cannot be modified during runtime - release it.
+            if (_renderTexture != null)
+            {
+                _renderTexture.Release();
+            }
+            //Create new texture using provided size.
+            var renderTexDesc = new RenderTextureDescriptor(renderTextureSize.x, renderTextureSize.y, GraphicsFormat.R8G8B8A8_UNorm, (int)DepthBits.Depth32);
+
+            _renderTexture = new RenderTexture(renderTexDesc);
+            _renderingCamera.targetTexture = _renderTexture;
+        }
+
         /// <summary>
         /// Sets the viewport of the camera.
         /// </summary>
