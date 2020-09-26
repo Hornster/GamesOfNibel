@@ -34,6 +34,9 @@ namespace Assets.Scripts.GUI.Camera
         [Tooltip("Used to divide the left and right halves of screen.")]
         [SerializeField]
         private Image _screenVerticalDivisor;
+        [Tooltip("Canvas scaler which contains the reference size for the main canvas.")]
+        [SerializeField] 
+        private CanvasScaler _mainCanvasScaler;
         /// <summary>
         /// Max amount of players in split-screen mode.
         /// </summary>
@@ -60,7 +63,7 @@ namespace Assets.Scripts.GUI.Camera
             }
 
             return _instance;
-       }
+        }
         /// <summary>
         /// Used to register new player in split-screen mode.
         /// </summary>
@@ -109,6 +112,10 @@ namespace Assets.Scripts.GUI.Camera
         /// <param name="newTextureSize"></param>
         private void ChangeRenderTextureSizes(Vector2Int newTextureSize)
         {
+            var referenceSize = _mainCanvasScaler.referenceResolution;
+            var deltaFactorX = referenceSize.x / newTextureSize.x;
+            newTextureSize.y = (int)(referenceSize.y / deltaFactorX);
+
             for (int i = 0; i < _registeredRenderOutputs.Count; i++)
             {
                 _registeredRenderOutputs[i].CreateRenderTexture(newTextureSize);

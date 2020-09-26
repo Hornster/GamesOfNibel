@@ -18,8 +18,8 @@ namespace Assets.Scripts.GUI.Camera
         [SerializeField]
         private RectTransform _renderOutputTransform;
 
-        //[Tooltip("The texture which will be holding the render of the camera.")]
-        //[SerializeField]
+        [Tooltip("The texture which will be holding the render of the camera.")]
+        [SerializeField]
         private RenderTexture _renderTexture;
         private UnityEngine.Camera _renderingCamera;
         private void Start()
@@ -70,10 +70,11 @@ namespace Assets.Scripts.GUI.Camera
                 _renderTexture.Release();
             }
             //Create new texture using provided size.
-            var renderTexDesc = new RenderTextureDescriptor(renderTextureSize.x, renderTextureSize.y, GraphicsFormat.R8G8B8A8_UNorm, (int)DepthBits.Depth32);
+            var renderTexDesc = new RenderTextureDescriptor(renderTextureSize.x, renderTextureSize.y, GraphicsFormat.R8G8B8A8_UNorm, (int)DepthBits.Depth24);
 
             _renderTexture = new RenderTexture(renderTexDesc);
             _renderingCamera.targetTexture = _renderTexture;
+            _renderOutput.texture = _renderTexture;
         }
 
         /// <summary>

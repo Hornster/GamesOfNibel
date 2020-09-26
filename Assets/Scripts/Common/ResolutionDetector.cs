@@ -22,10 +22,6 @@ namespace Assets.Scripts.Common
         /// </summary>
         private Vector2Int _currentScreenResolution;
 
-        private void Start()
-        {
-            _currentScreenResolution = new Vector2Int(Screen.width, Screen.height);
-        }
         private void FixedUpdate()
         {
             var newScreenResolution = new Vector2Int(Screen.width, Screen.height);
