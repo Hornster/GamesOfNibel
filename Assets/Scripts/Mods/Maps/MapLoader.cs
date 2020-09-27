@@ -31,6 +31,8 @@ namespace Assets.Scripts.Mods.Maps
         /// </summary>
         [SerializeField] private Transform _mapsContainer;
 
+        private static AssetBundle _loadedMap;
+
         /// <summary>
         /// Loads available maps and returns references to their data.
         /// </summary>
@@ -57,7 +59,25 @@ namespace Assets.Scripts.Mods.Maps
         /// <returns></returns>
         public void TryLoadingMapBundle(MapData mapData)
         {
-            _mapBundleLoader.LoadMapSceneBundle(mapData);
+            _loadedMap = _mapBundleLoader.LoadMapSceneBundle(mapData);
+        }
+        /// <summary>
+        /// Unloads all assets that contain map data.
+        /// </summary>
+        public void UnloadAvailableMaps()
+        {
+            _mapBundleLoader.UnloadLoadedAssetBundles();
+        }
+        /// <summary>
+        /// Unloads the asset of the last played map (scene).
+        /// </summary>
+        public void UnloadLastLoadedMap()
+        {
+            if (_loadedMap != null)
+            {
+                _loadedMap.Unload(true);
+                _loadedMap = null;
+            }
         }
     }
 }

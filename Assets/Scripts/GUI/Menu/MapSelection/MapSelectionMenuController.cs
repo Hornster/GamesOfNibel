@@ -41,6 +41,8 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         private void Awake()
         {
             var foundMaps = _mapLoader.LoadAvailableMaps();
+
+            _mapLoader.UnloadLastLoadedMap();
             
             RegisterEventHandlers(foundMaps);
         }
@@ -55,7 +57,8 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
                 {
                     var mapData = _selectedMap.MapData;
                     _mapLoader.TryLoadingMapBundle(mapData);
-                    //SceneManager.LoadScene(mapData.ScenePath);
+                    _mapLoader.UnloadAvailableMaps();
+
                     //perform transitions and launch the map.
                     _onMapLaunching?.Invoke(mapData.ScenePath);
                 }

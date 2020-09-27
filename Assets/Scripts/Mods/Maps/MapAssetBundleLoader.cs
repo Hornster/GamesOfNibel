@@ -28,6 +28,8 @@ namespace Assets.Scripts.Mods.Maps
         /// Errors concerning single action (like selecting a map) are not contained in here and are simply thrown.
         /// </summary>
         public List<ModLoadingException> ErrorsList { get; private set; }
+
+        private List<AssetBundle> _loadedAssetBundles = new List<AssetBundle>();
         /// <summary>
         /// Reads the maps directory. Returns available maps.
         /// </summary>
@@ -68,6 +70,17 @@ namespace Assets.Scripts.Mods.Maps
             throw new ModLoadingException(
                 $"Unable to load map scene at {mapData.ScenePath} in {mapData.SceneBundlePath} bundle! Check names integrity and whether are there files missing.");
             
+        }
+        /// <summary>
+        /// Unloads all loaded assets. Does preserve already used instances.
+        /// </summary>
+        public void UnloadLoadedAssetBundles()
+        {
+            for (int i = 0; i < _loadedAssetBundles.Count; i++)
+            {
+                _loadedAssetBundles[i]?.Unload(false);
+            }
+            _loadedAssetBundles.Clear();
         }
         /// <summary>
         /// Resets the errors  list.
@@ -156,6 +169,7 @@ namespace Assets.Scripts.Mods.Maps
             {
                 var newMapData = mapper.MapDataFromRawMapData(mapInfo);
                 var previewBundle = AssetBundle.LoadFromFile(mapInfo.PreviewBundlePath);
+                _loadedAssetBundles.Add(previewBundle);
 
                 newMapData.PreviewImg = LoadSinglePreviewImage(previewBundle, mapInfo.PreviewImgPath);
                 newMapData.ThumbnailImg = LoadSinglePreviewImage(previewBundle, mapInfo.ThumbnailImgPath);
