@@ -13,11 +13,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
         //private string _mapName;
         private MapDataSO _mapDataSO;
 
-        //private MapDataAssetBundleConstants _mapAssetBundleConstants;
-
         private SceneAsset _scene;
-        //private Sprite _previewImage;
-        //private Sprite _thumbnailImage;
 
         /// <summary>
         /// Were all requirements met upon trying to create the map mod? Updated
@@ -190,9 +186,10 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
         {
             var assetBundleNames = new List<string>();
             var assetAddressables = new List<string>();
+            var sceneBundleName = _mapDataSO.ShownMapName + _mapDataSO.MapAssetBundleConstants.BundleNameSuffix;
 
             //Set new asset bundle.
-            assetBundleCreator.CreateNewBundle(_mapDataSO.ShownMapName);
+            assetBundleCreator.CreateNewBundle(sceneBundleName);
 
             //Set the name of the scene...
             var sceneName = GetAssetName(_scene);
@@ -206,7 +203,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
 
             //...and save the bundle for the scene alone.
             assetBundleCreator.SaveBundle(baseDir);
-            _mapDataSO.SceneBundlePath = Path.Combine(baseDir, _mapDataSO.ShownMapName);
+            _mapDataSO.SceneBundlePath = Path.Combine(baseDir, sceneBundleName);
         }
         /// <summary>
         /// Manages the creation of the map mod - preview images and the scene itself.

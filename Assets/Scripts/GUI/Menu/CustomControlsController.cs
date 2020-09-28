@@ -274,6 +274,10 @@ namespace Assets.Scripts.GUI.Menu
         /// <param name="_controlsFinder">New set of controls. Will override the old set in this controller.</param>
         public void ReplaceControls(CustomControlsFinder _controlsFinder)
         {
+            if (_controlsFinder.FoundControls == _currentlyUsedControls)
+            {
+                return; //We do not need to change anything if the menu was not changed.
+            }
             _currentlyUsedControls = _controlsFinder.FoundControls;
             _controlsCount = _controlsFinder.ControlsCount;
 

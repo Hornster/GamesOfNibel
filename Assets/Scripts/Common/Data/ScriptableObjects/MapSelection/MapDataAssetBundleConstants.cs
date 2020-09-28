@@ -18,13 +18,8 @@ namespace Assets.Scripts.Common.Data.ScriptableObjects.MapSelection
                                                              + "AssetBundles" + Path.DirectorySeparatorChar 
                                                              + "Maps" + Path.DirectorySeparatorChar;
 
-        [Header("ScenePath placeholder")] 
-        public readonly string ScenePlaceholder = "$SceneName$";
-
-        [Header("After sceneId")]
-        public readonly string PreviewImageFolderName = "PreviewImg" + Path.DirectorySeparatorChar;
-        public readonly string ThumbnailImageFolderName = "ThumbnailImg" + Path.DirectorySeparatorChar;
-        public readonly string SceneFolderName = "Scene" + Path.DirectorySeparatorChar;
+        [Header("Bundle name suffix")] 
+        public readonly string BundleNameSuffix = "Map Mod";
 
         /// <summary>
         /// Constant path chunk added to the main map mod base directory designated for the preview images
