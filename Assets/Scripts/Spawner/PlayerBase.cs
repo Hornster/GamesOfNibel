@@ -11,12 +11,15 @@ namespace Assets.Scripts.Spawner
         /// </summary>
         [SerializeField]
         private Teams _myTeam;
-        /// <summary>
-        /// Spawner assigned to this base.
-        /// </summary>
-        private IFlagSpawner _myFlagSpawner;
+        [Tooltip("Prefab of the player used to spawn the players.")]
+        [SerializeField]
+        private GameObject _playerPrefab;
 
-        public void SpawnPlayer(int whichPlayer)
+        private void Start()
+        {
+            SpawnPlayers();
+        }
+        public void SpawnPlayer()
         {
             
         }

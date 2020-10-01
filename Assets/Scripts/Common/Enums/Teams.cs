@@ -5,6 +5,10 @@ namespace Assets.Scripts.Common.Enums
     {
         Lotus,
         Lily,
-        Neutral
+        Neutral,
+        /// <summary>
+        /// Used by spawners. Spawner marked by Multi will spawn everyone, no matter the team they belong to.
+        /// </summary>
+        Multi
     }
 }
