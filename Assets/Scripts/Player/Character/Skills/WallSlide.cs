@@ -47,6 +47,22 @@ namespace Assets.Scripts.Player.Character.Skills
             _influenceTypes = _influenceTypes | (int)type;
         }
         /// <summary>
+        /// Sets the rigidbody to provided one.
+        /// </summary>
+        /// <param name="rigidbody"></param>
+        public void SetRigidBody(Rigidbody2D rigidbody)
+        {
+            _rb = rigidbody;
+        }
+        /// <summary>
+        /// Sets the player state to provided one.
+        /// </summary>
+        /// <param name="playerState"></param>
+        public void SetPlayerState(PlayerState playerState)
+        {
+            _playerState = playerState;
+        }
+        /// <summary>
         /// Applies effect to rigidbody accordingly with their type.
         /// </summary>
         /// <param name="effect"></param>

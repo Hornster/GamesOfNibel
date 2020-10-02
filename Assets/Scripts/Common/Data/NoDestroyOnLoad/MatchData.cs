@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Exceptions;
 using UnityEngine;
 
 namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
@@ -16,6 +17,10 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// The instance of the match data.
         /// </summary>
         private static MatchData _instance;
+        /// <summary>
+        /// How many instances are active? Only one is allowed.
+        /// </summary>
+        private static int _instancesCount = 0;
         /// <summary>
         /// Configuration of skills that will be used during the match.
         /// </summary>
@@ -33,6 +38,11 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
 
         private void Awake()
         {
+            if (_instancesCount > 0)
+            {
+                throw new Exception($"There are multiple instances of {this} this singleton!");
+            }
+            _instancesCount++;
             _instance = this;
             DontDestroyOnLoad(this);
         }
@@ -59,7 +69,7 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         {
             if (_instance == null)
             {
-                throw new Exception("No MatchData instance is present while trying to retrieve it!");
+                throw new GONBaseException("No MatchData instance is present while trying to retrieve it!");
             }
             return _instance;
         }

@@ -5,6 +5,7 @@
 
 using System;
 using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Player.Character.Skills;
 using UnityEngine;
 
 namespace Assets.Scripts.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary

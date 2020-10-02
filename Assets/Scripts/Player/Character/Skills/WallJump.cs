@@ -78,6 +78,22 @@ namespace Assets.Scripts.Player.Character.Skills
 
             _playerState.PlayerWallJumps();
         }
+        /// <summary>
+        /// Sets the rigidbody to provided one.
+        /// </summary>
+        /// <param name="rigidbody"></param>
+        public void SetRigidBody(Rigidbody2D rigidbody)
+        {
+            _characterRigidbody = rigidbody;
+        }
+        /// <summary>
+        /// Sets the player state to provided one.
+        /// </summary>
+        /// <param name="playerState"></param>
+        public void SetPlayerState(PlayerState playerState)
+        {
+            _playerState = playerState;
+        }
         public void UseSkill()
         {
             //wall hop

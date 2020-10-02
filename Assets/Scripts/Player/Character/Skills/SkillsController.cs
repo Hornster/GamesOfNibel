@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Player.Character.Skills.Factory;
 using UnityEngine;
 
 namespace Assets.Scripts.Player.Character.Skills
@@ -15,13 +16,26 @@ namespace Assets.Scripts.Player.Character.Skills
         [SerializeField] private WallSlide _wallSlideSkill;
         [SerializeField] private WallJump _wallJumpSkill;
         [SerializeField] private Glide _glideSkill;
+        [SerializeField] private SkillContainerProvider _skillContainerProvider;
 
         private void Start()
         {
-            AddBasicSkill(SkillType.DoubleJump, _doubleJumpSkill);
-            AddBasicSkill(SkillType.WallSlide, _wallSlideSkill);
-            AddBasicSkill(SkillType.WallJump, _wallJumpSkill);
-            AddBasicSkill(SkillType.Glide, _glideSkill);
+            var skillFactory = SkillFactory.GetInstance();
+            var newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, SkillType.DoubleJump);
+            AddBasicSkill(SkillType.DoubleJump, newSkill);
+            
+            newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, SkillType.WallSlide);
+            AddBasicSkill(SkillType.WallSlide, newSkill);
+            
+            newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, SkillType.WallJump);
+            AddBasicSkill(SkillType.WallJump, newSkill);
+            
+            newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, SkillType.Glide);
+            AddBasicSkill(SkillType.Glide, newSkill);
+            //AddBasicSkill(SkillType.DoubleJump, _doubleJumpSkill);
+            //AddBasicSkill(SkillType.WallSlide, _wallSlideSkill);
+            //AddBasicSkill(SkillType.WallJump, _wallJumpSkill);
+            //AddBasicSkill(SkillType.Glide, _glideSkill);
         }
         //DEBUG
 

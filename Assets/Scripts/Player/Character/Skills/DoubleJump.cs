@@ -37,6 +37,22 @@ namespace Assets.Scripts.Player.Character.Skills
             _initialVelocity = _jumpHeight / jumpTime + 0.5f * gravity * jumpTime;
         }
         /// <summary>
+        /// Sets the rigidbody to provided one.
+        /// </summary>
+        /// <param name="rigidbody"></param>
+        public void SetRigidBody(Rigidbody2D rigidbody)
+        {
+            _characterRigidbody = rigidbody;
+        }
+        /// <summary>
+        /// Sets the player state to provided one.
+        /// </summary>
+        /// <param name="playerState"></param>
+        public void SetPlayerState(PlayerState playerState)
+        {
+            _playerState = playerState;
+        }
+        /// <summary>
         /// Performs double jump.
         /// </summary>
         public void UseSkill()
