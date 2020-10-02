@@ -54,7 +54,6 @@ namespace Assets.Scripts.GUI.Menu
         /// </summary>
         public void DeselectControl()
         {
-
             _animator.SetBool(_idleParamName, true);
             _animator.SetBool(_selectedParamName, false);
         }

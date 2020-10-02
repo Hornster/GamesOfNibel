@@ -21,9 +21,14 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// How many instances are active? Only one is allowed.
         /// </summary>
         private static int _instancesCount = 0;
+        [Tooltip("The parent gameobject that should be marked as DontDestroyOnLoad.")]
+        [SerializeField]
+        private GameObject _parent;
         /// <summary>
         /// Configuration of skills that will be used during the match.
         /// </summary>
+        [Tooltip("Configuration of skills for the match.")]
+        [SerializeField]
         private SkillsConfig _skillsConfig;
 
         /// <summary>
@@ -44,7 +49,7 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
             }
             _instancesCount++;
             _instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(_parent);
         }
         /// <summary>
         /// Adds given config to the list.
