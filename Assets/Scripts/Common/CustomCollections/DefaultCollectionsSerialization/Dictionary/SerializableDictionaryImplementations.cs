@@ -32,4 +32,12 @@ namespace Assets.Scripts.Common.CustomCollections.DefaultCollectionsSerializatio
     /// </summary>
     [Serializable]
     public class MenuTypeMenuTypeDictionary : SerializableDictionary<MenuType, MenuType> {}
+//---------------------
+// SkillType => bool
+//---------------------
+    /// <summary>
+    /// Serializable dictionary type for two menu types.
+    /// </summary>
+    [Serializable]
+    public class SkillTypeBoolDictionary : SerializableDictionary<SkillType, bool> { }
 }

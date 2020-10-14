@@ -22,31 +22,20 @@ namespace Assets.Scripts.Player.Character.Skills
         private void Start()
         {
             var matchConfig = MatchData.GetInstance();
-            var availableSkills = matchConfig.SkillsConfig.AvailableSkills;
+            var availableSkills = matchConfig.SkillsConfig.AvailableSkills.dictionary;
 
             var skillFactory = SkillFactory.GetInstance();
 
-            for (int i = 0; i < availableSkills.Length; i++)
-            {
-                var newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, availableSkills[i]);
-                AddBasicSkill(availableSkills[i], newSkill);
-            }
+            var allSkills = Enum.GetValues(typeof(SkillType)) as SkillType[];
 
-            //var newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, SkillType.DoubleJump);
-            //AddBasicSkill(SkillType.DoubleJump, newSkill);
-            
-            //newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, SkillType.WallSlide);
-            //AddBasicSkill(SkillType.WallSlide, newSkill);
-            
-            //newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, SkillType.WallJump);
-            //AddBasicSkill(SkillType.WallJump, newSkill);
-            
-            //newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, SkillType.Glide);
-            //AddBasicSkill(SkillType.Glide, newSkill);
-            //AddBasicSkill(SkillType.DoubleJump, _doubleJumpSkill);
-            //AddBasicSkill(SkillType.WallSlide, _wallSlideSkill);
-            //AddBasicSkill(SkillType.WallJump, _wallJumpSkill);
-            //AddBasicSkill(SkillType.Glide, _glideSkill);
+            foreach (var skill in allSkills)
+            {
+                if (availableSkills[skill])
+                {
+                    var newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, skill);
+                    AddBasicSkill(skill, newSkill);
+                }
+            }
         }
         //DEBUG
 

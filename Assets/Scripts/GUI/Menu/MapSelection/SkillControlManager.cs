@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.CustomEvents;
 using Assets.Scripts.Common.Enums;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.GUI.Menu.MapSelection
@@ -15,6 +17,8 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
     /// </summary>
     public class SkillControlManager : MonoBehaviour
     {
+        [Tooltip("Called whenever the connected skill is toggled.")]
+        private UnityAction<SkillType, bool> _onSkillSelectionChange;
         /// <summary>
         /// Provides infor about available colors for the skills in the menu.
         /// </summary>
@@ -38,9 +42,18 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         /// Is this skill required for currently PREVIEWED map? Causes automatic update of skill color.
         /// </summary>
         /// <param name="isRequired"></param>
-        public void UpdateSkillState(bool isRequired)
+        public void UpdateSkillRequirementState(bool isRequired)
         {
             isSkillRequired = isRequired;
+            UpdateSkillColor();
+        }
+        /// <summary>
+        /// Sets the skill to provided state.
+        /// </summary>
+        /// <param name="isActive">True for enabled, False for disabled.</param>
+        public void SetSkillState(bool isActive)
+        {
+            IsSkillActive = isActive;
             UpdateSkillColor();
         }
         /// <summary>
@@ -49,7 +62,17 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         public void ToggleSkill()
         {
             IsSkillActive = !IsSkillActive;
+            _onSkillSelectionChange?.Invoke(_skillType, IsSkillActive);
             UpdateSkillColor();
+        }
+        /// <summary>
+        /// Registers provided handler. When the user interacts with UI control assigned to this skill,
+        /// the handler will be called.
+        /// </summary>
+        /// <param name="handler"></param>
+        public void RegisterOnSkillSelectionChange(UnityAction<SkillType, bool> handler)
+        {
+            _onSkillSelectionChange += handler;
         }
         /// <summary>
         /// Updates the color of the switch accordingly to its current state.
@@ -82,6 +105,11 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
         private void Start()
         {
             UpdateSkillColor();
+        }
+
+        private void OnDestroy()
+        {
+            _onSkillSelectionChange = null;
         }
     }
 }

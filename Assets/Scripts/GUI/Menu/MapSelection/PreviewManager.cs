@@ -81,7 +81,7 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
             //First reset all skills to not required.
             foreach (var skill in _skillControls.Values)
             {
-                skill.UpdateSkillState(false);
+                skill.UpdateSkillRequirementState(false);
             }
 
             //Then mark all required skills properly.
@@ -89,7 +89,7 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
             {
                 if (_skillControls.TryGetValue(skill, out var skillControl))
                 {
-                    skillControl.UpdateSkillState(true);
+                    skillControl.UpdateSkillRequirementState(true);
                 }
             }
         }
