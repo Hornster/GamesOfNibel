@@ -70,7 +70,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
+    width: 0.5
     height: 1
 --- !u!114 &46385161519025678
 MonoBehaviour:
@@ -86,6 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderOutput: {fileID: 46385161519025776}
   _renderOutputTransform: {fileID: 46385161519025777}
+  _renderTexture: {fileID: 0}
 --- !u!1 &7085244193836820231
 GameObject:
   m_ObjectHideFlags: 0

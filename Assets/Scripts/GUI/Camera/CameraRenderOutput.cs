@@ -25,17 +25,16 @@ namespace Assets.Scripts.GUI.Camera
         private void Start()
         {
             _renderOutput.texture = _renderTexture;
+            _renderingCamera.ResetAspect();
         }
 
         /// <summary>
         /// Sets the render source camera to provided one. Makes sure that the render texture is created for it as well.
         /// </summary>
         /// <param name="renderingCamera"></param>
-        /// <param name="renderTextureSize">Size of the render texture which the camera will be rendering to.</param>
-        public void SetSourceCamera(UnityEngine.Camera renderingCamera, Vector2Int renderTextureSize)
+        public void SetSourceCamera(UnityEngine.Camera renderingCamera)
         {
             _renderingCamera = renderingCamera;
-            CreateRenderTexture(renderTextureSize);
         }
 
         /// <summary>
@@ -76,7 +75,16 @@ namespace Assets.Scripts.GUI.Camera
             _renderingCamera.targetTexture = _renderTexture;
             _renderOutput.texture = _renderTexture;
         }
-
+        /// <summary>
+        /// Updates the aspect of render texture size assigned to this render output's camera. 
+        /// </summary>
+        /// <param name="newAspect">Width of screen/height.</param>
+        public void UpdateAspect(float newAspect)
+        {
+            var newTextureSize = new Vector2(_renderTexture.width, 0f);
+            newTextureSize.y = newTextureSize.x / newAspect;
+            CreateRenderTexture(new Vector2Int((int)newTextureSize.x, (int)newTextureSize.y));
+        }
         /// <summary>
         /// Sets the viewport of the camera.
         /// </summary>

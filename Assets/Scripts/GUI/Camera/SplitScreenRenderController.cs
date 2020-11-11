@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UI;
@@ -49,10 +51,6 @@ namespace Assets.Scripts.GUI.Camera
         /// </summary>
         private static SplitScreenRenderController _instance;
 
-        private void Start()
-        {
-            ResolutionDetector.RegisterOnScreenResolutionChange(ChangeRenderTextureSizes);
-        }
 
         public static SplitScreenRenderController GetInstance()
         {
@@ -79,18 +77,14 @@ namespace Assets.Scripts.GUI.Camera
 
             _registeredRenderOutputs.Add(renderOutputScript);
 
-            var canvasRect = _mainCanvas.rect;
-            var renderTextureSize = new Vector2Int((int)canvasRect.width, (int)canvasRect.height);
-
-            renderOutputScript.SetSourceCamera(playerCamera, renderTextureSize);
-
-            ReconfigureSize();
+            renderOutputScript.SetSourceCamera(playerCamera);
         }
         /// <summary>
         /// Accordingly changes the rects and render images of the registered players, splitting the screen. Affects camera rects, too.
         /// </summary>
-        private void ReconfigureSize()
+        private IEnumerator ReconfigureSize()
         {
+            yield return new WaitForEndOfFrame();
             var mainCanvasRectWidth = _mainCanvas.rect.width;
             var mainCanvasRectHeight = _mainCanvas.rect.height;
 
@@ -104,6 +98,7 @@ namespace Assets.Scripts.GUI.Camera
                 _registeredRenderOutputs[i].SetRenderOutputPosition(i* mainCanvasRectWidth);
                 _registeredRenderOutputs[i].SetCameraViewport(cameraViewportWidth);
             }
+
         }
         /// <summary>
         /// Used to change the render texture sizes so they fit the new screen size.
@@ -111,14 +106,12 @@ namespace Assets.Scripts.GUI.Camera
         /// <param name="newTextureSize"></param>
         private void ChangeRenderTextureSizes(Vector2Int newTextureSize)
         {
-            var referenceSize = _mainCanvasScaler.referenceResolution;
-            var deltaFactorX = referenceSize.x / newTextureSize.x;
-            newTextureSize.y = (int)(referenceSize.y / deltaFactorX);
-
             for (int i = 0; i < _registeredRenderOutputs.Count; i++)
             {
                 _registeredRenderOutputs[i].CreateRenderTexture(newTextureSize);
             }
+
+            StartCoroutine(ReconfigureSize());
         }
 
         private void Awake()
@@ -128,6 +121,8 @@ namespace Assets.Scripts.GUI.Camera
                 throw new Exception("Instance of this singleton has already been declared in object hierarchy!");
             }
             _instance = this;
+
+            ResolutionDetector.RegisterOnScreenResolutionChange(ChangeRenderTextureSizes);
         }
 
     }
