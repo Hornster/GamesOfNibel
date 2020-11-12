@@ -38,6 +38,9 @@ namespace Assets.Scripts.GUI.Camera
         [Tooltip("Canvas scaler which contains the reference size for the main canvas.")]
         [SerializeField] 
         private CanvasScaler _mainCanvasScaler;
+        [Tooltip("Used to turn on and off the screen divisor.")]
+        [SerializeField]
+        private ScreenDivisorController _screenDivisorController;
         /// <summary>
         /// Max amount of players in split-screen mode.
         /// </summary>
@@ -92,11 +95,14 @@ namespace Assets.Scripts.GUI.Camera
 
             var cameraViewportWidth = 1f / _registeredRenderOutputs.Count;
 
+            _screenDivisorController.SetEnabled(_registeredRenderOutputs.Count > 1);
+
             for (int i = 0; i < _registeredRenderOutputs.Count; i++)
             {
                 _registeredRenderOutputs[i].SetRenderOutputSize((int)mainCanvasRectWidth, (int)mainCanvasRectHeight);
                 _registeredRenderOutputs[i].SetRenderOutputPosition(i* mainCanvasRectWidth);
                 _registeredRenderOutputs[i].SetCameraViewport(cameraViewportWidth);
+                _registeredRenderOutputs[i].SetRawImageUVRect(cameraViewportWidth);
             }
 
         }

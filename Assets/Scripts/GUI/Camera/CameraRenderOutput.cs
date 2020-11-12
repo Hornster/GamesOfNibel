@@ -97,5 +97,16 @@ namespace Assets.Scripts.GUI.Camera
             cameraRect.width = viewPortWidth;
             _renderingCamera.rect = cameraRect;
         }
+        /// <summary>
+        /// Changes the width of the uv rect of the raw image component which is used to
+        /// display the results from the cameras.
+        /// </summary>
+        /// <param name="viewportWidth">New viewport width.</param>
+        public void SetRawImageUVRect(float viewportWidth)
+        {
+            var renderOutputUVRect = _renderOutput.uvRect;
+            renderOutputUVRect.width = viewportWidth;
+            _renderOutput.uvRect = renderOutputUVRect;
+        }
     }
 }
