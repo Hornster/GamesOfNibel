@@ -30,11 +30,17 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         [Tooltip("Configuration of skills for the match.")]
         [SerializeField]
         private SkillsConfig _skillsConfig;
+        /// <summary>
+        /// Configuration of players that will be taking part in the match.
+        /// </summary>
+        [Tooltip("Configuration of players for the match.")]
+        [SerializeField]
+        private PlayerConfigsList _playersConfig;
 
         /// <summary>
         /// Stores data of all players that needs to be spawned.
         /// </summary>
-        public List<PlayerConfig> PlayersConfigs { get; private set; } = new List<PlayerConfig>();
+        public PlayerConfigsList PlayersConfigs => _playersConfig;
         /// <summary>
         /// Gets the skills configuration.
         /// </summary>
@@ -55,16 +61,9 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// Adds given config to the list.
         /// </summary>
         /// <param name="config">Player config.</param>
-        public void AddPlayerConfig(PlayerConfig config)
+        public void AddPlayerConfig()
         {
-            PlayersConfigs.Add(config);
-        }
-        /// <summary>
-        /// Removes all saved player configurations.
-        /// </summary>
-        public void ClearPlayerConfigs()
-        {
-            PlayersConfigs.Clear();
+            PlayersConfigs.AddPlayerConfig();
         }
         /// <summary>
         /// Get instance of the match data.

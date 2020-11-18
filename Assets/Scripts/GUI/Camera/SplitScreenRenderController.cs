@@ -133,7 +133,3 @@ namespace Assets.Scripts.GUI.Camera
 
     }
 }
-
-//TODO: Screen resolution changes on display, but two player rendering cameras render to rendertexture, not display.
-//TODO: Make a simple class that detects change in screen resolution, register events to it and replace the
-//TODO: render texture with new one. Like here: https://answers.unity.com/questions/969731/how-do-i-check-if-the-screengamewindow-has-changed.html

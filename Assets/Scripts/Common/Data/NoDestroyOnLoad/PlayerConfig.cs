@@ -10,7 +10,6 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
     {
         //The fields and getters/setters are explicitly divided in order to allow
         //testing through Unity Inspector.
-        
         /// <summary>
         /// Name of the player.
         /// </summary>
@@ -24,9 +23,13 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         [SerializeField]
         private Teams _playerTeam;
 
-        //TODO add character enum when char selection will become available
 
-        
+        private int _myId;
+        //TODO add character enum when char selection will become available
+        /// <summary>
+        /// Id of the player.
+        /// </summary>
+        public int MyId => _myId;
         /// <summary>
         /// The name the player decided to hide behind.
         /// </summary>
@@ -47,5 +50,13 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// Was the player already spawned by some previous spawner?
         /// </summary>
         public bool PlayerAlreadySpawned { get; set; }
+        /// <summary>
+        /// Sets id of the player to new one.
+        /// </summary>
+        /// <param name="newId"></param>
+        public void SetPlayerId(int newId)
+        {
+            _myId = newId;
+        }
     }
 }

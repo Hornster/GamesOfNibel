@@ -48,9 +48,10 @@ namespace Assets.Scripts.Spawner
                 throw new GONBaseException("No players found to spawn!");
             }
 
-            for (int i = 0; i < playersConfigs.Count; i++)
+            var availablePlayerConfigs = playersConfigs.PlayerConfigs;
+            for (int i = 0; i < availablePlayerConfigs.Count; i++)
             {
-                var currentPlayerConfig = playersConfigs[i];
+                var currentPlayerConfig = availablePlayerConfigs[i];
                 SpawnSinglePlayer(currentPlayerConfig, _matchData.SkillsConfig);
 
             }
