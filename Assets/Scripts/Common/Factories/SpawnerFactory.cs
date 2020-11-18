@@ -9,6 +9,9 @@ namespace Assets.Scripts.Common.Factories
 {
     public class SpawnerFactory : MonoBehaviour, ISpawnerFactory
     {
-
+        public GameObject CreateSpawner()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
