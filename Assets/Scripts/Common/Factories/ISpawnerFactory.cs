@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Data;
 using UnityEngine;
 
 namespace Assets.Scripts.Common.Factories
@@ -12,6 +13,6 @@ namespace Assets.Scripts.Common.Factories
     /// </summary>
     public interface ISpawnerFactory
     {
-        GameObject CreateSpawner(/*SpawnerData spawnerData*/);//TODO
+        List<GameObject> CreateSpawner(SpawnerGroupConfig spawnerGroupConfig);
     }
 }

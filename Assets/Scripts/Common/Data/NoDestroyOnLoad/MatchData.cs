@@ -38,6 +38,13 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         private PlayerConfigsList _playersConfig;
 
         /// <summary>
+        /// Configuration of players that will be taking part in the match.
+        /// </summary>
+        [Tooltip("Configuration of spawners for the match.")]
+        [SerializeField]
+        private SpawnerConfigsList _spawnersConfig;
+
+        /// <summary>
         /// Stores data of all players that needs to be spawned.
         /// </summary>
         public PlayerConfigsList PlayersConfigs => _playersConfig;
@@ -45,6 +52,10 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// Gets the skills configuration.
         /// </summary>
         public SkillsConfig SkillsConfig => _skillsConfig;
+        /// <summary>
+        /// Gets the spawners configuration.
+        /// </summary>
+        public SpawnerConfigsList SpawnersConfig => _spawnersConfig;
 
 
         private void Awake()
