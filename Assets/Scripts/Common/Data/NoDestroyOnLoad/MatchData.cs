@@ -56,6 +56,10 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// Gets the spawners configuration.
         /// </summary>
         public SpawnerConfigsList SpawnersConfig => _spawnersConfig;
+        /// <summary>
+        /// Stores path to scene with map that should be loaded.
+        /// </summary>
+        public string SceneToLoad { get; set; }
 
 
         private void Awake()

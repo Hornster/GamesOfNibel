@@ -9,7 +9,7 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
 {
     public interface ISceneData
     {
-        GameObject[] GetPlayers();
-        GameObject[] GetSpawns();
+        List<GameObject> Players { get; }
+        List<GameObject> Spawners { get; }
     }
 }

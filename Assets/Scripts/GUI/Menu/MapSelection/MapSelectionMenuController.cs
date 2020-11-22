@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Common.CustomEvents;
+using Assets.Scripts.Common.Data.NoDestroyOnLoad;
+using Assets.Scripts.Common.Data.ScriptableObjects.ScenePassData;
 using Assets.Scripts.Common.Exceptions;
 using Assets.Scripts.Mods.Maps;
 using UnityEngine;
@@ -18,6 +20,10 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
     /// </summary>
     public class MapSelectionMenuController : MonoBehaviour
     {
+        [Tooltip("SO that stores path to the dynamic objects loading scene. This scene is loaded" +
+                 "before any map scene and is used to initialize dynamic data for the given" +
+                 "map scene.")]
+        [SerializeField] private LoadingScenePathSO _loadingScenePathSO;
         [SerializeField] private MapLoader _mapLoader;
         [SerializeField] private PreviewManager _previewManager;
 
@@ -59,8 +65,11 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
                     _mapLoader.TryLoadingMapBundle(mapData);
                     _mapLoader.UnloadAvailableMaps();
 
+                    MatchData.GetInstance().SceneToLoad = mapData.ScenePath;
+
                     //perform transitions and launch the map.
-                    _onMapLaunching?.Invoke(mapData.ScenePath);
+                    _onMapLaunching?.Invoke(_loadingScenePathSO.LoadingScenePath);
+                    //_onMapLaunching?.Invoke(mapData.ScenePath);
                 }
                 catch (ModLoadingException ex)
                 {
