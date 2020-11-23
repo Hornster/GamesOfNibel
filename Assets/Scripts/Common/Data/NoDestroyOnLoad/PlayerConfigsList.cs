@@ -20,6 +20,15 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
 
         public List<PlayerConfig> PlayerConfigs { get; } = new List<PlayerConfig>();
 
+        private void Awake()
+        {
+            var foundPlayerConfigs = GetComponentsInChildren<PlayerConfig>();
+            foreach (var playerConfig in foundPlayerConfigs)
+            {
+                PlayerConfigs.Add(playerConfig);
+            }
+        }
+
         /// <summary>
         /// Creates new config for the player. Returns the id of the config.
         /// </summary>

@@ -37,7 +37,7 @@ namespace Assets.Scripts.MapInitialization
 
         private bool _isDoneLoading = false;
 
-        private object _isDoneLoadingLock;
+        private object _isDoneLoadingLock = new object();
 
         private void Start()
         {            
@@ -98,30 +98,24 @@ namespace Assets.Scripts.MapInitialization
         /// </summary>
         private void CreateSpawners()
         {
-            var readySpawners = new List<GameObject>();
             var spawnersData = _matchData.SpawnersConfig.SpawnerConfigs;
             foreach (var spawnerData in spawnersData)
             {
                 var newSpawners = _spawnerFactory.Interface.CreateSpawner(spawnerData);
-                newSpawners.ForEach(s => readySpawners.Add(s));
+                _sceneData.AddSpawners(newSpawners);
             }
-
-            _sceneData.Spawners = readySpawners;
         }
         /// <summary>
         /// Creates players based off the matchData contents.
         /// </summary>
         private void CreatePlayers()
         {
-            var readyPlayers = new List<GameObject>();
             var playerConfigs = _matchData.PlayersConfigs.PlayerConfigs;
             foreach (var playerConfig in playerConfigs)
             {
                 var newPlayer = _characterFactory.Interface.CreateCharacter(playerConfig);
-                readyPlayers.Add(newPlayer);
+                _sceneData.AddPlayer(newPlayer);
             }
-
-            _sceneData.Players = readyPlayers;
         }
 
     }

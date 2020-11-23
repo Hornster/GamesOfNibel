@@ -16,17 +16,51 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
     /// </summary>
     public class SceneData : MonoBehaviour, ISceneData
     {
-        
+        [Tooltip("Used for visual organization only. All created players go here.")]
+        [SerializeField]
+        private Transform _playersParent;
+        [Tooltip("Used for visual organization only. All created spawners go here.")]
+        [SerializeField]
+        private Transform _spawnersParent;
         /// <summary>
         /// List of all created players.
         /// </summary>
-        public List<GameObject> Players { get; set; } = new List<GameObject>();
+        public List<GameObject> Players { get; private set; } = new List<GameObject>();
         /// <summary>
         /// List of all created spawners.
         /// </summary>
-        public List<GameObject> Spawners { get; set; } = new List<GameObject>();
+        public List<GameObject> Spawners { get; private set; } = new List<GameObject>();
 
-        
+        /// <summary>
+        /// Adds player to the data structure.
+        /// </summary>
+        /// <param name="playerObject">New player object.</param>
+        public void AddPlayer(GameObject playerObject)
+        {
+            playerObject.transform.parent = _playersParent;
+            Players.Add(playerObject);
+        }
+
+        /// <summary>
+        /// Adds multiple spawners to the data structure.
+        /// </summary>
+        /// <param name="spawnerObjects">Spawners that should be added.</param>
+        public void AddSpawners(List<GameObject> spawnerObjects)
+        {
+            spawnerObjects.ForEach(s =>
+            {
+                s.transform.parent = _spawnersParent;
+                Spawners.Add(s);
+            });
+        }
+        /// <summary>
+        /// Adds single spawn to the data structure.
+        /// </summary>
+        /// <param name="spawnerObject">New spawner object.</param>
+        public void AddSpawner(GameObject spawnerObject)
+        {
+            Spawners.Add(spawnerObject);
+        }
         /// <summary>
         /// Marks this object to be destroyed.
         /// </summary>

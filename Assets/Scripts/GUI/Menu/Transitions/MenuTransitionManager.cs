@@ -66,10 +66,17 @@ namespace Assets.Scripts.GUI.Menu.Transitions
         protected MenuType _currentMenu = MenuType.None;
         protected void Start()
         {
-            var foundMenus = _menusParent.GetComponentsInChildren<MenuTransition>();
-            foreach (var menu in foundMenus)
+            //don't have to be found. For debug purposes for example.
+            if (_menusParent != null)
             {
-                _availableMenus.Add(menu.MenuType, menu);
+                var foundMenus = _menusParent.GetComponentsInChildren<MenuTransition>();
+                if (foundMenus != null)
+                {
+                    foreach (var menu in foundMenus)
+                    {
+                        _availableMenus.Add(menu.MenuType, menu);
+                    }
+                }
             }
 
             PerformTransition(_startingMenu.GetStartMenu());

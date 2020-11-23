@@ -43,6 +43,11 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         [Tooltip("Configuration of spawners for the match.")]
         [SerializeField]
         private SpawnerConfigsList _spawnersConfig;
+        [Header("DEBUG")]
+        [TextArea]
+        [Tooltip("Used to force given scene to be loaded.")]
+        [SerializeField]
+        private string _sceneToLoad;
 
         /// <summary>
         /// Stores data of all players that needs to be spawned.
@@ -59,7 +64,7 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// <summary>
         /// Stores path to scene with map that should be loaded.
         /// </summary>
-        public string SceneToLoad { get; set; }
+        public string SceneToLoad { get => _sceneToLoad; set => _sceneToLoad = value; }
 
 
         private void Awake()

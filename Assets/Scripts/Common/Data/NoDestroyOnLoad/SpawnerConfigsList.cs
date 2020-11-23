@@ -15,6 +15,15 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         private GameObject _spawnerConfigPrefab;
         public List<SpawnerGroupConfig> SpawnerConfigs { get; } = new List<SpawnerGroupConfig>();
 
+        private void Awake()
+        {
+            //Seek any already present configs. For example for debug purposes.
+            var foundSpawnerConfigs = GetComponentsInChildren<SpawnerGroupConfig>();
+            foreach (var spawnerGroupConfig in foundSpawnerConfigs)
+            {
+                SpawnerConfigs.Add(spawnerGroupConfig);
+            }
+        }
         /// <summary>
         /// Adds a spawn group config.
         /// </summary>
