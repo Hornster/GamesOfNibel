@@ -4,12 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
 {
-    public interface ISceneData
+    /// <summary>
+    /// An interface that can be found by Unity's FindObjectBy method.
+    /// Contains dynamically loaded data, that can be passed to currently loaded map.
+    /// </summary>
+    public class ISceneData : MonoBehaviour
     {
-        List<GameObject> Players { get; }
-        List<GameObject> Spawners { get; }
+        public List<GameObject> Players { get; }
+        public List<GameObject> Spawners { get; }
     }
 }

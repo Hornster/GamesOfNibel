@@ -14,7 +14,7 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
     /// <summary>
     /// Contains all necessary data for a scene to be loaded.
     /// </summary>
-    public class SceneData : MonoBehaviour, ISceneData
+    public class SceneData : ISceneData 
     {
         [Tooltip("Used for visual organization only. All created players go here.")]
         [SerializeField]
