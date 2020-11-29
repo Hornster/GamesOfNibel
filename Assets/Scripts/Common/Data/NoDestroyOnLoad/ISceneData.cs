@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Enums;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -14,7 +15,7 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
     /// </summary>
     public class ISceneData : MonoBehaviour
     {
-        public List<GameObject> Players { get; }
-        public List<GameObject> Spawners { get; }
+        public virtual List<GameObject> Players { get; protected set; }
+        public virtual Dictionary<Teams, List<GameObject>> Spawners { get; protected set; }
     }
 }

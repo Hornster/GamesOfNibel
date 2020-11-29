@@ -17,3 +17,10 @@
 
 //mod tool:
 //https://github.com/Hello-Meow/ModTool
+
+
+//TODO:
+//SpawnerPositioner -
+//  Finish checks - there has to be some spawners and markers present. Compare main collections size.
+//  Change positioning method - iterate through dictionaries this time. TryGetValue on both structures.
+//  Test the shit.

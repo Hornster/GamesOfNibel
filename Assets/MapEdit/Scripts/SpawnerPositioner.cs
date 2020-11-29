@@ -58,6 +58,49 @@ namespace Assets.MapEdit.Scripts
             }
         }
         /// <summary>
+        /// Checks if the amount of spawners, grouped by teams, is equal to amount of
+        /// markers, grouped by team. If not - yeets an exception of GONBaseException type.
+        /// </summary>
+        private void ChkSpawnersCountAgainstMarkers()
+        {
+            var spawners = _sceneData.Spawners;
+            var possibleSpawnerTypes = Enum.GetValues(typeof(Teams)) as Teams[];
+
+            //if()
+
+            foreach (var team in possibleSpawnerTypes)
+            {
+                List<GameObject> spawnersList;
+                Queue<ISpawnerMarker> spawnerMarkers;
+
+                spawners.TryGetValue(team, out spawnersList);
+                _foundSpawnMarkers.TryGetValue(team, out spawnerMarkers);
+
+                if (spawnersList == null && spawnerMarkers == null)
+                {
+                    continue; //We do not have anything to check here.
+                }
+
+                if (spawnersList == null)
+                {   //If we got here, then there are markers but no spawners. Inform about this.
+                    throw new GONBaseException($"No spawners found for team {team}! Expected count: {spawnerMarkers.Count}");
+                }
+
+                if (spawnerMarkers == null)
+                {   //If we got here, then there are spawners but no markers. Inform about this.
+                    throw new GONBaseException($"No markers found for team {team}! Current spawns count: {spawnersList.Count}");
+                }
+
+                if (spawnerMarkers.Count != spawnersList.Count)
+                {
+                    //If we got here, then it means that the amount of spawners doesn't equal markers count.
+                    throw new GONBaseException($"Different amount of markers than spawns for team {team}! \n" +
+                                        $"Spawners found: {spawnersList.Count} \n" +
+                                        $"Markers found: {spawnerMarkers.Count}");
+                }
+            }
+        }
+        /// <summary>
         /// Positions available spawns on the markers' positions.
         /// </summary>
         private void RepositionSpawns()
