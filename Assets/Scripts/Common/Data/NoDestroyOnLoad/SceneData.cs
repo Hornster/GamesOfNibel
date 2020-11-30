@@ -1,13 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Exceptions;
-using Assets.Scripts.Common.Factories;
-using Assets.Scripts.InspectorSerialization.Interfaces;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
@@ -60,6 +53,7 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         public void AddSpawner(GameObject spawnerObject)
         {
             var team = spawnerObject.GetComponentInChildren<TeamModule>().MyTeam;
+            spawnerObject.transform.parent = _spawnersParent;
             if (Spawners.TryGetValue(team, out var spawnersList))
             {
                 spawnersList.Add(spawnerObject);

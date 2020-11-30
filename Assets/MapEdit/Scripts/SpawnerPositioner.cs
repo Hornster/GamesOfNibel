@@ -7,6 +7,7 @@ using Assets.Scripts.Common;
 using Assets.Scripts.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Exceptions;
+using JetBrains.Annotations;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
@@ -35,7 +36,7 @@ namespace Assets.MapEdit.Scripts
             }
             var foundSpawnerMarkers = GetComponentsInChildren<ISpawnerMarker>();
             GroupFoundSpawns(foundSpawnerMarkers);
-            RepositionSpawns();
+            ChkSpawnersCountAgainstMarkers();
         }
         /// <summary>
         /// Groups spawn markers by their teams.
@@ -58,15 +59,25 @@ namespace Assets.MapEdit.Scripts
             }
         }
         /// <summary>
-        /// Checks if the amount of spawners, grouped by teams, is equal to amount of
+        /// Checks if the amount of spawnersByTeam, grouped by teams, is equal to amount of
         /// markers, grouped by team. If not - yeets an exception of GONBaseException type.
         /// </summary>
         private void ChkSpawnersCountAgainstMarkers()
         {
             var spawners = _sceneData.Spawners;
-            var possibleSpawnerTypes = Enum.GetValues(typeof(Teams)) as Teams[];
+            var possibleSpawnerTypes = GetTeams();
 
-            //if()
+            if (_foundSpawnMarkers.Count <= 0)
+            {
+                throw new GONBaseException($"No spawn markers found! At least one spawn shall be included in the map!");
+            }
+
+            if (spawners.Count != _foundSpawnMarkers.Count)
+            {
+                throw new GONBaseException($"Spawners and markers types count misalignment! \n" +
+                                           $"Spawner types: {spawners.Count}, \n" +
+                                           $"Markers types: {_foundSpawnMarkers.Count}");
+            }
 
             foreach (var team in possibleSpawnerTypes)
             {
@@ -82,40 +93,46 @@ namespace Assets.MapEdit.Scripts
                 }
 
                 if (spawnersList == null)
-                {   //If we got here, then there are markers but no spawners. Inform about this.
+                {   //If we got here, then there are markers but no spawnersByTeam. Inform about this.
                     throw new GONBaseException($"No spawners found for team {team}! Expected count: {spawnerMarkers.Count}");
                 }
 
                 if (spawnerMarkers == null)
-                {   //If we got here, then there are spawners but no markers. Inform about this.
+                {   //If we got here, then there are spawnersByTeam but no markers. Inform about this.
                     throw new GONBaseException($"No markers found for team {team}! Current spawns count: {spawnersList.Count}");
                 }
 
                 if (spawnerMarkers.Count != spawnersList.Count)
                 {
-                    //If we got here, then it means that the amount of spawners doesn't equal markers count.
+                    //If we got here, then it means that the amount of spawnersByTeam doesn't equal markers count.
                     throw new GONBaseException($"Different amount of markers than spawns for team {team}! \n" +
                                         $"Spawners found: {spawnersList.Count} \n" +
                                         $"Markers found: {spawnerMarkers.Count}");
                 }
+                RepositionSpawns(spawnersList, spawnerMarkers);
             }
         }
         /// <summary>
-        /// Positions available spawns on the markers' positions.
+        /// 
         /// </summary>
-        private void RepositionSpawns()
+        /// <returns></returns>
+        private Teams[] GetTeams()
         {
-            var spawners = _sceneData.Spawners;
-            foreach (var spawner in spawners)
+            return Enum.GetValues(typeof(Teams)) as Teams[];
+        }
+        /// <summary>
+        /// Positions available spawns on the markers' positions. Passed parameters have to be grouped
+        /// by the same team!
+        /// </summary>
+        /// <param name="spawnersByTeam">All spawners that have the same team.</param>
+        /// <param name="spawnerMarkers">Markers for all spawners of given team.</param>
+        private void RepositionSpawns([NotNull] List<GameObject> spawnersByTeam, [NotNull] Queue<ISpawnerMarker> spawnerMarkers)
+        {
+            foreach (var spawner in spawnersByTeam)
             {
                 var spawnerTeam = spawner.GetComponentInChildren<TeamModule>().MyTeam;
                 if (_foundSpawnMarkers.TryGetValue(spawnerTeam, out var markers))
                 {
-                    if (markers.Count <= 0)
-                    {
-                        throw new Exception($"Incorrect amount of {spawnerTeam} spawns!");
-                    }
-
                     var marker = markers.Dequeue();
                     if (marker.MoveSpawn(spawner) == false)
                     {
@@ -127,6 +144,8 @@ namespace Assets.MapEdit.Scripts
                     throw new Exception($"Tried to add spawn of team that was not present on the map: {spawnerTeam}!");
                 }
             }
+            
+            
         }
     }
 }

@@ -527,6 +527,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnerGroupConfig
       objectReference: {fileID: 0}
+    - target: {fileID: 6371778623475426443, guid: 79fda9934ea9e7345b073aa39d9d92d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79fda9934ea9e7345b073aa39d9d92d8, type: 3}
 --- !u!4 &1254253892 stripped
@@ -687,6 +692,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnerGroupConfig (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6371778623475426443, guid: 79fda9934ea9e7345b073aa39d9d92d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79fda9934ea9e7345b073aa39d9d92d8, type: 3}
 --- !u!1001 &1631352213
@@ -844,6 +854,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpawnerGroupConfig (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6371778623475426443, guid: 79fda9934ea9e7345b073aa39d9d92d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79fda9934ea9e7345b073aa39d9d92d8, type: 3}
