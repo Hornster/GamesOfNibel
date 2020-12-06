@@ -8,7 +8,6 @@ using Assets.Scripts.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Exceptions;
 using JetBrains.Annotations;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace Assets.MapEdit.Scripts

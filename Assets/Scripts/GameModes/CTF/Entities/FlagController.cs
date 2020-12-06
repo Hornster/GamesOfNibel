@@ -4,6 +4,7 @@ using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Spawner;
+using Assets.Scripts.Spawner.FlagSpawner;
 using UnityEngine;
 using UnityEngine.Events;
 

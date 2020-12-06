@@ -1,9 +1,8 @@
-﻿
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Common.Enums;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.Spawner
+namespace Assets.Scripts.Spawner.FlagSpawner
 {
     /// <summary>
     /// Used to transfer data to freshly spawned flag, right from the spawner.

@@ -2,6 +2,7 @@
 using Assets.Scripts.Common;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Spawner;
+using Assets.Scripts.Spawner.FlagSpawner;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = System.Random;

@@ -68,8 +68,8 @@ namespace Assets.Scripts.GUI.Menu.MapSelection
                     MatchData.GetInstance().SceneToLoad = mapData.ScenePath;
 
                     //perform transitions and launch the map.
-                    _onMapLaunching?.Invoke(_loadingScenePathSO.LoadingScenePath);
-                    //_onMapLaunching?.Invoke(mapData.ScenePath);
+                    //_onMapLaunching?.Invoke(_loadingScenePathSO.LoadingScenePath);
+                    _onMapLaunching?.Invoke(mapData.ScenePath);
                 }
                 catch (ModLoadingException ex)
                 {

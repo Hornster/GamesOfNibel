@@ -61,10 +61,6 @@ namespace Assets.Scripts.Player
             CalcAirborneVelChangeValues();
         }
 
-        private void UpdateTimer(float lastFrameTIme)
-        {
-
-        }
         private void CalcAirborneVelChangeValues()
         {
             _airborneDeceleration = _movementSpeed / _decelerationTimeAirborne;
