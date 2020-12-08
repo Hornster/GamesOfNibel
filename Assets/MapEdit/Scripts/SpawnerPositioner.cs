@@ -63,7 +63,7 @@ namespace Assets.MapEdit.Scripts
         /// </summary>
         private void ChkSpawnersCountAgainstMarkers()
         {
-            var spawners = _sceneData.Spawners;
+            var spawners = _sceneData.Bases;
             var possibleSpawnerTypes = GetTeams();
 
             if (_foundSpawnMarkers.Count <= 0)
@@ -73,7 +73,7 @@ namespace Assets.MapEdit.Scripts
 
             if (spawners.Count != _foundSpawnMarkers.Count)
             {
-                throw new GONBaseException($"Spawners and markers types count misalignment! \n" +
+                throw new GONBaseException($"Bases and markers types count misalignment! \n" +
                                            $"Spawner types: {spawners.Count}, \n" +
                                            $"Markers types: {_foundSpawnMarkers.Count}");
             }
@@ -105,7 +105,7 @@ namespace Assets.MapEdit.Scripts
                 {
                     //If we got here, then it means that the amount of spawnersByTeam doesn't equal markers count.
                     throw new GONBaseException($"Different amount of markers than spawns for team {team}! \n" +
-                                        $"Spawners found: {spawnersList.Count} \n" +
+                                        $"Bases found: {spawnersList.Count} \n" +
                                         $"Markers found: {spawnerMarkers.Count}");
                 }
                 RepositionSpawns(spawnersList, spawnerMarkers);
@@ -135,7 +135,7 @@ namespace Assets.MapEdit.Scripts
                     var marker = markers.Dequeue();
                     if (marker.MoveSpawn(spawner) == false)
                     {
-                        throw new Exception($"Spawners of team {spawnerTeam} are overlapping!");
+                        throw new Exception($"Bases of team {spawnerTeam} are overlapping!");
                     }
                 }
                 else

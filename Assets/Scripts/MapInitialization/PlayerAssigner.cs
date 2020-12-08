@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Common;
 using Assets.Scripts.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Common.Exceptions;
 using Assets.Scripts.Common.Helpers;
+using Assets.Scripts.Spawner.PlayerSpawner;
 using UnityEngine;
 
 namespace Assets.Scripts.MapInitialization
@@ -19,61 +22,76 @@ namespace Assets.Scripts.MapInitialization
         /// <param name="sceneData"></param>
         public void PositionPlayers(SceneData sceneData)
         {
-            bool wasMultiteamBasePresent = false;
+            var bases = sceneData.Bases;
+            var players = sceneData.Players;
 
-            var spawners = sceneData.Spawners;
-            var players = EnlistPlayers(sceneData.Players);
+            AssignAllPlayersToBases(players, bases);
+        }
 
-            var teams = spawners.Keys;
+        private void AssignAllPlayersToBases(Dictionary<Teams, List<GameObject>> players, Dictionary<Teams, List<GameObject>> bases)
+        {
+            var teams = players.Keys;
             foreach (var team in teams)
             {
-                if (team == Teams.Multi)
+                //No need to check if the entry exists - we are using keys from this
+                //very dictionary.
+                players.TryGetValue(team, out var currentTeam);
+                List<GameObject> teamBases;
+                switch (team)
                 {
-                    wasMultiteamBasePresent = true; //These shall be checked the last. Specialized teams (like lily) have priority.
+                    case Teams.Lotus:
+                    case Teams.Lily:
+                    case Teams.Neutral:
+                        if (bases.TryGetValue(team, out teamBases))
+                        {
+                            AssignPlayersToBases(currentTeam, teamBases);
+                        }
+                        else if (AssignToMultiTeamBase(currentTeam, bases))
+                        {
+                            throw new GONBaseException($"Found players that cannot be assigned to any base! Players team: {team}");
+                        }
+                        break;
+                    case Teams.Multi:
+                        if (bases.TryGetValue(team, out teamBases))
+                        {
+                            AssignPlayersToBases(currentTeam, teamBases);
+                        }
+                        else
+                        {
+                            throw new GONBaseException($"Found players that cannot be assigned to any base! Players team: {team}");
+                        }
+                        break;
+                    default:
+                        throw new GONBaseException($"Unknown team found during assigning players to spawns! {team}");
                 }
-                if (team == Teams.Neutral)
-                {
-                    continue;   //Neutral bases cannot have any players assigned.
-                }
-                if (spawners.TryGetValue(team, out var oneTeamSpawners) == false)
-                {
-                    continue;
-                }
-
-                SetPlayersPositions(oneTeamSpawners, players);
             }
+        }
+        private bool AssignToMultiTeamBase(List<GameObject> players,  Dictionary<Teams, List<GameObject>> basesDictionary)
+        {
+            if (basesDictionary.TryGetValue(Teams.Multi, out var multiTeamBases))
+            {
+                AssignPlayersToBases(players, multiTeamBases);
+                return true;
+            }
+
+            return false;
         }
         /// <summary>
-        /// Retrieves teams and repositioning components of the players.
+        /// Assigns players to the first of provided bases and causes them to be repositioned to its player spawn point.
         /// </summary>
-        /// <param name="players"></param>
-        /// <returns></returns>
-        private List<(Teams, IRepositioner)> EnlistPlayers(List<GameObject> players)
-        {
-            var playersQueue = new List<(Teams, IRepositioner)>();
-            foreach (var player in players)
-            {
-                var team = player.GetComponentInChildren<TeamModule>().MyTeam;
-                var repositioner = player.GetComponentInChildren<IRepositioner>();
-                playersQueue.Add((team, repositioner));
-            }
-
-            return playersQueue;
-        }
-
-        private void SetPlayersPositions(List<GameObject> spawners, List<(Teams, IRepositioner)> players)
+        /// <param name="players">Players of the same team as bases.</param>
+        /// <param name="bases">Bases of the same team as players.</param>
+        private void AssignPlayersToBases(List<GameObject> players, List<GameObject> bases)
         {
             //TODO Allow for configuration of spawn assignment perhaps? For example random. In the future.
-
-            //TODO - Sort players right after their creation (or during it, even) and assign them to dictionary.
-            //TODO This way you will be able to call both dictionaries with use of teams, simply.
-            var assignedToSpawner = spawners[0];
-            var assignedPlayersIndices = new List<int>();
-
-            for (int i = 0; i < players.Count; i++)
+            var targetBase = bases[0].GetComponentInChildren<PlayerPositioner>();
+            foreach (var player in players)
             {
-                if(players[i].Item1 == )
+                var positioner = player.GetComponentInChildren<IRepositioner>();
+                targetBase.AssignPlayer(positioner);
             }
+
+            targetBase.RepositionAllPlayers();
         }
     }
 }

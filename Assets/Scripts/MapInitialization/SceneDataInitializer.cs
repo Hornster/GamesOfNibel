@@ -20,6 +20,9 @@ namespace Assets.Scripts.MapInitialization
         private GameObject _sceneDataPrefab;
         [Tooltip("Called when the user confirmed selected map and its loading sequence has been started.")]
         [SerializeField] private StringUnityEvent _onMapLaunching;
+        [Tooltip("Assigns players to created bases and repositions them.")]
+        [SerializeField]
+        private PlayerAssigner _playerAssigner;
         /// <summary>
         /// Raw data concerning the match. Contains amount of spawns, players, etc.
         /// </summary>
@@ -70,6 +73,8 @@ namespace Assets.Scripts.MapInitialization
             }
             CreateSpawners();
             CreatePlayers();
+
+            _playerAssigner.PositionPlayers(_sceneData);
 
             lock (_isDoneLoadingLock)
             {

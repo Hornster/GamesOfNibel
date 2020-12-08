@@ -19,11 +19,11 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// <summary>
         /// List of all created players.
         /// </summary>
-        public override List<GameObject> Players { get; protected set; } = new List<GameObject>();
+        public override Dictionary<Teams, List<GameObject>> Players { get; protected set; } = new Dictionary<Teams, List<GameObject>>();
         /// <summary>
         /// List of all created spawners.
         /// </summary>
-        public override Dictionary<Teams, List<GameObject>> Spawners { get; protected set; } = new Dictionary<Teams, List<GameObject>>();
+        public override Dictionary<Teams, List<GameObject>> Bases { get; protected set; } = new Dictionary<Teams, List<GameObject>>();
 
         /// <summary>
         /// Adds player to the data structure.
@@ -31,14 +31,23 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// <param name="playerObject">New player object.</param>
         public void AddPlayer(GameObject playerObject)
         {
+            var team = playerObject.GetComponentInChildren<TeamModule>().MyTeam;
             playerObject.transform.parent = _playersParent;
-            Players.Add(playerObject);
+            if (Players.TryGetValue(team, out var playerList))
+            {
+                playerList.Add(playerObject);
+            }
+            else
+            {
+                var newPlayerList = new List<GameObject>{playerObject};
+                Players.Add(team, newPlayerList);
+            }
         }
 
         /// <summary>
         /// Adds multiple spawners to the data structure.
         /// </summary>
-        /// <param name="spawnerObjects">Spawners that should be added.</param>
+        /// <param name="spawnerObjects">Bases that should be added.</param>
         public void AddSpawners(List<GameObject> spawnerObjects)
         {
             foreach (var spawnerObject in spawnerObjects)
@@ -54,14 +63,14 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         {
             var team = spawnerObject.GetComponentInChildren<TeamModule>().MyTeam;
             spawnerObject.transform.parent = _spawnersParent;
-            if (Spawners.TryGetValue(team, out var spawnersList))
+            if (Bases.TryGetValue(team, out var spawnersList))
             {
                 spawnersList.Add(spawnerObject);
             }
             else
             {
                 var newSpawnersList = new List<GameObject> { spawnerObject };
-                Spawners.Add(team, newSpawnersList);
+                Bases.Add(team, newSpawnersList);
             }
         }
         /// <summary>

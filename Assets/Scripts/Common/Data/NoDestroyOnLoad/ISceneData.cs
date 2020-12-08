@@ -15,7 +15,7 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
     /// </summary>
     public class ISceneData : MonoBehaviour
     {
-        public virtual List<GameObject> Players { get; protected set; }
-        public virtual Dictionary<Teams, List<GameObject>> Spawners { get; protected set; }
+        public virtual Dictionary<Teams, List<GameObject>> Players { get; protected set; }
+        public virtual Dictionary<Teams, List<GameObject>> Bases { get; protected set; }
     }
 }
