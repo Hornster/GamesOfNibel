@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1802774658077057468}
   - component: {fileID: 1802774658077057459}
   - component: {fileID: 3384743499589827310}
+  - component: {fileID: 1741039451465140687}
   m_Layer: 0
   m_Name: SpawnArea
   m_TagString: Untagged
@@ -100,6 +101,20 @@ MonoBehaviour:
   _spawningEntityPrefab: {fileID: 2237946120781604325, guid: aed28352c559b8e42803cfea6347e0df,
     type: 3}
   _spawningPosition: {fileID: 1927472733785251564}
+--- !u!114 &1741039451465140687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802774658077057469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f4d8a9c56499c443bf48f7d8e04ba10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerSpawnPosition: {fileID: 6397283142924073583}
+  _spawnerTeam: {fileID: 3638308603743299039}
 --- !u!1 &1802774658152930630
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1802774658394306757}
   - component: {fileID: 3638308603743299039}
+  - component: {fileID: 1624079519674170649}
   m_Layer: 0
   m_Name: NeutralBase
   m_TagString: Untagged
@@ -179,6 +195,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myTeam: 2
+--- !u!114 &1624079519674170649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802774658394306758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e375d08450934408451316098ad66b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseRootGameObject: {fileID: 1802774658394306758}
 --- !u!1 &1802774658851160220
 GameObject:
   m_ObjectHideFlags: 0

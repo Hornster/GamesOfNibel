@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Common;
+using Assets.Scripts.Common.Helpers;
 using UnityEngine;
 
 namespace Assets.MapEdit.Scripts
@@ -35,8 +36,11 @@ namespace Assets.MapEdit.Scripts
                 return false;
             }
 
-            var destinationPos = this.gameObject.transform.position;
-            spawnGameObject.transform.position = destinationPos;
+            var baseRepositioner = spawnGameObject.GetComponentInChildren<IRepositioner>();
+            baseRepositioner.ChangePosition(transform.position);
+
+            //var destinationPos = this.gameObject.transform.position;
+            //spawnGameObject.transform.position = destinationPos;
 
             HasSpawnAssigned = true;
             return HasSpawnAssigned;

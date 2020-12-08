@@ -90,8 +90,8 @@ namespace Assets.Scripts.MapInitialization
                 var positioner = player.GetComponentInChildren<IRepositioner>();
                 targetBase.AssignPlayer(positioner);
             }
-
-            targetBase.RepositionAllPlayers();
+            //Do NOT reposition players now. Wait for the initialization to finish, then
+            //reposition players when on the map, right after moving the spawns.
         }
     }
 }

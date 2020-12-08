@@ -15,7 +15,7 @@ namespace Assets.MapEdit.Scripts
     /// <summary>
     /// Knows about every single spawn marker on the map.
     /// </summary>
-    public class SpawnerPositioner : MonoBehaviour
+    public class BasesRepositioner : MonoBehaviour
     {
         /// <summary>
         /// Stores found markers. Bool value indicates whether has given marker had already assigned its own spawn. 
