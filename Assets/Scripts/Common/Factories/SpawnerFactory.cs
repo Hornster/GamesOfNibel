@@ -6,20 +6,25 @@ using System.Threading.Tasks;
 using Assets.Scripts.Common.Data;
 using Assets.Scripts.Common.Enums;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Common.Factories
 {
     public class SpawnerFactory : MonoBehaviour, ISpawnerFactory
     {
-        [Tooltip("Prefab for the neutral spawn variant.")]
+        [Tooltip("Prefab for the neutral base variant.")]
         [SerializeField]
-        private GameObject _neutralSpawnerVariant;
-        [Tooltip("Prefab for the Lotus team spawn variant.")]
+        private GameObject _neutralBaseVariant;
+        [Tooltip("Prefab for the Lotus team base variant.")]
         [SerializeField]
-        private GameObject _lotusSpawnerVariant;
-        [Tooltip("Prefab for the Lily team spawn variant.")]
+        private GameObject _lotusBaseVariant;
+        [Tooltip("Prefab for the Lily team base variant.")]
         [SerializeField]
-        private GameObject _lilySpawnerVariant;
+        private GameObject _lilyBaseVariant;
+        [Tooltip("Prefab for the Multi Team base variant.")]
+        [SerializeField]
+        private GameObject _multiTeamBaseVariant;
+
         /// <summary>
         /// Dictates how many spawners of single group can be created at once.
         /// </summary>
@@ -48,14 +53,16 @@ namespace Assets.Scripts.Common.Factories
             switch (team)
             {
                 case Teams.Lotus:
-                    createdObject = Instantiate(_lotusSpawnerVariant);
+                    createdObject = Instantiate(_lotusBaseVariant);
                     break;
                 case Teams.Lily:
-                    createdObject = Instantiate(_lilySpawnerVariant);
+                    createdObject = Instantiate(_lilyBaseVariant);
                     break;
                 case Teams.Neutral:
+                    createdObject = Instantiate(_neutralBaseVariant);
+                    break;
                 case Teams.Multi:
-                    createdObject = Instantiate(_neutralSpawnerVariant);
+                    createdObject = Instantiate(_multiTeamBaseVariant);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(team), team, null);

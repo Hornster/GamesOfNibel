@@ -86,11 +86,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca219f324991a746a854951cf9eb69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _neutralSpawnerVariant: {fileID: 1802774658394306758, guid: 4674325ea1fd62f4c85275977b08e1a7,
+  _neutralBaseVariant: {fileID: 1802774658394306758, guid: 4674325ea1fd62f4c85275977b08e1a7,
     type: 3}
-  _lotusSpawnerVariant: {fileID: 4296282655228140164, guid: 0c362acf885a0a84eaffd61dec0353be,
+  _lotusBaseVariant: {fileID: 4296282655228140164, guid: 0c362acf885a0a84eaffd61dec0353be,
     type: 3}
-  _lilySpawnerVariant: {fileID: 3898500124913803426, guid: 2aec7f8354b785a43917d376c19d9aa3,
+  _lilyBaseVariant: {fileID: 3898500124913803426, guid: 2aec7f8354b785a43917d376c19d9aa3,
+    type: 3}
+  _multiTeamBaseVariant: {fileID: 6616774278055752891, guid: 182a33002ac7b0946a30451fa6a4a660,
     type: 3}
 --- !u!1 &9105683010133851142
 GameObject:
