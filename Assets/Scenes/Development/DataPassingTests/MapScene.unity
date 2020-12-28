@@ -477,6 +477,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MultiSpawnerMarker Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4826900682424914367, guid: 73ce53ef0a78ef545aa4cb4276462922,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73ce53ef0a78ef545aa4cb4276462922, type: 3}
 --- !u!4 &1283755634 stripped

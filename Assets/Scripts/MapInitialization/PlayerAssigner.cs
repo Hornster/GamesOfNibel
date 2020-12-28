@@ -46,7 +46,7 @@ namespace Assets.Scripts.MapInitialization
                         {
                             AssignPlayersToBases(currentTeam, teamBases);
                         }
-                        else if (AssignToMultiTeamBase(currentTeam, bases))
+                        else if (AssignToMultiTeamBase(currentTeam, bases) == false)
                         {
                             throw new GONBaseException($"Found players that cannot be assigned to any base! Players team: {team}");
                         }
