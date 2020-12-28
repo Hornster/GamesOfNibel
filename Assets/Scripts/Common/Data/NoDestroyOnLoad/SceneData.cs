@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Exceptions;
-using Assets.Scripts.Common.Factories;
-using Assets.Scripts.InspectorSerialization.Interfaces;
-using UnityEditor;
+using Assets.Scripts.Common.Enums;
 using UnityEngine;
 
 namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
@@ -25,11 +19,11 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// <summary>
         /// List of all created players.
         /// </summary>
-        public List<GameObject> Players { get; private set; } = new List<GameObject>();
+        public override Dictionary<Teams, List<GameObject>> Players { get; protected set; } = new Dictionary<Teams, List<GameObject>>();
         /// <summary>
         /// List of all created spawners.
         /// </summary>
-        public List<GameObject> Spawners { get; private set; } = new List<GameObject>();
+        public override Dictionary<Teams, List<GameObject>> Bases { get; protected set; } = new Dictionary<Teams, List<GameObject>>();
 
         /// <summary>
         /// Adds player to the data structure.
@@ -37,21 +31,29 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// <param name="playerObject">New player object.</param>
         public void AddPlayer(GameObject playerObject)
         {
+            var team = playerObject.GetComponentInChildren<TeamModule>().MyTeam;
             playerObject.transform.parent = _playersParent;
-            Players.Add(playerObject);
+            if (Players.TryGetValue(team, out var playerList))
+            {
+                playerList.Add(playerObject);
+            }
+            else
+            {
+                var newPlayerList = new List<GameObject>{playerObject};
+                Players.Add(team, newPlayerList);
+            }
         }
 
         /// <summary>
         /// Adds multiple spawners to the data structure.
         /// </summary>
-        /// <param name="spawnerObjects">Spawners that should be added.</param>
+        /// <param name="spawnerObjects">Bases that should be added.</param>
         public void AddSpawners(List<GameObject> spawnerObjects)
         {
-            spawnerObjects.ForEach(s =>
+            foreach (var spawnerObject in spawnerObjects)
             {
-                s.transform.parent = _spawnersParent;
-                Spawners.Add(s);
-            });
+                AddSpawner(spawnerObject);
+            }
         }
         /// <summary>
         /// Adds single spawn to the data structure.
@@ -59,7 +61,17 @@ namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
         /// <param name="spawnerObject">New spawner object.</param>
         public void AddSpawner(GameObject spawnerObject)
         {
-            Spawners.Add(spawnerObject);
+            var team = spawnerObject.GetComponentInChildren<TeamModule>().MyTeam;
+            spawnerObject.transform.parent = _spawnersParent;
+            if (Bases.TryGetValue(team, out var spawnersList))
+            {
+                spawnersList.Add(spawnerObject);
+            }
+            else
+            {
+                var newSpawnersList = new List<GameObject> { spawnerObject };
+                Bases.Add(team, newSpawnersList);
+            }
         }
         /// <summary>
         /// Marks this object to be destroyed.

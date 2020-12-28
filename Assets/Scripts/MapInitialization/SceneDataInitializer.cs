@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using Assets.Scripts.Common.CustomEvents;
 using Assets.Scripts.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Common.Exceptions;
 using Assets.Scripts.InspectorSerialization.Interfaces;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace Assets.Scripts.MapInitialization
 {
@@ -26,6 +20,9 @@ namespace Assets.Scripts.MapInitialization
         private GameObject _sceneDataPrefab;
         [Tooltip("Called when the user confirmed selected map and its loading sequence has been started.")]
         [SerializeField] private StringUnityEvent _onMapLaunching;
+        [Tooltip("Assigns players to created bases and repositions them.")]
+        [SerializeField]
+        private PlayerAssigner _playerAssigner;
         /// <summary>
         /// Raw data concerning the match. Contains amount of spawns, players, etc.
         /// </summary>
@@ -76,6 +73,8 @@ namespace Assets.Scripts.MapInitialization
             }
             CreateSpawners();
             CreatePlayers();
+
+            _playerAssigner.PositionPlayers(_sceneData);
 
             lock (_isDoneLoadingLock)
             {

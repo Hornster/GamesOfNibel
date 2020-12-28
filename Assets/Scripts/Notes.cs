@@ -17,3 +17,5 @@
 
 //mod tool:
 //https://github.com/Hello-Meow/ModTool
+
+//TODO: Add color scheme and base for multiteam. Check if players will be correctly assigned to it and moved.

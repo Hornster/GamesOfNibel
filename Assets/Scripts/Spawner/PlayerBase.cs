@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Spawner
 {
-    public class PlayerBase : MonoBehaviour
+    public class PlayerBases : MonoBehaviour
     {
         /// <summary>
         /// The team to which this base belongs.

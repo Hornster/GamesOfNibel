@@ -1,10 +1,8 @@
-﻿
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Common;
 using Assets.Scripts.GameModes.CTF.Entities;
 using UnityEngine;
 
-namespace Assets.Scripts.Spawner
+namespace Assets.Scripts.Spawner.FlagSpawner
 {
     public class FlagSpawner : MonoBehaviour, IFlagSpawner
     {

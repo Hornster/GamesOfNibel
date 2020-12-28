@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Common.Enums;
-
-namespace Assets.Scripts.Spawner
+﻿namespace Assets.Scripts.Spawner.FlagSpawner
 {
     /// <summary>
     /// Defines what a regular spawner should have.

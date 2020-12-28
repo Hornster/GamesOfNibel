@@ -9,7 +9,7 @@ using Assets.Scripts.Player.Physics;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerPhysics), typeof(PlayerState))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IRepositioner
 {
     /// <summary>
     /// Value by which the current vertical velocity will be multiplied when the player jumps and
@@ -38,6 +38,14 @@ public class PlayerController : MonoBehaviour
     /// The velocity calculated from gravity, jump time and jump force.
     /// </summary>
     private float _jumpVelocity;
+    /// <summary>
+    /// Changes position of the player.
+    /// </summary>
+    /// <param name="newPosition">New position of the player.</param>
+    public void ChangePosition(Vector2 newPosition)
+    {
+        rb.position = newPosition;
+    }
 
     private void CalcJumpVelocity()
     {
