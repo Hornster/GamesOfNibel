@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Assets.Scripts.Common.Data.Maps;
 using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Common.Exceptions;
 using Assets.Scripts.Common.Helpers;

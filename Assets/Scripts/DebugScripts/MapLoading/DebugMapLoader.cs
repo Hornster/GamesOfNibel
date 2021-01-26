@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Data.Maps;
 using Assets.Scripts.GUI.Menu.MapSelection;
 using Assets.Scripts.Mods.Maps;
 using Assets.Scripts.Player;

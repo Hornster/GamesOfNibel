@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Common.Enums;
-using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Mods.Maps
+namespace Assets.Scripts.Common.Data.Maps
 {
     /// <summary>
     /// Stores data of a single loaded map.
@@ -21,5 +18,9 @@ namespace Assets.Scripts.Mods.Maps
         public List<SkillType> RequiredSkills { get; set; }
         public string ScenePath { get; set; }
         public string SceneBundlePath { get; set; }
+        public int MultiTeamBasesCount { get; set; }
+        public int NeutralBasesCount { get; set; }
+        public int LotusBasesCount { get; set; }
+        public int LilyBasesCount { get; set; }
     }
 }

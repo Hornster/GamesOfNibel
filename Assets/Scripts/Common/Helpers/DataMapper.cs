@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Data.Maps;
 using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
+using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Common.Exceptions;
 using Assets.Scripts.Mods.Maps;
+using UnityEditor;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Common.Helpers
 {
@@ -34,6 +39,8 @@ namespace Assets.Scripts.Common.Helpers
                 ThumbnailImgPath = source.ThumbnailImgPath
             };
 
+            SetBasesCount(source, rawData);
+
             return rawData;
 
         }
@@ -52,10 +59,47 @@ namespace Assets.Scripts.Common.Helpers
                 Description = source.Description,
                 RequiredSkills = source.RequiredSkills.ToList(),
                 ScenePath = source.ScenePath,
-                SceneBundlePath = source.SceneBundlePath
+                SceneBundlePath = source.SceneBundlePath,
+                LilyBasesCount = source.LilyBasesCount,
+                LotusBasesCount = source.LotusBasesCount,
+                MultiTeamBasesCount = source.MultiTeamBasesCount,
+                NeutralBasesCount = source.NeutralBasesCount
             };
 
             return mapData;
+        }
+        private void SetBasesCount(MapDataSO source, RawMapData dest)
+        {
+            if (source.BasesRoot != null)
+            {
+                var bases = source.BasesRoot.GetBasesCount();
+                var keys = bases.Keys;
+
+                foreach (var key in keys)
+                {
+                    switch (key)
+                    {
+                        case Teams.Lotus:
+                            dest.LotusBasesCount = bases[key];
+                            break;
+                        case Teams.Lily:
+                            dest.LilyBasesCount = bases[key];
+                            break;
+                        case Teams.Neutral:
+                            dest.NeutralBasesCount = bases[key];
+                            break;
+                        case Teams.Multi:
+                            dest.MultiTeamBasesCount = bases[key];
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException($"There is no such team as ${key}!");
+                    }
+                }
+            }
+            else
+            {
+                throw new GONBaseException("Bases root game object not specified!");
+            }
         }
     }
 }

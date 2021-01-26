@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Common.Data.Maps;
 using Assets.Scripts.GUI.Menu.Interface;
 using Assets.Scripts.Mods.Maps;
 using UnityEngine;

@@ -226,6 +226,12 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
             var mapper = new DataMapper();
             var serializableMapData = mapper.MapDataSOToRawMapData(_mapDataSO);
 
+
+            //TODO: Check if MapDataSO contains BasesRoot reference. If yes - use it to swiftly retrieve bases quantity.
+            //TODO: If not - get all object from the scene and search for the object in there. https://docs.unity3d.com/ScriptReference/SceneManagement.Scene.GetRootGameObjects.html
+
+            //var foundBases;
+
             assetBundleCreator.CreateJSONInfoFile(serializableMapData, baseDir, serializableMapData.ShownMapName);
         }
     }

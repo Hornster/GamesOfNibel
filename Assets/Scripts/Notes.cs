@@ -18,4 +18,7 @@
 //mod tool:
 //https://github.com/Hello-Meow/ModTool
 
+//Structure:
+//https://blog.theknightsofunity.com/7-ways-keep-unity-project-organized/
+
 //TODO: Add color scheme and base for multiteam. Check if players will be correctly assigned to it and moved.

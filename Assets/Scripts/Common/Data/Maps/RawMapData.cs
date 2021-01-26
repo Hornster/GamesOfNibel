@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
+﻿using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Mods.Maps
+namespace Assets.Scripts.Common.Data.Maps
 {
     /// <summary>
     /// Raw data of a map, ready for serialization or deserialization.
@@ -43,6 +38,13 @@ namespace Assets.Scripts.Mods.Maps
         /// Inner field (is set during bundle asset building).
         /// </summary>
         public string ScenePath;
+        /// <summary>
+        /// How many universal bases (for all teams) does the map have.
+        /// </summary>
+        public int MultiTeamBasesCount;
+        public int NeutralBasesCount;
+        public int LotusBasesCount;
+        public int LilyBasesCount;
 
         public string GetJsonString()
         {

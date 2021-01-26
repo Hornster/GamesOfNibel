@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Common.Data.Maps;
 using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Common.Enums;
 using Assets.Scripts.Common.Helpers;
