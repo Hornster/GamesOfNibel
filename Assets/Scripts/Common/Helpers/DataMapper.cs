@@ -21,10 +21,12 @@ namespace Assets.Scripts.Common.Helpers
         /// <summary>
         /// Maps mappable fields from map data scriptable object to raw map data one.
         /// </summary>
-        /// <param name="source"></param>
+        /// <param name="source">Source of static information about the map.</param>
+        /// <param name="basesRoot">Provides count of bases available in the scene.</param>
         /// <returns></returns>
-        public RawMapData MapDataSOToRawMapData(MapDataSO source)
+        public RawMapData MapDataSOToRawMapData(BasesRoot basesRoot, MapDataSO source)
         {
+            //BasesRoot cannot be put in MapDataSO since it's gameobject - SO cannot reference it.
             var rawData = new RawMapData()
             {
                 Authors = source.Authors,
@@ -39,7 +41,7 @@ namespace Assets.Scripts.Common.Helpers
                 ThumbnailImgPath = source.ThumbnailImgPath
             };
 
-            SetBasesCount(source, rawData);
+            SetBasesCount(basesRoot, rawData);
 
             return rawData;
 
@@ -68,11 +70,11 @@ namespace Assets.Scripts.Common.Helpers
 
             return mapData;
         }
-        private void SetBasesCount(MapDataSO source, RawMapData dest)
+        private void SetBasesCount(BasesRoot basesRoot, RawMapData dest)
         {
-            if (source.BasesRoot != null)
+            if (basesRoot)
             {
-                var bases = source.BasesRoot.GetBasesCount();
+                var bases = basesRoot.GetBasesCount();
                 var keys = bases.Keys;
 
                 foreach (var key in keys)

@@ -27,11 +27,7 @@ namespace Assets.Scripts.Common.Data.ScriptableObjects.MapSelection
         [Header("Required references")]
         public MapDataAssetBundleConstants MapAssetBundleConstants;
 
-        [Header("Optional References")] 
-        [TextArea]
-        public string Notes = "These references are not required but may speed up map assembling process when present.";
-        [Tooltip("Reference to parent object that stores bases.")]
-        public BasesRoot BasesRoot; 
+       
         //public SceneAsset Scene;
 
         [HideInInspector] 

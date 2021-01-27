@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Common.Data.Maps
 {
-    public class BasesRoot
+    public class BasesRoot : MonoBehaviour
     {
         [Tooltip("Parent gameobject that holds the bases' markers.")]
         [SerializeField]

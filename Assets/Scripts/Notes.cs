@@ -21,4 +21,6 @@
 //Structure:
 //https://blog.theknightsofunity.com/7-ways-keep-unity-project-organized/
 
+//Adding gameobjects to scene from script: https://medium.com/@gonzalez.martin90/unity-tips-scriptable-objects-3e0e19349c05
+
 //TODO: Add color scheme and base for multiteam. Check if players will be correctly assigned to it and moved.
