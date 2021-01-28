@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
-using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
+namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
 {
     /// <summary>
     /// Configuration of the available skills for currently played map.

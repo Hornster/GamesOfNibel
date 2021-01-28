@@ -306,7 +306,7 @@ PrefabInstance:
     - target: {fileID: 6804705105742983035, guid: c6df3633020b09b4881c863733b09e8e,
         type: 3}
       propertyPath: _sceneToLoad
-      value: Assets/Scenes/Development/DataPassingTests/MapScene.unity
+      value: Assets/Sandbox/DataPassingTests/Scenes/MapScene.unity
       objectReference: {fileID: 0}
     - target: {fileID: 6804705106925202256, guid: c6df3633020b09b4881c863733b09e8e,
         type: 3}

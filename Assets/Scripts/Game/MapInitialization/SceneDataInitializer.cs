@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using Assets.Scripts.Common.CustomEvents;
-using Assets.Scripts.Common.Data.NoDestroyOnLoad;
-using Assets.Scripts.Common.Exceptions;
-using Assets.Scripts.InspectorSerialization.Interfaces;
+using Assets.Scripts.Game.Common.CustomEvents;
+using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
+using Assets.Scripts.Game.Common.Exceptions;
+using Assets.Scripts.Game.InspectorSerialization.Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts.MapInitialization
+namespace Assets.Scripts.Game.MapInitialization
 {
     public class SceneDataInitializer : MonoBehaviour
     {

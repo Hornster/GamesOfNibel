@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Common.CustomEvents;
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Game.Common.CustomEvents;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.GUI.Menu.Transitions
+namespace Assets.Scripts.Game.GUI.Menu.Transitions
 {
     /// <summary>
     /// Manages transition for assigned menu.

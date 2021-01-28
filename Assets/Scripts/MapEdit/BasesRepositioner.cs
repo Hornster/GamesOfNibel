@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Data.NoDestroyOnLoad;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Exceptions;
+using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Exceptions;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Assets.MapEdit.Scripts
+namespace Assets.Scripts.MapEdit
 {
     /// <summary>
     /// Knows about every single spawn marker on the map.

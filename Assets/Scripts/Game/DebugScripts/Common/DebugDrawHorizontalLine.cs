@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace Assets.Scripts.DebugScripts.Common
+namespace Assets.Scripts.Game.DebugScripts.Common
 {
     public class DebugDrawHorizontalLine : MonoBehaviour
     {

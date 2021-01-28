@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Common.Data.ScriptableObjects.MapSelection
+﻿namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
 {
     /// <summary>
     /// Used to retrieve Json-formatted info about the mod.

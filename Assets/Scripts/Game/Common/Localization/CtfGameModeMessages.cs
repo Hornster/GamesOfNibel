@@ -1,7 +1,7 @@
 ﻿using System;
-using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Game.Common.Enums;
 
-namespace Assets.Scripts.Common.Localization
+namespace Assets.Scripts.Game.Common.Localization
 {
     /// <summary>
     /// Stores messages for the Ctf game mode.

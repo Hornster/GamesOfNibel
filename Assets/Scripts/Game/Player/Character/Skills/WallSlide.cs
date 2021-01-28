@@ -1,11 +1,11 @@
-﻿using Assets.Scripts.Common.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Player.Gravity.Constraints;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Player.Gravity.Constraints;
 using UnityEngine;
 
-namespace Assets.Scripts.Player.Character.Skills
+namespace Assets.Scripts.Game.Player.Character.Skills
 {
     public class WallSlide : MonoBehaviour, IBasicSkill
     {

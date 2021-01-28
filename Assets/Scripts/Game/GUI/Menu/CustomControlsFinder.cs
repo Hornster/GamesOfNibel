@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.GUI.Menu.Interface;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.GUI.Menu.Interface;
 using UnityEngine;
 
-namespace Assets.Scripts.GUI.Menu
+namespace Assets.Scripts.Game.GUI.Menu
 {
     /// <summary>
     /// Searches for custom controls across provided gameobject and its children.

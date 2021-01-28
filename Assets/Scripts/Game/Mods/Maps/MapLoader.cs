@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Data.Maps;
-using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
-using Assets.Scripts.GUI.Menu;
-using Assets.Scripts.GUI.Menu.MapSelection;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common.Data.Maps;
+using Assets.Scripts.Game.GUI.Menu;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace Assets.Scripts.Mods.Maps
+namespace Assets.Scripts.Game.Mods.Maps
 {
     /// <summary>
     /// Responsible for managing loaded maps.

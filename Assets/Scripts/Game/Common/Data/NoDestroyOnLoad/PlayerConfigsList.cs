@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 //Use GetInstanceID for the player ids.
 
-namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
+namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
 {
     /// <summary>
     /// Manages the configs of players.

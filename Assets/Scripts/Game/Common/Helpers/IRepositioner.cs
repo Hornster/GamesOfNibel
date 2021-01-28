@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Common.Helpers
+namespace Assets.Scripts.Game.Common.Helpers
 {
     /// <summary>
     /// Used to reposition objects.

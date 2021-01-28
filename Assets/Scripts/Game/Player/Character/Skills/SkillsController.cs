@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Data.NoDestroyOnLoad;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Player.Character.Skills.Factory;
+using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Player.Character.Skills.Factory;
 using UnityEngine;
 
-namespace Assets.Scripts.Player.Character.Skills
+namespace Assets.Scripts.Game.Player.Character.Skills
 {
     public class SkillsController : MonoBehaviour
     {

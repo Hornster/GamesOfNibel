@@ -1,12 +1,10 @@
-﻿
-using System;
-using Assets.Scripts.Common.Data.NoDestroyOnLoad;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Exceptions;
-using Assets.Scripts.Player.Character;
+﻿using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Exceptions;
+using Assets.Scripts.Game.Player.Character;
 using UnityEngine;
 
-namespace Assets.Scripts.Spawner
+namespace Assets.Scripts.Game.Spawner
 {
     public class PlayerBases : MonoBehaviour
     {

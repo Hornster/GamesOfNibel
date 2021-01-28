@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.GUI.Camera
+namespace Assets.Scripts.Game.GUI.Camera
 {
     /// <summary>
     /// Used to register the camera of a player to the merged render.

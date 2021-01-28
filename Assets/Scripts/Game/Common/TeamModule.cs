@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Common
+namespace Assets.Scripts.Game.Common
 {
     /// <summary>
     /// Puts the team definition in one place.

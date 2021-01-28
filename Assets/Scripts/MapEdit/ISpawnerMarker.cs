@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common;
+﻿using Assets.Scripts.Game.Common;
 using UnityEngine;
 
-namespace Assets.MapEdit.Scripts
+namespace Assets.Scripts.MapEdit
 {
     /// <summary>
     /// Interface used for finding spawner positions on maps (so far, might change later).

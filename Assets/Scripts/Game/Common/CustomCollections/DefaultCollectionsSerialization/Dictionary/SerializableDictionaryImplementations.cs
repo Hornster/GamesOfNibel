@@ -4,11 +4,10 @@
 //Modifications by: Karol Kozuch (CrazedAerialCable)
 
 using System;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Player.Character.Skills;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary
+namespace Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary
 {
     // ---------------
 //  String => Int

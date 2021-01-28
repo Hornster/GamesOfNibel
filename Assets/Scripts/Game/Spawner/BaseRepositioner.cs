@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Exceptions;
-using Assets.Scripts.Common.Helpers;
-using Assets.Scripts.Spawner.PlayerSpawner;
+﻿using Assets.Scripts.Game.Common.Exceptions;
+using Assets.Scripts.Game.Common.Helpers;
+using Assets.Scripts.Game.Spawner.PlayerSpawner;
 using UnityEngine;
 
-namespace Assets.Scripts.Spawner
+namespace Assets.Scripts.Game.Spawner
 {
     /// <summary>
     /// Allows for moving base around. Designed for load-time usage.

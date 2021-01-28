@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Common.CustomCollections;
-using Assets.Scripts.Common.CustomEvents;
-using Assets.Scripts.Common.Data;
-using Assets.Scripts.Common.Data.ScriptableObjects.ScenePassData;
-using Assets.Scripts.Common.Data.ScriptableObjects.Transitions;
-using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Game.Common.CustomEvents;
+using Assets.Scripts.Game.Common.Data;
+using Assets.Scripts.Game.Common.Data.ScriptableObjects.ScenePassData;
+using Assets.Scripts.Game.Common.Data.ScriptableObjects.Transitions;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts.GUI.Menu.Transitions
+namespace Assets.Scripts.Game.GUI.Menu.Transitions
 {
     /// <summary>
     /// Manages passes between menu parts. Should be positioned in parent gameobject of all available menus.

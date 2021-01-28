@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Data;
-using Assets.Scripts.Common.Enums;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Common
+namespace Assets.Scripts.Game.Common
 {
     /// <summary>
     /// Sets the color of the sprite assigned to it.

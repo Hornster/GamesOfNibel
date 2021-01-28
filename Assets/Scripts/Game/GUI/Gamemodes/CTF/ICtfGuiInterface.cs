@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Game.Common.Enums;
 
-namespace Assets.Scripts.GUI.Gamemodes.CTF
+namespace Assets.Scripts.Game.GUI.Gamemodes.CTF
 {
     /// <summary>
     /// GUI for the CTF information parts.

@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.CustomEvents;
-using Assets.Scripts.Common.Data.NoDestroyOnLoad;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Exceptions;
+using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.GUI.Menu.MapSelection
+namespace Assets.Scripts.Game.GUI.Menu.MapSelection
 {
     /// <summary>
     /// Stores state of the skills selected for the match.

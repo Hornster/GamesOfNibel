@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Common.Data.Maps;
-using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Helpers;
-using Assets.Scripts.Mods.Maps;
+using Assets.Scripts.Game.Common.Data.Maps;
+using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Helpers;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.GUI.Menu.MapSelection
+namespace Assets.Scripts.Game.GUI.Menu.MapSelection
 {
     /// <summary>
     /// Manages data shown in the preview field of the map selection menu.

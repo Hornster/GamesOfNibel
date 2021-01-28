@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.GUI.Menu.InGameMenu;
+﻿using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.GUI.Menu.InGameMenu;
 using UnityEngine;
 using UnityEngine.Events;
 using Input = UnityEngine.Input;
 using Vector2 = System.Numerics.Vector2;
 
-namespace Assets.Scripts.Player
+namespace Assets.Scripts.Game.Player
 {
     public class InputReader : MonoBehaviour
     {

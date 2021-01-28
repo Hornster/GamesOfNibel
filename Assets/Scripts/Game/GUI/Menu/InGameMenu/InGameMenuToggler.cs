@@ -1,10 +1,8 @@
-﻿
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Helpers;
+﻿using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.GUI.Menu.InGameMenu
+namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
 {
     /// <summary>
     /// Toggles the ingame menu and the input readers.

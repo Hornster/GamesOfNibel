@@ -1,10 +1,9 @@
-﻿
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Helpers;
+﻿using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Helpers;
 using UnityEngine;
 
-namespace Assets.Scripts.Player
+namespace Assets.Scripts.Game.Player
 {
     /// <summary>
     /// Manages collision masks.

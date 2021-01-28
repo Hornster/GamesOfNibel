@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.Common.CustomEvents
+namespace Assets.Scripts.Game.Common.CustomEvents
 {
     /// <summary>
     /// Unity event with a SkillType and a bool arguments.

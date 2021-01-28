@@ -1,23 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.Player;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class HelpToggler : MonoBehaviour
+namespace Assets.Scripts.Game.Player.GUI
 {
-    [SerializeField] private GameObject _helpObject;
-
-    private bool _isActive = false;
-    // Start is called before the first frame update
-    void Start()
+    public class HelpToggler : MonoBehaviour
     {
-        _helpObject.SetActive(_isActive);
-        InputReader.RegisterHelpToggleHandler(ToggleHelpPage);
-    }
+        [SerializeField] private GameObject _helpObject;
 
-    private void ToggleHelpPage()
-    {
-        _isActive = !_isActive;
-        _helpObject.SetActive(_isActive);
+        private bool _isActive = false;
+        // Start is called before the first frame update
+        void Start()
+        {
+            _helpObject.SetActive(_isActive);
+            InputReader.RegisterHelpToggleHandler(ToggleHelpPage);
+        }
+
+        private void ToggleHelpPage()
+        {
+            _isActive = !_isActive;
+            _helpObject.SetActive(_isActive);
+        }
     }
 }

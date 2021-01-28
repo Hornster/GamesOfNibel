@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.GUI.Menu.Transitions;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using Assets.Scripts.Game.GUI.Menu.Transitions;
 
-namespace Assets.Scripts.GUI.Menu.InGameMenu
+namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
 {
     /// <summary>
     /// In-Game version of transition manager. Used for menus that can be show during matches.

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Data.NoDestroyOnLoad;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Exceptions;
-using Assets.Scripts.Common.Helpers;
-using Assets.Scripts.Spawner.PlayerSpawner;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Exceptions;
+using Assets.Scripts.Game.Common.Helpers;
+using Assets.Scripts.Game.Spawner.PlayerSpawner;
 using UnityEngine;
 
-namespace Assets.Scripts.MapInitialization
+namespace Assets.Scripts.Game.MapInitialization
 {
     /// <summary>
     /// Used to position created players on their bases.

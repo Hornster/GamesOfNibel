@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.Common;
-using Assets.Scripts.Player.Gravity;
+﻿using Assets.Scripts.Game.Common;
 using UnityEngine;
 
-namespace Assets.Scripts.Player.Effects
+namespace Assets.Scripts.Game.Player.Effects
 {
     /// <summary>
     /// Effect of launching the player up upon jumping onto the jump plant.

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Assets.Editor.Scripts.Modding.MapCreation.Scripts.Util;
-using Assets.Scripts.Common.Data.Maps;
-using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
-using Assets.Scripts.Common.Helpers;
+using Assets.Scripts.Game.Common.Data.Maps;
+using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
+using Assets.Scripts.Game.Common.Helpers;
 using UnityEditor;
 using UnityEngine;
 

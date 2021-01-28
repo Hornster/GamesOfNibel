@@ -1,12 +1,12 @@
-﻿using Assets.Scripts.Common;
-using Assets.Scripts.Common.Enums;
-using System.Collections.Generic;
-using Assets.Scripts.Common.Localization;
-using Assets.Scripts.GameModes.CTF.Observers;
-using Assets.Scripts.GUI.Gamemodes.CTF;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Localization;
+using Assets.Scripts.Game.GameModes.CTF.Observers;
+using Assets.Scripts.Game.GUI.Gamemodes.CTF;
 using UnityEngine;
 
-namespace Assets.Scripts.GameModes.Managers
+namespace Assets.Scripts.Game.GameModes.Managers
 {
     /// <summary>
     /// Manages the capture the flag game mode play.

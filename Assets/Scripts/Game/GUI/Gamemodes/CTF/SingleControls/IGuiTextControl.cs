@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.GUI.Gamemodes.CTF.SingleControls
+namespace Assets.Scripts.Game.GUI.Gamemodes.CTF.SingleControls
 {
     /// <summary>
     /// Interface for text-based controls shown on the GUI.

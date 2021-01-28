@@ -1,5 +1,5 @@
 ﻿
-namespace Assets.Scripts.Common.Enums
+namespace Assets.Scripts.Game.Common.Enums
 {
     public enum Teams
     {

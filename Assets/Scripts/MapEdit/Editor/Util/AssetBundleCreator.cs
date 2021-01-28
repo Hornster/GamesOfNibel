@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
+using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
 using UnityEditor;
 
 namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts.Util

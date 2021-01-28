@@ -1,14 +1,13 @@
-﻿
-using System;
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Data;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.GameModes.CTF.Entities;
-using Assets.Scripts.Player;
+﻿using System;
+using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Data;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.GameModes.CTF.Entities;
+using Assets.Scripts.Game.Player;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.GameModes.CTF
+namespace Assets.Scripts.Game.GameModes.CTF
 {
     /// <summary>
     /// Allows the player  object to carry flags.

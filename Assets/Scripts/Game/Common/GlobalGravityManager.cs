@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Common
+namespace Assets.Scripts.Game.Common
 {
     /// <summary>
     /// Stores base information about gravity. Other classes can query it for the values.

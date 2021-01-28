@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using Assets.Scripts.Common.Helpers;
-using Assets.Scripts.GUI.Menu.Interface;
-using JetBrains.Annotations;
+using Assets.Scripts.Game.Common.Helpers;
+using Assets.Scripts.Game.GUI.Menu.Interface;
 using UnityEngine;
 using UnityEngine.Events;
-using Debug = UnityEngine.Debug;
 
-namespace Assets.Scripts.GUI.Menu
+namespace Assets.Scripts.Game.GUI.Menu
 {
     /// <summary>
     /// Manages controls that are children of this scripts monobehavior.

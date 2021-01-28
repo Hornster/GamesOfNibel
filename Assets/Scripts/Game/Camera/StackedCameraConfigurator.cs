@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Camera
+namespace Assets.Scripts.Game.Camera
 {
     /// <summary>
     /// Configures provided camera in such a way that it can be stacked on top of other cameras.

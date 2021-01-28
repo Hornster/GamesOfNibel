@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Player;
+﻿using Assets.Scripts.Game.Player;
 using UnityEngine;
 
-namespace Assets.Scripts.Common
+namespace Assets.Scripts.Game.Common
 {
     public class DebugGameController : MonoBehaviour
     {

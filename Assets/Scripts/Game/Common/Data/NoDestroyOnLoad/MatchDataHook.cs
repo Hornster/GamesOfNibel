@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
+namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
 {
     /// <summary>
     /// Manages reference to the Matchdata object, making sure only one is present at any given time.

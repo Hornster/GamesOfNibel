@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Exceptions;
+using Assets.Scripts.Game.Common.Exceptions;
 using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
+namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
 {
     /// <summary>
     /// Stores data of all players that will be partaking in the match and need to be spawned.

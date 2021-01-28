@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Data.Maps;
-using Assets.Scripts.GUI.Menu.Interface;
-using Assets.Scripts.Mods.Maps;
+﻿using Assets.Scripts.Game.Common.Data.Maps;
+using Assets.Scripts.Game.GUI.Menu.Interface;
+using Assets.Scripts.Game.Mods.Maps;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.GUI.Menu
+namespace Assets.Scripts.Game.GUI.Menu
 {
     /// <summary>
     /// Defines a menu control that can be selected by the user.

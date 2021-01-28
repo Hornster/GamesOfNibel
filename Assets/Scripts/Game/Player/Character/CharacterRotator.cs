@@ -1,8 +1,7 @@
-﻿
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Player.Character
+namespace Assets.Scripts.Game.Player.Character
 {
     /// <summary>
     /// Rotates the character.

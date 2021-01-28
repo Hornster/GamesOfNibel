@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.GUI.Menu.Interface;
+﻿using Assets.Scripts.Game.GUI.Menu.Interface;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.GUI.Menu
+namespace Assets.Scripts.Game.GUI.Menu
 {
     /// <summary>
     /// Manages single scrollbar. Can be used with Scrollbar component in Unity.

@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Data.Maps;
-using Assets.Scripts.GUI.Menu.MapSelection;
-using Assets.Scripts.Mods.Maps;
-using Assets.Scripts.Player;
-using UnityEditor;
+﻿using Assets.Scripts.Game.Common.Data.Maps;
+using Assets.Scripts.Game.Mods.Maps;
+using Assets.Scripts.Game.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.DebugScripts.MapLoading
+namespace Assets.Scripts.Game.DebugScripts.MapLoading
 {
     public class DebugMapLoader : MonoBehaviour
     {

@@ -3,8 +3,8 @@
 
 //Modifications by: Karol Kozuch (CrazedAerialCable)
 
-using Assets.Scripts.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
-using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEditor;
 using UnityEngine;
 

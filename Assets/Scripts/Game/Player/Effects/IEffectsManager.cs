@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Scripts.Player.Effects
+﻿namespace Assets.Scripts.Game.Player.Effects
 {
     /// <summary>
     /// Determines what should an effect manager have.

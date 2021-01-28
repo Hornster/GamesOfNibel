@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Common.Helpers;
-using Assets.Scripts.Player.Character;
+﻿using Assets.Scripts.Game.Common.Helpers;
+using Assets.Scripts.Game.Player.Character;
 using UnityEngine;
 
-namespace Assets.Scripts.Player.Physics
+namespace Assets.Scripts.Game.Player.Physics
 {
     public class PlayerPhysics : MonoBehaviour
     {

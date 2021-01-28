@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Assets.MapEdit.Scripts;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Exceptions;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Exceptions;
+using Assets.Scripts.MapEdit;
 using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.Maps
+namespace Assets.Scripts.Game.Common.Data.Maps
 {
     public class BasesRoot : MonoBehaviour
     {

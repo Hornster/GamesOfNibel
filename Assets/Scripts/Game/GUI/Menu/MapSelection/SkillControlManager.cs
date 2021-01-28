@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.CustomEvents;
-using Assets.Scripts.Common.Enums;
-using UnityEditor;
+﻿using Assets.Scripts.Game.Common.Data;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.GUI.Menu.MapSelection
+namespace Assets.Scripts.Game.GUI.Menu.MapSelection
 {
     /// <summary>
     /// Manages the look of the skill toggling controls.

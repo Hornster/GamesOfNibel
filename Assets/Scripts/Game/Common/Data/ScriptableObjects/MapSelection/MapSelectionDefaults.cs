@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.ScriptableObjects.MapSelection
+namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
 {
     /// <summary>
     /// Provides default values for map selection details.

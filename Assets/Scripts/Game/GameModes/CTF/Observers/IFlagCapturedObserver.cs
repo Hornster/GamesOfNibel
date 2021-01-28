@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Game.Common.Enums;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.GameModes.CTF.Observers
+namespace Assets.Scripts.Game.GameModes.CTF.Observers
 {
     /// <summary>
     /// Defines setting for an observed object that concerns flag capturing.

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Assets.Scripts.Common.Enums;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
+namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
 {
     /// <summary>
     /// Contains all necessary data for a scene to be loaded.

@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.GUI.Camera
+namespace Assets.Scripts.Game.GUI.Camera
 {
     /// <summary>
     /// Passes the render result of provided camera to provided UI raw image element.

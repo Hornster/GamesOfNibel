@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Scripts.Player.GUI.Skills.Debug
+﻿namespace Assets.Scripts.Game.Player.GUI.Skills.Debug
 {
     /// <summary>
     /// Debug interface. Used to toggle GUI elements used to show given skill usage state.

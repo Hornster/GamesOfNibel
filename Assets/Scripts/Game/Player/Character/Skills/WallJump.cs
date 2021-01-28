@@ -1,9 +1,8 @@
-﻿using Assets.Scripts.Common;
-using Assets.Scripts.Common.Helpers;
+﻿using Assets.Scripts.Game.Common;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.Player.Character.Skills
+namespace Assets.Scripts.Game.Player.Character.Skills
 {
     public class WallJump : MonoBehaviour, IBasicSkill
     {

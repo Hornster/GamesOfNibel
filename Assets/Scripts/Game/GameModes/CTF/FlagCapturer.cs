@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.GameModes.CTF.Entities;
-using Assets.Scripts.GameModes.CTF.Observers;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.GameModes.CTF.Entities;
+using Assets.Scripts.Game.GameModes.CTF.Observers;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.GameModes.CTF
+namespace Assets.Scripts.Game.GameModes.CTF
 {
     /// <summary>
     /// Defines the behavior of entities that can capture a flag, like bases.

@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.GUI.Menu
+﻿namespace Assets.Scripts.Game.GUI.Menu
 {
     /// <summary>
     /// Stores possible colors for given skill.

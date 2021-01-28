@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.Maps
+namespace Assets.Scripts.Game.Common.Data.Maps
 {
     /// <summary>
     /// Stores data of a single loaded map.

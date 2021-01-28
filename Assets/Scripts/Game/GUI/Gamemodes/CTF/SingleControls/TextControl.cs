@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Data;
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Game.Common;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.GUI.Gamemodes.CTF.SingleControls
+namespace Assets.Scripts.Game.GUI.Gamemodes.CTF.SingleControls
 {
     /// <summary>
     /// A GUI text based control that stores a number.

@@ -1,9 +1,8 @@
-﻿
-using System;
-using Assets.Scripts.Common.Enums;
+﻿using System;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.Common.CustomEvents
+namespace Assets.Scripts.Game.Common.CustomEvents
 {
     /// <summary>
     /// Custom unity event type that accepts two integers as arguments.

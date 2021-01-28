@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Assets.Scripts.Common.Helpers
+namespace Assets.Scripts.Game.Common.Helpers
 {
     /// <summary>
     /// Contains methods capable of manipulating strings.

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Common.Enums;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Player.GUI.Skills.Debug
+namespace Assets.Scripts.Game.Player.GUI.Skills.Debug
 {
     public class DebugGuiManager : MonoBehaviour
     {

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Helpers;
+﻿using Assets.Scripts.Game.Common.Helpers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
-namespace Assets.Scripts.GUI
+namespace Assets.Scripts.Game.GUI
 {
     /// <summary>
     /// Static class for reading the input data from the user when in GUI.

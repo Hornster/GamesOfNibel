@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Data;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.GUI.Gamemodes.CTF.SingleControls;
-using Assets.Scripts.InspectorSerialization.Interfaces;
-using TMPro;
-using UnityEditor;
+using Assets.Scripts.Game.Common.Data;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.GUI.Gamemodes.CTF.SingleControls;
+using Assets.Scripts.Game.InspectorSerialization.Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts.GUI.Gamemodes.CTF
+namespace Assets.Scripts.Game.GUI.Gamemodes.CTF
 {
     /// <summary>
     /// Controller for CTF mode GUI elements.

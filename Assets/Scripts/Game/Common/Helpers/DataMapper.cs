@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Data.Maps;
-using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Exceptions;
-using Assets.Scripts.Mods.Maps;
-using UnityEditor;
-using UnityEngine.SceneManagement;
+using Assets.Scripts.Game.Common.Data.Maps;
+using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Exceptions;
 
-namespace Assets.Scripts.Common.Helpers
+namespace Assets.Scripts.Game.Common.Helpers
 {
     /// <summary>
     /// Maps one class into other.

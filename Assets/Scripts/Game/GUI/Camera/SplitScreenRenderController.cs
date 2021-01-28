@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common;
+using Assets.Scripts.Game.Common;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.GUI.Camera
+namespace Assets.Scripts.Game.GUI.Camera
 {
     /// <summary>
     /// Setting the rendering cameras for split-screen mode.

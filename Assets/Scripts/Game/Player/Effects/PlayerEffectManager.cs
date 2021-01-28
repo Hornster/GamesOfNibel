@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Player.Effects
+namespace Assets.Scripts.Game.Player.Effects
 {
     /// <summary>
     /// Manages the effects applied to the player.

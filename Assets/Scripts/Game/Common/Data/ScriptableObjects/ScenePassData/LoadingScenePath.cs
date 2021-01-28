@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.ScriptableObjects.ScenePassData
+namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.ScenePassData
 {
     /// <summary>
     /// Holds path to the loading scene - temporary scene that loads all dynamic objects, like spawners and

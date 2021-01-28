@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.ScriptableObjects.MapSelection
+namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
 {
     /// <summary>
     /// Stores information about the path elements of a map mod asset bundle.

@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.GUI.Menu.Interface;
+using Assets.Scripts.Game.Common.Data;
+using Assets.Scripts.Game.GUI.Menu.Interface;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.GUI.Menu
+namespace Assets.Scripts.Game.GUI.Menu
 {
     /// <summary>
     /// Manages single skill toggle, allowing it to change colors accordingly when needed.

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Helpers;
-using UnityEditor;
+﻿using Assets.Scripts.Game.Common.Helpers;
 using UnityEngine;
 
-namespace Assets.Scripts.Player
+namespace Assets.Scripts.Game.Player
 {
     public class PlayerMovementApplier : MonoBehaviour
     {

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Assets.Scripts.Common.Data.Maps;
-using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
-using Assets.Scripts.Common.Exceptions;
-using Assets.Scripts.Common.Helpers;
-using Assets.Scripts.GUI.Menu.MapSelection;
-using UnityEditor;
+using Assets.Scripts.Game.Common.Data.Maps;
+using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
+using Assets.Scripts.Game.Common.Exceptions;
+using Assets.Scripts.Game.Common.Helpers;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Assets.Scripts.Mods.Maps
+namespace Assets.Scripts.Game.Mods.Maps
 {
     public class MapAssetBundleLoader : MonoBehaviour
     {

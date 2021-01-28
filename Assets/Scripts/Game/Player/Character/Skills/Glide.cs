@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Player.Gravity.Constraints;
-using UnityEditor;
+﻿using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Player.Gravity.Constraints;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.Player.Character.Skills
+namespace Assets.Scripts.Game.Player.Character.Skills
 {
     /// <summary>
     /// Gives the characters the gliding ability. Usage of this skill

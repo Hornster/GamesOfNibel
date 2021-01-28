@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Spawner.FlagSpawner
+﻿namespace Assets.Scripts.Game.Spawner.FlagSpawner
 {
     /// <summary>
     /// Defines what a regular spawner should have.

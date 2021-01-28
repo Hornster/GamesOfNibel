@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Exceptions;
+﻿using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Exceptions;
 using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.ScriptableObjects.Transitions
+namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.Transitions
 {
     /// <summary>
     /// Stores information about backwards transitions for menu and ingame menu.

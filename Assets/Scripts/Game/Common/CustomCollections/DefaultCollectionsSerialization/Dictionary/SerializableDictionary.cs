@@ -2,11 +2,9 @@
 //Author: Fredrik Ludvigsen (Steinbitglis) 
 
 using System.Collections.Generic;
-
 using UnityEngine;
 
-
-namespace Assets.Scripts.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary
+namespace Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary
 {
     abstract public class SerializableDictionary<K, V> : ISerializationCallbackReceiver
     {

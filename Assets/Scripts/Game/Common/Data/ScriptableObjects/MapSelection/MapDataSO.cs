@@ -1,9 +1,7 @@
-﻿using Assets.Scripts.Common.Data.Maps;
-using Assets.Scripts.Common.Enums;
-using UnityEditor;
+﻿using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.ScriptableObjects.MapSelection
+namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
 {
     /// <summary>
     /// Input point for map mod assembler - stores all required data about given map. EDITOR ONLY!!!

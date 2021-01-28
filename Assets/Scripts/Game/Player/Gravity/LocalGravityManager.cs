@@ -1,10 +1,10 @@
-﻿using System.Collections.Specialized;
-using System.Collections.Generic;
-using Assets.Scripts.Common;
-using Assets.Scripts.Player.Gravity.Constraints;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Player.Gravity.Constraints;
 using UnityEngine;
 
-namespace Assets.Scripts.Player.Gravity
+namespace Assets.Scripts.Game.Player.Gravity
 {
     public class LocalGravityManager :MonoBehaviour
     {

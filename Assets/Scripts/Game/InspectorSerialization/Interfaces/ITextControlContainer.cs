@@ -1,7 +1,7 @@
 ﻿using System;
-using Assets.Scripts.GUI.Gamemodes.CTF.SingleControls;
+using Assets.Scripts.Game.GUI.Gamemodes.CTF.SingleControls;
 
-namespace Assets.Scripts.InspectorSerialization.Interfaces
+namespace Assets.Scripts.Game.InspectorSerialization.Interfaces
 {
     [Serializable]
     public class ITextControlContainer : IUnifiedContainer<IGuiTextControl>

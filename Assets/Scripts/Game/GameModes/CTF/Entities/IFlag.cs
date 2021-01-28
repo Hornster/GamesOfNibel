@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Game.Common.Enums;
 
-namespace Assets.Scripts.GameModes.CTF.Entities
+namespace Assets.Scripts.Game.GameModes.CTF.Entities
 {
     /// <summary>
     /// Defines what should the flag be able to do.

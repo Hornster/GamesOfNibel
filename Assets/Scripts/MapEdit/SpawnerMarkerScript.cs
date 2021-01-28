@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Common;
-using Assets.Scripts.Common.Helpers;
+﻿using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Helpers;
 using UnityEngine;
 
-namespace Assets.MapEdit.Scripts
+namespace Assets.Scripts.MapEdit
 {
     /// <summary>
     /// Script solely used for finding spawner positions on maps (so far, might change later).

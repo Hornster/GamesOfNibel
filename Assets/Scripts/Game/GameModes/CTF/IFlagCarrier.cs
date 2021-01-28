@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.GameModes.CTF.Entities;
+﻿using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.GameModes.CTF.Entities;
 using UnityEngine;
 
-namespace Assets.Scripts.GameModes.CTF
+namespace Assets.Scripts.Game.GameModes.CTF
 {
     /// <summary>
     ///Defines what should the flag carrier be able to do.

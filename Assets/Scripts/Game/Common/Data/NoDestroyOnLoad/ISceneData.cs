@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Enums;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace Assets.Scripts.Common.Data.NoDestroyOnLoad
+namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
 {
     /// <summary>
     /// An interface that can be found by Unity's FindObjectBy method.

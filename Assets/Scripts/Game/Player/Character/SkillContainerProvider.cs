@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Player.Character.Skills;
+﻿using Assets.Scripts.Game.Player.Character.Skills;
 using UnityEngine;
 
-namespace Assets.Scripts.Player.Character
+namespace Assets.Scripts.Game.Player.Character
 {
     /// <summary>
     /// Used by other GOs to get references to parts of player which contains their skills.

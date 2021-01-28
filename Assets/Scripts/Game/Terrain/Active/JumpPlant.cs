@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Player.Effects;
+﻿using Assets.Scripts.Game.Player.Effects;
 using UnityEngine;
 
-namespace Assets.Scripts.Terrain.Active
+namespace Assets.Scripts.Game.Terrain.Active
 {
     /// <summary>
     /// Controls the jump plant behavior.

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Player.Physics
+namespace Assets.Scripts.Game.Player.Physics
 {
     /// <summary>
     /// Manages casting of associated rays.

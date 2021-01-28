@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Common.Data.ScriptableObjects.MapSelection;
-using Assets.Scripts.Common.Enums;
+﻿using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Common.Data.Maps
+namespace Assets.Scripts.Game.Common.Data.Maps
 {
     /// <summary>
     /// Raw data of a map, ready for serialization or deserialization.

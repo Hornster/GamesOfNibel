@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Scripts.GUI.Menu.Interface
+﻿namespace Assets.Scripts.Game.GUI.Menu.Interface
 {
     /// <summary>
     /// Defines base for every single custom UI control.

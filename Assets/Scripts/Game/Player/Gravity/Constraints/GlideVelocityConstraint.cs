@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Player.Gravity.Constraints
+namespace Assets.Scripts.Game.Player.Gravity.Constraints
 {
     public class GlideVelocityConstraint : IMaxVelConstraint
     {

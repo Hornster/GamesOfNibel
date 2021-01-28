@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.Factories;
+using Assets.Scripts.Game.Common.Factories;
 
-namespace Assets.Scripts.InspectorSerialization.Interfaces
+namespace Assets.Scripts.Game.InspectorSerialization.Interfaces
 {
 
     /// <summary>

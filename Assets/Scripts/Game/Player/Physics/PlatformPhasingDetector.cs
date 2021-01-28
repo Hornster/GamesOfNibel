@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Helpers;
+﻿using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Helpers;
 using UnityEngine;
 
-namespace Assets.Scripts.Player.Physics
+namespace Assets.Scripts.Game.Player.Physics
 {
     /// <summary>
     /// Detects when player entity phases through the platform.

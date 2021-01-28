@@ -1,13 +1,9 @@
-﻿
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Spawner;
-using Assets.Scripts.Spawner.FlagSpawner;
+﻿using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Spawner.FlagSpawner;
 using UnityEngine;
-using UnityEngine.Events;
 using Random = System.Random;
 
-namespace Assets.Scripts.GameModes.CTF
+namespace Assets.Scripts.Game.GameModes.CTF
 {
     [RequireComponent(typeof(Timer))]
     public class FlagSpawnersController : MonoBehaviour

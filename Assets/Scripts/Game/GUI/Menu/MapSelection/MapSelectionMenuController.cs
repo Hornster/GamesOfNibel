@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common.CustomEvents;
-using Assets.Scripts.Common.Data.NoDestroyOnLoad;
-using Assets.Scripts.Common.Data.ScriptableObjects.ScenePassData;
-using Assets.Scripts.Common.Exceptions;
-using Assets.Scripts.Mods.Maps;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common.CustomEvents;
+using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
+using Assets.Scripts.Game.Common.Data.ScriptableObjects.ScenePassData;
+using Assets.Scripts.Game.Common.Exceptions;
+using Assets.Scripts.Game.Mods.Maps;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts.GUI.Menu.MapSelection
+namespace Assets.Scripts.Game.GUI.Menu.MapSelection
 {
     /// <summary>
     /// Main class for the map selection menu.

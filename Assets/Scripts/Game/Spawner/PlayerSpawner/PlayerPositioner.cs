@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Helpers;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Helpers;
 using UnityEngine;
 
-namespace Assets.Scripts.Spawner.PlayerSpawner
+namespace Assets.Scripts.Game.Spawner.PlayerSpawner
 {
     /// <summary>
     /// Used in bases. Keeps an eye for assigned players and repositions them to the base when necessary.

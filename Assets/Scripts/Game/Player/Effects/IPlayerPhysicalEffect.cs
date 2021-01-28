@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Player.Effects
+namespace Assets.Scripts.Game.Player.Effects
 {
     /// <summary>
     /// Defines classes that can affect player.

@@ -1,14 +1,12 @@
-﻿
-using Assets.Scripts.Common;
-using Assets.Scripts.Common.Data;
-using Assets.Scripts.Common.Enums;
-using Assets.Scripts.Common.Helpers;
-using Assets.Scripts.Spawner;
-using Assets.Scripts.Spawner.FlagSpawner;
+﻿using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Data;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Helpers;
+using Assets.Scripts.Game.Spawner.FlagSpawner;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.GameModes.CTF.Entities
+namespace Assets.Scripts.Game.GameModes.CTF.Entities
 {
     [RequireComponent(typeof(CircleCollider2D), typeof(Rigidbody2D), 
         typeof(Timer))]
