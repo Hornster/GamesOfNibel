@@ -84,7 +84,7 @@ namespace Assets.Scripts.Game.Player.Physics
         /// </summary>
         private bool _isStateInformedNoCollisionWall;   //Helps changing polling into event, since wall detection is continuous, not event-based.
 
-        private void Start()
+        private void OnEnable()
         {
             rb = GetComponent<Rigidbody2D>();
             _playerState = GetComponent<PlayerState>();

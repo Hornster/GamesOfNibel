@@ -39,6 +39,9 @@ namespace Assets.Scripts.MapEdit
             var baseRepositioner = spawnGameObject.GetComponentInChildren<IRepositioner>();
             baseRepositioner.ChangePosition(transform.position);
 
+            var baseRotator = spawnGameObject.GetComponentInChildren<IRotator>();
+            baseRotator.Rotate(transform.rotation);
+
             //var destinationPos = this.gameObject.transform.position;
             //spawnGameObject.transform.position = destinationPos;
 

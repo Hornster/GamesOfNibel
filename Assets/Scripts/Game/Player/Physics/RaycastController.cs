@@ -13,7 +13,7 @@ namespace Assets.Scripts.Game.Player.Physics
         /// </summary>
         private RaycastHit2D _lastHit;
 
-        private void Start()
+        private void OnEnable()
         {
             _raycasters = GetComponentsInChildren<IRaycaster2D>();
         }

@@ -14,6 +14,9 @@ namespace Assets.Scripts.MapEdit
     /// </summary>
     public class BasesRepositioner : MonoBehaviour
     {
+        [Tooltip("The base gameobject that is a parent of all bases markers.")]
+        [SerializeField]
+        private GameObject BaseMarkersRoot;
         /// <summary>
         /// Stores found markers. Bool value indicates whether has given marker had already assigned its own spawn. 
         /// </summary>
@@ -33,6 +36,14 @@ namespace Assets.Scripts.MapEdit
             var foundSpawnerMarkers = GetComponentsInChildren<ISpawnerMarker>();
             GroupFoundSpawns(foundSpawnerMarkers);
             ChkSpawnersCountAgainstMarkers();
+            HideMarkers();
+        }
+        /// <summary>
+        /// Hides all markers on the scene.
+        /// </summary>
+        private void HideMarkers()
+        {
+            BaseMarkersRoot.SetActive(false);
         }
         /// <summary>
         /// Groups spawn markers by their teams.
