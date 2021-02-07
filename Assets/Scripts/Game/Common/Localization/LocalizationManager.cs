@@ -16,7 +16,7 @@
         {
             return _instance ?? (_instance = new LocalizationManager());
         }
-        //Singleton constructor is private.
+        //SceneSingleton constructor is private.
         private LocalizationManager()
         {
             CtfLocale = new CtfGameModeMessages();

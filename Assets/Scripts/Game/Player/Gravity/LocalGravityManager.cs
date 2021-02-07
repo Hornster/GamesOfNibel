@@ -45,7 +45,7 @@ namespace Assets.Scripts.Game.Player.Gravity
             _influencedRigidbody.gravityScale = 0.0f;
         }
 
-        private void Start()
+        private void OnEnable()
         {
             _baseJumpHeight = GlobalGravityManager.GetBaseJumpHeight();
             _baseJumpTime = GlobalGravityManager.GetBaseJumpTime();

@@ -8,9 +8,9 @@ namespace Assets.Scripts.Game.Player.Character.Skills.Factory
     /// <summary>
     /// Creates skill gameobjects basing on provided data.
     /// </summary>
-    public class SkillFactory : MonoBehaviour
+    public class SkillsFactory : MonoBehaviour, ISkillsFactory
     {
-        private static SkillFactory _instance;
+        private static SkillsFactory _instance;
 
         [Tooltip("Prefab of the double jump skill.")]
         [SerializeField]
@@ -33,13 +33,13 @@ namespace Assets.Scripts.Game.Player.Character.Skills.Factory
 
             if (_activeInstances > 1)
             {
-                throw new GONBaseException("Only one instance of SkillFactory is allowed!");
+                throw new GONBaseException("Only one instance of SkillsFactory is allowed!");
             }
 
             _instance = this;
         }
 
-        public static SkillFactory GetInstance()
+        public static SkillsFactory GetInstance()
         {
             if (_instance == null)
             {

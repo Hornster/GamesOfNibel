@@ -3,7 +3,7 @@
 namespace Assets.Scripts.Game.Player
 {
     /// <summary>
-    /// Singleton class that stores controls config.
+    /// SceneSingleton class that stores controls config.
     /// </summary>
     public class ButtonConfig
     {

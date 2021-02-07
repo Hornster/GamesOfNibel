@@ -4,9 +4,9 @@ using UnityEngine;
 namespace Assets.Scripts.Game.Player.Character
 {
     /// <summary>
-    /// Used by other GOs to get references to parts of player which contains their skills.
+    /// Used by other GOs to get references to parts of player which are needed by the players' skills.
     /// </summary>
-    public class SkillContainerProvider : MonoBehaviour
+    public class SkillInfoProvider : MonoBehaviour
     {
         [Tooltip("The parent gameobject of character's skills.")]
         [SerializeField] private Transform _skillsContainerGO;

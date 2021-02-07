@@ -16,19 +16,25 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         [Tooltip("What skills are allowed for the player to use.")]
         [SerializeField]
         private SkillTypeBoolDictionary _availableSkills;
-        //TODO change that array to a dictionary
-        //private 
+
 
         private void Awake()
         {
             var allSkills = Enum.GetValues(typeof(SkillType)) as SkillType[];
             foreach (var skill in allSkills)
             {
+#if UNITY_EDITOR
+                if (_availableSkills.dictionary.ContainsKey(skill))
+                {
+                    //If modifications will be introduced via unity inspector, do not overwrite them.
+                    continue;
+                }
+#endif
                 _availableSkills.dictionary.Add(skill, true);
             }
             DontDestroyOnLoad(this);
         }
-        
+
         /// <summary>
         /// Getters for the code.
         /// </summary>

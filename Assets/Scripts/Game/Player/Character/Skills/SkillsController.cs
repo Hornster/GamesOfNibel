@@ -14,26 +14,26 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         [SerializeField] private WallSlide _wallSlideSkill;
         [SerializeField] private WallJump _wallJumpSkill;
         [SerializeField] private Glide _glideSkill;
-        [SerializeField] private SkillContainerProvider _skillContainerProvider;
+        [SerializeField] private SkillInfoProvider _skillInfoProvider;
 
-        private void Start()
-        {
-            var matchConfig = MatchData.GetInstance();
-            var availableSkills = matchConfig.SkillsConfig.AvailableSkills.dictionary;
+        //private void Start()
+        //{
+        //    //var matchConfig = MatchData.GetInstance();
+        //    //var availableSkills = matchConfig.SkillsConfig.AvailableSkills.dictionary;
 
-            var skillFactory = SkillFactory.GetInstance();
+        //    //var skillFactory = SkillsFactory.GetInstance();
 
-            var allSkills = Enum.GetValues(typeof(SkillType)) as SkillType[];
+        //    //var allSkills = Enum.GetValues(typeof(SkillType)) as SkillType[];
 
-            foreach (var skill in allSkills)
-            {
-                if (availableSkills[skill])
-                {
-                    var newSkill = skillFactory.CreateSkill(_skillContainerProvider.SkillsContainerGO, _skillContainerProvider.PlayerState, _skillContainerProvider.CharacterRigidbody, skill);
-                    AddBasicSkill(skill, newSkill);
-                }
-            }
-        }
+        //    //foreach (var skill in allSkills)
+        //    //{
+        //    //    if (availableSkills[skill])
+        //    //    {
+        //    //        var newSkill = skillFactory.CreateSkill(_skillInfoProvider.SkillsContainerGO, _skillInfoProvider.PlayerState, _skillInfoProvider.CharacterRigidbody, skill);
+        //    //        AddBasicSkill(skill, newSkill);
+        //    //    }
+        //    //}
+        //}
         //DEBUG
 
 
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         }
         /// <summary>
         /// Adds the skill to the skill set of the character. If skill was added - returns true.
-        /// Returns false if skill was already present.
+        /// Returns false if skill was already present. If false returned, no new skill is added.
         /// </summary>
         /// <param name="type">Type of the skill by which the skill is recognized and selected.</param>
         /// <param name="skill">The skill object itself.</param>

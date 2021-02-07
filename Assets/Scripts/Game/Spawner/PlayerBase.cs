@@ -69,7 +69,6 @@ namespace Assets.Scripts.Game.Spawner
             }
 
             var newPlayerInstance = Instantiate(_playerPrefab, _spawningPosition);
-            var skillContainerProvider = newPlayerInstance.GetComponent<SkillContainerProvider>();
         }
 
         

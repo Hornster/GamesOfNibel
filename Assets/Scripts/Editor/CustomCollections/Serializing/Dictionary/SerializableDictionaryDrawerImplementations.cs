@@ -54,4 +54,21 @@ namespace Assets.Editor.Scripts.CustomCollections.Serializing.Dictionary
     }
 
     internal class SerializableMenuTypeMenuTypeTemplate : SerializableKeyValueTemplate<MenuType, MenuType> {}
+
+    //---------------------
+    // MenuType => MenuType
+    //---------------------
+    /// <summary>
+    /// Drawer for MenuType=>MenuType dictionary.
+    /// </summary>
+    [UnityEditor.CustomPropertyDrawer(typeof(SkillTypeBoolDictionary))]
+    public class SkillTypeBoolDictionaryDrawer : SerializableDictionaryDrawer<SkillType, bool>
+    {
+        protected override SerializableKeyValueTemplate<SkillType, bool> GetTemplate()
+        {
+            return GetGenericTemplate<SerializableSkillTypeBoolTemplate>();
+        }
+    }
+
+    internal class SerializableSkillTypeBoolTemplate : SerializableKeyValueTemplate<SkillType, bool> { }
 }

@@ -3,6 +3,8 @@ using Assets.Scripts.Game.Common.CustomEvents;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Exceptions;
 using Assets.Scripts.Game.InspectorSerialization.Interfaces;
+using Assets.Scripts.Game.Player.Character;
+using Assets.Scripts.Game.Player.Character.Skills;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.MapInitialization
@@ -15,6 +17,9 @@ namespace Assets.Scripts.Game.MapInitialization
         [Tooltip("Spawner factory object. Used to create player bases (spawners).")]
         [SerializeField]
         private ISpawnerFactoryContainer _spawnerFactory;
+        [Tooltip("Provides skills for created characters.")]
+        [SerializeField] 
+        private ISkillsFactoryContainer _skillsFactory;
         [Tooltip("Prefab of the SceneData object. Will contain ready for deployment dynamic objects for the loaded map.")]
         [SerializeField]
         private GameObject _sceneDataPrefab;
@@ -113,9 +118,36 @@ namespace Assets.Scripts.Game.MapInitialization
             foreach (var playerConfig in playerConfigs)
             {
                 var newPlayer = _characterFactory.Interface.CreateCharacter(playerConfig);
+                CreateSkillsForPlayer(newPlayer);
                 _sceneData.AddPlayer(newPlayer);
             }
         }
+        /// <summary>
+        /// Adds skills to player accordingly with provided with match data skills configuration.
+        /// </summary>
+        /// <param name="playerObject"></param>
+        private void CreateSkillsForPlayer(GameObject playerObject)
+        {
+            var skillInfoProvider = playerObject.GetComponentInChildren<SkillInfoProvider>();
 
+            if (skillInfoProvider == null)
+            {
+                throw new GONBaseException("All characters have to have a skill info provider attached to them!");
+            }
+
+            var skillsConfig = _matchData.SkillsConfig.AvailableSkills.dictionary;
+            var skillsFactory = _skillsFactory.Interface;
+            foreach (var skillConfig in skillsConfig)
+            {
+                if (skillConfig.Value)
+                {
+                    //If the skill is allowed, add it to the player.
+                    var newSkill = skillsFactory.CreateSkill(skillInfoProvider.SkillsContainerGO,
+                        skillInfoProvider.PlayerState, skillInfoProvider.CharacterRigidbody, skillConfig.Key);
+
+                    skillInfoProvider.SkillsController.AddBasicSkill(skillConfig.Key, newSkill);
+                }
+            }
+        }
     }
 }
