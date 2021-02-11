@@ -31,12 +31,13 @@ namespace Assets.Scripts.Game.Player.Character.Skills
 
         private void CalculateJumpStartVelocity()
         {
+            var instance = GlobalGravityManager.Instance;
             float angleInRadians = Mathf.Deg2Rad * _jumpAngle;
             float angleSin = Mathf.Sin(angleInRadians);
-            float jumpTime = GlobalGravityManager.GetBaseJumpTime();
+            float jumpTime = instance.GetBaseJumpTime();
             _wallJumpDirection = new Vector2(Mathf.Cos(angleInRadians), angleSin);
             _wallJumpVelocity = _jumpHeight / jumpTime;
-            _wallJumpVelocity += 0.5f* GlobalGravityManager.GetBaseGravityValue() * jumpTime;
+            _wallJumpVelocity += 0.5f* instance.GetBaseGravityValue() * jumpTime;
             _wallJumpVelocity /= _wallJumpDirection.y;
         }
         private void Start()

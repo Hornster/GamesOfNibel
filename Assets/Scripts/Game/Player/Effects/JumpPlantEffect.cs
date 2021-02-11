@@ -26,10 +26,11 @@ namespace Assets.Scripts.Game.Player.Effects
 
         private void Start()
         {
+            var instance = GlobalGravityManager.Instance;
             _direction = _direction.normalized;
-            var refGravity = GlobalGravityManager.GetBaseGravityValue();
+            var refGravity = instance.GetBaseGravityValue();
             var jumpTime = Mathf.Sqrt((2*_maxJumpHeight)/refGravity);
-            _launchVelocity = _maxJumpHeight/jumpTime + 0.5f * GlobalGravityManager.GetBaseGravityValue() * jumpTime;
+            _launchVelocity = _maxJumpHeight/jumpTime + 0.5f * instance.GetBaseGravityValue() * jumpTime;
         }
         /// <summary>
         /// Changes the current velocity of the player, sending them in _direction with _launchVelocity.

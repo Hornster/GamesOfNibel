@@ -15,13 +15,24 @@ namespace Assets.Scripts.Game.Common
     {
         private static readonly Lazy<T> LazyInstance = new Lazy<T>(CreateSingleton);
 
+
         public static T Instance => LazyInstance.Value;
 
         private static T CreateSingleton()
         {
-            var ownerObject = new GameObject($"{typeof(T).Name} (singleton)");
-            var instance = ownerObject.AddComponent<T>();
-            return instance;
+            var foundObject = FindObjectOfType(typeof(T)) as T;
+            if (foundObject == null)
+            {
+                var ownerObject = new GameObject($"{typeof(T).Name} (singleton)");
+                foundObject = ownerObject.AddComponent<T>();
+                Debug.Log($"Warning - object of type {typeof(T).Name} not found. Creating new one.");
+            }
+            else
+            {
+
+            }
+            
+            return foundObject;
         }
     }
 }

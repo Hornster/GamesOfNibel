@@ -5,7 +5,7 @@ namespace Assets.Scripts.Game.Common
     /// <summary>
     /// Stores base information about gravity. Other classes can query it for the values.
     /// </summary>
-    public class GlobalGravityManager : MonoBehaviour
+    public class GlobalGravityManager : SceneSingleton<GlobalGravityManager>
     {
         /// <summary>
         /// How long will it take to reach max height jumping off the ground vertically.
@@ -22,49 +22,54 @@ namespace Assets.Scripts.Game.Common
         /// The base gravity value.
         /// </summary>
         private float _baseGravityValue;
+        /// <summary>
+        /// Set to true when Awake has been called at least once.
+        /// </summary>
+        private static bool IsInitialized = false;
 
-        private static GlobalGravityManager _instance;
+        //private static GlobalGravityManager _instance;
 
         private void Awake()
         {
-            _instance = this;
             _baseGravityValue = (2 * _baseJumpHeight) / (_baseJumpTime * _baseJumpTime);
+            IsInitialized = true;
+        }
+        /// <summary>
+        /// Checks if the Awake method has been called. If not - calls it.
+        /// </summary>
+        public void ChkIfInitialized()
+        {
+            if (IsInitialized == false)
+            {
+                Awake();
+            }
         }
         /// <summary>
         /// Gets the base jump time.
         /// </summary>
         /// <returns></returns>
-        public static float GetBaseJumpTime()
+        public float GetBaseJumpTime()
         {
-            if (_instance == null)
-            {
-                Debug.LogError("ERROR: No Global gravity manager declared in scene!");
-            }
-            return _instance._baseJumpTime;
+            ChkIfInitialized();
+            return Instance._baseJumpTime;
         }
         /// <summary>
         /// Gets the base jump height.
         /// </summary>
         /// <returns></returns>
-        public static float GetBaseJumpHeight()
+        public float GetBaseJumpHeight()
         {
-            if (_instance == null)
-            {
-                Debug.LogError("ERROR: No Global gravity manager declared in scene!");
-            }
-            return _instance._baseJumpHeight;
+            ChkIfInitialized();
+            return Instance._baseJumpHeight;
         }
         /// <summary>
         /// Gets the base gravity value.
         /// </summary>
         /// <returns></returns>
-        public static float GetBaseGravityValue()
+        public float GetBaseGravityValue()
         {
-            if (_instance == null)
-            {
-                Debug.LogError("ERROR: No Global gravity manager declared in scene!");
-            }
-            return _instance._baseGravityValue;
+            ChkIfInitialized();
+            return Instance._baseGravityValue;
         }
     }
 }

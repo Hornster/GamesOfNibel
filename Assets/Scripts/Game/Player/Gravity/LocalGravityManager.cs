@@ -47,9 +47,10 @@ namespace Assets.Scripts.Game.Player.Gravity
 
         private void OnEnable()
         {
-            _baseJumpHeight = GlobalGravityManager.GetBaseJumpHeight();
-            _baseJumpTime = GlobalGravityManager.GetBaseJumpTime();
-            _referenceGravityValue = GlobalGravityManager.GetBaseGravityValue();
+            var instance = GlobalGravityManager.Instance;
+            _baseJumpHeight = instance.GetBaseJumpHeight();
+            _baseJumpTime = instance.GetBaseJumpTime();
+            _referenceGravityValue = instance.GetBaseGravityValue();
             _currentGravityValue = _referenceGravityValue;
         }
         /// <summary>
