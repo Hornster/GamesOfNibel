@@ -16,24 +16,25 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         [SerializeField] private Glide _glideSkill;
         [SerializeField] private SkillInfoProvider _skillInfoProvider;
 
-        //private void Start()
-        //{
-        //    //var matchConfig = MatchData.GetInstance();
-        //    //var availableSkills = matchConfig.SkillsConfig.AvailableSkills.dictionary;
-
-        //    //var skillFactory = SkillsFactory.GetInstance();
-
-        //    //var allSkills = Enum.GetValues(typeof(SkillType)) as SkillType[];
-
-        //    //foreach (var skill in allSkills)
-        //    //{
-        //    //    if (availableSkills[skill])
-        //    //    {
-        //    //        var newSkill = skillFactory.CreateSkill(_skillInfoProvider.SkillsContainerGO, _skillInfoProvider.PlayerState, _skillInfoProvider.CharacterRigidbody, skill);
-        //    //        AddBasicSkill(skill, newSkill);
-        //    //    }
-        //    //}
-        //}
+        private void Start()
+        {
+            AddSkillThroughDebug(SkillType.DoubleJump, _doubleJumpSkill);
+            AddSkillThroughDebug(SkillType.WallSlide, _wallSlideSkill);
+            AddSkillThroughDebug(SkillType.WallJump, _wallJumpSkill);
+            AddSkillThroughDebug(SkillType.Glide, _glideSkill);
+        }
+        /// <summary>
+        /// Adds skills that were added through inspector.
+        /// </summary>
+        /// <param name="skillType"></param>
+        /// <param name="skill"></param>
+        private void AddSkillThroughDebug(SkillType skillType, IBasicSkill skill)
+        {
+            if (skill != null)
+            {
+                AddBasicSkill(skillType, skill);
+            }
+        }
         //DEBUG
 
 

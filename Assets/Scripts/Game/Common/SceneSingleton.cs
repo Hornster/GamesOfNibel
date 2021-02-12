@@ -27,11 +27,7 @@ namespace Assets.Scripts.Game.Common
                 foundObject = ownerObject.AddComponent<T>();
                 Debug.Log($"Warning - object of type {typeof(T).Name} not found. Creating new one.");
             }
-            else
-            {
 
-            }
-            
             return foundObject;
         }
     }

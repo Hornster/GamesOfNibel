@@ -82,6 +82,9 @@ namespace Assets.Scripts.Game.Player
         /// If there are any restrictions towards Y velocity - this flag should be set to true.
         /// </summary>
         public bool IsFallingVelocityCapped { get; set; }
+        /// <summary>
+        /// New velocity that will be applied to the player.
+        /// </summary>
         public Vector2 NewVelocity{ get; set; }
         public Vector2 ColliderSize{ get; set; }
         public Vector2 SlopeNormalPerp{ get; set; }
