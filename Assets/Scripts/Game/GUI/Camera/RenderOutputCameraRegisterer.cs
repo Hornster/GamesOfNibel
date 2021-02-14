@@ -16,7 +16,7 @@ namespace Assets.Scripts.Game.GUI.Camera
         private void Start()
         {
             Debug.Log(this.gameObject);
-            _renderController = SplitScreenRenderController.GetInstance();
+            _renderController = SplitScreenRenderController.Instance;
             _renderController.RegisterPlayer(_myCamera);
         }
     }

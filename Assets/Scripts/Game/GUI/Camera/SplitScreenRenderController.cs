@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ namespace Assets.Scripts.Game.GUI.Camera
     /// <summary>
     /// Setting the rendering cameras for split-screen mode.
     /// </summary>
-    public class SplitScreenRenderController : MonoBehaviour
+    public class SplitScreenRenderController : SceneSingleton<SplitScreenRenderController>
     {
         /// <summary>
         /// Camera that renders entire screen to players, together with shared menu (pause menu, for example).
@@ -36,6 +37,9 @@ namespace Assets.Scripts.Game.GUI.Camera
         [Tooltip("Used to turn on and off the screen divisor.")]
         [SerializeField]
         private ScreenDivisorController _screenDivisorController;
+        [Tooltip("Object that checks current resolution.")]
+        [SerializeField]
+        private ResolutionDetector _resolutionDetector;
         /// <summary>
         /// Max amount of players in split-screen mode.
         /// </summary>
@@ -44,21 +48,7 @@ namespace Assets.Scripts.Game.GUI.Camera
         /// Stores all created render outputs.
         /// </summary>
         private List<CameraRenderOutput> _registeredRenderOutputs = new List<CameraRenderOutput>();
-        /// <summary>
-        /// The instance for this singleton.
-        /// </summary>
-        private static SplitScreenRenderController _instance;
 
-
-        public static SplitScreenRenderController GetInstance()
-        {
-            if (_instance == null)
-            {
-                throw new Exception("Tried to retrieve instance of this singleton without creating the singleton!");
-            }
-
-            return _instance;
-        }
         /// <summary>
         /// Used to register new player in split-screen mode.
         /// </summary>
@@ -76,6 +66,9 @@ namespace Assets.Scripts.Game.GUI.Camera
             _registeredRenderOutputs.Add(renderOutputScript);
 
             renderOutputScript.SetSourceCamera(playerCamera);
+
+            var screenResolution = _resolutionDetector.CurrentScreenResolution;//new Vector2Int(Screen.width, Screen.height);
+            ChangeRenderTextureSizes(screenResolution);
         }
         /// <summary>
         /// Accordingly changes the rects and render images of the registered players, splitting the screen. Affects camera rects, too.
@@ -105,6 +98,26 @@ namespace Assets.Scripts.Game.GUI.Camera
         /// Used to change the render texture sizes so they fit the new screen size.
         /// </summary>
         /// <param name="newTextureSize"></param>
+        //private void ChangeRenderTextureSizes(int registeredCamerasCount)
+        //{
+        //    if (registeredCamerasCount <= 0)
+        //    {
+        //        throw new Exception("There cannot be <= 0 cameras registered!");
+        //    }
+
+        //    _registeredRenderOutputs[0].GetRenderTextureSize();
+
+        //    for (int i = 0; i < _registeredRenderOutputs.Count; i++)
+        //    {
+        //        _registeredRenderOutputs[i].CreateRenderTexture(newTextureSize);
+        //    }
+
+        //    StartCoroutine(ReconfigureSize());
+        //}
+        /// <summary>
+        /// Used to change the render texture sizes so they fit the new screen size.
+        /// </summary>
+        /// <param name="newTextureSize"></param>
         private void ChangeRenderTextureSizes(Vector2Int newTextureSize)
         {
             for (int i = 0; i < _registeredRenderOutputs.Count; i++)
@@ -117,12 +130,6 @@ namespace Assets.Scripts.Game.GUI.Camera
 
         private void Awake()
         {
-            if (_instance != null)
-            {
-                throw new Exception("Instance of this singleton has already been declared in object hierarchy!");
-            }
-            _instance = this;
-
             ResolutionDetector.RegisterOnScreenResolutionChange(ChangeRenderTextureSizes);
         }
 

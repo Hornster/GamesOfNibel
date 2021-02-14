@@ -107,5 +107,10 @@ namespace Assets.Scripts.Game.GUI.Camera
             renderOutputUVRect.width = viewportWidth;
             _renderOutput.uvRect = renderOutputUVRect;
         }
+
+        public Vector2Int GetRenderTextureSize()
+        {
+            return new Vector2Int(_renderTexture.width, _renderTexture.height);
+        }
     }
 }

@@ -17,7 +17,8 @@ namespace Assets.Scripts.Game.Common
         /// </summary>
         private Vector2Int _currentScreenResolution;
 
-        private void Start()
+        public Vector2Int CurrentScreenResolution => _currentScreenResolution;
+        private void Awake()
         {
             FixedUpdate();
         }

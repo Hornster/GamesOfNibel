@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5125178233452910979}
   m_Layer: 0
-  m_Name: Cameras
+  m_Name: CamerasSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,6 +108,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1231829288658620324}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &283547218273161323 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1366572588751626191, guid: 08fa3cecfaad52c428efd821853f7dae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1231829288658620324}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 832d6f0630509004a80c4f5012e97abb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6503113949075932206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -250,6 +262,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TopMenuUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8333158644695073181, guid: eccfc1ad016c3cc41a4b2432b9bb81c0,
+        type: 3}
+      propertyPath: _resolutionDetector
+      value: 
+      objectReference: {fileID: 283547218273161323}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eccfc1ad016c3cc41a4b2432b9bb81c0, type: 3}
 --- !u!4 &283547217425378681 stripped
