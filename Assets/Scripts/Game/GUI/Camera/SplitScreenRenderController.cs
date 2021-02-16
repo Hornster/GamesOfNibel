@@ -11,6 +11,7 @@ namespace Assets.Scripts.Game.GUI.Camera
     /// <summary>
     /// Setting the rendering cameras for split-screen mode.
     /// </summary>
+    [RequireComponent(typeof(PlayerUIController))]
     public class SplitScreenRenderController : SceneSingleton<SplitScreenRenderController>
     {
         /// <summary>
@@ -40,6 +41,9 @@ namespace Assets.Scripts.Game.GUI.Camera
         [Tooltip("Object that checks current resolution.")]
         [SerializeField]
         private ResolutionDetector _resolutionDetector;
+        [Tooltip("Script that will be used to create the player's UI on demand.")]
+        [SerializeField]
+        private PlayerUIController _playerUIController;
         /// <summary>
         /// Max amount of players in split-screen mode.
         /// </summary>
@@ -59,6 +63,8 @@ namespace Assets.Scripts.Game.GUI.Camera
             {
                 throw new Exception($"Current game version supports up to {MaxPlayers} players in split screen mode!");
             }
+
+            _playerUIController.CreatePlayerUI(playerCamera);
 
             var newRenderOutput = Instantiate(_cameraRenderOutputPrefab, _cameraRenderOutputParent);
             var renderOutputScript = newRenderOutput.GetComponentInChildren<CameraRenderOutput>();
@@ -94,26 +100,7 @@ namespace Assets.Scripts.Game.GUI.Camera
             }
 
         }
-        /// <summary>
-        /// Used to change the render texture sizes so they fit the new screen size.
-        /// </summary>
-        /// <param name="newTextureSize"></param>
-        //private void ChangeRenderTextureSizes(int registeredCamerasCount)
-        //{
-        //    if (registeredCamerasCount <= 0)
-        //    {
-        //        throw new Exception("There cannot be <= 0 cameras registered!");
-        //    }
-
-        //    _registeredRenderOutputs[0].GetRenderTextureSize();
-
-        //    for (int i = 0; i < _registeredRenderOutputs.Count; i++)
-        //    {
-        //        _registeredRenderOutputs[i].CreateRenderTexture(newTextureSize);
-        //    }
-
-        //    StartCoroutine(ReconfigureSize());
-        //}
+        
         /// <summary>
         /// Used to change the render texture sizes so they fit the new screen size.
         /// </summary>

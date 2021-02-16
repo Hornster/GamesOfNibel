@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1913992407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970609408520999209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708cc2c5f7c49d141992525b60c1984a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myCamera: {fileID: 7276196589761070696}
 --- !u!1 &5535999678183602758
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +237,11 @@ PrefabInstance:
       propertyPath: _playerState
       value: 
       objectReference: {fileID: 5535999678530167654}
+    - target: {fileID: 315674809606092004, guid: 5f13abfaf580e4f40927f65368915c6f,
+        type: 3}
+      propertyPath: _idleEnableTime
+      value: 0.7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f13abfaf580e4f40927f65368915c6f, type: 3}
 --- !u!4 &490425577 stripped
@@ -619,13 +637,29 @@ PrefabInstance:
     - target: {fileID: 1174530912302118177, guid: d9a8b7a2fe478944b8e04dcd64cc27b0,
         type: 3}
       propertyPath: m_Name
-      value: Cameras
+      value: PlayerCameras
       objectReference: {fileID: 0}
     - target: {fileID: 2104458353835381235, guid: d9a8b7a2fe478944b8e04dcd64cc27b0,
         type: 3}
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 490425577}
+    - target: {fileID: 2104458354392827983, guid: d9a8b7a2fe478944b8e04dcd64cc27b0,
+        type: 3}
+      propertyPath: m_DefaultBlend.m_Time
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104458354392827983, guid: d9a8b7a2fe478944b8e04dcd64cc27b0,
+        type: 3}
+      propertyPath: m_CustomBlends
+      value: 
+      objectReference: {fileID: 11400000, guid: 21fa66de69cbacb49a3a254cd2717b3c,
+        type: 2}
+    - target: {fileID: 4957754039366315524, guid: d9a8b7a2fe478944b8e04dcd64cc27b0,
+        type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5770775473391286174, guid: d9a8b7a2fe478944b8e04dcd64cc27b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -688,6 +722,12 @@ PrefabInstance:
       objectReference: {fileID: 5535999678530167676}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9a8b7a2fe478944b8e04dcd64cc27b0, type: 3}
+--- !u!1 &970609408520999209 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1174530912302118177, guid: d9a8b7a2fe478944b8e04dcd64cc27b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 2104458354086667272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5557829031718966166 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5770775473391286174, guid: d9a8b7a2fe478944b8e04dcd64cc27b0,

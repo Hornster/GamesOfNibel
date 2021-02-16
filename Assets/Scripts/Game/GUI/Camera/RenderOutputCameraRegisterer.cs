@@ -13,6 +13,18 @@ namespace Assets.Scripts.Game.GUI.Camera
 
         private SplitScreenRenderController _renderController;
 
+        private bool _isInitialized = false;
+
+        //private void OnEnable()
+        //{
+        //    if (_isInitialized == false)
+        //    {
+        //        //We need to wait for ResolutionDetector's awake method to be executed as screen
+        //        //resollution is required. On the other hand, if we disabled and enabled the camera,
+        //        //we
+        //        return;
+        //    }
+        //}
         private void Start()
         {
             Debug.Log(this.gameObject);
