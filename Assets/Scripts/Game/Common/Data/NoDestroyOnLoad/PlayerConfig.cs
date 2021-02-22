@@ -22,6 +22,9 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         [Tooltip("The team the player belongs to.")]
         [SerializeField]
         private Teams _playerTeam;
+        [Tooltip("Defines whether is this first or second player, or perhaps a client connected to server. First and Second players are treated as hosts.")]
+        [SerializeField]
+        private WhatPlayer _whatPlayer;
 
 
         private int _myId;
@@ -45,6 +48,14 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         {
             get => _playerTeam;
             set => _playerTeam = value;
+        }
+        /// <summary>
+        /// Which player is this - P1? P2? (split-screen) Client? (network)
+        /// </summary>
+        public WhatPlayer WhatPlayer
+        {
+            get => _whatPlayer;
+            set => _whatPlayer = value;
         }
         /// <summary>
         /// Was the player already spawned by some previous spawner?

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.Remoting.Messaging;
 using Assets.Scripts.Game.Common.CustomEvents;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Exceptions;
@@ -11,6 +12,7 @@ namespace Assets.Scripts.Game.MapInitialization
 {
     public class SceneDataInitializer : MonoBehaviour
     {
+        [Header("Factories")]
         [Tooltip("Character factory object. Used to create player characters.")]
         [SerializeField]
         private ICharacterFactoryContainer _characterFactory;
@@ -20,14 +22,21 @@ namespace Assets.Scripts.Game.MapInitialization
         [Tooltip("Provides skills for created characters.")]
         [SerializeField] 
         private ISkillsFactoryContainer _skillsFactory;
+
+        [Header("Scene Deployment")]
         [Tooltip("Prefab of the SceneData object. Will contain ready for deployment dynamic objects for the loaded map.")]
         [SerializeField]
         private GameObject _sceneDataPrefab;
-        [Tooltip("Called when the user confirmed selected map and its loading sequence has been started.")]
-        [SerializeField] private StringUnityEvent _onMapLaunching;
         [Tooltip("Assigns players to created bases and repositions them.")]
         [SerializeField]
         private PlayerAssigner _playerAssigner;
+        [Tooltip("Contains base objects that every scene should have.")] 
+        [SerializeField]
+        private GameObject _baseSceneObjectsPrefab;
+
+        [Header("Events")]
+        [Tooltip("Called when the user confirmed selected map and its loading sequence has been started.")]
+        [SerializeField] private StringUnityEvent _onMapLaunching;
         /// <summary>
         /// Raw data concerning the match. Contains amount of spawns, players, etc.
         /// </summary>
@@ -69,6 +78,7 @@ namespace Assets.Scripts.Game.MapInitialization
         private IEnumerator CreateData()
         {
             var newSceneDataObj = Instantiate(_sceneDataPrefab);
+            Instantiate(_baseSceneObjectsPrefab, newSceneDataObj.transform);
             _sceneData = newSceneDataObj.GetComponentInChildren<SceneData>();
             DontDestroyOnLoad(newSceneDataObj);//This object is supposed to survive being passed to the loaded map.
                                                 //Then, after retrieving its contents, we can destroy it.
