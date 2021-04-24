@@ -18,4 +18,16 @@
 //mod tool:
 //https://github.com/Hello-Meow/ModTool
 
-//TODO: Add color scheme and base for multiteam. Check if players will be correctly assigned to it and moved.
+//Structure:
+//https://blog.theknightsofunity.com/7-ways-keep-unity-project-organized/
+
+//Adding gameobjects to scene from script: https://medium.com/@gonzalez.martin90/unity-tips-scriptable-objects-3e0e19349c05
+
+//Cinemachine multiple cameras:
+//Add 2 regular cameras, add cinemachine brains to them.
+//Add 2 Virtual Cameras from Cinemachine
+//Set the regular camera gameobject and virtual camera gameobject to playerCamera1 layer (or whatever is it called)
+//Do it respectively for cameras for secondplayer - assign to layer playerCamera2.
+//Make sure that layer playerCamera1 has turned off layer playerCamera1 in the culling mask and vice-versa.
+//This ought make cinemachine work with two separate cameras.
+
