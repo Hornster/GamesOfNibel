@@ -18,7 +18,7 @@ namespace Assets.Scripts.Game.Common.Helpers
         /// <param name="source">Source of static information about the map.</param>
         /// <param name="basesRoot">Provides count of bases available in the scene.</param>
         /// <returns></returns>
-        public RawMapData MapDataSOToRawMapData(BasesRoot basesRoot, MapDataSO source)
+        public RawMapData MapDataSOToRawMapData(MapDataSO source)
         {
             //BasesRoot cannot be put in MapDataSO since it's gameobject - SO cannot reference it.
             var rawData = new RawMapData()
@@ -38,8 +38,6 @@ namespace Assets.Scripts.Game.Common.Helpers
                 MultiTeamBasesCount = source.MultiTeamBasesCount,
                 NeutralBasesCount = source.NeutralBasesCount
             };
-
-            SetBasesCount(basesRoot, rawData);
 
             return rawData;
 
@@ -68,38 +66,6 @@ namespace Assets.Scripts.Game.Common.Helpers
 
             return mapData;
         }
-        private void SetBasesCount(BasesRoot basesRoot, RawMapData dest)
-        {
-            if (basesRoot)
-            {
-                var bases = basesRoot.GetBasesCount();
-                var keys = bases.Keys;
-
-                foreach (var key in keys)
-                {
-                    switch (key)
-                    {
-                        case Teams.Lotus:
-                            dest.LotusBasesCount = bases[key];
-                            break;
-                        case Teams.Lily:
-                            dest.LilyBasesCount = bases[key];
-                            break;
-                        case Teams.Neutral:
-                            dest.NeutralBasesCount = bases[key];
-                            break;
-                        case Teams.Multi:
-                            dest.MultiTeamBasesCount = bases[key];
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException($"There is no such team as ${key}!");
-                    }
-                }
-            }
-            else
-            {
-                throw new GONBaseException("Bases root game object not specified!");
-            }
-        }
+        
     }
 }

@@ -79,11 +79,6 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
             SceneBundlePath = "";
             PreviewBundlePath = "";
 
-            MultiTeamBasesCount = 0;
-            NeutralBasesCount = 0;
-            LotusBasesCount = 0;
-            LilyBasesCount = 0;
-
             //This is MY CODE and I'm going to put ANY MONSTROSITIES I WANT in here 'kay? 'kay.
         }
 

@@ -17,10 +17,6 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
 
         private SceneAsset _scene;
 
-        /// <summary>
-        /// Checks presence of any bases in assigned to it object.
-        /// </summary>
-        private BasesRoot _basesRoot;
 
         /// <summary>
         /// Were all requirements met upon trying to create the map mod? Updated
@@ -77,8 +73,6 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
             EditorGUILayout.HelpBox("MapDataSO contains description of the map. Can be found by right clicking in the project inspector, selecting Create->Scriptable Objects->MapDataSO", MessageType.Info);
             _mapDataSO = (MapDataSO) EditorGUILayout.ObjectField("Map data SO:", _mapDataSO, typeof(MapDataSO), IsAllowedSceneObject(_mapDataSO));
             _scene = (SceneAsset)EditorGUILayout.ObjectField("Scene file (asset):", _scene, typeof(SceneAsset), IsAllowedSceneObject(_scene));
-            EditorGUILayout.HelpBox("BasesRoot script defines what game object in the scene is the parent of all bases. By default it can be found on BasesMarker object but you can set your own.", MessageType.Info);
-            _basesRoot = (BasesRoot)EditorGUILayout.ObjectField("BasesRoot script:", _basesRoot, typeof(BasesRoot), IsAllowedSceneObject(_basesRoot));
             
 
             ChkInputData();
@@ -236,7 +230,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
             CreateSceneBundle(assetBundleCreator, baseDir);
 
             var mapper = new DataMapper();
-            var serializableMapData = mapper.MapDataSOToRawMapData(_basesRoot, _mapDataSO);
+            var serializableMapData = mapper.MapDataSOToRawMapData(_mapDataSO);
 
 
             //TODO: Check if MapDataSO contains BasesRoot reference. If yes - use it to swiftly retrieve bases quantity.
