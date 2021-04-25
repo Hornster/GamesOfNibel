@@ -32,7 +32,11 @@ namespace Assets.Scripts.Game.Common.Helpers
                 SceneBundlePath = source.SceneBundlePath,
                 ScenePath = source.ScenePath,
                 ShownMapName = source.ShownMapName,
-                ThumbnailImgPath = source.ThumbnailImgPath
+                ThumbnailImgPath = source.ThumbnailImgPath,
+                LilyBasesCount = source.LilyBasesCount,
+                LotusBasesCount = source.LotusBasesCount,
+                MultiTeamBasesCount = source.MultiTeamBasesCount,
+                NeutralBasesCount = source.NeutralBasesCount
             };
 
             SetBasesCount(basesRoot, rawData);

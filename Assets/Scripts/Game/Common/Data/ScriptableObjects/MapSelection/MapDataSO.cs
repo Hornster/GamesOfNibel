@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Game.Common.Enums;
+﻿using Assets.Scripts.Game.Common.Data.Maps;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
@@ -26,8 +27,6 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
         public MapDataAssetBundleConstants MapAssetBundleConstants;
 
        
-        //public SceneAsset Scene;
-
         [HideInInspector] 
         public string SceneBundlePath;
         /// <summary>
@@ -54,6 +53,22 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
         [HideInInspector]
         public string ScenePath;
         /// <summary>
+        /// How many universal bases (for all teams) does the map have.
+        /// </summary>
+        public int MultiTeamBasesCount;
+        /// <summary>
+        /// How many neutral bases does the map have.
+        /// </summary>
+        public int NeutralBasesCount;
+        /// <summary>
+        /// How many Lotus team bases does the map have.
+        /// </summary>
+        public int LotusBasesCount;
+        /// <summary>
+        /// How many Lotus team bases does the map have.
+        /// </summary>
+        public int LilyBasesCount;
+        /// <summary>
         /// Resets fields that are not shown to the user as these are used to create json file.
         /// </summary>
         public void ResetInnerFields()
@@ -63,6 +78,11 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
             ScenePath = "";
             SceneBundlePath = "";
             PreviewBundlePath = "";
+
+            MultiTeamBasesCount = 0;
+            NeutralBasesCount = 0;
+            LotusBasesCount = 0;
+            LilyBasesCount = 0;
 
             //This is MY CODE and I'm going to put ANY MONSTROSITIES I WANT in here 'kay? 'kay.
         }

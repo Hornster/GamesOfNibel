@@ -42,8 +42,17 @@ namespace Assets.Scripts.Game.Common.Data.Maps
         /// How many universal bases (for all teams) does the map have.
         /// </summary>
         public int MultiTeamBasesCount;
+        /// <summary>
+        /// How many neutral bases does the map have.
+        /// </summary>
         public int NeutralBasesCount;
+        /// <summary>
+        /// How many Lotus team bases does the map have.
+        /// </summary>
         public int LotusBasesCount;
+        /// <summary>
+        /// How many Lotus team bases does the map have.
+        /// </summary>
         public int LilyBasesCount;
 
         public string GetJsonString()

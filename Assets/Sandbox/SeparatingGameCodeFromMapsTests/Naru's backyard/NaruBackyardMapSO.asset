@@ -22,8 +22,15 @@ MonoBehaviour:
   ThumbnailImg: {fileID: 21300000, guid: 087071f153da04f469ddec67109629ae, type: 3}
   MapAssetBundleConstants: {fileID: 11400000, guid: 53eb7e63772834345b3cd1007e84b2e3,
     type: 2}
-  SceneBundlePath: 
-  PreviewBundlePath: 
-  PreviewImgPath: Assets/Scenes/GameScenes/CTF/Naru's backyard/LessDumbPreview.png
-  ThumbnailImgPath: Assets/Scenes/GameScenes/CTF/Naru's backyard/DumbThumbnail.png
-  ScenePath: 
+  SceneBundlePath: Assets\Mods\AssetBundles\Maps\Naru's Backyard\Naru's backyard
+    Markers\Naru's BackyardMap Mod
+  PreviewBundlePath: Assets\Mods\AssetBundles\Maps\Naru's Backyard\Naru's backyard
+    MarkersPreview\Naru's BackyardPreviewImages
+  PreviewImgPath: Assets/Scenes/GameScenes/CTF/Naru's backyard Obsolete/LessDumbPreview.png
+  ThumbnailImgPath: Assets/Scenes/GameScenes/CTF/Naru's backyard Obsolete/DumbThumbnail.png
+  ScenePath: Assets/Sandbox/SeparatingGameCodeFromMapsTests/Naru's backyard/Naru's
+    backyard Markers.unity
+  MultiTeamBasesCount: 0
+  NeutralBasesCount: 3
+  LotusBasesCount: 1
+  LilyBasesCount: 1

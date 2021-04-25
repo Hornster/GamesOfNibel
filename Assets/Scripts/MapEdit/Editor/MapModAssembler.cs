@@ -4,8 +4,9 @@ using Assets.Editor.Scripts.Modding.MapCreation.Scripts.Util;
 using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Game.Common.Helpers;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 
 namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
 {
@@ -15,6 +16,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
         private MapDataSO _mapDataSO;
 
         private SceneAsset _scene;
+
         /// <summary>
         /// Checks presence of any bases in assigned to it object.
         /// </summary>
@@ -77,6 +79,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
             _scene = (SceneAsset)EditorGUILayout.ObjectField("Scene file (asset):", _scene, typeof(SceneAsset), IsAllowedSceneObject(_scene));
             EditorGUILayout.HelpBox("BasesRoot script defines what game object in the scene is the parent of all bases. By default it can be found on BasesMarker object but you can set your own.", MessageType.Info);
             _basesRoot = (BasesRoot)EditorGUILayout.ObjectField("BasesRoot script:", _basesRoot, typeof(BasesRoot), IsAllowedSceneObject(_basesRoot));
+            
 
             ChkInputData();
 
@@ -213,6 +216,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
             assetBundleCreator.SaveBundle(baseDir);
             _mapDataSO.SceneBundlePath = Path.Combine(baseDir, sceneBundleName);
         }
+        
         /// <summary>
         /// Manages the creation of the map mod - preview images and the scene itself.
         /// </summary>
@@ -242,6 +246,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
 
             assetBundleCreator.CreateJSONInfoFile(serializableMapData, baseDir, serializableMapData.ShownMapName);
         }
+
     }
 }
 //TODO: assets and scenes cannot be in the same bundle for some reason. First create bundle with images, then create the scene. DONE
