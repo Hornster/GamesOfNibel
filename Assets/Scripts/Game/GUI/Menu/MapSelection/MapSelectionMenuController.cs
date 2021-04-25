@@ -14,10 +14,10 @@ namespace Assets.Scripts.Game.GUI.Menu.MapSelection
     /// </summary>
     public class MapSelectionMenuController : MonoBehaviour
     {
-        [Tooltip("SO that stores path to the dynamic objects loading scene. This scene is loaded" +
-                 "before any map scene and is used to initialize dynamic data for the given" +
-                 "map scene.")]
-        [SerializeField] private LoadingScenePathSO _loadingScenePathSO;
+        //[Tooltip("SO that stores path to the dynamic objects loading scene. This scene is loaded" +
+        //         "before any map scene and is used to initialize dynamic data for the given" +
+        //         "map scene.")]
+        //[SerializeField] private LoadingScenePathSO _loadingScenePathSO;
         [SerializeField] private MapLoader _mapLoader;
         [SerializeField] private PreviewManager _previewManager;
 
@@ -62,7 +62,6 @@ namespace Assets.Scripts.Game.GUI.Menu.MapSelection
                     MatchData.GetInstance().SceneToLoad = mapData.ScenePath;
 
                     //perform transitions and launch the map.
-                    //_onMapLaunching?.Invoke(_loadingScenePathSO.LoadingScenePath);
                     _onMapLaunching?.Invoke(mapData.ScenePath);
                 }
                 catch (ModLoadingException ex)

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapModsConstants: {fileID: 11400000, guid: 53eb7e63772834345b3cd1007e84b2e3, type: 2}
   _defaultSO: {fileID: 11400000, guid: 74640ed0d7c891247891dd65eb43f4b5, type: 2}
+  _mapDefaults: {fileID: 11400000, guid: 0c7ff6d4671ae1549911866f02d8f362, type: 2}
 --- !u!114 &7103994439330912194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,3 +61,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapBundleLoader: {fileID: 8104468778621450458}
   _mapUIElementPrefab: {fileID: 0}
+  _mapsContainer: {fileID: 0}

@@ -43,7 +43,7 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
         [SerializeField]
         protected float _sceneFadeOutTime = 1f;
         [Tooltip("What is the name of the trigger that causes the fade out scene animation to play.")]
-        [SerializeField] protected string _sceneFadeOutTrigger = "fadeOut";
+        [SerializeField] protected string _sceneFadeOutTrigger = "FadeOut";
         [Tooltip("Reference to the animator that manages entire scene transitions.")]
         [SerializeField]
         protected Animator _sceneTransitionAnimator;

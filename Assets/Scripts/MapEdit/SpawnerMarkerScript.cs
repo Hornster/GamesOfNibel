@@ -7,6 +7,7 @@ namespace Assets.Scripts.MapEdit
     /// <summary>
     /// Script solely used for finding spawner positions on maps (so far, might change later).
     /// </summary>
+    [RequireComponent(typeof(TeamModule))]
     public class SpawnerMarkerScript : MonoBehaviour, ISpawnerMarker
     {
         [Tooltip("Object defining the team of the marker, and thus, its future spawn counterpart.")]
@@ -23,6 +24,8 @@ namespace Assets.Scripts.MapEdit
         /// Set to true when the marker has a spawn assigned.
         /// </summary>
         public bool HasSpawnAssigned { get; private set; }
+
+        
         /// <summary>
         /// Move the spawn to the location of this marker.
         /// </summary>
