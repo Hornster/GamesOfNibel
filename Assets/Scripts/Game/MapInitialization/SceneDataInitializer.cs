@@ -36,7 +36,8 @@ namespace Assets.Scripts.Game.MapInitialization
 
         [Header("Events")]
         [Tooltip("Called when the user confirmed selected map and its loading sequence has been started.")]
-        [SerializeField] private StringUnityEvent _onMapLaunching;
+        [SerializeField] private StringUnityEvent _onSceneDataLoaded;
+
         /// <summary>
         /// Raw data concerning the match. Contains amount of spawns, players, etc.
         /// </summary>
@@ -50,9 +51,32 @@ namespace Assets.Scripts.Game.MapInitialization
 
         private object _isDoneLoadingLock = new object();
 
-        private void Start()
-        {            
-            StartCoroutine(CreateData());
+        //private void Start()
+        //{            
+        //    StartCoroutine(CreateData());
+        //}
+
+        public IEnumerator CreateData()
+        {
+            var newSceneDataObj = Instantiate(_sceneDataPrefab);
+            Instantiate(_baseSceneObjectsPrefab, newSceneDataObj.transform);
+            _sceneData = newSceneDataObj.GetComponentInChildren<SceneData>();
+            DontDestroyOnLoad(newSceneDataObj);//This object is supposed to survive being passed to the loaded map.
+            //Then, after retrieving its contents, we can destroy it.
+            if (RetrieveDataObject() == false)
+            {
+                throw new GONBaseException("No matchdata found during map loading!");
+            }
+            CreateSpawners();
+            CreatePlayers();
+
+            _playerAssigner.PositionPlayers(_sceneData);
+
+            lock (_isDoneLoadingLock)
+            {
+                _isDoneLoading = true;
+            }
+            yield return null;
         }
 
         private void Update()
@@ -69,34 +93,13 @@ namespace Assets.Scripts.Game.MapInitialization
         private void LaunchMap()
         {
             //No null checking. It HAS to be called.
-            _onMapLaunching.Invoke(_matchData.SceneToLoad);
+            _onSceneDataLoaded.Invoke(_matchData.SceneToLoad);
         }
         /// <summary>
         /// Creates data that is needed for the map.
         /// </summary>
         /// <returns></returns>
-        private IEnumerator CreateData()
-        {
-            var newSceneDataObj = Instantiate(_sceneDataPrefab);
-            Instantiate(_baseSceneObjectsPrefab, newSceneDataObj.transform);
-            _sceneData = newSceneDataObj.GetComponentInChildren<SceneData>();
-            DontDestroyOnLoad(newSceneDataObj);//This object is supposed to survive being passed to the loaded map.
-                                                //Then, after retrieving its contents, we can destroy it.
-            if (RetrieveDataObject() == false)
-            {
-                throw new GONBaseException("No matchdata found during map loading!");
-            }
-            CreateSpawners();
-            CreatePlayers();
-
-            _playerAssigner.PositionPlayers(_sceneData);
-
-            lock (_isDoneLoadingLock)
-            {
-                _isDoneLoading = true;
-            }
-            yield return null;
-        }
+        
         /// <summary>
         /// Tries to find the MatchData object.
         /// </summary>
