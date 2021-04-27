@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Assets.Scripts.Game.Common.CustomEvents;
 using Assets.Scripts.Game.Common.Data;
 using Assets.Scripts.Game.Common.Data.ScriptableObjects.ScenePassData;
@@ -127,8 +128,8 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
         public void PerformSceneTransition(string scenePath)
         {
             //Create data during fadeout.
-            StartCoroutine(_sceneDataInitializer.CreateData());
-            StartCoroutine(SceneFadeOut(scenePath));
+            StartCoroutine(CoordinateSceneTransition(scenePath));
+
         }
         /// <summary>
         /// Forces return to previous menu. Does not use history but uses the backwards transitions serialized object to determine
@@ -148,6 +149,21 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
             _rememberStep = false;
             PerformTransition( _menuTransitionsHistory.TransitionFrom);
             _rememberStep = true;
+        }
+        /// <summary>
+        /// Coordinates transition between scenes, starting and awaiting for coroutines.
+        /// </summary>
+        /// <param name="scenePath"></param>
+        /// <returns></returns>
+        private IEnumerator CoordinateSceneTransition(string scenePath)
+        {
+            var sceneFadeOutCoroutine = StartCoroutine(SceneFadeOut());
+            var dataIniCoroutine = StartCoroutine(_sceneDataInitializer.CreateData());
+
+            yield return dataIniCoroutine;
+            yield return sceneFadeOutCoroutine;
+
+            SceneManager.LoadScene(scenePath);
         }
         /// <summary>
         /// Sends info about found controls for new menu to all listening objects. If any controls were found, that is.
@@ -207,18 +223,12 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
         /// <summary>
         /// Performs the scene fade out.
         /// </summary>
-        protected IEnumerator SceneFadeOut(string scenePath)
+        protected IEnumerator SceneFadeOut()
         {
             _sceneTransitionAnimator.SetTrigger(_sceneFadeOutTrigger);
 
-            yield return new WaitForSeconds(_sceneFadeOutTime);
-
-            while (_sceneDataInitializer.IsDoneLoading == false)
-            {
-                //Await for scene data initializer to finish creating the scene data...
-            }
-            //...then load the map.
-            SceneManager.LoadScene(scenePath);
+            //Wait for _sceneFadeOutTime in milliseconds.
+            yield return new WaitForSecondsRealtime(_sceneFadeOutTime);
         }
         /// <summary>
         /// Performs the scene fade out.

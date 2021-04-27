@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Runtime.Remoting.Messaging;
+using System.Threading.Tasks;
 using Assets.Scripts.Game.Common.CustomEvents;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Exceptions;
@@ -50,7 +52,6 @@ namespace Assets.Scripts.Game.MapInitialization
         private bool _isDoneLoading = false;
 
         private object _isDoneLoadingLock = new object();
-
         public bool IsDoneLoading
         {
             get
@@ -87,6 +88,7 @@ namespace Assets.Scripts.Game.MapInitialization
             {
                 _isDoneLoading = true;
             }
+
             yield return null;
         }
 

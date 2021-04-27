@@ -90,6 +90,7 @@ namespace Assets.Scripts.Game.Player.Character.Skills.Factory
 
             wallSlideScript.SetRigidBody(rb);
             wallSlideScript.SetPlayerState(playerState);
+            wallSlideScript.SetSlideType(new[] {WallSlideType.GravityDecrease});
 
             return wallSlideScript;
         }

@@ -28,7 +28,7 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         /// <summary>
         /// Which wall slide attributes shall be applied?
         /// </summary>
-        [SerializeField] private WallSlideType[] _activeWallSlideTypes;//TODO This is debug. Remove it later on.
+        private WallSlideType[] _activeWallSlideTypes;
         /// <summary>
         /// Defines what influence types the wall slide has on the player.
         /// Check WallSlideType enum for details.
@@ -61,6 +61,14 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         public void SetPlayerState(PlayerState playerState)
         {
             _playerState = playerState;
+        }
+        /// <summary>
+        /// Sets the available wall slide types to provided ones.
+        /// </summary>
+        /// <param name="slideTypes"></param>
+        public void SetSlideType(WallSlideType[] slideTypes)
+        {
+            _activeWallSlideTypes = slideTypes;
         }
         /// <summary>
         /// Applies effect to rigidbody accordingly with their type.

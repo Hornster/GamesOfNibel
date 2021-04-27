@@ -13,10 +13,6 @@ namespace Assets.Scripts.Game.GUI.Menu.MapSelection
     /// </summary>
     public class SkillsState : MonoBehaviour
     {
-        [Tooltip("Used to transfer data from and to between-scene-data-carrying object.")]
-        [SerializeField]
-        private MatchDataHook _matchDataHook;
-
         /// <summary>
         /// Stores handlers for skill states config restore for the UI upon returning to menu.
         /// </summary>

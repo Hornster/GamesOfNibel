@@ -9,12 +9,26 @@ namespace Assets.Scripts.Game.Player.Character.Skills
 {
     public class SkillsController : MonoBehaviour
     {
+        [Header("Required References")]
+        /// <summary>
+        /// Reference to the gameobject that stores skills of the character.
+        /// </summary>
+        [SerializeField] private GameObject _basicSkillContainer;
+        /// <summary>
+        /// Info about player state - what skills can they use, are they on the ground, etc.
+        /// </summary>
+        [SerializeField] private PlayerState _playerState;
+        /// <summary>
+        /// Stores basic skills that are available for the player.
+        /// </summary>
+        private Dictionary<SkillType, IBasicSkill> _basicSkills = new Dictionary<SkillType, IBasicSkill>();
+
         //DEBUG
+        [Header("Debug")]
         [SerializeField] private DoubleJump _doubleJumpSkill;
         [SerializeField] private WallSlide _wallSlideSkill;
         [SerializeField] private WallJump _wallJumpSkill;
         [SerializeField] private Glide _glideSkill;
-        [SerializeField] private SkillInfoProvider _skillInfoProvider;
 
         private void Start()
         {
@@ -38,18 +52,6 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         //DEBUG
 
 
-        /// <summary>
-        /// Reference to the gameobject that stores skills of the character.
-        /// </summary>
-        [SerializeField] private GameObject _basicSkillContainer;
-        /// <summary>
-        /// Info about player state - what skills can they use, are they on the ground, etc.
-        /// </summary>
-        [SerializeField] private PlayerState _playerState;
-        /// <summary>
-        /// Stores basic skills that are available for the player.
-        /// </summary>
-        private Dictionary<SkillType, IBasicSkill> _basicSkills = new Dictionary<SkillType, IBasicSkill>();
         
         private void Update()
         {
