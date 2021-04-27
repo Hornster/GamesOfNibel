@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -493,6 +493,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onMapSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 967011269}
+        m_MethodName: OnMapSelected
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &342250475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -560,8 +574,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneDataInitializer
       objectReference: {fileID: 0}
+    - target: {fileID: 9105683011586640911, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: _onSceneDataLoaded.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9105683011586640911, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: _onSceneDataLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9105683011586640911, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: _onSceneDataLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1237394360}
+    - target: {fileID: 9105683011586640911, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: _onSceneDataLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9105683011586640911, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: _onSceneDataLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PerformSceneTransition
+      objectReference: {fileID: 0}
+    - target: {fileID: 9105683011586640911, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: _onSceneDataLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f59c6ac74e04404499d4efb9864d92e5, type: 3}
+--- !u!114 &342250476 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9105683011586640911, guid: f59c6ac74e04404499d4efb9864d92e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 342250475}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c38cc68b68be6dd46810f0a5f08c9e30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &384063431
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5444,6 +5500,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 762213374914966520, guid: 73cd387a0cd72db438b176e705780a47,
+        type: 3}
+      propertyPath: _matchDataPrefab
+      value: 
+      objectReference: {fileID: 6804705106925202257, guid: c6df3633020b09b4881c863733b09e8e,
+        type: 3}
+    - target: {fileID: 762213374914966520, guid: 73cd387a0cd72db438b176e705780a47,
+        type: 3}
+      propertyPath: _spawnerConfigPrefab
+      value: 
+      objectReference: {fileID: 6371778623475426443, guid: 79fda9934ea9e7345b073aa39d9d92d8,
+        type: 3}
     - target: {fileID: 762213374914966521, guid: 73cd387a0cd72db438b176e705780a47,
         type: 3}
       propertyPath: m_Name
@@ -6464,6 +6532,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: aa9d2b9cb4e95014d8139204e2597fc3,
         type: 2}
+    - target: {fileID: 4958807407690477551, guid: 9e94845e4924bbf4b95b25f3753f99ee,
+        type: 3}
+      propertyPath: _sceneDataInitializer
+      value: 
+      objectReference: {fileID: 342250476}
     - target: {fileID: 4958807407690477551, guid: 9e94845e4924bbf4b95b25f3753f99ee,
         type: 3}
       propertyPath: _sceneTransitionAnimator

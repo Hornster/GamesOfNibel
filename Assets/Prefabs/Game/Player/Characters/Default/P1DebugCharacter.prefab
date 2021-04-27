@@ -292,6 +292,11 @@ PrefabInstance:
       propertyPath: _myTeam
       value: 
       objectReference: {fileID: 7686857009796243035}
+    - target: {fileID: 333759144456033423, guid: 1a7a436c9d53c0a48ae42d58aa69e509,
+        type: 3}
+      propertyPath: _flagPosition
+      value: 
+      objectReference: {fileID: 4316966162453018492}
     - target: {fileID: 333759144500703952, guid: 1a7a436c9d53c0a48ae42d58aa69e509,
         type: 3}
       propertyPath: _wallJumpAvailable.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -431,6 +436,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ad706cc42ccf4418886a8b962241ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &4316966162453018492 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4560231031138022871, guid: 1a7a436c9d53c0a48ae42d58aa69e509,
+    type: 3}
+  m_PrefabInstance: {fileID: 333759142828524203}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1027573144726947159
 PrefabInstance:
   m_ObjectHideFlags: 0

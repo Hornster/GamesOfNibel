@@ -5,6 +5,7 @@ using Assets.Scripts.Game.Common.Data;
 using Assets.Scripts.Game.Common.Data.ScriptableObjects.ScenePassData;
 using Assets.Scripts.Game.Common.Data.ScriptableObjects.Transitions;
 using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.MapInitialization;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -22,6 +23,9 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
         [Tooltip("Holds info about what menu shall be loaded upon entering main menu.")]
         [SerializeField]
         protected ReturnFromSceneToMenuSO _startingMenu;
+        [Tooltip("Prepares scene data for loaded scene.")]
+        [SerializeField]
+        private SceneDataInitializer _sceneDataInitializer;
         /// <summary>
         /// Reference to the gameobject that has menus as children.
         /// </summary>
@@ -37,6 +41,7 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
         /// </summary>
         [SerializeField]
         protected UnityEvent _onInGameMenuTurnedOff;
+
 
         [Header("Scene transition")] 
         [Tooltip("The time it takes for entire scene to fade away. Shall be equal to the length of the fade out animation.")]
@@ -121,6 +126,8 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
         /// </summary>
         public void PerformSceneTransition(string scenePath)
         {
+            //Create data during fadeout.
+            StartCoroutine(_sceneDataInitializer.CreateData());
             StartCoroutine(SceneFadeOut(scenePath));
         }
         /// <summary>
@@ -206,6 +213,11 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
 
             yield return new WaitForSeconds(_sceneFadeOutTime);
 
+            while (_sceneDataInitializer.IsDoneLoading == false)
+            {
+                //Await for scene data initializer to finish creating the scene data...
+            }
+            //...then load the map.
             SceneManager.LoadScene(scenePath);
         }
         /// <summary>

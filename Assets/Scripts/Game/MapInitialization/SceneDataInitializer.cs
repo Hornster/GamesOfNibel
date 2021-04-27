@@ -51,6 +51,17 @@ namespace Assets.Scripts.Game.MapInitialization
 
         private object _isDoneLoadingLock = new object();
 
+        public bool IsDoneLoading
+        {
+            get
+            {
+                lock (_isDoneLoadingLock)
+                {
+                    return _isDoneLoading;
+                }
+            }
+        }
+
         //private void Start()
         //{            
         //    StartCoroutine(CreateData());

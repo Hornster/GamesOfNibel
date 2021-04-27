@@ -30,6 +30,8 @@ namespace Assets.Scripts.Game.GUI.Menu.MapSelection
         /// </summary>
         [Tooltip("If something goes wrong with map launching, these handlers will be called.")]
         [SerializeField] private UnityEvent _onMapLoadFailure;
+        [Tooltip("Called when a map has been chosen as match one. Carries over selected map's data.")]
+        [SerializeField] private MapDataUnityEvent _onMapSelected;
         /// <summary>
         /// The currently selected map. It will be launched when the player accepts the settings.
         /// </summary>
@@ -59,7 +61,7 @@ namespace Assets.Scripts.Game.GUI.Menu.MapSelection
                     _mapLoader.TryLoadingMapBundle(mapData);
                     _mapLoader.UnloadAvailableMaps();
 
-                    MatchData.GetInstance().SceneToLoad = mapData.ScenePath;
+                    //MatchData.GetInstance().SceneToLoad = mapData.ScenePath;
 
                     //perform transitions and launch the map.
                     _onMapLaunching?.Invoke(mapData.ScenePath);
@@ -108,6 +110,7 @@ namespace Assets.Scripts.Game.GUI.Menu.MapSelection
         {
             _selectedMap?.DisableSelection();
             _selectedMap = mapControl;
+            _onMapSelected?.Invoke(_selectedMap.MapData);
         }
         /// <summary>
         /// Called when player stopped pointing at any map.

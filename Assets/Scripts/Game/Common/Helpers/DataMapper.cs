@@ -57,12 +57,13 @@ namespace Assets.Scripts.Game.Common.Helpers
                 Description = source.Description,
                 RequiredSkills = source.RequiredSkills.ToList(),
                 ScenePath = source.ScenePath,
-                SceneBundlePath = source.SceneBundlePath,
-                LilyBasesCount = source.LilyBasesCount,
-                LotusBasesCount = source.LotusBasesCount,
-                MultiTeamBasesCount = source.MultiTeamBasesCount,
-                NeutralBasesCount = source.NeutralBasesCount
+                SceneBundlePath = source.SceneBundlePath
             };
+
+            mapData.BasesCount.Add(Teams.Lily, source.LilyBasesCount);
+            mapData.BasesCount.Add(Teams.Lotus, source.LotusBasesCount);
+            mapData.BasesCount.Add(Teams.Multi, source.MultiTeamBasesCount);
+            mapData.BasesCount.Add(Teams.Neutral, source.NeutralBasesCount);
 
             return mapData;
         }

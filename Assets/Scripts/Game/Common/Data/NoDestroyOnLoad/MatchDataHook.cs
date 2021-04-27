@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Game.Common.Data.Maps;
+using Assets.Scripts.Game.Common.Enums;
+using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
 {
@@ -11,7 +13,9 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         [Tooltip("The prefab of the match data object.")]
         [SerializeField]
         private GameObject _matchDataPrefab;
-        
+        [Tooltip("Prefab for spawner config.")]
+        [SerializeField]
+        private GameObject _spawnerConfigPrefab;
         /// <summary>
         /// Static reference to the match data. Used to control the presence of the singleton.
         /// MatchData is marked as DontDestroyOnLoad, so it requires higher control level.
@@ -28,6 +32,33 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
                 //TODO add saving the ref to the indestructible object.
                 //TODO connect the object with SkillsState through regular ref if necessary
             }
+        }
+
+        public void OnMapSelected(MapData mapData)
+        {
+            MatchDataReference.AddPlayerConfig();
+            SetSpawnersData(mapData);
+            MatchDataReference.SceneToLoad = mapData.ScenePath;
+        }
+
+        private void SetSpawnersData(MapData mapData)
+        {
+            foreach (var baseCountData in mapData.BasesCount)
+            {
+                MatchDataReference.AddSpawnerConfig(CreateSpawnData(baseCountData.Key, baseCountData.Value));
+            }
+            
+        }
+
+        private SpawnerGroupConfig CreateSpawnData(Teams spawnerTeam, int spawnersCount)
+        {
+            var newSpawnerConfig = Instantiate(_spawnerConfigPrefab);
+            var newSpawnerConfigData = newSpawnerConfig.GetComponent<SpawnerGroupConfig>();
+
+            newSpawnerConfigData.MyTeam = spawnerTeam;
+            newSpawnerConfigData.Quantity = spawnersCount;
+
+            return newSpawnerConfigData;
         }
     }
 }

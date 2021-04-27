@@ -6,9 +6,6 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
 {
     public class SpawnerConfigsList : MonoBehaviour
     {
-        [SerializeField]
-        [Tooltip("Player menu config prefab.")]
-        private GameObject _spawnerConfigPrefab;
         public List<SpawnerGroupConfig> SpawnerConfigs { get; } = new List<SpawnerGroupConfig>();
 
         private void Awake()
@@ -23,17 +20,11 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         /// <summary>
         /// Adds a spawn group config.
         /// </summary>
-        /// <param name="spawnGroupTeam">What team do the spawns belong to.</param>
-        /// <param name="quantity">How many spawns are in there.</param>
-        public void AddSpawnConfig(Teams spawnGroupTeam, int quantity)
+        /// <param name="spawnerGroupConfig">Config of a spawner group that shall be added..</param>
+        public void AddSpawnConfig(SpawnerGroupConfig spawnerGroupConfig)
         {
-            if (quantity > 1)
-            {
-                var newSpawnerConfig = Instantiate(_spawnerConfigPrefab).GetComponentInChildren<SpawnerGroupConfig>();
-                newSpawnerConfig.MyTeam = spawnGroupTeam;
-                newSpawnerConfig.Quantity = quantity;
-                SpawnerConfigs.Add(newSpawnerConfig);
-            }
+            spawnerGroupConfig.gameObject.transform.SetParent(this.transform);
+            SpawnerConfigs.Add(spawnerGroupConfig);
         }
     }
 }

@@ -81,6 +81,10 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         {
             PlayersConfigs.AddPlayerConfig();
         }
+        public void AddSpawnerConfig(SpawnerGroupConfig spawnerGroupConfig)
+        {
+            SpawnersConfig.AddSpawnConfig(spawnerGroupConfig);
+        }
         /// <summary>
         /// Get instance of the match data.
         /// </summary>
@@ -98,5 +102,7 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         {
             _instance = null;
         }
+
+        
     }
 }

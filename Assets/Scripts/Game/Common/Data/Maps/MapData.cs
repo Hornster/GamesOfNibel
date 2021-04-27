@@ -18,9 +18,6 @@ namespace Assets.Scripts.Game.Common.Data.Maps
         public List<SkillType> RequiredSkills { get; set; }
         public string ScenePath { get; set; }
         public string SceneBundlePath { get; set; }
-        public int MultiTeamBasesCount { get; set; }
-        public int NeutralBasesCount { get; set; }
-        public int LotusBasesCount { get; set; }
-        public int LilyBasesCount { get; set; }
+        public Dictionary<Teams, int> BasesCount { get; set; } = new Dictionary<Teams, int>();
     }
 }
