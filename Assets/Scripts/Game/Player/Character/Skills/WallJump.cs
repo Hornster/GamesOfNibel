@@ -13,20 +13,19 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         private Vector2 _wallJumpDirection;
         private float _wallJumpVelocity;
 
+        [Tooltip("Angle of the jump from the wall, in degrees.")]
         [Range(1, 90)]
-        [SerializeField] private float _jumpAngle;
-        [SerializeField] private float _jumpHeight;
+        [SerializeField] private float _jumpAngle = 45;
+        [SerializeField] private float _jumpHeight = 3;
 
         /// <summary>
         /// Rigidbody of the character.
         /// </summary>
-        [SerializeField] //TODO remove serialization, debug feature.
         private Rigidbody2D _characterRigidbody;
 
         /// <summary>
         /// Uses this skill.
         /// </summary>
-        [SerializeField] //TODO remove serialization, debug feature.
         private PlayerState _playerState;
 
         private void CalculateJumpStartVelocity()
@@ -42,7 +41,6 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         }
         private void Start()
         {
-            _wallJumpDirection.Normalize();
             CalculateJumpStartVelocity();
         }
         //todo DEBUG
@@ -93,6 +91,24 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         public void SetPlayerState(PlayerState playerState)
         {
             _playerState = playerState;
+        }
+        /// <summary>
+        /// Sets new jump angle. Relatively to TODO. In degrees.
+        /// </summary>
+        /// <param name="jumpAngle"></param>
+        public void SetJumpAngle(float jumpAngle)
+        {
+            _jumpAngle = jumpAngle;
+            CalculateJumpStartVelocity();
+        }
+        /// <summary>
+        /// Sets the height of the wall jump.
+        /// </summary>
+        /// <param name="wallJumpHeight"></param>
+        public void SetJumpHeight(float wallJumpHeight)
+        {
+            _jumpHeight = wallJumpHeight;
+            CalculateJumpStartVelocity();
         }
         public void UseSkill()
         {

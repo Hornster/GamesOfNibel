@@ -514,6 +514,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3957968125070727094, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: _maxGlideFallingSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957968125070727094, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: _wallSlideGravityScale
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957968125070727094, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: _wallSlideMaxVelocityCap
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957968125070727094, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: _wallSlideModifiers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9105683011586640908, guid: f59c6ac74e04404499d4efb9864d92e5,
         type: 3}
       propertyPath: m_RootOrder
@@ -1330,7 +1350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09ee40b9c238864ebaaf350c37a9c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _matchDataHook: {fileID: 967011269}
 --- !u!1001 &660865712
 PrefabInstance:
   m_ObjectHideFlags: 0

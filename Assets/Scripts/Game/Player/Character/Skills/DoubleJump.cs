@@ -12,8 +12,8 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         /// <summary>
         /// Defines the force applied to character during double jump.
         /// </summary>
-        private float _initialVelocity = 20.0f;
-        [SerializeField] private float _jumpHeight = 5.0f;
+        private float _initialVelocity;
+        [SerializeField] private float _jumpHeight = 3.0f;
 
         /// <summary>
         /// Rigidbody of the character.
@@ -32,10 +32,13 @@ namespace Assets.Scripts.Game.Player.Character.Skills
 
         private void Start()
         {
-            var instance = GlobalGravityManager.Instance;
-            float gravity = instance.GetBaseGravityValue();
-            float jumpTime = instance.GetBaseJumpTime();
-            _initialVelocity = _jumpHeight / jumpTime + 0.5f * gravity * jumpTime;
+            _initialVelocity = CalculateJumpVelocity(_jumpHeight);
+        }
+
+        public void SetJumpHeight(float jumpHeight)
+        {
+            _jumpHeight = jumpHeight;
+            _initialVelocity = CalculateJumpVelocity(_jumpHeight);
         }
         /// <summary>
         /// Sets the rigidbody to provided one.
@@ -69,6 +72,19 @@ namespace Assets.Scripts.Game.Player.Character.Skills
                 //todo DEBUG
                 _skillUsed?.Invoke();
             }
+        }
+        /// <summary>
+        /// Calculates and returns jump velocity, accordingly to provided jump height.
+        /// </summary>
+        /// <param name="jumpHeight">How high the jump is relatively to starting position</param>
+        /// <returns></returns>
+        private float CalculateJumpVelocity(float jumpHeight)
+        {
+            var instance = GlobalGravityManager.Instance;
+            float gravity = instance.GetBaseGravityValue();
+            float jumpTime = instance.GetBaseJumpTime();
+
+            return jumpHeight / jumpTime + 0.5f * gravity * jumpTime;
         }
     }
 }

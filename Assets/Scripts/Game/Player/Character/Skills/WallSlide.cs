@@ -39,6 +39,10 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         /// </summary>
         private IEnumerable<WallSlideType> _wallSlideTypes;
         /// <summary>
+        /// Stores reference to currently active max velocity constraint.
+        /// </summary>
+        private IMaxVelConstraint _activeVelocityConstraint;
+        /// <summary>
         /// Adds the influence type to the WallSlide skill.
         /// </summary>
         /// <param name="type"></param>
@@ -96,10 +100,16 @@ namespace Assets.Scripts.Game.Player.Character.Skills
             {
                 if (wallSlideType == WallSlideType.MaxVelocityCap)
                 {
-                    var velocityConstraint = new WallSlideVelocityConstraint(_playerState, _maxVelocityCap);
-                    _playerState.LocalGravityManager.ApplyMaxVelocityConstraint(velocityConstraint);
+                    _activeVelocityConstraint = new WallSlideVelocityConstraint(_playerState, _maxVelocityCap);
+                    _playerState.LocalGravityManager.ApplyMaxVelocityConstraint(_activeVelocityConstraint);
                 }
             }
+        }
+
+        private void RemoveMaxVelocityConstraint()
+        {
+            _playerState.LocalGravityManager.RemoveMaxVelocityConstraint(_activeVelocityConstraint);
+            _activeVelocityConstraint = null;
         }
         private void Start()
         {
@@ -109,6 +119,7 @@ namespace Assets.Scripts.Game.Player.Character.Skills
                 AddType(type);
             }
 
+            RemoveMaxVelocityConstraint();
             CreateMaxVelocityConstraint();
         }
 
@@ -125,6 +136,18 @@ namespace Assets.Scripts.Game.Player.Character.Skills
                 }
             }
             
+        }
+
+        public void SetMaxVelocity(float maxVelocity)
+        {
+            _maxVelocityCap = maxVelocity;
+            RemoveMaxVelocityConstraint();
+            CreateMaxVelocityConstraint();
+        }
+
+        public void SetGravityScale(float wallSlideGravityScale)
+        {
+            _gravityScale = wallSlideGravityScale;
         }
     }
 }

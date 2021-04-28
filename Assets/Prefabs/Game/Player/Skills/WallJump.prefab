@@ -71,7 +71,5 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _jumpAngle: 45
+  _jumpAngle: 60
   _jumpHeight: 3
-  _characterRigidbody: {fileID: 0}
-  _playerState: {fileID: 0}

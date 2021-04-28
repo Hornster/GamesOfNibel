@@ -121,6 +121,14 @@ namespace Assets.Scripts.Game.Player.Gravity
             _maxConstraints.Add(constraint);
         }
         /// <summary>
+        /// Removes a falling velocity constraint.
+        /// </summary>
+        /// <param name="constraint">Constraint on max velocity.</param>
+        public void RemoveMaxVelocityConstraint(IMaxVelConstraint constraint)
+        {
+            _maxConstraints.Remove(constraint);
+        }
+        /// <summary>
         /// Returns the reference value of the gravity (not influenced by any factors).
         /// </summary>
         /// <returns></returns>

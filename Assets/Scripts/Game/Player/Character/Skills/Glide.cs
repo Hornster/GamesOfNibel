@@ -14,7 +14,7 @@ namespace Assets.Scripts.Game.Player.Character.Skills
         /// <summary>
         /// How fast the player descends while using the ability.
         /// </summary>
-        [SerializeField] private float _maxFallingSpeed = 1.0f;
+        [SerializeField] private float _maxFallingSpeed = 3.0f;
 
         /// <summary>
         /// Rigidbody of the character.
@@ -39,18 +39,19 @@ namespace Assets.Scripts.Game.Player.Character.Skills
 
 
 
-        [SerializeField]//TODO remove serialization, debug feature.
         private Rigidbody2D _characterRigidbody;
         /// <summary>
         /// Uses this skill.
         /// </summary>
-        [SerializeField]//TODO remove serialization, debug feature.
         private PlayerState _playerState;
+        /// <summary>
+        /// Reference to constraint defining max glide fall velocity.
+        /// </summary>
+        private IMaxVelConstraint _maxVelocityConstraint;
 
         private void Start()
         {
-            var maxVelocityConstraint = new GlideVelocityConstraint(_playerState, _maxFallingSpeed);
-            _playerState.LocalGravityManager.ApplyMaxVelocityConstraint(maxVelocityConstraint);
+            SetGlideFallingConstraint();
         }
 
         private void FixedUpdate()
@@ -116,6 +117,22 @@ namespace Assets.Scripts.Game.Player.Character.Skills
             {
                 _skillUsed?.Invoke();
             }
+        }
+
+        public void SetMaxFallingVelocity(float maxGlideFallingSpeed)
+        {
+            _maxFallingSpeed = maxGlideFallingSpeed;
+
+            SetGlideFallingConstraint();
+        }
+        /// <summary>
+        /// Sets the max falling velocity constraint for glide skill.
+        /// </summary>
+        private void SetGlideFallingConstraint()
+        {
+            _playerState.LocalGravityManager.RemoveMaxVelocityConstraint(_maxVelocityConstraint);
+            _maxVelocityConstraint = new GlideVelocityConstraint(_playerState, _maxFallingSpeed);
+            _playerState.LocalGravityManager.ApplyMaxVelocityConstraint(_maxVelocityConstraint);
         }
     }
 }

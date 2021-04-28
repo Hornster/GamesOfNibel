@@ -11,19 +11,42 @@ namespace Assets.Scripts.Game.Player.Character.Skills.Factory
     public class SkillsFactory : MonoBehaviour, ISkillsFactory
     {
         private static SkillsFactory _instance;
-
+        [Header("Double Jump")]
         [Tooltip("Prefab of the double jump skill.")]
         [SerializeField]
         private GameObject _doubleJumpPrefab;
+        [Tooltip("Max height of the double jump, relative to player's position upon performing the jump.")]
+        [SerializeField] 
+        private float _doubleJumpHeight = 3.0f;
+
+        [Header("Wall jump")]
         [Tooltip("Prefab of the wall jump skill.")]
         [SerializeField]
         private GameObject _wallJumpPrefab;
+        [Tooltip("Angle of the jump from the wall, relatively to CHECK WHAT SHOULD BE HERE. In degrees.")]
+        [Range(1, 90)]
+        [SerializeField] private float _wallJumpAngle = 60;
+        [Tooltip("How high the jump is, relatively from the position of jumping object.")]
+        [SerializeField] private float _wallJumpHeight = 3;
+
+        [Header("Wall slide")]
         [Tooltip("Prefab of the wall slide skill.")]
         [SerializeField]
         private GameObject _wallSlideModifierPrefab;
+        [Tooltip("Max vertical velocity (along gravitation vector) the player can get while holding the wall.")]
+        [SerializeField] private float _wallSlideMaxVelocityCap = 0f;
+        [Tooltip("By what factor is the vertical acceleration multiplied by when holding the wall.")]
+        [SerializeField] private float _wallSlideGravityScale = 0.5f;
+        [Tooltip("How will the wall slide influence the vertical velocity?")]
+        [SerializeField] private WallSlideType[] _wallSlideModifiers;
+
+        [Header("Glide")]
         [Tooltip("Prefab of the glide skill.")]
         [SerializeField]
         private GameObject _glidePrefab;
+        [Tooltip("Max vertical velocity that the player can achieve while gliding (along gravitation vector).")]
+        [SerializeField]
+        private float _maxGlideFallingSpeed = 3f;
 
         private static int _activeInstances;
 
@@ -79,6 +102,7 @@ namespace Assets.Scripts.Game.Player.Character.Skills.Factory
 
             doubleJumpScript.SetRigidBody(rb);
             doubleJumpScript.SetPlayerState(playerState);
+            doubleJumpScript.SetJumpHeight(_doubleJumpHeight);
 
             return doubleJumpScript;
         }
@@ -90,7 +114,9 @@ namespace Assets.Scripts.Game.Player.Character.Skills.Factory
 
             wallSlideScript.SetRigidBody(rb);
             wallSlideScript.SetPlayerState(playerState);
-            wallSlideScript.SetSlideType(new[] {WallSlideType.GravityDecrease});
+            wallSlideScript.SetSlideType(_wallSlideModifiers);
+            wallSlideScript.SetMaxVelocity(_wallSlideMaxVelocityCap);
+            wallSlideScript.SetGravityScale(_wallSlideGravityScale);
 
             return wallSlideScript;
         }
@@ -98,12 +124,14 @@ namespace Assets.Scripts.Game.Player.Character.Skills.Factory
         private IBasicSkill CreateWallJump(Transform parent, PlayerState playerState, Rigidbody2D rb)
         {
             var newWallJump = Instantiate(_wallJumpPrefab, parent);
-            var wallSlideScript = newWallJump.GetComponent<WallJump>();
+            var wallJumpScript = newWallJump.GetComponent<WallJump>();
 
-            wallSlideScript.SetRigidBody(rb);
-            wallSlideScript.SetPlayerState(playerState);
+            wallJumpScript.SetRigidBody(rb);
+            wallJumpScript.SetPlayerState(playerState);
+            wallJumpScript.SetJumpAngle(_wallJumpAngle);
+            wallJumpScript.SetJumpHeight(_wallJumpHeight);
 
-            return wallSlideScript;
+            return wallJumpScript;
         }
 
         private IBasicSkill CreateGlide(Transform parent, PlayerState playerState, Rigidbody2D rb)
@@ -113,6 +141,7 @@ namespace Assets.Scripts.Game.Player.Character.Skills.Factory
 
             glideScript.SetRigidBody(rb);
             glideScript.SetPlayerState(playerState);
+            glideScript.SetMaxFallingVelocity(_maxGlideFallingSpeed);
 
             return glideScript;
         }
