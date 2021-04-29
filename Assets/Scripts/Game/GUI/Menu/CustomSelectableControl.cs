@@ -65,7 +65,6 @@ namespace Assets.Scripts.Game.GUI.Menu
             _animator.SetBool(_idleParamName, true);
             _animator.SetBool(_pointedAtParamName, false);
             _animator.ResetTrigger(_pressedParamName);
-            Debug.Log($"{ControlId} was deselected.");
         }
 
         public void SelectControl()
@@ -73,7 +72,6 @@ namespace Assets.Scripts.Game.GUI.Menu
             _animator.SetBool(_idleParamName, false);
             _animator.SetBool(_pointedAtParamName, true);
             _onPointedAt?.Invoke(this);
-            Debug.Log($"{ControlId} was selected.");
         }
 
         public void ControlPressed()
@@ -82,7 +80,6 @@ namespace Assets.Scripts.Game.GUI.Menu
             _assignedEvents?.Invoke();
             _onSelected?.Invoke(this);
             _shaderDisabler.EnableShader();
-            Debug.Log($"{ControlId} was pressed.");
         }
         /// <summary>
         /// Calls the _onStoppedPointing event handler.

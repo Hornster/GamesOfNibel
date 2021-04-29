@@ -4218,7 +4218,8 @@ MonoBehaviour:
   _mapMode: {fileID: 2055387189}
   _description: {fileID: 1342773604}
   _previewImage: {fileID: 1039417700}
-  _noPreviewPlaceholder: {fileID: 0}
+  _noPreviewPlaceholder: {fileID: 21300000, guid: 747636105e85a2441b3951ba6ed7dbc6,
+    type: 3}
   _skillControlsContainer: {fileID: 642331384}
   _selectionDefaults: {fileID: 11400000, guid: 0c7ff6d4671ae1549911866f02d8f362, type: 2}
 --- !u!1001 &1817359676

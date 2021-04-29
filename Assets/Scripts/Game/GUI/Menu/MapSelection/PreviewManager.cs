@@ -55,6 +55,8 @@ namespace Assets.Scripts.Game.GUI.Menu.MapSelection
             {
                 _skillControls.Add(skill.SkillType, skill);
             }
+
+            UpdatePreview(null);
         }
         /// <summary>
         /// Updates map details.
@@ -83,6 +85,10 @@ namespace Assets.Scripts.Game.GUI.Menu.MapSelection
                 skill.UpdateSkillRequirementState(false);
             }
 
+            if (mapData == null)
+            {
+                return;
+            }
             //Then mark all required skills properly.
             foreach (var skill in mapData.RequiredSkills)
             {
