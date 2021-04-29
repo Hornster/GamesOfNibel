@@ -25,7 +25,6 @@ namespace Assets.Scripts.Game.Common
             {
                 var ownerObject = new GameObject($"{typeof(T).Name} (singleton)");
                 foundObject = ownerObject.AddComponent<T>();
-                Debug.Log($"Warning - object of type {typeof(T).Name} not found. Creating new one.");
             }
 
             return foundObject;

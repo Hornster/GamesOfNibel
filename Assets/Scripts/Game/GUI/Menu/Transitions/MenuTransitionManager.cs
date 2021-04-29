@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Assets.Scripts.Game.Common;
 using Assets.Scripts.Game.Common.CustomEvents;
 using Assets.Scripts.Game.Common.Data;
 using Assets.Scripts.Game.Common.Data.ScriptableObjects.ScenePassData;
@@ -121,6 +122,10 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
             {
                 _onInGameMenuTurnedOff?.Invoke();
             }
+            else if (toMenu == MenuType.Exit)
+            {
+                LeaveGame();
+            }
         }
         /// <summary>
         /// Performs the fade out scene transition.
@@ -149,6 +154,13 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
             _rememberStep = false;
             PerformTransition( _menuTransitionsHistory.TransitionFrom);
             _rememberStep = true;
+        }
+        /// <summary>
+        /// Called to leave the application.
+        /// </summary>
+        public void LeaveGame()
+        {
+            ApplicationQuitter.Instance.Quit();
         }
         /// <summary>
         /// Coordinates transition between scenes, starting and awaiting for coroutines.

@@ -21,6 +21,10 @@
         /// <summary>
         /// Can be used for example when there's a transition from a menu to a playable scene and backwards.
         /// </summary>
-        None
+        None,
+        /// <summary>
+        /// Final transition, happening upon leaving the game.
+        /// </summary>
+        Exit
     }
 }
