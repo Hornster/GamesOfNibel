@@ -190,6 +190,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4958807407690477551, guid: 9e94845e4924bbf4b95b25f3753f99ee,
         type: 3}
+      propertyPath: _sceneDataInitializer
+      value: 
+      objectReference: {fileID: 9105683010201094950}
+    - target: {fileID: 4958807407690477551, guid: 9e94845e4924bbf4b95b25f3753f99ee,
+        type: 3}
       propertyPath: _sceneTransitionAnimator
       value: 
       objectReference: {fileID: 1261668572}
@@ -242,7 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644bd44b9bf9d8940826122e63454a6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneDataInitializer: {fileID: 9105683010201094950}
+  _transitionManager: {fileID: 230991816}
+  _startScene: Assets/Sandbox/DataPassingTests/Scenes/MapScene.unity
 --- !u!4 &422606519
 Transform:
   m_ObjectHideFlags: 0

@@ -85,7 +85,10 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
                 }
             }
 
-            PerformTransition(_startingMenu.GetStartMenu());
+            if(_startingMenu != null)
+            {
+                PerformTransition(_startingMenu.GetStartMenu());
+            }
         }
         /// <summary>
         /// Performs transition from given menu to given menu, in main menu.

@@ -99,6 +99,14 @@ namespace Assets.Scripts.Game.Player.Gravity
             ResetGravityModifiers();
         }
         /// <summary>
+        /// Resets the state of the manager (keeps values set for entire match).
+        /// </summary>
+        public void Reset()
+        {
+            _activeMultipliers.Clear();
+            CalcGravityMultiplier();
+        }
+        /// <summary>
         /// Applies a multiplier to the reference gravity value. Every object can apply only one modifier at a time.
         /// The multiplier will be reset upon going through the next FixedUpdate stage.
         /// </summary>

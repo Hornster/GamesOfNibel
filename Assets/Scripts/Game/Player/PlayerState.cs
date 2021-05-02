@@ -253,6 +253,21 @@ namespace Assets.Scripts.Game.Player
             _jumpMemoryTimer.Reset();
             _jumpMemoryTimer.StartTimer();
         }
+
+        public void ResetState()
+        {
+            xInput = 0;
+            yInput = 0;
+            facingDirection = 1;
+            IsJumpRequestRemembered = false;
+            IsPhasingThroughPlatform = false;
+            IsStandingOnGroundRemembered = false;
+            IsTouchingWallRemembered = false;
+            IsGliding = false;
+            ResetOneUseSkills();
+            NewVelocity = new Vector2(0, 0);
+            GlideStage = GlideStages.GlideStop;
+        }
         /// <summary>
         /// Called by jump timeout memory timer when the time after pressing the jump button has passed.
         /// </summary>

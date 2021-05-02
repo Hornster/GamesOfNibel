@@ -3,6 +3,7 @@ using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Exceptions;
 using Assets.Scripts.Game.Common.Helpers;
+using Assets.Scripts.Game.Player;
 using Assets.Scripts.Game.Spawner.PlayerSpawner;
 using UnityEngine;
 
@@ -85,8 +86,11 @@ namespace Assets.Scripts.Game.MapInitialization
             var targetBase = bases[0].GetComponentInChildren<PlayerPositioner>();
             foreach (var player in players)
             {
+                var playerID = player.gameObject.GetInstanceID();
                 var positioner = player.GetComponentInChildren<IRepositioner>();
-                targetBase.AssignPlayer(positioner);
+                var state = player.GetComponentInChildren<PlayerReset>();
+
+                targetBase.AssignPlayer(playerID, positioner, state);
             }
             //Do NOT reposition players now. Wait for the initialization to finish, then
             //reposition players when on the map, right after moving the spawns.
