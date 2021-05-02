@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 333759143084577812}
   - component: {fileID: 5654859942542426207}
   - component: {fileID: 333759144051468899}
+  - component: {fileID: 2018929584753189469}
   m_Layer: 10
   m_Name: CharacterBody
   m_TagString: Untagged
@@ -285,6 +286,19 @@ MonoBehaviour:
   _decelerationTimeAirborne: 0.2
   _playerState: {fileID: 5220255037441368525}
   rb: {fileID: 5220255037441368521}
+--- !u!114 &2018929584753189469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5220255037441368534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab27394aa7a0cb148bc9f7ccbc7a0df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerReset: {fileID: 0}
 --- !u!1001 &2044833929092152324
 PrefabInstance:
   m_ObjectHideFlags: 0

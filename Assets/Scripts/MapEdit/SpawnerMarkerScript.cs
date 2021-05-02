@@ -40,13 +40,9 @@ namespace Assets.Scripts.MapEdit
             }
 
             var baseRepositioner = spawnGameObject.GetComponentInChildren<IRepositioner>();
-            baseRepositioner.ChangePosition(transform.position);
-
             var baseRotator = spawnGameObject.GetComponentInChildren<IRotator>();
-            baseRotator.Rotate(transform.rotation);
-
-            //var destinationPos = this.gameObject.transform.position;
-            //spawnGameObject.transform.position = destinationPos;
+            baseRotator.Rotate(transform.rotation);             //First rotate, then repsition. Upon repositioning we also set the
+            baseRepositioner.ChangePosition(transform.position);//players' positions.
 
             HasSpawnAssigned = true;
             return HasSpawnAssigned;
