@@ -258,7 +258,6 @@ namespace Assets.Scripts.Game.Player
         {
             xInput = 0;
             yInput = 0;
-            facingDirection = 1;
             IsJumpRequestRemembered = false;
             IsPhasingThroughPlatform = false;
             IsStandingOnGroundRemembered = false;
