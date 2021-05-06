@@ -44,6 +44,7 @@ namespace Assets.Scripts.Game.Player
         /// <param name="newPosition">New position of the player.</param>
         public void ChangePosition(Vector2 newPosition)
         {
+            transform.position = new Vector3(newPosition.x, newPosition.y, 0);
             rb.position = newPosition;
         }
 

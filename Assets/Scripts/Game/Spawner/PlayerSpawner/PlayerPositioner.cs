@@ -51,9 +51,9 @@ namespace Assets.Scripts.Game.Spawner.PlayerSpawner
         {
             if(_assignedPlayers.TryGetValue(playerID, out var player))
             {
-                (var repositioner, var state) = player;
+                (var repositioner, var playerReset) = player;
+                playerReset.ResetState();
                 repositioner.ChangePosition(_playerSpawnPosition.position);
-                state.ResetState();
             }
         }
         /// <summary>
