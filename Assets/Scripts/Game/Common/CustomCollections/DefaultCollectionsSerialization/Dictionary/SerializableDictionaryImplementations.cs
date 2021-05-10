@@ -39,4 +39,12 @@ namespace Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSeriali
     /// </summary>
     [Serializable]
     public class SkillTypeBoolDictionary : SerializableDictionary<SkillType, bool> { }
+    //---------------------
+    // GameplayMode => GameObject
+    //---------------------
+    /// <summary>
+    /// Serializable dictionary type Gameobject references basing on gamemode type.
+    /// </summary>
+    [Serializable]
+    public class GameplayModeGameObjectDictionary : SerializableDictionary<GameplayModesEnum, GameObject> { }
 }

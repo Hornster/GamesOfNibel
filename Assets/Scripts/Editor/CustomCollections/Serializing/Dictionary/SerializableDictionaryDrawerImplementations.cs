@@ -71,4 +71,21 @@ namespace Assets.Editor.Scripts.CustomCollections.Serializing.Dictionary
     }
 
     internal class SerializableSkillTypeBoolTemplate : SerializableKeyValueTemplate<SkillType, bool> { }
+
+    //---------------------
+    // GameplayType => Gameobject
+    //---------------------
+    /// <summary>
+    /// Drawer for GameplayType => Gameobject dictionary.
+    /// </summary>
+    [UnityEditor.CustomPropertyDrawer(typeof(GameplayModeGameObjectDictionary))]
+    public class GameplayModeGameObjectDictionaryDrawer : SerializableDictionaryDrawer<GameplayModesEnum, GameObject>
+    {
+        protected override SerializableKeyValueTemplate<GameplayModesEnum, GameObject> GetTemplate()
+        {
+            return GetGenericTemplate<GameplayModeGameObjectTemplate>();
+        }
+    }
+
+    internal class GameplayModeGameObjectTemplate : SerializableKeyValueTemplate<GameplayModesEnum, GameObject> { }
 }
