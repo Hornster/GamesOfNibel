@@ -3,11 +3,13 @@ using Assets.Scripts.Game.Common.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Game.Common.Factories;
+using Assets.Scripts.Game.MapInitialization;
 using UnityEngine;
 
 namespace Assets.Sandbox.Scripts
 {
-    public class GameGUIFactory : MonoBehaviour
+    public class GameGUIFactory : MonoBehaviour, IGameGUIFactory
     {
         [Header("Main gameplay GUI.")]
         [Tooltip("Main game GUI prefab, should contain Pause.")]
@@ -32,9 +34,11 @@ namespace Assets.Sandbox.Scripts
         public GameObject CreateBaseUI(Transform parent, bool defaultPauseMenu = true)
         {
             var mainUI = Instantiate(_baseGUIPrefab);
+            var menuAssigner = mainUI.GetComponentInChildren<MenuAssigner>();
             if (defaultPauseMenu)
             {
-                Instantiate(_defaultPauseMenuPrefab, mainUI.transform);
+                var pauseMenu = Instantiate(_defaultPauseMenuPrefab);
+                menuAssigner?.AssignMenu(pauseMenu.transform);
             }
 
             return mainUI;
@@ -49,7 +53,9 @@ namespace Assets.Sandbox.Scripts
         {
             if(_UIPrefabs.dictionary.TryGetValue(gameplayMode, out var prefab))
             {
-                return Instantiate(prefab, parent);
+                var menu = Instantiate(prefab, parent);
+
+                return menu;
             }
             else
             {

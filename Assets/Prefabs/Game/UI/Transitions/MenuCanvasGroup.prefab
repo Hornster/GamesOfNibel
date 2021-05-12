@@ -57,6 +57,9 @@ MonoBehaviour:
   _menuType: 0
   _menuCanvasGroup: {fileID: 1426714728153131351}
   _animator: {fileID: 1426714728153131368}
+  _setActiveComponents:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!225 &1426714728153131351
 CanvasGroup:
   m_ObjectHideFlags: 0

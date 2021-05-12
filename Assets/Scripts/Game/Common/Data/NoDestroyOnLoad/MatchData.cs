@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Exceptions;
 using UnityEngine;
 
@@ -61,6 +62,11 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         /// Stores path to scene with map that should be loaded.
         /// </summary>
         public string SceneToLoad { get => _sceneToLoad; set => _sceneToLoad = value; }
+
+        /// <summary>
+        /// What mode is the currently selected map for.
+        /// </summary>
+        public GameplayModesEnum GameplayMode { get; set; } = GameplayModesEnum.CTF;//TODO change to reading from map data
 
 
         private void Awake()

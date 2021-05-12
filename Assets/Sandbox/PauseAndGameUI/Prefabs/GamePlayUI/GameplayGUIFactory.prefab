@@ -43,11 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfef3e689a752a4caa3701d312af836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseGUIPrefab: {fileID: 1852291444210517063, guid: af4b85fe17112e741b216f46b5af6880,
+  _baseGUIPrefab: {fileID: 4813882070827668368, guid: a11da01e17df7ed48a75d78a3af1b8b5,
     type: 3}
   _defaultPauseMenuPrefab: {fileID: 5959639342433481046, guid: 76ceafcbb180fa14aa686eeae7098b7d,
     type: 3}
   _UIPrefabs:
     keys: 00000000
     values:
-    - {fileID: 6530322339786928291, guid: 040ea9756faad894596ea50f576fd4e5, type: 3}
+    - {fileID: 8514810396145859617, guid: 16efb838688b3ab4a87057eb64e5269e, type: 3}

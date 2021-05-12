@@ -4,6 +4,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using Assets.Scripts.Game.Common.CustomEvents;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
+using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Exceptions;
 using Assets.Scripts.Game.InspectorSerialization.Interfaces;
 using Assets.Scripts.Game.Player.Character;
@@ -24,6 +25,9 @@ namespace Assets.Scripts.Game.MapInitialization
         [Tooltip("Provides skills for created characters.")]
         [SerializeField] 
         private ISkillsFactoryContainer _skillsFactory;
+        [Tooltip("Ingame menus factory. Provides pause menus and gamemode characteristic menus.")]
+        [SerializeField]
+        private IIngameMenuFactoryContainer _ingameMenuFactory;
 
         [Header("Scene Deployment")]
         [Tooltip("Prefab of the SceneData object. Will contain ready for deployment dynamic objects for the loaded map.")]
@@ -63,11 +67,6 @@ namespace Assets.Scripts.Game.MapInitialization
             }
         }
 
-        //private void Start()
-        //{            
-        //    StartCoroutine(CreateData());
-        //}
-
         public IEnumerator CreateData()
         {
             var newSceneDataObj = Instantiate(_sceneDataPrefab);
@@ -81,6 +80,7 @@ namespace Assets.Scripts.Game.MapInitialization
             }
             CreateSpawners();
             CreatePlayers();
+            CreateIngameMenus(_matchData.GameplayMode);
 
             _playerAssigner.PositionPlayers(_sceneData);
 
@@ -174,6 +174,15 @@ namespace Assets.Scripts.Game.MapInitialization
                     skillInfoProvider.SkillsController.AddBasicSkill(skillConfig.Key, newSkill);
                 }
             }
+        }
+
+        private void CreateIngameMenus(GameplayModesEnum selectedGameMode)
+        {
+            var ingameMenuFactory = _ingameMenuFactory.Interface;
+            var guiMainObject = ingameMenuFactory.CreateBaseUI(_sceneData.gameObject.transform);
+            var ingameMenu = ingameMenuFactory.CreateTopUI(selectedGameMode, guiMainObject.transform);
+
+            guiMainObject.transform.SetParent(_sceneData.gameObject.transform);
         }
     }
 }
