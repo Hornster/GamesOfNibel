@@ -44,11 +44,6 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
                 EnableInGameMenu();
                 Debug.Log("Enabling menu.");
             }
-            else
-            {
-                //the menu is already active, so simply return to previous menu.
-                _transitionManager.PerformReturnTransition();
-            }
         }
         /// <summary>
         /// Activates the game menu by sending call to menu transition manager.
