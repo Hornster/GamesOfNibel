@@ -16,11 +16,6 @@ namespace Assets.Sandbox.Scripts
         [SerializeField]
         private GameObject _baseGUIPrefab;
 
-        [Header("Pause menu prefabs")]
-        [Tooltip("Base pause menu.")]
-        [SerializeField]
-        private GameObject _defaultPauseMenuPrefab;
-
         [Header("Game type main UIs.")]
         [Tooltip("Capture the Flag main UI prefab.")]
         [SerializeField]
@@ -34,12 +29,6 @@ namespace Assets.Sandbox.Scripts
         public GameObject CreateBaseUI(Transform parent, bool defaultPauseMenu = true)
         {
             var mainUI = Instantiate(_baseGUIPrefab);
-            var menuAssigner = mainUI.GetComponentInChildren<MenuAssigner>();
-            if (defaultPauseMenu)
-            {
-                var pauseMenu = Instantiate(_defaultPauseMenuPrefab);
-                menuAssigner?.AssignMenu(pauseMenu.transform);
-            }
 
             return mainUI;
         }
