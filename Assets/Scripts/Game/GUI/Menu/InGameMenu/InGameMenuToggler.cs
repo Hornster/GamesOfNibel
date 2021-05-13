@@ -44,6 +44,10 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
                 EnableInGameMenu();
                 Debug.Log("Enabling menu.");
             }
+            else
+            {
+                OnInGameMenuDisabled();
+            }
         }
         /// <summary>
         /// Activates the game menu by sending call to menu transition manager.
@@ -60,6 +64,7 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
         public void OnInGameMenuDisabled()
         {
             _isIngameMenuActive = false;
+            _transitionManager.PerformTransition(MenuType.None);
             _onMenuToggle?.Invoke(_isIngameMenuActive);
         }
         /// <summary>
