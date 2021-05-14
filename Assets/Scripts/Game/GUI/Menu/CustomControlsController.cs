@@ -79,6 +79,11 @@ namespace Assets.Scripts.Game.GUI.Menu
 
             GUIInputReader.RegisterLMBPressedHandler(ChkMouseInput);
         }
+
+        private void OnDestroy()
+        {
+            GUIInputReader.RemoveLMBPressedHandler(ChkMouseInput);
+        }
         /// <summary>
         /// Selects control based on provided index.
         /// </summary>

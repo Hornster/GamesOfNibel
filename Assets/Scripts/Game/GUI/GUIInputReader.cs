@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.Game.Common.Helpers;
+﻿using Assets.Scripts.Game.Common.CustomEvents;
+using Assets.Scripts.Game.Common.Helpers;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Game.GUI
@@ -13,11 +15,11 @@ namespace Assets.Scripts.Game.GUI
         /// <summary>
         /// Handler for event where left mouse button has been pressed once.
         /// </summary>
-        private static UnityAction<bool> _LMBPressed;
+        private static BoolUnityEvent _LMBPressed = new BoolUnityEvent();
         /// <summary>
         /// Called when cancelling control, like escape key, has been pressed.
         /// </summary>
-        private static UnityAction _onCancelEvent;
+        private static UnityEvent _onCancelEvent = new UnityEvent();
         /// <summary>
         /// Stores raw input from the player on horizontal and vertical axes. Updated as fast as Unity can.
         /// </summary>
@@ -75,12 +77,21 @@ namespace Assets.Scripts.Game.GUI
             }
         }
         /// <summary>
-        /// Registers handler for the left mouse button press event.
+        /// Registers handler for the left mouse button press event. Remember to call
+        /// Remove equivalent during ondestroy!
         /// </summary>
         /// <param name="handler"></param>
         public static void RegisterLMBPressedHandler(UnityAction<bool> handler)
         {
-            _LMBPressed += handler;
+            _LMBPressed.AddListener(handler);
+        }
+        /// <summary>
+        /// Removes handler for the left mouse button press event.
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void RemoveLMBPressedHandler(UnityAction<bool> handler)
+        {
+            _LMBPressed.RemoveListener(handler);
         }
         /// <summary>
         /// Registers handler for cancel operation.
@@ -88,13 +99,17 @@ namespace Assets.Scripts.Game.GUI
         /// <param name="handler"></param>
         public static void RegisterOnCancelHandler(UnityAction handler)
         {
-            _onCancelEvent += handler;
+            _onCancelEvent.AddListener(handler);
         }
 
-        private void OnDestroy()
+        /// <summary>
+        /// Removes handler for cancel operation.
+        /// Remove equivalent during ondestroy!
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void RemoveOnCancelHandler(UnityAction handler)
         {
-            _LMBPressed = null;
-            _onCancelEvent = null;
+            _onCancelEvent.RemoveListener(handler);
         }
     }
 }

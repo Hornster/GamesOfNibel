@@ -32,6 +32,7 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
         {
             GUIInputReader.RegisterOnCancelHandler(ToggleIngameMenu);
         }
+
         /// <summary>
         /// Toggles ingame menu. If it is enabled, causes the transition manager to return to previous menu.
         /// </summary>
@@ -46,7 +47,7 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
             }
             else
             {
-                OnInGameMenuDisabled();
+                DisableInGameMenu();
             }
         }
         /// <summary>
@@ -59,11 +60,18 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
             _onMenuToggle?.Invoke(_isIngameMenuActive);
         }
         /// <summary>
-        /// Shall be called when in game menu (pause menu) has been disabled.
+        /// Should be called when menu has been disabled outside of this script.
         /// </summary>
         public void OnInGameMenuDisabled()
         {
             _isIngameMenuActive = false;
+        }
+        /// <summary>
+        /// Shall be called when in game menu (pause menu) has been disabled.
+        /// </summary>
+        public void DisableInGameMenu()
+        {
+            OnInGameMenuDisabled();
             _transitionManager.PerformTransition(MenuType.None);
             _onMenuToggle?.Invoke(_isIngameMenuActive);
         }
@@ -79,6 +87,7 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
         private void OnDestroy()
         {
             _onMenuToggle = null;
+            GUIInputReader.RemoveOnCancelHandler(ToggleIngameMenu);
         }
     }
 }

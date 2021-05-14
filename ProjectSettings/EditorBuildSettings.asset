@@ -20,19 +20,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Sandbox/GameCameraSetting/Scenes/CameraSettingsTests.unity
     guid: df6c0cbc6f5970141bcf3743f88757bc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Sandbox/DataPassingTests/Scenes/InitializationScene.unity
     guid: 879d916cbc5f66f44a020c0a295ff85d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Sandbox/DataPassingTests/Scenes/MapScene.unity
     guid: 3bfda062fff96a540abe43242d245de6
   - enabled: 0
     path: Assets/Sandbox/GameCameraSetting/Scenes/CinemachinePlayerTest.unity
     guid: bc632b64d378d8446b3a6f17c4c87f24
-  - enabled: 1
+  - enabled: 0
     path: Assets/Sandbox/PauseAndGameUI/Scenes/Naru's backyard/Naru's backyard Markers.unity
     guid: aefdefdfff4af36459c4131bac0b8a96
-  - enabled: 1
+  - enabled: 0
     path: Assets/Sandbox/PauseAndGameUI/Scenes/Naru's backyard/InitializationScene
       1.unity
     guid: 611d9ac13ebbd324181197b273242d72
