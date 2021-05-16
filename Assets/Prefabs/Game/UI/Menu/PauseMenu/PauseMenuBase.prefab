@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6538242211682806832}
   - component: {fileID: 5508282165430755259}
   - component: {fileID: 4484546979936404221}
+  - component: {fileID: 2125070872758641713}
   m_Layer: 0
   m_Name: PauseMenuBase
   m_TagString: Untagged
@@ -28,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 106379780649411517}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 910491998108341541}
   m_Father: {fileID: 0}
@@ -99,6 +100,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2125070872758641713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106379780649411517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 643a16577f79f86468c2cb6663b0780e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetCanvases:
+  - {fileID: 6538242211682806832}
 --- !u!1001 &2264750795817221196
 PrefabInstance:
   m_ObjectHideFlags: 0

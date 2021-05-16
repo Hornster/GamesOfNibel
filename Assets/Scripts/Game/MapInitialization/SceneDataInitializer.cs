@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
+using Assets.Scripts.Game.Common;
 using Assets.Scripts.Game.Common.CustomEvents;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
@@ -80,7 +81,9 @@ namespace Assets.Scripts.Game.MapInitialization
             }
             CreateSpawners();
             CreatePlayers();
-            CreateIngameMenus(_matchData.GameplayMode);
+
+            var ingameGUIBase = CreateIngameMenus(_matchData.GameplayMode);
+            InjectMainCameraToIngameMenus(newSceneDataObj, ingameGUIBase);
 
             _playerAssigner.PositionPlayers(_sceneData);
 
@@ -176,13 +179,26 @@ namespace Assets.Scripts.Game.MapInitialization
             }
         }
 
-        private void CreateIngameMenus(GameplayModesEnum selectedGameMode)
+        private GameObject CreateIngameMenus(GameplayModesEnum selectedGameMode)
         {
             var ingameMenuFactory = _ingameMenuFactory.Interface;
             var guiMainObject = ingameMenuFactory.CreateBaseUI(_sceneData.gameObject.transform);
             var ingameMenu = ingameMenuFactory.CreateTopUI(selectedGameMode, guiMainObject.transform);
 
             guiMainObject.transform.SetParent(_sceneData.gameObject.transform);
+
+            return guiMainObject;
+        }
+
+        private void InjectMainCameraToIngameMenus(GameObject sceneDataObj, GameObject mainGUIObject)
+        {
+            var cameraRetriever = sceneDataObj.GetComponentInChildren<CameraRetriever>();
+            var cameraDestinations = mainGUIObject.GetComponentsInChildren<CameraProvider>();
+
+            foreach(var cameraDestination in cameraDestinations)
+            {
+                cameraDestination.SetCamera(cameraRetriever.GetCamera());
+            }
         }
     }
 }
