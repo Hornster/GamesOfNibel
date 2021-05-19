@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5508282165430755259}
   - component: {fileID: 4484546979936404221}
   - component: {fileID: 2125070872758641713}
+  - component: {fileID: 6356993478613132969}
   m_Layer: 0
   m_Name: PauseMenuBase
   m_TagString: Untagged
@@ -54,7 +55,7 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
@@ -114,6 +115,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetCanvases:
   - {fileID: 6538242211682806832}
+--- !u!114 &6356993478613132969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106379780649411517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc91e417fac7cb942802627b96d93c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2264750795817221196
 PrefabInstance:
   m_ObjectHideFlags: 0

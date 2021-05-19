@@ -23,5 +23,15 @@ namespace Assets.Scripts.Game.GUI.Camera
             var uiCanvas = playerUI.GetComponentInChildren<Canvas>();
             uiCanvas.worldCamera = playerCamera;
         }
+
+        public void AddPlayerInGameUIs(GameObject playerUIPrefab)
+        {
+            var canvases = _playersUIParent.GetComponentsInChildren<Canvas>();
+            foreach (var canvas in canvases)
+            {
+                //Every player has the same game UI. They participate in the same type of gameplay after all.
+                var newPlayerUI = Instantiate(playerUIPrefab, canvas.transform);
+            }
+        }
     }
 }

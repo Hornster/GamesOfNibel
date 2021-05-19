@@ -57,21 +57,11 @@ namespace Assets.Scripts.Game.MapInitialization
         private bool _isDoneLoading = false;
 
         private object _isDoneLoadingLock = new object();
-        public bool IsDoneLoading
-        {
-            get
-            {
-                lock (_isDoneLoadingLock)
-                {
-                    return _isDoneLoading;
-                }
-            }
-        }
 
         public IEnumerator CreateData()
         {
             var newSceneDataObj = Instantiate(_sceneDataPrefab);
-            Instantiate(_baseSceneObjectsPrefab, newSceneDataObj.transform);
+            var baseSceneObjects = Instantiate(_baseSceneObjectsPrefab, newSceneDataObj.transform);
             _sceneData = newSceneDataObj.GetComponentInChildren<SceneData>();
             DontDestroyOnLoad(newSceneDataObj);//This object is supposed to survive being passed to the loaded map.
             //Then, after retrieving its contents, we can destroy it.
@@ -82,8 +72,9 @@ namespace Assets.Scripts.Game.MapInitialization
             CreateSpawners();
             CreatePlayers();
 
-            var ingameGUIBase = CreateIngameMenus(_matchData.GameplayMode);
+            var ingameGUIBase = CreateIngameMenus(newSceneDataObj, _matchData.GameplayMode);
             InjectMainCameraToIngameMenus(newSceneDataObj, ingameGUIBase);
+            ReassignUIs(ingameGUIBase, baseSceneObjects);
 
             _playerAssigner.PositionPlayers(_sceneData);
 
@@ -179,7 +170,7 @@ namespace Assets.Scripts.Game.MapInitialization
             }
         }
 
-        private GameObject CreateIngameMenus(GameplayModesEnum selectedGameMode)
+        private GameObject CreateIngameMenus(GameObject sceneDataObj, GameplayModesEnum selectedGameMode)
         {
             var ingameMenuFactory = _ingameMenuFactory.Interface;
             var guiMainObject = ingameMenuFactory.CreateBaseUI(_sceneData.gameObject.transform);
@@ -188,6 +179,16 @@ namespace Assets.Scripts.Game.MapInitialization
             guiMainObject.transform.SetParent(_sceneData.gameObject.transform);
 
             return guiMainObject;
+        }
+
+        private void ReassignUIs(GameObject uiMainObject, GameObject baseSceneObjects)
+        {
+            var pauseObject = uiMainObject.GetComponentInChildren<PauseMenuMarker>().gameObject;
+            var pauseObjectTarget = baseSceneObjects.GetComponentInChildren<InGameTopUIMenuAssigner>();
+
+            pauseObjectTarget.AssignMenu(pauseObject);
+            //TODO: Create as many player UI elements as players, then pass them as array/list.
+            //TODO: Use the _matchData.PlayersConfigs.PlayerConfigs; to get count.
         }
 
         private void InjectMainCameraToIngameMenus(GameObject sceneDataObj, GameObject mainGUIObject)
