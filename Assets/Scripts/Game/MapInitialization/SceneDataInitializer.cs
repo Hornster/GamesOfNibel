@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using Assets.Scripts.Game.Common;
@@ -181,12 +182,26 @@ namespace Assets.Scripts.Game.MapInitialization
             return guiMainObject;
         }
 
+        private List<GameObject> CreatePlayerUIs()
+        {
+            var playerUIs = new List<GameObject>();
+            int playersCount = _matchData.PlayersConfigs.PlayerConfigs.Count;
+            for (int i = 0; i < playersCount; i++)
+            {
+                //playerUIs.Add();
+            }
+
+            return playerUIs;
+        }
+
         private void ReassignUIs(GameObject uiMainObject, GameObject baseSceneObjects)
         {
             var pauseObject = uiMainObject.GetComponentInChildren<PauseMenuMarker>().gameObject;
             var pauseObjectTarget = baseSceneObjects.GetComponentInChildren<InGameTopUIMenuAssigner>();
 
             pauseObjectTarget.AssignMenu(pauseObject);
+
+            
             //TODO: Create as many player UI elements as players, then pass them as array/list.
             //TODO: Use the _matchData.PlayersConfigs.PlayerConfigs; to get count.
         }
