@@ -18,11 +18,11 @@ namespace Assets.Scripts.Game.Common.Factories
         /// <returns></returns>
         GameObject CreateBaseUI(Transform parent, bool defaultPauseMenu = true);
         /// <summary>
-        /// Creates UI visible by all players (as in, even during splitscreen).
+        /// Creates UI visible by given player.
         /// </summary>
         /// <param name="gameplayMode">Decides what should the UI represent.</param>
         /// <param name="parent">What should be the parent of created UI.</param>
         /// <returns></returns>
-        GameObject CreateTopUI(GameplayModesEnum gameplayMode, Transform parent);
+        GameObject CreatePlayerGameUI(GameplayModesEnum gameplayMode, Transform parent);
     }
 }

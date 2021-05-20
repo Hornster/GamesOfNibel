@@ -33,12 +33,12 @@ namespace Assets.Sandbox.Scripts
             return mainUI;
         }
         /// <summary>
-        /// Creates UI visible by all players (as in, even during splitscreen).
+        /// Creates UI visible by given player.
         /// </summary>
         /// <param name="gameplayMode">Decides what should the UI represent.</param>
         /// <param name="parent">What should be the parent of created UI.</param>
         /// <returns></returns>
-        public GameObject CreateTopUI(GameplayModesEnum gameplayMode, Transform parent)
+        public GameObject CreatePlayerGameUI(GameplayModesEnum gameplayMode, Transform parent)
         {
             if(_UIPrefabs.dictionary.TryGetValue(gameplayMode, out var prefab))
             {

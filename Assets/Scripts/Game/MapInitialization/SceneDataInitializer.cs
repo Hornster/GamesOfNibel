@@ -8,9 +8,11 @@ using Assets.Scripts.Game.Common.CustomEvents;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Exceptions;
+using Assets.Scripts.Game.GUI.Camera;
 using Assets.Scripts.Game.InspectorSerialization.Interfaces;
 using Assets.Scripts.Game.Player.Character;
 using Assets.Scripts.Game.Player.Character.Skills;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.MapInitialization
@@ -73,11 +75,16 @@ namespace Assets.Scripts.Game.MapInitialization
             CreateSpawners();
             CreatePlayers();
 
-            var ingameGUIBase = CreateIngameMenus(newSceneDataObj, _matchData.GameplayMode);
+            var ingameGUIBase = CreateIngameMenus();
+            var playerUIs = CreatePlayerUIs(newSceneDataObj, GameplayModesEnum.CTF);
             InjectMainCameraToIngameMenus(newSceneDataObj, ingameGUIBase);
-            ReassignUIs(ingameGUIBase, baseSceneObjects);
+            ReassignTopUIs(ingameGUIBase, baseSceneObjects);
 
             _playerAssigner.PositionPlayers(_sceneData);
+
+            //Wait for the player UIs to be created.
+            yield return new WaitForEndOfFrame();
+            ReassignPlayerUIs(newSceneDataObj, playerUIs);
 
             lock (_isDoneLoadingLock)
             {
@@ -171,39 +178,46 @@ namespace Assets.Scripts.Game.MapInitialization
             }
         }
 
-        private GameObject CreateIngameMenus(GameObject sceneDataObj, GameplayModesEnum selectedGameMode)
+        private GameObject CreateIngameMenus()
         {
             var ingameMenuFactory = _ingameMenuFactory.Interface;
             var guiMainObject = ingameMenuFactory.CreateBaseUI(_sceneData.gameObject.transform);
-            var ingameMenu = ingameMenuFactory.CreateTopUI(selectedGameMode, guiMainObject.transform);
 
             guiMainObject.transform.SetParent(_sceneData.gameObject.transform);
 
             return guiMainObject;
         }
 
-        private List<GameObject> CreatePlayerUIs()
+        private List<GameObject> CreatePlayerUIs(GameObject sceneDataObj, GameplayModesEnum selectedGameMode)
         {
+            var ingameMenuFactory = _ingameMenuFactory.Interface;
             var playerUIs = new List<GameObject>();
             int playersCount = _matchData.PlayersConfigs.PlayerConfigs.Count;
             for (int i = 0; i < playersCount; i++)
             {
-                //playerUIs.Add();
+                playerUIs.Add(ingameMenuFactory.CreatePlayerGameUI(selectedGameMode, null));
             }
 
             return playerUIs;
         }
 
-        private void ReassignUIs(GameObject uiMainObject, GameObject baseSceneObjects)
+        private void ReassignTopUIs(GameObject uiMainObject, GameObject baseSceneObjects)
         {
             var pauseObject = uiMainObject.GetComponentInChildren<PauseMenuMarker>().gameObject;
             var pauseObjectTarget = baseSceneObjects.GetComponentInChildren<InGameTopUIMenuAssigner>();
 
             pauseObjectTarget.AssignMenu(pauseObject);
+        }
+        /// <summary>
+        /// Reassigns players UIs to player canvases.
+        /// </summary>
+        /// <param name="sceneDataObj">Scene object, used to retrieve controller script used for assigning.</param>
+        /// <param name="playerUIs">Players' UIs.</param>
+        private void ReassignPlayerUIs(GameObject sceneDataObj, List<GameObject> playerUIs)
+        {
+            var playerUIController = sceneDataObj.GetComponentInChildren<PlayerUIController>();
 
-            
-            //TODO: Create as many player UI elements as players, then pass them as array/list.
-            //TODO: Use the _matchData.PlayersConfigs.PlayerConfigs; to get count.
+            playerUIController.AddPlayerInGameUIs(playerUIs);
         }
 
         private void InjectMainCameraToIngameMenus(GameObject sceneDataObj, GameObject mainGUIObject)
