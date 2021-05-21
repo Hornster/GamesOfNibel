@@ -45,9 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseGUIPrefab: {fileID: 4813882070827668368, guid: a11da01e17df7ed48a75d78a3af1b8b5,
     type: 3}
-  _defaultPauseMenuPrefab: {fileID: 5959639342433481046, guid: 76ceafcbb180fa14aa686eeae7098b7d,
-    type: 3}
   _UIPrefabs:
     keys: 00000000
     values:
-    - {fileID: 8514810396145859617, guid: 16efb838688b3ab4a87057eb64e5269e, type: 3}
+    - {fileID: 2387415332052126931, guid: 16efb838688b3ab4a87057eb64e5269e, type: 3}

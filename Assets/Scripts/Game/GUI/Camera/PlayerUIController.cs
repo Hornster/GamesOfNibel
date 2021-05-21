@@ -40,9 +40,12 @@ namespace Assets.Scripts.Game.GUI.Camera
                 SetCamera(playerCamera, playerUIPrefab[i]);
                 //Every player has the same game UI. They participate in the same type of gameplay after all.
                 playerUIPrefab[i].transform.SetParent(canvases[i].transform);
-                StartCoroutine(CanvasModifier.ChkForCanvas(playerUIPrefab[i]));
+                //Reset canvas scale to (1,1,1) since for some reason automatic scaling makes the scale go through the roof.
+                //Hence "true"
+                StartCoroutine(CanvasModifier.ChkForCanvas(playerUIPrefab[i], true));
             }
         }
+
         /// <summary>
         /// Tries to set the provided camera as world camera of provided GameObject's canvases.
         /// </summary>

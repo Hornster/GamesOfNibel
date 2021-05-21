@@ -17,9 +17,10 @@ namespace Assets.Scripts.Game.Common.UI
         /// Checks if provided gameobject has a canvas attached to it. If yes - changes it to full stretch
         /// positioned in the middle.
         /// </summary>
-        public static IEnumerator ChkForCanvas(GameObject menu)
+        /// <param name="menu">Game object that contains the main canvas.</param>
+        /// <param name="resetScale">Shall the scale of the canvas be reset to (1,1,1)?</param>
+        public static IEnumerator ChkForCanvas(GameObject menu, bool resetScale = false)
         {
-            yield return new WaitForEndOfFrame();
             var gameObjectCanvas = menu.GetComponent<Canvas>();
             if (gameObjectCanvas != null)
             {
@@ -29,7 +30,12 @@ namespace Assets.Scripts.Game.Common.UI
                 rectTransform.pivot = new Vector2(0.5f, 0.5f); //The pivot shall go to the center.
                 rectTransform.offsetMin = Vector2.zero;
                 rectTransform.offsetMax = Vector2.zero;
+                if (resetScale)
+                {
+                    rectTransform.localScale = Vector3.one;
+                }
             }
+            yield return null;
         }
     }
 }
