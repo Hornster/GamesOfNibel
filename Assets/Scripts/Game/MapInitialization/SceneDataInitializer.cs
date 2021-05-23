@@ -9,6 +9,7 @@ using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Exceptions;
 using Assets.Scripts.Game.GUI.Camera;
+using Assets.Scripts.Game.GUI.Menu.InGameMenu;
 using Assets.Scripts.Game.InspectorSerialization.Interfaces;
 using Assets.Scripts.Game.Player.Character;
 using Assets.Scripts.Game.Player.Character.Skills;
@@ -219,7 +220,11 @@ namespace Assets.Scripts.Game.MapInitialization
 
             playerUIController.AddPlayerInGameUIs(playerUIs);
         }
-
+        /// <summary>
+        /// Injects main camera to canvases of ingame menus.
+        /// </summary>
+        /// <param name="sceneDataObj">Object containing the main camera. Shall contain the CameraRetriever component.</param>
+        /// <param name="mainGUIObject">Object with canvas(es). Shall contain a camera provider for each canvas.</param>
         private void InjectMainCameraToIngameMenus(GameObject sceneDataObj, GameObject mainGUIObject)
         {
             var cameraRetriever = sceneDataObj.GetComponentInChildren<CameraRetriever>();
@@ -229,6 +234,22 @@ namespace Assets.Scripts.Game.MapInitialization
             {
                 cameraDestination.SetCamera(cameraRetriever.GetCamera());
             }
+        }
+        /// <summary>
+        /// Registers scene data for destruction upon leaving the scene after playing it.
+        /// </summary>
+        /// <param name="inGameMenuTransitionManagerObj">Object that contains the InGameMenuTransitionManager script. Can be in its children.</param>
+        private void RegisterSceneDataForDestroy(GameObject inGameMenuTransitionManagerObj)
+        {
+            var inGameTransitionManager =
+                inGameMenuTransitionManagerObj.GetComponentInChildren<InGameMenuTransitionManager>();
+
+            if (inGameTransitionManager == null)
+            {
+                throw new Exception("No in game menu transition manager found!");
+            }
+
+            inGameTransitionManager.OnReturnToMenu.AddListener(_sceneData.DestroyData);
         }
     }
 }

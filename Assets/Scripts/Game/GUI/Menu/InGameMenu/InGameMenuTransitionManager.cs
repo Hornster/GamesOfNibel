@@ -56,6 +56,12 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
         /// Currently active menu.
         /// </summary>
         protected MenuType _currentMenu = MenuType.None;
+        /// <summary>
+        /// Called when the player returns to the main menu from selected and run match. The containing object gets destroyed when that happens, so no need
+        /// to clear events.
+        /// </summary>
+        public UnityEvent OnReturnToMenu { get; set; } = new UnityEvent();
+
         protected void Start()
         {
             //don't have to be found. For debug purposes for example.
@@ -180,6 +186,7 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
 
             yield return new WaitForSeconds(_sceneFadeOutTime);
 
+            OnReturnToMenu.Invoke();
             SceneManager.LoadScene((int)sceneId);
         }
     }
