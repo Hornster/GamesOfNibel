@@ -77,6 +77,7 @@ namespace Assets.Scripts.Game.MapInitialization
             CreatePlayers();
 
             var ingameGUIBase = CreateIngameMenus();
+            RegisterSceneDataForDestroy(ingameGUIBase);
             var playerUIs = CreatePlayerUIs(newSceneDataObj, GameplayModesEnum.CTF);
             InjectMainCameraToIngameMenus(newSceneDataObj, ingameGUIBase);
             ReassignTopUIs(ingameGUIBase, baseSceneObjects);

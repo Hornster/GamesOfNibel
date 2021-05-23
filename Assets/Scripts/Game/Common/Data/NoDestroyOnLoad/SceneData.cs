@@ -79,7 +79,7 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         /// </summary>
         public void DestroyData()
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
 
     }
