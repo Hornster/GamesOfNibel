@@ -313,6 +313,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5939202276328234603}
     m_Modifications:
+    - target: {fileID: 283547218328503421, guid: 6b7aa456ec6279347a47a37e93907b0c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 8000
+      objectReference: {fileID: 0}
     - target: {fileID: 4448388764895739704, guid: 6b7aa456ec6279347a47a37e93907b0c,
         type: 3}
       propertyPath: _playerUIPrefab

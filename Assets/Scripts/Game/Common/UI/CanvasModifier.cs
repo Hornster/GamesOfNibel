@@ -34,6 +34,8 @@ namespace Assets.Scripts.Game.Common.UI
                 {
                     rectTransform.localScale = Vector3.one;
                 }
+                //Makes sure that the canvas is within camera's render depth distance.
+                rectTransform.localPosition = new Vector3(rectTransform.localPosition.x, rectTransform.localPosition.y, 0);
             }
             yield return null;
         }
