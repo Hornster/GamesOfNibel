@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1817832777029876605}
   - component: {fileID: 1817832777029876482}
   m_Layer: 0
-  m_Name: MenuUI
+  m_Name: TopUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -399,6 +399,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 6095420884946917463, guid: cbd35bfedbb4e4c40b382ce79bd6d128,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 16439
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbd35bfedbb4e4c40b382ce79bd6d128, type: 3}

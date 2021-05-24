@@ -148,6 +148,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 106379780649411517, guid: 681bc709df20d6b43b67565932304435,
         type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 106379780649411517, guid: 681bc709df20d6b43b67565932304435,
+        type: 3}
       propertyPath: m_TagString
       value: PauseMenuBase
       objectReference: {fileID: 0}

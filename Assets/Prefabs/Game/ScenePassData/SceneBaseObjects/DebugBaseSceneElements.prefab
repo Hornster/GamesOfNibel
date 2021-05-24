@@ -318,6 +318,11 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 8000
       objectReference: {fileID: 0}
+    - target: {fileID: 283547218930382925, guid: 6b7aa456ec6279347a47a37e93907b0c,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 16423
+      objectReference: {fileID: 0}
     - target: {fileID: 4448388764895739704, guid: 6b7aa456ec6279347a47a37e93907b0c,
         type: 3}
       propertyPath: _playerUIPrefab
