@@ -69,5 +69,15 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         {
             _myId = newId;
         }
+        /// <summary>
+        /// Destroys this config's gameobject.
+        /// </summary>
+        public void DestroyConfig()
+        {
+            if (this.gameObject != null)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 }

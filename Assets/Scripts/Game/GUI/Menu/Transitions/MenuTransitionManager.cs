@@ -175,6 +175,8 @@ namespace Assets.Scripts.Game.GUI.Menu.Transitions
             var sceneFadeOutCoroutine = StartCoroutine(SceneFadeOut());
             var dataIniCoroutine = StartCoroutine(_sceneDataInitializer.CreateData());
 
+            Debug.Break();
+
             yield return dataIniCoroutine;
             yield return sceneFadeOutCoroutine;
 

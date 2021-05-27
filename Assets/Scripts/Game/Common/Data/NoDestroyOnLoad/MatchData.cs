@@ -109,6 +109,13 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
             _instance = null;
         }
 
-        
+        /// <summary>
+        /// Deletes the data stored in this object, removes data gameobjects.
+        /// </summary>
+        public void DeleteData()
+        {
+            PlayersConfigs.ClearData();
+            SpawnersConfig.ClearData();
+        }
     }
 }

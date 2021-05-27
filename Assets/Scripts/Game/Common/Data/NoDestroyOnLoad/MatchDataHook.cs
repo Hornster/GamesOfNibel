@@ -36,6 +36,8 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
 
         public void OnMapSelected(MapData mapData)
         {
+            MatchDataReference.DeleteData();
+
             MatchDataReference.AddPlayerConfig();
             SetSpawnersData(mapData);
             MatchDataReference.SceneToLoad = mapData.ScenePath;

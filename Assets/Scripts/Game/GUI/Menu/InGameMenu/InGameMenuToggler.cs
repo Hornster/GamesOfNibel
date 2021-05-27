@@ -65,6 +65,7 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
         public void OnInGameMenuDisabled()
         {
             _isIngameMenuActive = false;
+            _onMenuToggle?.Invoke(_isIngameMenuActive);
         }
         /// <summary>
         /// Shall be called when in game menu (pause menu) has been disabled.
@@ -73,7 +74,6 @@ namespace Assets.Scripts.Game.GUI.Menu.InGameMenu
         {
             OnInGameMenuDisabled();
             _transitionManager.PerformTransition(MenuType.None);
-            _onMenuToggle?.Invoke(_isIngameMenuActive);
         }
         /// <summary>
         /// Registers event handler that will be called whenever ingame menu is toggled. Passed argument is the state of the menu after toggling occured.

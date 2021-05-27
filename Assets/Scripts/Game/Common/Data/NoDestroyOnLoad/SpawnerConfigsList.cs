@@ -26,5 +26,14 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
             spawnerGroupConfig.gameObject.transform.SetParent(this.transform);
             SpawnerConfigs.Add(spawnerGroupConfig);
         }
+
+        public void ClearData()
+        {
+            foreach (var spawnerConfig in SpawnerConfigs)
+            {
+                spawnerConfig.DestroyConfig();
+            }
+            SpawnerConfigs.Clear();
+        }
     }
 }

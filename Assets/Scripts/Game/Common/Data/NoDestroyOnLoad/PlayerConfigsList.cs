@@ -36,5 +36,17 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
             PlayerConfigs.Add(newPlayerConfig);
             return newPlayerConfig.MyId;
         }
+        /// <summary>
+        /// Clears all data of players.
+        /// </summary>
+        public void ClearData()
+        {
+            foreach (var playerConfig in PlayerConfigs)
+            {
+                playerConfig.DestroyConfig();
+            }
+
+            PlayerConfigs.Clear();
+        }
     }
 }

@@ -22,5 +22,12 @@ namespace Assets.Scripts.Game.Common.Data
         /// How many spawns of this team there should be.
         /// </summary>
         public int Quantity { get => _quantity; set => _quantity=value; }
+        /// <summary>
+        /// Destroys the config's gameobject.
+        /// </summary>
+        public void DestroyConfig()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
