@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.Game.GUI.Menu.Interface;
 using UnityEngine;
@@ -251,7 +252,18 @@ namespace Assets.Scripts.Game.GUI.Menu
             ChkControlCancelInput();
             ChkMouseInput();
         }
-
+        /// <summary>
+        /// Waits for the end of the frame and then
+        /// Removes controls provided to this controller.
+        /// Controls can be regained via ReplaceController method.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator DisableControlsCoroutine()
+        {
+            //Wait for button press events to be handled. Then, lose the references to the controls.
+            yield return new WaitForEndOfFrame();
+            _currentlyUsedControls = new Dictionary<int, ICustomMenuControl>();
+        }
         /// <summary>
         /// Deselects currently selected control and selects new one.
         /// </summary>
@@ -284,6 +296,14 @@ namespace Assets.Scripts.Game.GUI.Menu
 
             _currentSelectedIndex = 0;
             SelectControl(_currentSelectedIndex);
+        }
+        /// <summary>
+        /// Removes controls provided to this controller. Controls can be regained via ReplaceController method.
+        /// </summary>
+        public void DisableControls()
+        {
+            DeselectControl(_currentSelectedIndex);
+            StartCoroutine(DisableControlsCoroutine());
         }
     }
 }
