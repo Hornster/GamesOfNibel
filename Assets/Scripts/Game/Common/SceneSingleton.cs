@@ -13,10 +13,20 @@ namespace Assets.Scripts.Game.Common
     /// <typeparam name="T"></typeparam>
     public abstract class SceneSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        private static readonly Lazy<T> LazyInstance = new Lazy<T>(CreateSingleton);
+        private static Lazy<T> LazyInstance = new Lazy<T>(CreateSingleton);
 
 
-        public static T Instance => LazyInstance.Value;
+        public static T Instance => CheckForInstance();
+
+        private static T CheckForInstance()
+        {
+            if (LazyInstance?.Value == null)
+            {
+                LazyInstance = new Lazy<T>(CreateSingleton);
+            }
+            
+            return LazyInstance.Value;
+        }
 
         private static T CreateSingleton()
         {
