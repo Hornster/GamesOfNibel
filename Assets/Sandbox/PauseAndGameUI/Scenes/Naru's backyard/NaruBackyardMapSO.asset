@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShownMapName: Naru's Backyard
   Authors:
-  - ZilogZ80, Puszek
+  - CrazedAerialCable
+  - Puszek
   GameplayMode: 0
   Description: First ever created map.
   RequiredSkills: 0000000002000000

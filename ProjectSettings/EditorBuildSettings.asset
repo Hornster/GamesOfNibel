@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Sandbox/GameCameraSetting/Scenes/CinemachinePlayerTest.unity
     guid: bc632b64d378d8446b3a6f17c4c87f24
-  - enabled: 1
+  - enabled: 0
     path: Assets/Sandbox/PauseAndGameUI/Scenes/Naru's backyard/Naru's backyard Markers.unity
     guid: aefdefdfff4af36459c4131bac0b8a96
   - enabled: 0
