@@ -173,7 +173,7 @@ MonoBehaviour:
   wallCheckDistance: 0.8
   _maxClimbableAngle: 100
   _minimalWallAngle: 0
-  _skinWidth: 0.01
+  _skinWidth: 0.025
   _closeToGroundThreshold: 0.05
   _closeGroundCheckSize: {x: 0.5, y: 0.1}
   groundCheck: {fileID: 5220255036992878696}

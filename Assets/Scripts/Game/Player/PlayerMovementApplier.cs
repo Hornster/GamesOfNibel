@@ -133,7 +133,7 @@ namespace Assets.Scripts.Game.Player
                 currentVelocity.x = Mathf.Sign(currentVelocity.x) * _movementSpeed;
             }
             //In the air
-            _playerState.NewVelocity = currentVelocity;
+            SetPlayerVelocity(currentVelocity);
             rb.velocity = _playerState.NewVelocity;
         }
         public void ApplyMovement(float lastFrameTime)
@@ -145,7 +145,7 @@ namespace Assets.Scripts.Game.Player
                 float horizontalVelocity = AccelerateOnGround(lastFrameTime);
                 var newVelocity = ChkHowCloseToGround(new Vector2(horizontalVelocity * _playerState.xInput, _playerState.NewVelocity.y));
                 //On flat ground
-                _playerState.NewVelocity = newVelocity;
+                SetPlayerVelocity( newVelocity);
                 rb.velocity = newVelocity;
             }
             else if (_playerState.isGrounded && _playerState.isOnSlope && !_playerState.IsBeginningJump && _playerState.canWalkOnSlope)
@@ -155,7 +155,7 @@ namespace Assets.Scripts.Game.Player
                 if (_playerState.IsStandingOnGround)
                 {
                     float velocity = AccelerateOnGround(lastFrameTime);
-                    _playerState.NewVelocity = new Vector2(velocity * _playerState.SlopeNormalPerp.x * -_playerState.xInput, velocity * _playerState.SlopeNormalPerp.y * -_playerState.xInput);
+                    SetPlayerVelocity( new Vector2(velocity * _playerState.SlopeNormalPerp.x * -_playerState.xInput, velocity * _playerState.SlopeNormalPerp.y * -_playerState.xInput));
                     rb.velocity = _playerState.NewVelocity;
                 }
             }
@@ -173,7 +173,7 @@ namespace Assets.Scripts.Game.Player
                     {
                         float horizontalVelocity = AccelerateOnGround(lastFrameTime);
                         //Player wants to move away from the slope, that is acceptable.
-                        _playerState.NewVelocity = new Vector2(rb.velocity.x + horizontalVelocity * _playerState.xInput, rb.velocity.y);
+                        SetPlayerVelocity( new Vector2(rb.velocity.x + horizontalVelocity * _playerState.xInput, rb.velocity.y));
                         rb.velocity = _playerState.NewVelocity;
                     }
                 }
@@ -182,6 +182,14 @@ namespace Assets.Scripts.Game.Player
             {
                 CorrectXVelocityWhileAirborne(lastFrameTime);
             }
+        }
+        /// <summary>
+        /// Sets the provided velocity as new player velocity.
+        /// </summary>
+        /// <param name="newVelocity"></param>
+        private void SetPlayerVelocity(Vector2 newVelocity)
+        {
+            _playerState.NewVelocity = newVelocity;
         }
     }
 }

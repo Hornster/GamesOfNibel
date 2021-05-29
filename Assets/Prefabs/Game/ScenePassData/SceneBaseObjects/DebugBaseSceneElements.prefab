@@ -156,6 +156,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5069618047218325314, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
         type: 3}
+      propertyPath: m_text
+      value: 'WSAD/Arrow keys - movement
+
+        Spacebar - jump/wall (against wall)
+        jump/double jump (midair)
+
+        S/Down key + Spacebar - drop from platform
+
+        Shift
+        - hold to glide midair
+
+        H - toggle this ugly thingie
+
+        Escape
+        - pause menu
+
+        ''s all for now, sry.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069618047218325314, guid: 7dbabaee8866cc2429ba24eae6dcde5b,
+        type: 3}
       propertyPath: m_textInfo.lineCount
       value: 11
       objectReference: {fileID: 0}
@@ -184,7 +204,7 @@ PrefabInstance:
       propertyPath: m_text
       value: '(H)elp
 
-        GamesOfNibel V0.1.4.1b
+        GamesOfNibel V0.2.2
 
 '
       objectReference: {fileID: 0}
@@ -298,7 +318,8 @@ PrefabInstance:
       propertyPath: _playerTransform
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5069618049136451021, guid: 7dbabaee8866cc2429ba24eae6dcde5b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7dbabaee8866cc2429ba24eae6dcde5b, type: 3}
 --- !u!4 &2167884424212636973 stripped
 Transform:

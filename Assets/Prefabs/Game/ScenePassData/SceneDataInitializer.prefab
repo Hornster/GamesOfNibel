@@ -63,7 +63,7 @@ MonoBehaviour:
   _sceneDataPrefab: {fileID: 132306653485450056, guid: fee4f5c8b93bc10418bd9a19012f2dbd,
     type: 3}
   _playerAssigner: {fileID: 1739029963}
-  _baseSceneObjectsPrefab: {fileID: 3373880218705025044, guid: 2a5022efe10359144aa0977bb734106d,
+  _baseSceneObjectsPrefab: {fileID: 7874786156370726420, guid: d0d8e813b72ea7a43b3d7240fac4a3f5,
     type: 3}
   _onSceneDataLoaded:
     m_PersistentCalls:
