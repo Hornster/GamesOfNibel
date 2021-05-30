@@ -213,9 +213,11 @@ MonoBehaviour:
   _jumpRequestMemoryTimeout: 0.03
   _groundTouchMemoryTimeout: 0.03
   _wallTouchMemoryTimeout: 0.1
+  _isBeginningJumpTimeout: 0.5
   _jumpMemoryTimer: {fileID: 7343034248418799638}
   _groundTouchMemoryTimer: {fileID: 6714330758677518009}
   _wallTouchMemoryTimer: {fileID: 333759143417114016}
+  _beginningJumpTimer: {fileID: 0}
 --- !u!114 &333759144092407585
 MonoBehaviour:
   m_ObjectHideFlags: 0

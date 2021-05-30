@@ -98,7 +98,6 @@ namespace Assets.Scripts.Game.Player.Physics
             _unclimbableSlopeOnBack = false;
 
             CheckGround();      //Check if the player is touching the ground or, simply, is close enough to it.
-            //MoveCloserToGround();//Check distance to the ground to move the player as close to the ground as possible.
             SlopeCheck();
             WallCheck();
             ChkEdgeCases();
@@ -175,7 +174,7 @@ namespace Assets.Scripts.Game.Player.Physics
                 //Otherwise, jumping on slope under high angle while running towards that slope
                 //would end up in us slide upwards up to the moment when this flag changes back to false.
                 //Which by default happens upon velocity.y reaching 0 from positive value.
-                _playerState.IsBeginningJump = false;
+                _playerState.ResetIsBeginningJump();
 
             }
 
@@ -258,7 +257,11 @@ namespace Assets.Scripts.Game.Player.Physics
                 Debug.DrawRay(hit.point, hit.normal, Color.yellow);
             }
 
-            if (_playerState.slopeDownAngle > maxSlopeAngle || _playerState.slopeSideAngle > maxSlopeAngle)
+            if (_playerState.slopeDownAngle > maxSlopeAngle)
+            {
+                _playerState.canWalkOnSlope = false;
+            }
+            else if (_playerState.IsStandingOnGround == false && _playerState.slopeSideAngle > maxSlopeAngle)
             {
                 _playerState.canWalkOnSlope = false;
             }
@@ -336,6 +339,12 @@ namespace Assets.Scripts.Game.Player.Physics
             {
                 _playerState.canJump = true;
             }
+            //Player cannot be on the slope if they are not touching a wall, nor are grounded.
+            if (_playerState.isGrounded == false && _playerState.IsTouchingWall == false && _playerState.isOnSlope)
+            {
+                //This can occur when the player is standing on the very edge of a platform, close to it but outside of it.
+                _playerState.isOnSlope = false;
+            }
         }
 
 
@@ -354,8 +363,3 @@ namespace Assets.Scripts.Game.Player.Physics
 
     }
 }
-//TODO: Add 2 more rays to bottom and one more to wall detection.
-//TODO: Each ray would have it's own game object. These would be in hierarchy as childs of a controller
-//TODO:The controller would seek out the rays with GetComponentsInChildren
-//TODO: Wall jump can be done basing on the timer as well. Game remembers that the character was holding the wall
-//TODO: and measures time, for example allowing the player to jump up to 0.2 seconds after letting go the wall.

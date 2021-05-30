@@ -134,7 +134,7 @@ namespace Assets.Scripts.Game.Player
             }
             //In the air
             SetPlayerVelocity(currentVelocity);
-            rb.velocity = _playerState.NewVelocity;
+            //rb.velocity = _playerState.NewVelocity;
         }
         public void ApplyMovement(float lastFrameTime)
         {
@@ -146,7 +146,7 @@ namespace Assets.Scripts.Game.Player
                 var newVelocity = ChkHowCloseToGround(new Vector2(horizontalVelocity * _playerState.xInput, _playerState.NewVelocity.y));
                 //On flat ground
                 SetPlayerVelocity( newVelocity);
-                rb.velocity = newVelocity;
+                //rb.velocity = newVelocity;
             }
             else if (_playerState.isGrounded && _playerState.isOnSlope && !_playerState.IsBeginningJump && _playerState.canWalkOnSlope)
             {
@@ -156,7 +156,7 @@ namespace Assets.Scripts.Game.Player
                 {
                     float velocity = AccelerateOnGround(lastFrameTime);
                     SetPlayerVelocity( new Vector2(velocity * _playerState.SlopeNormalPerp.x * -_playerState.xInput, velocity * _playerState.SlopeNormalPerp.y * -_playerState.xInput));
-                    rb.velocity = _playerState.NewVelocity;
+                    //rb.velocity = _playerState.NewVelocity;
                 }
             }
             else if (_playerState.isGrounded && _playerState.isOnSlope &&
@@ -174,7 +174,7 @@ namespace Assets.Scripts.Game.Player
                         float horizontalVelocity = AccelerateOnGround(lastFrameTime);
                         //Player wants to move away from the slope, that is acceptable.
                         SetPlayerVelocity( new Vector2(rb.velocity.x + horizontalVelocity * _playerState.xInput, rb.velocity.y));
-                        rb.velocity = _playerState.NewVelocity;
+                        //rb.velocity = _playerState.NewVelocity;
                     }
                 }
             }
@@ -190,6 +190,7 @@ namespace Assets.Scripts.Game.Player
         private void SetPlayerVelocity(Vector2 newVelocity)
         {
             _playerState.NewVelocity = newVelocity;
+            rb.velocity = _playerState.NewVelocity;
         }
     }
 }

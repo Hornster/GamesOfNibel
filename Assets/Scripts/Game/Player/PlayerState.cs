@@ -60,9 +60,10 @@ namespace Assets.Scripts.Game.Player
         public bool IsAscending { get; set; }
         /// <summary>
         /// Used to lift the player off the ground. Initial jump state, where the player is jumping
-        /// but the collision with the ground may still be present.
+        /// but the collision with the ground may still be present. Can be set and reset only via proper methods since
+        /// has a timeout timer.
         /// </summary>
-        public bool IsBeginningJump { get; set; }
+        public bool IsBeginningJump { get; private set; }
         public bool canWalkOnSlope{ get; set; }
         /// <summary>
         /// Holds a climbable wall.
@@ -110,7 +111,10 @@ namespace Assets.Scripts.Game.Player
         /// Time, in seconds, after which the fact that the player was touching the wall is forgotten.
         /// </summary>
         [SerializeField] private float _wallTouchMemoryTimeout = 0.1f;
-
+        /// <summary>
+        /// Time, in seconds, after which the isBeginningJump boolean will be reset.
+        /// </summary>
+        [SerializeField] private float _isBeginningJumpTimeout = 1f;
         /// <summary>
         /// Measures the time from last jump input from player.
         /// </summary>
@@ -124,6 +128,11 @@ namespace Assets.Scripts.Game.Player
         /// Measures the time since the most recent wall holding by the player.
         /// </summary>
         [SerializeField] private Timer _wallTouchMemoryTimer;
+        /// <summary>
+        /// A safety switch for the IsBeginningJump flag. In tight spaces jumping can result in
+        /// the character not letting off the ground.
+        /// </summary>
+        [SerializeField] private Timer _beginningJumpTimer;
 
         private void Awake()
         {
@@ -136,6 +145,9 @@ namespace Assets.Scripts.Game.Player
 
             _wallTouchMemoryTimer.MaxAwaitTime = _wallTouchMemoryTimeout;
             _wallTouchMemoryTimer.RegisterTimeoutHandler(TimeoutForHoldingWallMemory);
+
+            _beginningJumpTimer.MaxAwaitTime = _isBeginningJumpTimeout;
+            _beginningJumpTimer.RegisterTimeoutHandler(TimeoutForIsBeginningJumpBoolean);
         }
         /// <summary>
         /// Registers the double jump timer which is called each time the jump memory timeout happens.
@@ -199,7 +211,6 @@ namespace Assets.Scripts.Game.Player
         {
             canJump = false;
             isJumping = true;
-            IsBeginningJump = true;
             IsAscending = true;
             IsStandingOnGroundRemembered = false;
             IsJumpRequestRemembered = false;
@@ -207,6 +218,7 @@ namespace Assets.Scripts.Game.Player
             _jumpMemoryTimer.Stop();//We jumped already, no need to jump twice.
             _groundTouchMemoryTimer.Stop();
             _wallTouchMemoryTimer.Stop();
+            SetIsBeginningJump();
         }
         /// <summary>
         /// Called whenever the player reaches the max height of their jump.
@@ -268,6 +280,23 @@ namespace Assets.Scripts.Game.Player
             GlideStage = GlideStages.GlideStop;
         }
         /// <summary>
+        /// Resets the IsBeginningJump boolean and its timeout timer.
+        /// </summary>
+        public void ResetIsBeginningJump()
+        {
+            IsBeginningJump = false;
+            TimeoutForIsBeginningJumpBoolean();
+        }
+        /// <summary>
+        /// Sets the IsBeginningJump boolean and launches its timeout timer.
+        /// </summary>
+        public void SetIsBeginningJump()
+        {
+            IsBeginningJump = true;
+            _beginningJumpTimer.StartTimer();
+        }
+
+        /// <summary>
         /// Called by jump timeout memory timer when the time after pressing the jump button has passed.
         /// </summary>
         private void TimeoutForJumpMemory()
@@ -290,6 +319,15 @@ namespace Assets.Scripts.Game.Player
         {
             IsStandingOnGroundRemembered = false;
             _groundTouchMemoryTimer.Stop();
+        }
+        /// <summary>
+        /// Called by beginning jump boolean timer when the time runs out and the boolean is still set to true.
+        /// </summary>
+        private void TimeoutForIsBeginningJumpBoolean()
+        {
+            IsBeginningJump = false;
+            _beginningJumpTimer.ResetAndStop();
+            Debug.Log("IsBeginningJump reset!");
         }
         //todo DEBUG
         private void NotifyDebugWatchers()
