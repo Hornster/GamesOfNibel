@@ -5,30 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/GameScenes/Menu/MainMenu.unity
     guid: 80659c2da6740e34c847317ecd6a9c9b
   - enabled: 0
-    path: Assets/Sandbox/Scenes/TestScene/TestScene.unity
-    guid: e6d5ee18814e61543a45b0d55067f3a8
-  - enabled: 1
     path: Assets/Scenes/GameScenes/Tutorial/Bootcamp Movement.unity
     guid: 9298a6abe9f62e144bc26a3bb2e1648f
   - enabled: 0
-    path: Assets/Scenes/GameScenes/CTF/Naru's backyard Obsolete/Naru's backyard Scene.unity
-    guid: 1c68a8e5fa88ff34c8612e7f299fbc78
-  - enabled: 0
-    path: Assets/Sandbox/GameCameraSetting/Scenes/CameraSettingsTests.unity
-    guid: df6c0cbc6f5970141bcf3743f88757bc
-  - enabled: 0
     path: Assets/Sandbox/DataPassingTests/Scenes/InitializationScene.unity
     guid: 879d916cbc5f66f44a020c0a295ff85d
-  - enabled: 0
-    path: Assets/Sandbox/DataPassingTests/Scenes/MapScene.unity
-    guid: 3bfda062fff96a540abe43242d245de6
-  - enabled: 0
-    path: Assets/Sandbox/GameCameraSetting/Scenes/CinemachinePlayerTest.unity
-    guid: bc632b64d378d8446b3a6f17c4c87f24
   - enabled: 0
     path: Assets/Sandbox/PauseAndGameUI/Scenes/Naru's backyard/Naru's backyard Markers.unity
     guid: aefdefdfff4af36459c4131bac0b8a96
@@ -36,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Sandbox/PauseAndGameUI/Scenes/Naru's backyard/InitializationScene
       1.unity
     guid: 611d9ac13ebbd324181197b273242d72
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameScenes/Tutorial/InitializationScene 2.unity
     guid: ac2cdac34d4bc7a4ba7242e34b6951b5
   m_configObjects: {}

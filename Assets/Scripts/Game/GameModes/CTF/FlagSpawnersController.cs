@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Exceptions;
 using Assets.Scripts.Game.Spawner.FlagSpawner;
+using Boo.Lang;
 using UnityEngine;
 using Random = System.Random;
 
@@ -71,13 +73,17 @@ namespace Assets.Scripts.Game.GameModes.CTF
             int whichSpawn = _randomGenerator.Next(0, _neutralFlagSpawnerModules.Length);
 
             _neutralFlagSpawnerModules[whichSpawn].SpawnEntity(PrepareFlagData());
-
-            Debug.Log("Neutral flag respawned.");
         }
         
-        private void Start()
+        public void Initialize(GameObject flagSpawningBasesParent)
         {
-            _neutralFlagSpawnerModules = GetComponentsInChildren<IFlagSpawner>();
+            _neutralFlagSpawnerModules = flagSpawningBasesParent.GetComponentsInChildren<IFlagSpawner>();
+
+            if (_neutralFlagSpawnerModules.Length == 0)
+            {
+                throw new GONBaseException("No flag spawners found!");
+            }
+
             _neutralFlagRespawnTimer = GetComponent<Timer>();
             _neutralFlagRespawnTimer.RegisterTimeoutHandler(SpawnNeutralFlagHandler);
             _neutralFlagRespawnTimer.MaxAwaitTime = _flagRespawnTime;
