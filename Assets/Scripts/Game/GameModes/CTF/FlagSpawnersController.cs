@@ -13,7 +13,7 @@ namespace Assets.Scripts.Game.GameModes.CTF
         /// <summary>
         /// Array of available neutral flag spawners.
         /// </summary>
-        private IFlagSpawner[] _neutralFlagSpawnerModules;
+        private List<IFlagSpawner> _neutralFlagSpawnerModules;
         
         /// <summary>
         /// The time it takes to create a new flag. Counting from most recent capture of the flag.
@@ -70,14 +70,14 @@ namespace Assets.Scripts.Game.GameModes.CTF
         {
             _isNeutralFlagSpawned = true;
             _neutralFlagRespawnTimer.ResetAndStop();
-            int whichSpawn = _randomGenerator.Next(0, _neutralFlagSpawnerModules.Length);
+            int whichSpawn = _randomGenerator.Next(0, _neutralFlagSpawnerModules.Count);
 
             _neutralFlagSpawnerModules[whichSpawn].SpawnEntity(PrepareFlagData());
         }
         
         public void Initialize(List<GameObject> flagSpawningBases)
         {
-            var _neutralFlagSpawnerModules = new List<IFlagSpawner>(flagSpawningBases.Count);
+            _neutralFlagSpawnerModules = new List<IFlagSpawner>(flagSpawningBases.Count);
 
             foreach (var flagSpawningBase in flagSpawningBases)
             {

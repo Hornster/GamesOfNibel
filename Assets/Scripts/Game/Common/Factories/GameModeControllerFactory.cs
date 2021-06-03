@@ -54,8 +54,30 @@ namespace Assets.Scripts.Game.Common.Factories
                     throw new GONBaseException("Ctf UI Controller not found!");
                 }
             }
-            
+
+            ctfGameModeManager = RegisterFlagCaptureHandlers(sceneData, ctfGameModeManager);
+
             return controller;
+        }
+        /// <summary>
+        /// Registers (if possible) players' bases' flag capture handlers.
+        /// </summary>
+        /// <param name="sceneData">Source of bases.</param>
+        /// <param name="gameModeManager">Capture The Flag mode manager script.</param>
+        /// <returns></returns>
+        private CtfGameModeManager RegisterFlagCaptureHandlers(SceneData sceneData, CtfGameModeManager gameModeManager)
+        {
+            if (sceneData.Bases.TryGetValue(Teams.Lily, out var lilyBases))
+            {
+                gameModeManager.RegisterFlagCaptureHandlers(lilyBases);
+            }
+
+            if (sceneData.Bases.TryGetValue(Teams.Lotus, out var lotusBases))
+            {
+                gameModeManager.RegisterFlagCaptureHandlers(lotusBases);
+            }
+
+            return gameModeManager;
         }
         /// <summary>
         /// Creates selected game controller and connects it to provided UI. Make sure the UI is correct.

@@ -5,6 +5,7 @@ using Assets.Scripts.Game.Common.Localization;
 using Assets.Scripts.Game.GameModes.CTF.Observers;
 using Assets.Scripts.Game.GUI.Gamemodes.CTF;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Game.GameModes.Managers
 {
@@ -53,12 +54,33 @@ namespace Assets.Scripts.Game.GameModes.Managers
         /// </summary>
         public void StartMatch()
         {
+            foreach (var uiController in _guiControllers)
+            {
+                uiController.PrintMessage(Teams.Multi, $"Round begins in {_startTime} seconds!");
+            }
             _roundTimer.StartTimer();
-            _isMatchOn = true;
+            SceneManager.sceneLoaded -= OnSceneLoaded;  //The match began - unregister the event handler.
+        }
+        /// <summary>
+        /// Registers awaiting event for scene load.
+        /// </summary>
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        /// <summary>
+        /// Called when scene is loaded - starts match begin sequence.
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="mode"></param>
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            Debug.Log("OnSceneLoaded: " + scene.name);
+            Debug.Log(mode);
+            StartMatch();
         }
         private void Start()
         {
-            RegisterFlagCaptureHandler();
             _roundTimer = GetComponent<Timer>();
             _roundTimer.RegisterTimeoutHandler(StartRound);
             _roundTimer.MaxAwaitTime = _startTime;
@@ -133,10 +155,21 @@ namespace Assets.Scripts.Game.GameModes.Managers
                 Debug.LogError($"How on Nibel did you get here?! There's no such team as {whichTeam}!!!");
             }
         }
-
-        private void RegisterFlagCaptureHandler()
+        /// <summary>
+        /// Tries to extract IFlagCapturedObservers from provided objects and assign a handler to them.
+        /// </summary>
+        /// <param name="flagCaptureCapableBases"></param>
+        public void RegisterFlagCaptureHandlers(List<GameObject> flagCaptureCapableBases)
         {
-            var flagCapturers = GetComponentsInChildren<IFlagCapturedObserver>();
+            var flagCapturers = new List<IFlagCapturedObserver>(flagCaptureCapableBases.Count);//GetComponentsInChildren<IFlagCapturedObserver>();
+            foreach (var flagCaptureCapableBase in flagCaptureCapableBases)
+            {
+                var flagCapturerScript = flagCaptureCapableBase.GetComponentInChildren<IFlagCapturedObserver>();
+                if (flagCapturerScript != null)
+                {
+                    flagCapturers.Add(flagCapturerScript);
+                }
+            }
             foreach (var flagCapturer in flagCapturers)
             {
                 flagCapturer.RegisterObserver(TeamScoredPoint);
@@ -147,8 +180,12 @@ namespace Assets.Scripts.Game.GameModes.Managers
         /// </summary>
         private void StartRound()
         {
+            foreach (var uiController in _guiControllers)
+            {
+                uiController.PrintMessage(Teams.Multi, "Round begins!");
+            }
             _roundTimer.ResetAndStop();
-
+            _isMatchOn = true;
         }
     }
 }
