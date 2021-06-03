@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Game.Common;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common;
 using Assets.Scripts.Game.Common.Exceptions;
 using Assets.Scripts.Game.Spawner.FlagSpawner;
-using Boo.Lang;
 using UnityEngine;
 using Random = System.Random;
 
@@ -75,11 +75,17 @@ namespace Assets.Scripts.Game.GameModes.CTF
             _neutralFlagSpawnerModules[whichSpawn].SpawnEntity(PrepareFlagData());
         }
         
-        public void Initialize(GameObject flagSpawningBasesParent)
+        public void Initialize(List<GameObject> flagSpawningBases)
         {
-            _neutralFlagSpawnerModules = flagSpawningBasesParent.GetComponentsInChildren<IFlagSpawner>();
+            var _neutralFlagSpawnerModules = new List<IFlagSpawner>(flagSpawningBases.Count);
 
-            if (_neutralFlagSpawnerModules.Length == 0)
+            foreach (var flagSpawningBase in flagSpawningBases)
+            {
+                _neutralFlagSpawnerModules.Add(flagSpawningBase.GetComponentInChildren<IFlagSpawner>());
+            }
+            
+
+            if (_neutralFlagSpawnerModules.Count == 0)
             {
                 throw new GONBaseException("No flag spawners found!");
             }

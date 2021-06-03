@@ -40,17 +40,30 @@ namespace Assets.Scripts.Game.GameModes.Managers
         /// Stores the score count of the teams.
         /// </summary>
         private Dictionary<Teams, int> _scoreCount = new Dictionary<Teams, int>();
-
+        /// <summary>
+        /// Sets the UI controller used to communicate with UI.
+        /// </summary>
+        /// <param name="ctfUiController"></param>
+        public void SetUIController(CtfGuiController ctfUiController)
+        {
+            _guiController = ctfUiController;
+        }
+        /// <summary>
+        /// Starts the match.
+        /// </summary>
+        public void StartMatch()
+        {
+            _roundTimer.StartTimer();
+            _isMatchOn = true;
+        }
         private void Start()
         {
             RegisterFlagCaptureHandler();
             _roundTimer = GetComponent<Timer>();
             _roundTimer.RegisterTimeoutHandler(StartRound);
             _roundTimer.MaxAwaitTime = _startTime;
-            _roundTimer.StartTimer();
             _scoreCount.Add(Teams.Lily, 0);
             _scoreCount.Add(Teams.Lotus, 0);
-            _isMatchOn = true;
         }
         /// <summary>
         /// Victory has been achieved - report it.

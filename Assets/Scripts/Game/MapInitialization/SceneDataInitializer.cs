@@ -33,6 +33,9 @@ namespace Assets.Scripts.Game.MapInitialization
         [Tooltip("Ingame menus factory. Provides pause menus and gamemode characteristic menus.")]
         [SerializeField]
         private IIngameMenuFactoryContainer _ingameMenuFactory;
+        [Tooltip("Prefab for game mode controllers factory.")]
+        [SerializeField]
+        private IGameModeControllerFactoryContainer _gameModeControllerFactory;
 
         [Header("Scene Deployment")]
         [Tooltip("Prefab of the SceneData object. Will contain ready for deployment dynamic objects for the loaded map.")]
@@ -254,3 +257,5 @@ namespace Assets.Scripts.Game.MapInitialization
         }
     }
 }
+
+//TODO: Use the game mode controller factory to get proper controllers.
