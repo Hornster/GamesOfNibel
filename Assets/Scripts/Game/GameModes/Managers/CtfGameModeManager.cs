@@ -25,10 +25,10 @@ namespace Assets.Scripts.Game.GameModes.Managers
         [SerializeField]
         private int _victoryPointsRequired;
         /// <summary>
-        /// Reference to the gui controller. Used to show the game state to the players.
+        /// Reference to the gui controllers. Used to show the game state to the players.
         /// </summary>
         [SerializeField]
-        private CtfGuiController _guiController;
+        private List<CtfGuiController> _guiControllers;
         /// <summary>
         /// Set to true as long as the match is being played. When match ending requirements are met, the match ends and
         /// the flag is set to false/
@@ -44,9 +44,9 @@ namespace Assets.Scripts.Game.GameModes.Managers
         /// Sets the UI controller used to communicate with UI.
         /// </summary>
         /// <param name="ctfUiController"></param>
-        public void SetUIController(CtfGuiController ctfUiController)
+        public void AddUIController(CtfGuiController ctfUiController)
         {
-            _guiController = ctfUiController;
+            _guiControllers.Add(ctfUiController);
         }
         /// <summary>
         /// Starts the match.
@@ -75,7 +75,11 @@ namespace Assets.Scripts.Game.GameModes.Managers
             Debug.Log($"Team {whichTeam} is victorious!!");
             var locale = LocalizationManager.GetInstance();
             var victoryMsg = locale.CtfLocale.GetVictoryQuote(whichTeam);
-            _guiController.PrintMessage(whichTeam, victoryMsg);
+
+            foreach (var guiController in _guiControllers)
+            {
+                guiController.PrintMessage(whichTeam, victoryMsg);
+            }
         }
         /// <summary>
         /// Ends the match, returns to menu.
@@ -117,7 +121,11 @@ namespace Assets.Scripts.Game.GameModes.Managers
                 currentPoints += pointsAmount;
                 _scoreCount[whichTeam] = currentPoints;
 
-                _guiController.UpdatePoints(whichTeam, currentPoints);
+                foreach (var guiController in _guiControllers)
+                {
+                    guiController.UpdatePoints(whichTeam, currentPoints);
+                }
+
                 ChkVictoryCondition(whichTeam);
             }
             else

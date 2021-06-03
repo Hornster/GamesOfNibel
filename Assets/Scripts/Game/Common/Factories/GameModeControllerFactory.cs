@@ -29,7 +29,7 @@ namespace Assets.Scripts.Game.Common.Factories
         /// <param name="sceneData">Data of the scene, takes neutral bases from here.</param>
         /// <param name="gameModeUI">UI for CTF game mode.</param>
         /// <returns></returns>
-        private GameObject CreateCTFController(SceneData sceneData, GameObject gameModeUI)
+        private GameObject CreateCTFController(SceneData sceneData, List<GameObject> gameModeUIs)
         {
             var controller = Instantiate(_ctfMatchControllerPrefab);
             var flagController = controller.GetComponentInChildren<FlagSpawnersController>();
@@ -44,28 +44,31 @@ namespace Assets.Scripts.Game.Common.Factories
                 throw new GONBaseException("No neutral bases found for CTF mode!");
             }
 
-            var ctfUIController = gameModeUI.GetComponentInChildren<CtfGuiController>();
-            ctfGameModeManager.SetUIController(ctfUIController);
-
-            if (ctfUIController == null)
+            foreach (var gameModeUI in gameModeUIs)
             {
-                throw new GONBaseException("Ctf UI Controller not found!");
-            }
+                var ctfUIController = gameModeUI.GetComponentInChildren<CtfGuiController>();
+                ctfGameModeManager.AddUIController(ctfUIController);
 
+                if (ctfUIController == null)
+                {
+                    throw new GONBaseException("Ctf UI Controller not found!");
+                }
+            }
+            
             return controller;
         }
         /// <summary>
         /// Creates selected game controller and connects it to provided UI. Make sure the UI is correct.
         /// </summary>
-        /// <param name="gameModeUI"></param>
-        /// <param name="gameplayMode"></param>
+        /// <param name="gameModeUIs">Players UIs - each player has a UI set that shows the match state to them.</param>
+        /// <param name="gameplayMode">Match type which will be played.</param>
         /// <returns></returns>
-        public GameObject CreateGameController(SceneData sceneData, GameObject gameModeUI, GameplayModesEnum gameplayMode)
+        public GameObject CreateGameController(SceneData sceneData, List<GameObject> gameModeUIs, GameplayModesEnum gameplayMode)
         {
             switch (gameplayMode)
             {
                 case GameplayModesEnum.CTF:
-                    return CreateCTFController(sceneData, gameModeUI);
+                    return CreateCTFController(sceneData, gameModeUIs);
                 case GameplayModesEnum.Race:
                     throw new NotImplementedException();
                 case GameplayModesEnum.TimeAttack:

@@ -87,6 +87,9 @@ namespace Assets.Scripts.Game.MapInitialization
 
             _playerAssigner.PositionPlayers(_sceneData);
 
+            //Initialization of game (gameplay) controllers shall be always at the end, right before EndOfFrame.
+            CreateGameMode(_matchData.GameplayMode, playerUIs);
+
             //Wait for the player UIs to be created.
             yield return new WaitForEndOfFrame();
             ReassignPlayerUIs(newSceneDataObj, playerUIs);
@@ -108,6 +111,13 @@ namespace Assets.Scripts.Game.MapInitialization
                     LaunchMap();
                 }
             }
+        }
+
+        private void CreateGameMode(GameplayModesEnum gameMode, List<GameObject> gameModeUI)
+        {
+            var matchController = _gameModeControllerFactory.Interface.CreateGameController(_sceneData, gameModeUI, gameMode);
+
+            matchController.transform.SetParent(_sceneData.transform);
         }
 
         private void LaunchMap()
@@ -257,5 +267,3 @@ namespace Assets.Scripts.Game.MapInitialization
         }
     }
 }
-
-//TODO: Use the game mode controller factory to get proper controllers.
