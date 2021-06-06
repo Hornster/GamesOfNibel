@@ -95,7 +95,14 @@ namespace Assets.Scripts.Game.GameModes.CTF
             _neutralFlagRespawnTimer.MaxAwaitTime = _flagRespawnTime;
             _randomGenerator = new Random();
 
-            NeutralFlagCapturedHandler();
+            //NeutralFlagCapturedHandler();
+        }
+        /// <summary>
+        /// Start counting for the first flag to spawn.
+        /// </summary>
+        public void StartMatch()
+        {
+            NeutralFlagCapturedHandler();//Start counting for new flag to spawn.
         }
     }
 }

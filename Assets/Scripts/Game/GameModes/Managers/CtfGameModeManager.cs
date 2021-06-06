@@ -2,6 +2,7 @@
 using Assets.Scripts.Game.Common;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Localization;
+using Assets.Scripts.Game.GameModes.CTF;
 using Assets.Scripts.Game.GameModes.CTF.Observers;
 using Assets.Scripts.Game.GUI.Gamemodes.CTF;
 using UnityEngine;
@@ -41,6 +42,8 @@ namespace Assets.Scripts.Game.GameModes.Managers
         /// Stores the score count of the teams.
         /// </summary>
         private Dictionary<Teams, int> _scoreCount = new Dictionary<Teams, int>();
+        private FlagSpawnersController _flagSpawnersController;
+
         /// <summary>
         /// Sets the UI controller used to communicate with UI.
         /// </summary>
@@ -60,6 +63,34 @@ namespace Assets.Scripts.Game.GameModes.Managers
             }
             _roundTimer.StartTimer();
             SceneManager.sceneLoaded -= OnSceneLoaded;  //The match began - unregister the event handler.
+        }
+        /// <summary>
+        /// Adds a flag spawners controller.
+        /// </summary>
+        /// <param name="flagSpawnersController"></param>
+        public void AddFlagSpawnerController(FlagSpawnersController flagSpawnersController)
+        {
+            _flagSpawnersController = flagSpawnersController;
+        }
+        /// <summary>
+        /// Tries to extract IFlagCapturedObservers from provided objects and assign a handler to them.
+        /// </summary>
+        /// <param name="flagCaptureCapableBases"></param>
+        public void RegisterFlagCaptureHandlers(List<GameObject> flagCaptureCapableBases)
+        {
+            var flagCapturers = new List<IFlagCapturedObserver>(flagCaptureCapableBases.Count);//GetComponentsInChildren<IFlagCapturedObserver>();
+            foreach (var flagCaptureCapableBase in flagCaptureCapableBases)
+            {
+                var flagCapturerScript = flagCaptureCapableBase.GetComponentInChildren<IFlagCapturedObserver>();
+                if (flagCapturerScript != null)
+                {
+                    flagCapturers.Add(flagCapturerScript);
+                }
+            }
+            foreach (var flagCapturer in flagCapturers)
+            {
+                flagCapturer.RegisterObserver(TeamScoredPoint);
+            }
         }
         /// <summary>
         /// Registers awaiting event for scene load.
@@ -155,26 +186,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
                 Debug.LogError($"How on Nibel did you get here?! There's no such team as {whichTeam}!!!");
             }
         }
-        /// <summary>
-        /// Tries to extract IFlagCapturedObservers from provided objects and assign a handler to them.
-        /// </summary>
-        /// <param name="flagCaptureCapableBases"></param>
-        public void RegisterFlagCaptureHandlers(List<GameObject> flagCaptureCapableBases)
-        {
-            var flagCapturers = new List<IFlagCapturedObserver>(flagCaptureCapableBases.Count);//GetComponentsInChildren<IFlagCapturedObserver>();
-            foreach (var flagCaptureCapableBase in flagCaptureCapableBases)
-            {
-                var flagCapturerScript = flagCaptureCapableBase.GetComponentInChildren<IFlagCapturedObserver>();
-                if (flagCapturerScript != null)
-                {
-                    flagCapturers.Add(flagCapturerScript);
-                }
-            }
-            foreach (var flagCapturer in flagCapturers)
-            {
-                flagCapturer.RegisterObserver(TeamScoredPoint);
-            }
-        }
+        
         /// <summary>
         /// Begins the round after the initial countdown.
         /// </summary>
@@ -186,6 +198,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
             }
             _roundTimer.ResetAndStop();
             _isMatchOn = true;
+            _flagSpawnersController.StartMatch();
         }
     }
 }

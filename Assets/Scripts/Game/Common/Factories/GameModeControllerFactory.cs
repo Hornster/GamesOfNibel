@@ -38,6 +38,7 @@ namespace Assets.Scripts.Game.Common.Factories
             if (sceneData.Bases.TryGetValue(Teams.Neutral, out var neutralBases))
             {
                 flagController.Initialize(neutralBases);
+                ctfGameModeManager.AddFlagSpawnerController(flagController);
             }
             else
             {
