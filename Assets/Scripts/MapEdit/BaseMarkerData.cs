@@ -15,7 +15,7 @@ namespace Assets.Scripts.MapEdit
         /// <summary>
         /// Unique ID of the base
         /// </summary>
-        public int ID { get; private set; }
+        public int ID { get; private set; }//TODO: maybe do it in factory. Factory is in SO, with this value, so it's remembered. Make it reset upon reaching 300 000 000 or something
         [SerializeField]
         private TeamModule _myTeam;
         [SerializeField]
