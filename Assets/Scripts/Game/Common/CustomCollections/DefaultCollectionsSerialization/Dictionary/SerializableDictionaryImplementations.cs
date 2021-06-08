@@ -47,4 +47,18 @@ namespace Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSeriali
     /// </summary>
     [Serializable]
     public class GameplayModeGameObjectDictionary : SerializableDictionary<GameplayModesEnum, GameObject> { }
+    //---------------------
+    // BaseSubtypeEnum => GameObject
+    //---------------------
+    [Serializable]
+    public class BaseSubtypeGameObjectDictionary : SerializableDictionary<BaseSubtypeEnum, GameObject> { }
+    //---------------------
+    // GameplayModesEnum => Dictionary<BaseSubtypeEnum, GameObject>
+    //---------------------
+    [Serializable]
+    public class GameplayModeBaseSubtypeDictDictionary : SerializableDictionary<GameplayModesEnum,
+            BaseSubtypeGameObjectDictionary>
+    {
+
+    }
 }

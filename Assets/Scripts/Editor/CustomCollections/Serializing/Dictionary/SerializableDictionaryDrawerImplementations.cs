@@ -88,4 +88,31 @@ namespace Assets.Editor.Scripts.CustomCollections.Serializing.Dictionary
     }
 
     internal class GameplayModeGameObjectTemplate : SerializableKeyValueTemplate<GameplayModesEnum, GameObject> { }
+    //---------------------
+    // BaseSubtypeEnum => GameObject
+    //---------------------
+    [UnityEditor.CustomPropertyDrawer(typeof(BaseSubtypeGameObjectDictionary))]
+    public class BaseSubtypeGameObjectDictionaryDrawer : SerializableDictionaryDrawer<BaseSubtypeEnum, GameObject>
+    {
+        protected override SerializableKeyValueTemplate<BaseSubtypeEnum, GameObject> GetTemplate()
+        {
+            return GetGenericTemplate<BaseSubtypeGameObjectDictionaryTemplate>();
+        }
+    }
+
+    internal class BaseSubtypeGameObjectDictionaryTemplate : SerializableKeyValueTemplate<BaseSubtypeEnum, GameObject> { }
+
+    //---------------------
+    // GameplayModesEnum => Dictionary<BaseSubtypeEnum, GameObject>
+    //---------------------
+    [UnityEditor.CustomPropertyDrawer(typeof(GameplayModeBaseSubtypeDictDictionary))]
+    public class GameplayModeBaseSubtypeDictDictionaryDrawer : SerializableDictionaryDrawer<GameplayModesEnum, BaseSubtypeGameObjectDictionary>
+    {
+        protected override SerializableKeyValueTemplate<GameplayModesEnum, BaseSubtypeGameObjectDictionary> GetTemplate()
+        {
+            return GetGenericTemplate<GameplayModeBaseSubtypeDictDictionaryTemplate>();
+        }
+    }
+
+    internal class GameplayModeBaseSubtypeDictDictionaryTemplate : SerializableKeyValueTemplate<GameplayModesEnum, BaseSubtypeGameObjectDictionary> { }
 }
