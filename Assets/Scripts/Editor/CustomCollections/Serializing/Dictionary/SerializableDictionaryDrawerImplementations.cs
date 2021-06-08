@@ -3,8 +3,10 @@
 
 //Modifications by: Karol Kozuch (CrazedAerialCable)
 
+using System;
 using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
 using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.MapEdit.Common.Data.CustomContainers;
 using UnityEditor;
 using UnityEngine;
 
@@ -89,30 +91,17 @@ namespace Assets.Editor.Scripts.CustomCollections.Serializing.Dictionary
 
     internal class GameplayModeGameObjectTemplate : SerializableKeyValueTemplate<GameplayModesEnum, GameObject> { }
     //---------------------
-    // BaseSubtypeEnum => GameObject
+    // <GameplayModesEnum, BaseSubtypeEnum> => GameObject
     //---------------------
     [UnityEditor.CustomPropertyDrawer(typeof(BaseSubtypeGameObjectDictionary))]
-    public class BaseSubtypeGameObjectDictionaryDrawer : SerializableDictionaryDrawer<BaseSubtypeEnum, GameObject>
+    public class BaseSubtypeGameObjectDictionaryDrawer : SerializableDictionaryDrawer<GameplayModeBaseSubtypeTuple, GameObject>
     {
-        protected override SerializableKeyValueTemplate<BaseSubtypeEnum, GameObject> GetTemplate()
+        protected override SerializableKeyValueTemplate<GameplayModeBaseSubtypeTuple, GameObject> GetTemplate()
         {
             return GetGenericTemplate<BaseSubtypeGameObjectDictionaryTemplate>();
         }
     }
 
-    internal class BaseSubtypeGameObjectDictionaryTemplate : SerializableKeyValueTemplate<BaseSubtypeEnum, GameObject> { }
+    internal class BaseSubtypeGameObjectDictionaryTemplate : SerializableKeyValueTemplate<GameplayModeBaseSubtypeTuple, GameObject> { }
 
-    //---------------------
-    // GameplayModesEnum => Dictionary<BaseSubtypeEnum, GameObject>
-    //---------------------
-    [UnityEditor.CustomPropertyDrawer(typeof(GameplayModeBaseSubtypeDictDictionary))]
-    public class GameplayModeBaseSubtypeDictDictionaryDrawer : SerializableDictionaryDrawer<GameplayModesEnum, BaseSubtypeGameObjectDictionary>
-    {
-        protected override SerializableKeyValueTemplate<GameplayModesEnum, BaseSubtypeGameObjectDictionary> GetTemplate()
-        {
-            return GetGenericTemplate<GameplayModeBaseSubtypeDictDictionaryTemplate>();
-        }
-    }
-
-    internal class GameplayModeBaseSubtypeDictDictionaryTemplate : SerializableKeyValueTemplate<GameplayModesEnum, BaseSubtypeGameObjectDictionary> { }
 }

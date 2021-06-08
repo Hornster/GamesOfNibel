@@ -5,6 +5,7 @@
 
 using System;
 using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.MapEdit.Common.Data.CustomContainers;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary
@@ -51,14 +52,6 @@ namespace Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSeriali
     // BaseSubtypeEnum => GameObject
     //---------------------
     [Serializable]
-    public class BaseSubtypeGameObjectDictionary : SerializableDictionary<BaseSubtypeEnum, GameObject> { }
-    //---------------------
-    // GameplayModesEnum => Dictionary<BaseSubtypeEnum, GameObject>
-    //---------------------
-    [Serializable]
-    public class GameplayModeBaseSubtypeDictDictionary : SerializableDictionary<GameplayModesEnum,
-            BaseSubtypeGameObjectDictionary>
-    {
-
-    }
+    public class BaseSubtypeGameObjectDictionary : SerializableDictionary<GameplayModeBaseSubtypeTuple, GameObject> { }
+    
 }

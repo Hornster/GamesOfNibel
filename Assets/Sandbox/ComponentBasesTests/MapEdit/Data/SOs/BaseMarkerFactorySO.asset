@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseMainPrefab: {fileID: 0}
   _baseFloorComponents:
-    keys: 
+    keys: []
     values: []
   _baseSpireComponents:
-    keys: 
+    keys: []
     values: []
   _baseAdditionalComponents:
-    keys: 
+    keys: []
     values: []

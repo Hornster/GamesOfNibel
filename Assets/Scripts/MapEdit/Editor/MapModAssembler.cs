@@ -4,6 +4,7 @@ using Assets.Editor.Scripts.Modding.MapCreation.Scripts.Util;
 using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Game.Common.Helpers;
+using Assets.Scripts.MapEdit.Editor.Data;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -24,7 +25,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
         /// </summary>
         private bool _allRequirementsMet = true;
 
-        [MenuItem("Window/GoNMapModAssembler")]
+        [MenuItem(SGMapEditPaths.WindowsPath + "/Map Mod Assembler")]
         public static void ShowWindow()
         {
             GetWindow<MapModAssembler>("Map Mod Assembler");

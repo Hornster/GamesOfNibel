@@ -7,30 +7,33 @@ using Assets.Scripts.Game.Common;
 using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Exceptions;
+using Assets.Scripts.MapEdit.Common.Data.CustomContainers;
 using UnityEngine;
 
 namespace Assets.Scripts.MapEdit.Common.Data.ScriptableObjects
 {
     //At least one of the three components should be present.
     //The base marker should be visible, after all, in the editor.
-    [CreateAssetMenu(fileName = "BaseMarkerFactorySO", menuName = "ScriptableObjects/MapEdit/BaseMarkerFactorySO")]
+    [CreateAssetMenu(fileName = BaseMarkerFactorySoName, menuName = "ScriptableObjects/MapEdit/" + BaseMarkerFactorySoName)]
     public class BaseMarkerFactorySO : ScriptableObject
     {
+        public const string BaseMarkerFactorySoName = "BaseMarkerFactorySO";
+        public const string PathToBaseMarkerFactorySo = "Assets/Sandbox/ComponentBasesTests/MapEdit/Data/SOs";
         private const int _maxIDValue = 300000000;
-        private static int _lastUsedMarkerID = 0;
+        private int _lastUsedMarkerID = 0;
 
-        [Header("Base marker main object")] 
+        [Header("Base marker main object")]
         [Tooltip("The main base marker object which contains the components and universal scripts.")]
         [SerializeField]
         private GameObject _baseMainPrefab;
         [Header("Base markers components")]
         [SerializeField]
-        private GameplayModeBaseSubtypeDictDictionary _baseFloorComponents = new GameplayModeBaseSubtypeDictDictionary();
+        private BaseSubtypeGameObjectDictionary _baseFloorComponents = new BaseSubtypeGameObjectDictionary();
         [SerializeField]
-        private GameplayModeBaseSubtypeDictDictionary _baseSpireComponents = new GameplayModeBaseSubtypeDictDictionary();
+        private BaseSubtypeGameObjectDictionary _baseSpireComponents = new BaseSubtypeGameObjectDictionary();
         [Tooltip("Additional components that can be assigned to given base, like spawn areas.")]
         [SerializeField]
-        private GameplayModeBaseSubtypeDictDictionary _baseAdditionalComponents = new GameplayModeBaseSubtypeDictDictionary();
+        private BaseSubtypeGameObjectDictionary _baseAdditionalComponents = new BaseSubtypeGameObjectDictionary();
 
         public GameObject CreateBaseMarker(Teams team, GameplayModesEnum gameplayMode, BaseSubtypeEnum baseSubtype, Vector3 position)
         {
@@ -56,15 +59,13 @@ namespace Assets.Scripts.MapEdit.Common.Data.ScriptableObjects
         /// <param name="baseSubtype"></param>
         /// <param name="dictionary">Which of the available dictionary to query to.</param>
         /// <returns></returns>
-        private GameObject GetPrefabFromDictionary(GameplayModesEnum gameplayMode, BaseSubtypeEnum baseSubtype, GameplayModeBaseSubtypeDictDictionary dictionary)
+        private GameObject GetPrefabFromDictionary(GameplayModesEnum gameplayMode, BaseSubtypeEnum baseSubtype, BaseSubtypeGameObjectDictionary dictionary)
         {
             GameObject returnValue = null;
-            if (dictionary.dictionary.TryGetValue(gameplayMode, out var availableSubtypes))
+            var key = new GameplayModeBaseSubtypeTuple(gameplayMode, baseSubtype);
+            if (dictionary.dictionary.TryGetValue(key, out var prefab))
             {
-                if (availableSubtypes.dictionary.TryGetValue(baseSubtype, out var prefab))
-                {
-                    returnValue = prefab;
-                }
+                returnValue = prefab;
             }
 
             return returnValue;
@@ -116,7 +117,7 @@ namespace Assets.Scripts.MapEdit.Common.Data.ScriptableObjects
         private GameObject SetBaseMarkerData(GameObject baseMarker, GameplayModesEnum gameplayMode, BaseSubtypeEnum baseSubtype)
         {
             var baseMarkerData = baseMarker.GetComponent<BaseMarkerData>();
-            
+
             if (baseMarkerData == null)
             {
                 throw new Exception("No base marker data found in base main prefab!");
