@@ -81,12 +81,12 @@ namespace Assets.Scripts.MapEdit.Common.Data.ScriptableObjects
 
             if (spirePrefab != null)
             {
-                Instantiate(floorPrefab, baseMarker.transform);
+                Instantiate(spirePrefab, baseMarker.transform);
             }
 
             if (additionsPrefab != null)
             {
-                Instantiate(floorPrefab, baseMarker.transform);
+                Instantiate(additionsPrefab, baseMarker.transform);
             }
 
             return baseMarker;

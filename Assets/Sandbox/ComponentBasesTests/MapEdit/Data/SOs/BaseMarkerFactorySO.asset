@@ -12,13 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987ff637e4478cf4b8f732d18c63a2f2, type: 3}
   m_Name: BaseMarkerFactorySO
   m_EditorClassIdentifier: 
-  _baseMainPrefab: {fileID: 0}
+  _baseMainPrefab: {fileID: 2189667011992005855, guid: 95acd5984e5607547b4b615d6782bd32,
+    type: 3}
   _baseFloorComponents:
-    keys: []
-    values: []
+    keys:
+    - _gameplayMode: 0
+      _baseSubtype: 0
+    - _gameplayMode: 1
+      _baseSubtype: 1
+    - _gameplayMode: 1
+      _baseSubtype: 2
+    values:
+    - {fileID: 8588862914707064016, guid: bea1a74d5701c9f4f9be272960b81c0f, type: 3}
+    - {fileID: 8050719247305326561, guid: 69154fdd43ab437478889a5ee2c8703a, type: 3}
+    - {fileID: 8050719247305326561, guid: bd4a667dbdea2dd45acc1bca07b0cee1, type: 3}
   _baseSpireComponents:
-    keys: []
-    values: []
+    keys:
+    - _gameplayMode: 0
+      _baseSubtype: 0
+    - _gameplayMode: 1
+      _baseSubtype: 1
+    - _gameplayMode: 1
+      _baseSubtype: 2
+    values:
+    - {fileID: 5718598707408337235, guid: 5854ac6b8deb60d409049a114f0b31a1, type: 3}
+    - {fileID: 8452574694225293188, guid: 7d187e2ce2395354dbf8b9380e7d2ee7, type: 3}
+    - {fileID: 8452574694225293188, guid: 5b4a89311f12b3b429fa88a1e75419c8, type: 3}
   _baseAdditionalComponents:
-    keys: []
-    values: []
+    keys:
+    - _gameplayMode: 0
+      _baseSubtype: 0
+    values:
+    - {fileID: 1483842758550953626, guid: f184755d6db07514a93080da5b1b4218, type: 3}

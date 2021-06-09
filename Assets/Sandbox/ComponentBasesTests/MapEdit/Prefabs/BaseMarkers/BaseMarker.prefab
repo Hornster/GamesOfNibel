@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2189667011992005852}
   - component: {fileID: 3826409238412554694}
   - component: {fileID: 813655843825846551}
+  - component: {fileID: 741991923893141308}
   m_Layer: 0
-  m_Name: SpawnerMarker
+  m_Name: BaseMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,3 +59,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnerTeam: {fileID: 3826409238412554694}
+--- !u!114 &741991923893141308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189667011992005855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183f3ead757b14c468338e9b33e83683, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myTeam: {fileID: 3826409238412554694}
+  _gameMode: 0
+  _baseSubtype: 0
