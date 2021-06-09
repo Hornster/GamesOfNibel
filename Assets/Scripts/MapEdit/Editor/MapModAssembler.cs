@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Assets.Editor.Scripts.Modding.MapCreation.Scripts.Util;
 using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.MapEdit.Editor.Data;
+using Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects;
+using Assets.Scripts.MapEdit.Editor.Util;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
 {
@@ -18,7 +22,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
 
         private SceneAsset _scene;
 
-
+        private MapModAssemblerCacheSO _cache;
         /// <summary>
         /// Were all requirements met upon trying to create the map mod? Updated
         /// every time OnGUI is called.
@@ -28,7 +32,39 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
         [MenuItem(SGMapEditPaths.WindowsPath + "/Map Mod Assembler")]
         public static void ShowWindow()
         {
-            GetWindow<MapModAssembler>("Map Mod Assembler");
+            var thisWindow = GetWindow<MapModAssembler>("Map Mod Assembler");
+            var cacheSeeker = new AssetSeeker<MapModAssemblerCacheSO>();
+            try
+            {
+                //TODO: For some reason the cache cannot be found after resetting the window.
+                thisWindow._cache = cacheSeeker.FindBaseMarkerFactorySo(SGMapEditPaths.MapEditScriptableObjectsPath,
+                    MapModAssemblerCacheSO.MapModAssemblerCacheSoName);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(ex.Message);
+            }
+
+            if (thisWindow._cache != null)
+            {
+                thisWindow._scene = thisWindow._cache.LastSetScene;
+                thisWindow._mapDataSO = thisWindow._cache.LastMapDataSO;
+            }
+            else
+            {
+                
+                thisWindow._cache = cacheSeeker.CreateAsset(SGMapEditPaths.MapEditScriptableObjectsPath,
+                    MapModAssemblerCacheSO.MapModAssemblerCacheSoName, SGMapEditPaths.ScriptableObjectsExtension);
+            }
+        }
+
+        public void OnInspectorUpdate()
+        {
+            if (_cache != null)
+            {
+                _cache.LastMapDataSO = _mapDataSO;
+                _cache.LastSetScene = _scene;
+            }
         }
         /// <summary>
         /// Checks if scene, preview image and thumbnail are saved on disk.

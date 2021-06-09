@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Game.Common;
 using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
 using Assets.Scripts.Game.Common.Enums;
-using Assets.Scripts.Game.Common.Exceptions;
 using Assets.Scripts.MapEdit.Common.Data.CustomContainers;
 using UnityEngine;
 
-namespace Assets.Scripts.MapEdit.Common.Data.ScriptableObjects
+namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
 {
     //At least one of the three components should be present.
     //The base marker should be visible, after all, in the editor.
@@ -18,7 +13,6 @@ namespace Assets.Scripts.MapEdit.Common.Data.ScriptableObjects
     public class BaseMarkerFactorySO : ScriptableObject
     {
         public const string BaseMarkerFactorySoName = "BaseMarkerFactorySO";
-        public const string PathToBaseMarkerFactorySo = "Assets/Sandbox/ComponentBasesTests/MapEdit/Data/SOs";
         private const int _maxIDValue = 300000000;
         private int _lastUsedMarkerID = 0;
 

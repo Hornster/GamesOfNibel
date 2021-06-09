@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Game.Common.Enums;
-using Assets.Scripts.MapEdit.Common.Data.ScriptableObjects;
 using Assets.Scripts.MapEdit.Editor.Data;
+using Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects;
+using Assets.Scripts.MapEdit.Editor.Util;
 using Data.Util;
 using UnityEditor;
 using UnityEngine;
@@ -28,7 +29,9 @@ namespace Assets.Scripts.MapEdit.Editor
         public static void ShowWindow()
         {
             var window = GetWindow<BaseCreatorWindow>("Base Creator Window");
-            window.FindBaseMarkerFactorySo();
+            var assetSeeker = new AssetSeeker<BaseMarkerFactorySO>();
+            window._baseMarkerFactorySo = assetSeeker.FindBaseMarkerFactorySo(
+                SGMapEditPaths.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
         }
 
         private void OnGUI()
@@ -62,22 +65,5 @@ namespace Assets.Scripts.MapEdit.Editor
 
         }
 
-        private void FindBaseMarkerFactorySo()
-        {
-            var factoryFileName = BaseMarkerFactorySO.BaseMarkerFactorySoName;
-            var hitsGUIDs = AssetDatabase.FindAssets(factoryFileName, new[] { BaseMarkerFactorySO.PathToBaseMarkerFactorySo });
-
-            if (hitsGUIDs.Length <= 0)
-            {
-                throw new Exception($"Cannot find Base Marker Factory SO at {BaseMarkerFactorySO.PathToBaseMarkerFactorySo}!");
-            }
-            else if (hitsGUIDs.Length > 1)
-            {
-                throw new Exception($"Only one Base Marker Factory SO is allowed at {BaseMarkerFactorySO.PathToBaseMarkerFactorySo}!");
-            }
-
-            var pathToFirstAsset = AssetDatabase.GUIDToAssetPath(hitsGUIDs[0]);
-            _baseMarkerFactorySo = AssetDatabase.LoadAssetAtPath<BaseMarkerFactorySO>(pathToFirstAsset);
-        }
     }
 }
