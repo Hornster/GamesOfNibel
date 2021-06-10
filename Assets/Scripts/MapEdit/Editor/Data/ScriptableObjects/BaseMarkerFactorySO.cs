@@ -9,13 +9,17 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
 {
     //At least one of the three components should be present.
     //The base marker should be visible, after all, in the editor.
-    [CreateAssetMenu(fileName = BaseMarkerFactorySoName, menuName = "ScriptableObjects/MapEdit/" + BaseMarkerFactorySoName)]
+    [CreateAssetMenu(fileName = BaseMarkerFactorySoName, menuName = SGMapEditPaths.MapEditMenuPath + BaseMarkerFactorySoName)]
     public class BaseMarkerFactorySO : ScriptableObject
     {
         public const string BaseMarkerFactorySoName = "BaseMarkerFactorySO";
         private const int _maxIDValue = 300000000;
         private int _lastUsedMarkerID = 0;
 
+        [Header("Cache")]
+        [Tooltip("Used to remember what base markers have been spawned.")]
+        [SerializeField]
+        private BaseMarkersCacheSO _baseMarkersCache;
         [Header("Base marker main object")]
         [Tooltip("The main base marker object which contains the components and universal scripts.")]
         [SerializeField]
@@ -44,8 +48,15 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
             baseMarker = SetBaseMarkerTeam(baseMarker, team);
             baseMarker = SetBaseMarkerData(baseMarker, gameplayMode, baseSubtype);
 
+            //SaveBaseInCache(baseMarker);
+
             return baseMarker;
         }
+
+        //private void SaveBaseInCache(GameObject newBase)
+        //{
+        //    _baseMarkersCache.AddBase(newBase);
+        //}
         /// <summary>
         /// Tries to find prefab. If manages to - returns it. Returns null otherwise.
         /// </summary>

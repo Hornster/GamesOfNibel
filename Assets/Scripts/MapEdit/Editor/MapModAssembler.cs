@@ -283,8 +283,6 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
 
     }
 }
-//TODO: assets and scenes cannot be in the same bundle for some reason. First create bundle with images, then create the scene. DONE
-//TODO: Test above thing.
 //https://www.youtube.com/watch?v=1zROlULebXg - creating build pipeline for asset bundles
 //https://www.turiyaware.com/blog/creating-a-moddable-unity-game - modding with unity
 //https://www.youtube.com/watch?v=491TSNwXTIg - how to make editor window unity
