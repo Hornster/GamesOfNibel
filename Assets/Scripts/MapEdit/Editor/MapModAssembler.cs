@@ -32,38 +32,41 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
         [MenuItem(SGMapEditPaths.WindowsPath + "/Map Mod Assembler")]
         public static void ShowWindow()
         {
-            var thisWindow = GetWindow<MapModAssembler>("Map Mod Assembler");
+            GetWindow<MapModAssembler>("Map Mod Assembler");
+        }
+
+        public void Awake()
+        {
             var cacheSeeker = new AssetSeeker<MapModAssemblerCacheSO>();
             try
             {
-                //TODO: For some reason the cache cannot be found after resetting the window.
-                thisWindow._cache = cacheSeeker.FindBaseMarkerFactorySo(SGMapEditPaths.MapEditScriptableObjectsPath,
+                _cache = cacheSeeker.FindBaseMarkerFactorySo(SGMapEditPaths.MapEditScriptableObjectsPath,
                     MapModAssemblerCacheSO.MapModAssemblerCacheSoName);
             }
             catch (Exception ex)
             {
-                Debug.LogError(ex.Message);
+                Debug.LogWarning(ex.Message);
             }
 
-            if (thisWindow._cache != null)
+            if (_cache != null)
             {
-                thisWindow._scene = thisWindow._cache.LastSetScene;
-                thisWindow._mapDataSO = thisWindow._cache.LastMapDataSO;
+                _scene = _cache.LastSetScene;
+                _mapDataSO = _cache.LastMapDataSO;
             }
             else
             {
-                
-                thisWindow._cache = cacheSeeker.CreateAsset(SGMapEditPaths.MapEditScriptableObjectsPath,
+                _cache = cacheSeeker.CreateScriptableObjectAsset<MapModAssemblerCacheSO>(SGMapEditPaths.MapEditScriptableObjectsPath,
                     MapModAssemblerCacheSO.MapModAssemblerCacheSoName, SGMapEditPaths.ScriptableObjectsExtension);
             }
         }
 
-        public void OnInspectorUpdate()
+        private void SaveState()
         {
             if (_cache != null)
             {
                 _cache.LastMapDataSO = _mapDataSO;
                 _cache.LastSetScene = _scene;
+                EditorUtility.SetDirty(_cache);
             }
         }
         /// <summary>
@@ -108,10 +111,10 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
         void OnGUI()
         {
             EditorGUILayout.HelpBox("MapDataSO contains description of the map. Can be found by right clicking in the project inspector, selecting Create->Scriptable Objects->MapDataSO", MessageType.Info);
-            _mapDataSO = (MapDataSO) EditorGUILayout.ObjectField("Map data SO:", _mapDataSO, typeof(MapDataSO), IsAllowedSceneObject(_mapDataSO));
+            _mapDataSO = (MapDataSO)EditorGUILayout.ObjectField("Map data SO:", _mapDataSO, typeof(MapDataSO), IsAllowedSceneObject(_mapDataSO));
             _scene = (SceneAsset)EditorGUILayout.ObjectField("Scene file (asset):", _scene, typeof(SceneAsset), IsAllowedSceneObject(_scene));
-            
 
+            SaveState();
             ChkInputData();
 
 
@@ -176,7 +179,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
         private List<string> GetPreviewImagesAddressables(MapDataSO mapDataSo)
         {
             var addressables = new List<string>();
-             
+
             if (_mapDataSO.PreviewImg != null)
             {
                 var previewImgName = GetAssetName(_mapDataSO.PreviewImg);
@@ -209,7 +212,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
                 return; //No need for creation of images preview if none are existent.
             }
             assetBundleCreator.SetAssetNames(assetBundleNames);
-            
+
             //...the addressables...
             var assetAddressables = GetPreviewImagesAddressables(_mapDataSO);
             assetBundleCreator.SetAddressableNames(assetAddressables);
@@ -247,7 +250,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
             assetBundleCreator.SaveBundle(baseDir);
             _mapDataSO.SceneBundlePath = Path.Combine(baseDir, sceneBundleName);
         }
-        
+
         /// <summary>
         /// Manages the creation of the map mod - preview images and the scene itself.
         /// </summary>
@@ -262,7 +265,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
 
             var assetBundleCreator = new AssetBundleCreator();
             var baseDir = GetOutputPath();
-            
+
             CreatePreviewImagesBundle(assetBundleCreator, baseDir);
             CreateSceneBundle(assetBundleCreator, baseDir);
 
