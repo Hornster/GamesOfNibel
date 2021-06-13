@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
+using Assets.Scripts.MapEdit.Editor.Data.Constants;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = MapModAssemblerCacheSoName, menuName = SGMapEditPaths.MapEditMenuPath + MapModAssemblerCacheSoName)]
+    [CreateAssetMenu(fileName = MapModAssemblerCacheSoName, menuName = SGMapEditConstants.MapEditMenuPath + MapModAssemblerCacheSoName)]
     public class MapModAssemblerCacheSO : ScriptableObject
     {
         public const string MapModAssemblerCacheSoName = "MapModAssemblerCacheSO";

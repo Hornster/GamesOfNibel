@@ -48,7 +48,7 @@ namespace Assets.Scripts.Game.Common.Factories
         {
             var playerTeamModule = characterInstance.GetComponentInChildren<TeamModule>();
             var playerColorSetter = characterInstance.GetComponentInChildren<ColorSetter>();
-            playerColorSetter.SetColor(TeamColors.GetTeamColor(team));
+            playerColorSetter.SetColor(TeamColorsSO.GetTeamColor(team));
             playerTeamModule.MyTeam = team;
         }
     }

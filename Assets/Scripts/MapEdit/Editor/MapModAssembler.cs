@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using Assets.Editor.Scripts.Modding.MapCreation.Scripts.Util;
-using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.MapEdit.Editor.Data;
+using Assets.Scripts.MapEdit.Editor.Data.Constants;
 using Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects;
 using Assets.Scripts.MapEdit.Editor.Util;
-using UnityEngine;
 using UnityEditor;
-using UnityEditor.SceneManagement;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
+namespace Assets.Scripts.MapEdit.Editor
 {
     public class MapModAssembler : EditorWindow
     {
@@ -23,13 +22,14 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
         private SceneAsset _scene;
 
         private MapModAssemblerCacheSO _cache;
+
         /// <summary>
         /// Were all requirements met upon trying to create the map mod? Updated
         /// every time OnGUI is called.
         /// </summary>
         private bool _allRequirementsMet = true;
 
-        [MenuItem(SGMapEditPaths.WindowsPath + "/Map Mod Assembler")]
+        [MenuItem(SGMapEditConstants.WindowsPath + "/Map Mod Assembler")]
         public static void ShowWindow()
         {
             GetWindow<MapModAssembler>("Map Mod Assembler");
@@ -40,7 +40,7 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
             var cacheSeeker = new AssetSeeker<MapModAssemblerCacheSO>();
             try
             {
-                _cache = cacheSeeker.FindBaseMarkerFactorySo(SGMapEditPaths.MapEditScriptableObjectsPath,
+                _cache = cacheSeeker.FindBaseMarkerFactorySo(SGMapEditConstants.MapEditScriptableObjectsPath,
                     MapModAssemblerCacheSO.MapModAssemblerCacheSoName);
             }
             catch (Exception ex)
@@ -55,10 +55,11 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
             }
             else
             {
-                _cache = cacheSeeker.CreateScriptableObjectAsset<MapModAssemblerCacheSO>(SGMapEditPaths.MapEditScriptableObjectsPath,
-                    MapModAssemblerCacheSO.MapModAssemblerCacheSoName, SGMapEditPaths.ScriptableObjectsExtension);
+                _cache = cacheSeeker.CreateScriptableObjectAsset<MapModAssemblerCacheSO>(SGMapEditConstants.MapEditScriptableObjectsPath,
+                    MapModAssemblerCacheSO.MapModAssemblerCacheSoName, SGMapEditConstants.ScriptableObjectsExtension);
             }
         }
+
 
         private void SaveState()
         {
@@ -126,7 +127,25 @@ namespace Assets.Editor.Scripts.Modding.MapCreation.Scripts
                     CreateMapMod();
                 }
             }
+
+            EditorGUILayout.Space(SGMapEditConstants.VerticalUIElementsOffset);
+
+            CreateBaseMarkersCacheArea();
         }
+
+        private void CreateBaseMarkersCacheArea()
+        {
+            var baseMarkersCache = BaseMarkersCache.GetInstance();
+            var basesData = baseMarkersCache.GetBasesData();
+            GUILayout.Label("Base Markers Cache", EditorStyles.boldLabel);
+            GUILayout.Label($"Found spawners during last check: {basesData.Count}");
+
+            if (GUILayout.Button("Recheck bases"))
+            {
+                baseMarkersCache.FindBases();
+            }
+        }
+
         /// <summary>
         /// Creates and returns an output path for the asset bundle.
         /// </summary>

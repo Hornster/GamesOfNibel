@@ -50,7 +50,7 @@ namespace Assets.Scripts.Game.GameModes.CTF
 
         private void Start()
         {
-            var color = TeamColors.GetTeamColor(_myTeam.MyTeam);
+            var color = TeamColorsSO.GetTeamColor(_myTeam.MyTeam);
             InputReader.RegisterSpecialModeActivity(DropCarriedFlag);
             _changeColor?.Invoke(color);
         }

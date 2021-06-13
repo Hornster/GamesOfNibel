@@ -7,9 +7,12 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
     /// <summary>
     /// Input point for map mod assembler - stores all required data about given map. EDITOR ONLY!!!
     /// </summary>
-    [CreateAssetMenu(fileName = "MapDataSO", menuName = "ScriptableObjects/MapDataSO", order = 1)]
+    [CreateAssetMenu(fileName = MapDataSOName, 
+        menuName = SGConstants.SGSOMenuPath + SGConstants.SGSOMapSelectionRelativePath + MapDataSOName, order = 1)]
     public class MapDataSO : ScriptableObject
     {
+        public const string MapDataSOName = "MapDataSO";
+
         [Header("Map description")]
         public string ShownMapName;
         public string[] Authors;

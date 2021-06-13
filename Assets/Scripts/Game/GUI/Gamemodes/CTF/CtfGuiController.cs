@@ -39,8 +39,8 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.CTF
             _teamLotusScore = _teamLotusScoreContainer.Interface;
 
             _informationMessage.HideMessage(true);
-            _teamLilyScore.ChangeColor(TeamColors.GetTeamColor(Teams.Lily));
-            _teamLotusScore.ChangeColor(TeamColors.GetTeamColor(Teams.Lotus));
+            _teamLilyScore.ChangeColor(TeamColorsSO.GetTeamColor(Teams.Lily));
+            _teamLotusScore.ChangeColor(TeamColorsSO.GetTeamColor(Teams.Lotus));
             _teamLilyScore.ShowMessage(0.ToString());//Reset the flag count.
             _teamLotusScore.ShowMessage(0.ToString());//Reset the flag count.
         }
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.CTF
         /// <param name="whichTeam">To what color should the control switch its color.</param>
         private void SwitchMsgColor(IGuiTextControl whichMessage, Teams whichTeam)
         {
-            var newColor = TeamColors.GetTeamColor(whichTeam);
+            var newColor = TeamColorsSO.GetTeamColor(whichTeam);
             whichMessage.ChangeColor(newColor);
         }
         

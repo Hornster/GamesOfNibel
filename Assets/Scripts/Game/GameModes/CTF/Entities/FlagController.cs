@@ -214,7 +214,7 @@ namespace Assets.Scripts.Game.GameModes.CTF.Entities
         /// <param name="teamColor"></param>
         public void SetColor(Teams teamColor)
         {
-            _flagSpriteRenderer.color = TeamColors.GetTeamColor(teamColor);
+            _flagSpriteRenderer.color = TeamColorsSO.GetTeamColor(teamColor);
         }
         /// <summary>
         /// Changes the team which the flag belongs to.

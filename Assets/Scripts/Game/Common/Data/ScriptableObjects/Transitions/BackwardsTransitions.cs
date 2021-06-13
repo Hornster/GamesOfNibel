@@ -8,9 +8,11 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.Transitions
     /// <summary>
     /// Stores information about backwards transitions for menu and ingame menu.
     /// </summary>
-    [CreateAssetMenu(fileName = "BackwardsTransitions", menuName = "ScriptableObjects/Transitions/BackwardsTransitions")]
+    [CreateAssetMenu(fileName = BackwardsTransitionsName, 
+        menuName = SGConstants.SGSOMenuPath + SGConstants.SGSOTransitionsRelativePath + BackwardsTransitionsName)]
     public class BackwardsTransitions : ScriptableObject
     {
+        public const string BackwardsTransitionsName = "BackwardsTransitions";
         /// <summary>
         /// Key is the current menu, value is the menu the game shall return to. Dictionary for main menu.
         /// </summary>

@@ -6,9 +6,11 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
     /// <summary>
     /// Stores information about the path elements of a map mod asset bundle.
     /// </summary>
-    [CreateAssetMenu(fileName = "MapDataABConstants", menuName = "ScriptableObjects/MapDataAssetBundleConstants", order = 1)]
+    [CreateAssetMenu(fileName = MapDataAssenBundleConstantsName, 
+        menuName = SGConstants.SGSOMenuPath + SGConstants.SGSOMapSelectionRelativePath + MapDataAssenBundleConstantsName, order = 1)]
     public class MapDataAssetBundleConstants : ScriptableObject
     {
+        public const string MapDataAssenBundleConstantsName = "MapDataABConstants";
         /// <summary>
         /// The first part of the path in the asset bundle.
         /// </summary>

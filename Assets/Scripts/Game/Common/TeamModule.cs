@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.Game.Common.Enums;
+﻿using Assets.Scripts.Game.Common.CustomEvents;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Game.Common
 {
@@ -8,17 +10,32 @@ namespace Assets.Scripts.Game.Common
     /// </summary>
     public class TeamModule : MonoBehaviour
     {
+        [Tooltip("This event will be called when team is changed.")]
+        [SerializeField]
+        private TeamsUnityEvent _onTeamChangedHandlers;
         [SerializeField]
         private Teams _myTeam;
 
+        private void Start()
+        {
+            _onTeamChangedHandlers?.Invoke(_myTeam);
+        }
         /// <summary>
         /// The team of the entity this module was assigned to.
         /// </summary>
         public Teams MyTeam
         {
             get => _myTeam;
-            set => _myTeam = value;
+            set
+            {
+                _myTeam = value;
+                _onTeamChangedHandlers?.Invoke(_myTeam);
+            }
         }
 
+        public void RegisterOnTeamChangedHandler(UnityAction<Teams> handler)
+        {
+            _onTeamChangedHandlers.AddListener(handler);
+        }
     }
 }

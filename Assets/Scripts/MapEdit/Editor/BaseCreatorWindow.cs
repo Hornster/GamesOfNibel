@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.MapEdit.Editor.Data;
+using Assets.Scripts.MapEdit.Editor.Data.Constants;
 using Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects;
 using Assets.Scripts.MapEdit.Editor.Util;
 using Data.Util;
@@ -25,13 +26,13 @@ namespace Assets.Scripts.MapEdit.Editor
         private Vector2 _basePosition;
         
 
-        [MenuItem(SGMapEditPaths.WindowsPath + "/Base Creator")]
+        [MenuItem(SGMapEditConstants.WindowsPath + "/Base Creator")]
         public static void ShowWindow()
         {
             var window = GetWindow<BaseCreatorWindow>("Base Creator Window");
             var assetSeeker = new AssetSeeker<BaseMarkerFactorySO>();
             window._baseMarkerFactorySo = assetSeeker.FindBaseMarkerFactorySo(
-                SGMapEditPaths.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
+                SGMapEditConstants.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
         }
 
         private void OnGUI()
@@ -46,6 +47,7 @@ namespace Assets.Scripts.MapEdit.Editor
             if (GUILayout.Button("Create base!"))
             {
                 _baseMarkerFactorySo?.CreateBaseMarker(_baseTeam, _gameMode, _baseSubtype, _basePosition);
+                BaseMarkersCache.GetInstance().BasesAdded = true;
             }
         }
 

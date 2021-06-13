@@ -6,9 +6,11 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.ScenePassData
     /// <summary>
     /// Holds data defining which menu shall the game return to after changing scenes.
     /// </summary>
-    [CreateAssetMenu(fileName = "ReturnFromSceneTomMenuSO", menuName = "ScriptableObjects/SceneChanging/ReturnFromSceneToMenuSO", order = 1)]
+    [CreateAssetMenu(fileName = ReturnFromSceneToMenuSOName, 
+        menuName = SGConstants.SGSOMenuPath + SGConstants.SGSOSceneChangingRelativePath + ReturnFromSceneToMenuSOName, order = 1)]
     public class ReturnFromSceneToMenuSO : ScriptableObject
     {
+        public const string ReturnFromSceneToMenuSOName = "ReturnFromSceneToMenuSO";
         [Tooltip("What menu shall be shown during game startup.")]
         [SerializeField]
         private MenuType _startupMenu;
