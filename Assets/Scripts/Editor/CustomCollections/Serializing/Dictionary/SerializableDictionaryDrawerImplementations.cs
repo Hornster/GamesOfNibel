@@ -6,7 +6,6 @@
 using System;
 using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
 using Assets.Scripts.Game.Common.Enums;
-using Assets.Scripts.MapEdit.Common.Data.CustomContainers;
 using UnityEditor;
 using UnityEngine;
 
@@ -91,17 +90,17 @@ namespace Assets.Editor.Scripts.CustomCollections.Serializing.Dictionary
 
     internal class GameplayModeGameObjectTemplate : SerializableKeyValueTemplate<GameplayModesEnum, GameObject> { }
     //---------------------
-    // <GameplayModesEnum, BaseSubtypeEnum> => GameObject
+    // BaseTypeEnum => GameObject
     //---------------------
-    [UnityEditor.CustomPropertyDrawer(typeof(BaseSubtypeGameObjectDictionary))]
-    public class BaseSubtypeGameObjectDictionaryDrawer : SerializableDictionaryDrawer<GameplayModeBaseSubtypeTuple, GameObject>
+    [UnityEditor.CustomPropertyDrawer(typeof(BaseTypeGameObjectDictionary))]
+    public class BaseTypeGameObjectDictionaryDrawer : SerializableDictionaryDrawer<BaseTypeEnum, GameObject>
     {
-        protected override SerializableKeyValueTemplate<GameplayModeBaseSubtypeTuple, GameObject> GetTemplate()
+        protected override SerializableKeyValueTemplate<BaseTypeEnum, GameObject> GetTemplate()
         {
-            return GetGenericTemplate<BaseSubtypeGameObjectDictionaryTemplate>();
+            return GetGenericTemplate<BaseTypeGameObjectDictionaryTemplate>();
         }
     }
 
-    internal class BaseSubtypeGameObjectDictionaryTemplate : SerializableKeyValueTemplate<GameplayModeBaseSubtypeTuple, GameObject> { }
+    internal class BaseTypeGameObjectDictionaryTemplate : SerializableKeyValueTemplate<BaseTypeEnum, GameObject> { }
 
 }

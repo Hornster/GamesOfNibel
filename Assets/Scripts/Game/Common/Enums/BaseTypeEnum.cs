@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Game.Common.Enums
 {
-    public enum BaseSubtypeEnum
+    public enum BaseTypeEnum
     {
         CtfDefault,
         RaceStart,

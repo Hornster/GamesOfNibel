@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191d1fe34c171f042ad84b69f0a4ceee, type: 3}
+  m_Name: TeamColorsSO
+  m_EditorClassIdentifier: 
+  _lilyAdditionalElements: {r: 0.5529412, g: 0.40000004, b: 1, a: 0.09803922}
+  _lilySpire: {r: 0.40291423, g: 0.39999998, b: 1, a: 1}
+  _lilyBase: {r: 0.5524127, g: 0.39999998, b: 1, a: 1}
+  _lotusAdditionalElements: {r: 0.9538226, g: 1, b: 0.19339621, a: 0.09803922}
+  _lotusSpire: {r: 0.8914445, g: 0.8962264, b: 0.2494215, a: 1}
+  _lotusBase: {r: 0.7515387, g: 0.7735849, b: 0.054734774, a: 1}
+  _neutralAdditionalElements: {r: 1, g: 1, b: 1, a: 0.09803922}
+  _neutralSpire: {r: 0.9843137, g: 0.97647, b: 0.9882353, a: 1}
+  _neutralBase: {r: 0.9843137, g: 0.97647, b: 0.9882353, a: 1}
+  _multiAdditionalElements: {r: 0.3882353, g: 1, b: 0.9955552, a: 0.09803922}
+  _multiSpire: {r: 0.3882353, g: 1, b: 0.99607843, a: 1}
+  _multiBase: {r: 0.19166073, g: 0.6886792, b: 0.6854933, a: 1}

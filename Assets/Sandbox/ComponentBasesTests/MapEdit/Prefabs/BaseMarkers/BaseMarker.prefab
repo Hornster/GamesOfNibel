@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3826409238412554694}
   - component: {fileID: 813655843825846551}
   - component: {fileID: 741991923893141308}
+  - component: {fileID: 8617496373629429847}
   m_Layer: 0
   m_Name: BaseMarker
   m_TagString: Untagged
@@ -45,6 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039dca90c3af4d3408c2484b3d3926ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onTeamChangedHandlers:
+    m_PersistentCalls:
+      m_Calls: []
   _myTeam: 0
 --- !u!114 &813655843825846551
 MonoBehaviour:
@@ -74,3 +78,19 @@ MonoBehaviour:
   _myTeam: {fileID: 3826409238412554694}
   _gameMode: 0
   _baseSubtype: 0
+--- !u!114 &8617496373629429847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189667011992005855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b81e8a6af000a542b4cd14a080f1d49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseFloorColorSetter: []
+  _spireColorSetter: []
+  _additionalElementsColorSetter: []
+  _teamColorsSO: {fileID: 0}

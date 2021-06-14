@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Game.Common
 {
@@ -9,12 +10,20 @@ namespace Assets.Scripts.Game.Common
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
+        public bool OverrideAlpha = false;
+
+        public float AlphaOverrideValue = 0f;
+
         /// <summary>
         /// Sets the color of the sprite accordingly to the team. Changes the team as well.
         /// </summary>
         /// <param name="color"></param>
         public void SetColor(Color color)
         {
+            if (OverrideAlpha)
+            {
+                color.a = Mathf.Clamp01(AlphaOverrideValue);
+            }
             _spriteRenderer.color = color;
         }
     }

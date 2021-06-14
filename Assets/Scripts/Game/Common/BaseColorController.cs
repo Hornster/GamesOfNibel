@@ -11,15 +11,15 @@ namespace Assets.Scripts.Game.Common
 {
     public class BaseColorController : MonoBehaviour
     {
+        private TeamColorsSO _teamColorsSO;
+
+
         [SerializeField]
         private List<ColorSetter> _baseFloorColorSetter = new List<ColorSetter>();
         [SerializeField]
         private List<ColorSetter> _spireColorSetter = new List<ColorSetter>();
         [SerializeField]
         private List<ColorSetter> _additionalElementsColorSetter = new List<ColorSetter>();
-
-        [SerializeField] 
-        private TeamColorsSO _teamColorsSO;
 
         public List<ColorSetter> BaseFloorColorSetter
         {

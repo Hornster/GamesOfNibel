@@ -2,9 +2,9 @@
 using System.Linq;
 using Assets.Scripts.Game.Common;
 using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
+using Assets.Scripts.Game.Common.Data;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Helpers;
-using Assets.Scripts.MapEdit.Common.Data.CustomContainers;
 using Assets.Scripts.MapEdit.Editor.Data.Constants;
 using UnityEngine;
 
@@ -19,7 +19,9 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
         private const int _maxIDValue = 300000000;
         private int _lastUsedMarkerID = 0;
 
-
+        [Header("Data Sources")]
+        [SerializeField]
+        private TeamColorsSO _teamColorsSO;
         [Header("Cache")]
         [Tooltip("Used to remember what base markers have been spawned.")]
         [SerializeField]
@@ -30,18 +32,18 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
         private GameObject _baseMainPrefab;
         [Header("Base markers components")]
         [SerializeField]
-        private BaseSubtypeGameObjectDictionary _baseFloorComponents = new BaseSubtypeGameObjectDictionary();
+        private BaseTypeGameObjectDictionary _baseFloorComponents = new BaseTypeGameObjectDictionary();
         [SerializeField]
-        private BaseSubtypeGameObjectDictionary _baseSpireComponents = new BaseSubtypeGameObjectDictionary();
+        private BaseTypeGameObjectDictionary _baseSpireComponents = new BaseTypeGameObjectDictionary();
         [Tooltip("Additional components that can be assigned to given base, like spawn areas.")]
         [SerializeField]
-        private BaseSubtypeGameObjectDictionary _baseAdditionalComponents = new BaseSubtypeGameObjectDictionary();
+        private BaseTypeGameObjectDictionary _baseAdditionalComponents = new BaseTypeGameObjectDictionary();
 
-        public GameObject CreateBaseMarker(Teams team, GameplayModesEnum gameplayMode, BaseSubtypeEnum baseSubtype, Vector3 position)
+        public GameObject CreateBaseMarker(Teams team, BaseTypeEnum baseType, Vector3 position)
         {
-            var floorPrefab = GetPrefabFromDictionary(gameplayMode, baseSubtype, _baseFloorComponents);
-            var spirePrefab = GetPrefabFromDictionary(gameplayMode, baseSubtype, _baseSpireComponents);
-            var additionsPrefab = GetPrefabFromDictionary(gameplayMode, baseSubtype, _baseAdditionalComponents);
+            var floorPrefab = GetPrefabFromDictionary(baseType, _baseFloorComponents);
+            var spirePrefab = GetPrefabFromDictionary(baseType, _baseSpireComponents);
+            var additionsPrefab = GetPrefabFromDictionary(baseType, _baseAdditionalComponents);
 
             if (floorPrefab == null && spirePrefab == null && additionsPrefab == null)
             {
@@ -51,11 +53,17 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
             var (baseMarker, appliedComponents) = CreateBaseMarker(floorPrefab, spirePrefab, additionsPrefab, position);
             baseMarker = SetBaseColorReferences(baseMarker, appliedComponents);
             baseMarker = SetBaseMarkerTeam(baseMarker, team);
-            baseMarker = SetBaseMarkerData(baseMarker, gameplayMode, baseSubtype);
+            baseMarker = SetBaseMarkerData(baseMarker, baseType);
 
-            //SaveBaseInCache(baseMarker);
+            baseMarker.name = CreateBaseName(team, baseType, baseMarker.name);
 
             return baseMarker;
+        }
+
+        private string CreateBaseName(Teams team, BaseTypeEnum baseType, string defaultBaseName)
+        {
+            defaultBaseName = defaultBaseName.Replace("(Clone)", string.Empty);
+            return team.ToString() + baseType.ToString() + defaultBaseName;
         }
         /// <summary>
         /// Connects color changer scripts in the applied components with the color changing controller in base marker.
@@ -66,6 +74,7 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
         private GameObject SetBaseColorReferences(GameObject baseMarker, GameObject[] appliedComponents)
         {
             var baseColorController = baseMarker.GetComponent<BaseColorController>();
+            baseColorController.SetTeamColorsSO(_teamColorsSO);
             var floorObjectID = (int)BaseComponentTypeEnum.FloorObjectID;
             var spireObjectID = (int)BaseComponentTypeEnum.SpireObjectID;
             var additionalElementsObjectID = (int) BaseComponentTypeEnum.AdditionalElementsID;
@@ -96,15 +105,14 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
         /// <summary>
         /// Tries to find prefab. If manages to - returns it. Returns null otherwise.
         /// </summary>
-        /// <param name="gameplayMode"></param>
-        /// <param name="baseSubtype"></param>
+        /// <param name="baseType"></param>
         /// <param name="dictionary">Which of the available dictionary to query to.</param>
         /// <returns></returns>
-        private GameObject GetPrefabFromDictionary(GameplayModesEnum gameplayMode, BaseSubtypeEnum baseSubtype, BaseSubtypeGameObjectDictionary dictionary)
+        private GameObject GetPrefabFromDictionary(BaseTypeEnum baseType, BaseTypeGameObjectDictionary dictionary)
         {
             GameObject returnValue = null;
-            var key = new GameplayModeBaseSubtypeTuple(gameplayMode, baseSubtype);
-            if (dictionary.dictionary.TryGetValue(key, out var prefab))
+            
+            if (dictionary.dictionary.TryGetValue(baseType, out var prefab))
             {
                 returnValue = prefab;
             }
@@ -153,8 +161,9 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
 
             return _lastUsedMarkerID;
         }
-        private GameObject SetBaseMarkerData(GameObject baseMarker, GameplayModesEnum gameplayMode, BaseSubtypeEnum baseSubtype)
+        private GameObject SetBaseMarkerData(GameObject baseMarker, BaseTypeEnum baseType)
         {
+            var gameplayMode = EnumValueRetriever.GetGameplayModeFromBaseType(baseType);
             var baseMarkerData = baseMarker.GetComponent<BaseMarkerData>();
 
             if (baseMarkerData == null)
@@ -164,7 +173,7 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
 
             baseMarkerData.ID = GetNewBaseMarkerID();
             baseMarkerData.GameMode = gameplayMode;
-            baseMarkerData.BaseSubtype = baseSubtype;
+            baseMarkerData.BaseType = baseType;
 
             return baseMarker;
         }

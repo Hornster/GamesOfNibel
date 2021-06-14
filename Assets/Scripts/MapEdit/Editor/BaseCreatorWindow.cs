@@ -19,8 +19,7 @@ namespace Assets.Scripts.MapEdit.Editor
         private BaseMarkerFactorySO _baseMarkerFactorySo;
         private bool _requiredRefsGroupFoldout = false;
 
-        private GameplayModesEnum _gameMode;
-        private BaseSubtypeEnum _baseSubtype;
+        private BaseTypeEnum _baseType;
         private Teams _baseTeam;
         [Tooltip("Where the base shall be spawned. You can change it later.")]
         private Vector2 _basePosition;
@@ -39,14 +38,13 @@ namespace Assets.Scripts.MapEdit.Editor
         {
             CreateRequiredReferencesGroup();
             GUILayout.Label("Base settings", EditorStyles.boldLabel);
-            _gameMode = (GameplayModesEnum)EditorGUILayout.EnumPopup("Game mode", _gameMode);
-            _baseSubtype = (BaseSubtypeEnum) EditorGUILayout.EnumPopup("Base subtype", _baseSubtype);
+            _baseType = (BaseTypeEnum) EditorGUILayout.EnumPopup("Base subtype", _baseType);
             _baseTeam = (Teams) EditorGUILayout.EnumPopup("Base team", _baseTeam);
             _basePosition = EditorGUILayout.Vector2Field("Base position", _basePosition);
 
             if (GUILayout.Button("Create base!"))
             {
-                _baseMarkerFactorySo?.CreateBaseMarker(_baseTeam, _gameMode, _baseSubtype, _basePosition);
+                _baseMarkerFactorySo?.CreateBaseMarker(_baseTeam, _baseType, _basePosition);
                 BaseMarkersCache.GetInstance().BasesAdded = true;
             }
         }

@@ -10,13 +10,18 @@ namespace Assets.Scripts.Game.Common
     /// </summary>
     public class TeamModule : MonoBehaviour
     {
-        [Tooltip("This event will be called when team is changed.")]
-        [SerializeField]
-        private TeamsUnityEvent _onTeamChangedHandlers;
+        //[Tooltip("This event will be called when team is changed.")]
+        //[SerializeField]
+        private TeamsUnityEvent _onTeamChangedHandlers = new TeamsUnityEvent();
         [SerializeField]
         private Teams _myTeam;
 
         private void Start()
+        {
+            _onTeamChangedHandlers?.Invoke(_myTeam);
+        }
+
+        private void OnValidate()
         {
             _onTeamChangedHandlers?.Invoke(_myTeam);
         }

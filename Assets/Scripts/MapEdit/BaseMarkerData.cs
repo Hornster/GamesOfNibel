@@ -22,10 +22,10 @@ namespace Assets.Scripts.MapEdit
             set => _gameMode = value;
         }
 
-        public BaseSubtypeEnum BaseSubtype
+        public BaseTypeEnum BaseType
         {
-            get => _baseSubtype;
-            set => _baseSubtype = value;
+            get => _baseType;
+            set => _baseType = value;
         }
 
         [SerializeField]
@@ -33,6 +33,6 @@ namespace Assets.Scripts.MapEdit
         [SerializeField]
         private GameplayModesEnum _gameMode;
         [SerializeField]
-        private BaseSubtypeEnum _baseSubtype;
+        private BaseTypeEnum _baseType;
     }
 }
