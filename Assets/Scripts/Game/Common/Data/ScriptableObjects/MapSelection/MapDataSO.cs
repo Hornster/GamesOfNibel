@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.MapEdit;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
@@ -71,6 +73,8 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
         /// How many Lotus team bases does the map have.
         /// </summary>
         public int LilyBasesCount;
+
+        public List<BaseMarkerData> BaseMarkersData;
         /// <summary>
         /// Resets fields that are not shown to the user as these are used to create json file.
         /// </summary>

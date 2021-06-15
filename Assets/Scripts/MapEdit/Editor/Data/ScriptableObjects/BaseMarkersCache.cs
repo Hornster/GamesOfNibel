@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Helpers;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
@@ -8,7 +10,7 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
 {
     public class BaseMarkersCache : UnityEditor.Editor
     {
-        private List<BaseMarkerData> _basesDatas = new List<BaseMarkerData>();
+        private List<BaseMarkerData> _baseDatas = new List<BaseMarkerData>();
 
         private static BaseMarkersCache _instance;
         /// <summary>
@@ -40,7 +42,7 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
         public void FindBases()
         {
             var foundBaseMarkers = FindObjectsOfType<BaseMarkerData>();
-            _basesDatas = foundBaseMarkers.ToList();
+            _baseDatas = foundBaseMarkers.ToList();
             BasesAdded = false;
         }
         /// <summary>
@@ -59,7 +61,24 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
                 ChkReferences();
             }
 
-            return _basesDatas;
+            return _baseDatas;
+        }
+
+        public Dictionary<Teams, int> GetBasesCountByTeam()
+        {
+            var basesCount = new Dictionary<Teams, int>();
+            var teamsTypes = EnumValueRetriever.GetEnumArray<Teams>();
+            foreach (var teamType in teamsTypes)
+            {
+                basesCount.Add(teamType, 0);
+            }
+
+            foreach (var baseData in _baseDatas)
+            {
+                basesCount[baseData.BaseTeam]++;
+            }
+
+            return basesCount;
         }
 
         private void OnSceneChanged(Scene previousScene, Scene currentScene)
@@ -68,11 +87,11 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
         }
         private void ChkReferences()
         {
-            for (int i = _basesDatas.Count - 1; i >= 0; i--)
+            for (int i = _baseDatas.Count - 1; i >= 0; i--)
             {
-                if (_basesDatas[i] == null)
+                if (_baseDatas[i] == null)
                 {
-                    _basesDatas.RemoveAt(i);
+                    _baseDatas.RemoveAt(i);
                 }
             }
         }

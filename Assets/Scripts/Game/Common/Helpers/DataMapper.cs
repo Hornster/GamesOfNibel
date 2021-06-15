@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Exceptions;
+using Assets.Scripts.MapEdit;
 
 namespace Assets.Scripts.Game.Common.Helpers
 {
@@ -39,8 +41,12 @@ namespace Assets.Scripts.Game.Common.Helpers
                 NeutralBasesCount = source.NeutralBasesCount
             };
 
-            return rawData;
+            var basesData = new List<BaseData>(source.BaseMarkersData.Count);
+            source.BaseMarkersData.ForEach(baseMarkerData => basesData.Add(MapBaseMarkerDataToBaseData(baseMarkerData)));
 
+            rawData.BasesData = basesData;
+
+            return rawData;
         }
         /// <summary>
         /// Maps data from raw map data object to MapData.
@@ -67,6 +73,18 @@ namespace Assets.Scripts.Game.Common.Helpers
 
             return mapData;
         }
-        
+
+        public BaseData MapBaseMarkerDataToBaseData(BaseMarkerData baseMarkerData)
+        {
+            var baseData = new BaseData
+            {
+                ID = baseMarkerData.ID,
+                GameMode = baseMarkerData.GameMode,
+                BaseTeam = baseMarkerData.BaseTeam,
+                BaseType = baseMarkerData.BaseType
+            };
+
+            return baseData;
+        }
     }
 }

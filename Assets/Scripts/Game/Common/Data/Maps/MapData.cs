@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.MapEdit;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Data.Maps
@@ -19,5 +20,7 @@ namespace Assets.Scripts.Game.Common.Data.Maps
         public string ScenePath { get; set; }
         public string SceneBundlePath { get; set; }
         public Dictionary<Teams, int> BasesCount { get; set; } = new Dictionary<Teams, int>();
+
+        public List<BaseData> BasesData { get; set; } = new List<BaseData>();
     }
 }

@@ -28,6 +28,8 @@ namespace Assets.Scripts.MapEdit
             set => _baseType = value;
         }
 
+        public Teams BaseTeam => _myTeam.MyTeam;
+
         [SerializeField]
         private TeamModule _myTeam;
         [SerializeField]

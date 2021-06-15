@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
 using Assets.Scripts.Game.Common.Enums;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Data.Maps
@@ -54,6 +55,8 @@ namespace Assets.Scripts.Game.Common.Data.Maps
         /// How many Lotus team bases does the map have.
         /// </summary>
         public int LilyBasesCount;
+
+        public List<BaseData> BasesData = new List<BaseData>();
 
         public string GetJsonString()
         {

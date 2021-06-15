@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Assets.Editor.Scripts.Modding.MapCreation.Scripts.Util;
 using Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection;
+using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.MapEdit.Editor.Data;
 using Assets.Scripts.MapEdit.Editor.Data.Constants;
@@ -270,6 +271,20 @@ namespace Assets.Scripts.MapEdit.Editor
             _mapDataSO.SceneBundlePath = Path.Combine(baseDir, sceneBundleName);
         }
 
+        private MapDataSO AddBasesDataToMapData(MapDataSO mapDataSO)
+        {
+            var basesCache = BaseMarkersCache.GetInstance();
+            var basesCountByTeam = basesCache.GetBasesCountByTeam();
+
+            mapDataSO.MultiTeamBasesCount = basesCountByTeam[Teams.Multi];
+            mapDataSO.LilyBasesCount = basesCountByTeam[Teams.Lily];
+            mapDataSO.LotusBasesCount = basesCountByTeam[Teams.Lotus];
+            mapDataSO.NeutralBasesCount = basesCountByTeam[Teams.Neutral];
+
+            mapDataSO.BaseMarkersData = basesCache.GetBasesData();
+
+            return mapDataSO;
+        }
         /// <summary>
         /// Manages the creation of the map mod - preview images and the scene itself.
         /// </summary>
@@ -281,6 +296,8 @@ namespace Assets.Scripts.MapEdit.Editor
 
             //First, setup the bundle that contains the preview and thumbnail images of the map.
             _mapDataSO.ShownMapName = StringManipulator.RemoveSpecialCharacters(_mapDataSO.ShownMapName);
+            //Then, get bases data.
+            _mapDataSO = AddBasesDataToMapData(_mapDataSO);
 
             var assetBundleCreator = new AssetBundleCreator();
             var baseDir = GetOutputPath();
@@ -288,14 +305,9 @@ namespace Assets.Scripts.MapEdit.Editor
             CreatePreviewImagesBundle(assetBundleCreator, baseDir);
             CreateSceneBundle(assetBundleCreator, baseDir);
 
+
             var mapper = new DataMapper();
             var serializableMapData = mapper.MapDataSOToRawMapData(_mapDataSO);
-
-
-            //TODO: Check if MapDataSO contains BasesRoot reference. If yes - use it to swiftly retrieve bases quantity.
-            //TODO: If not - get all object from the scene and search for the object in there. https://docs.unity3d.com/ScriptReference/SceneManagement.Scene.GetRootGameObjects.html
-
-            //var foundBases;
 
             assetBundleCreator.CreateJSONInfoFile(serializableMapData, baseDir, serializableMapData.ShownMapName);
         }
