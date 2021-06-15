@@ -55,15 +55,6 @@ namespace Assets.Scripts.MapEdit.Editor.Util
 
         }
 
-        private bool ChkAgainstCTF(List<BaseMarkerData> ctfMarkers)
-        {
-            bool hasMultiBase = false;
-            bool hasNeutralBase = false;
-            bool hasLotusBase = false;
-            bool hasLilyBase = false;
-
-        }
-
        
 
         
