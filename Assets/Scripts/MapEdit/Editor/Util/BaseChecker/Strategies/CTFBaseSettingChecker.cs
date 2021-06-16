@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
         private bool _hasLilyBase;
         private bool _hasLotusBase;
         private bool _hasNeutralBase;
-        public bool ChkBasesSetting(List<BaseMarkerData> baseMarkers)
+        public bool ChkBasesSetting(List<BaseData> baseMarkers)
         {
             _hasLilyBase = false;
             _hasLotusBase = false;

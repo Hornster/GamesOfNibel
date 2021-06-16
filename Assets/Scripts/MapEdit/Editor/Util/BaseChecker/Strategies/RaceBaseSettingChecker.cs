@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Helpers;
 using TMPro;
@@ -18,7 +19,7 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
     {
         private Dictionary<Teams, Dictionary<BaseTypeEnum, bool>> _setting;
 
-        public bool ChkBasesSetting(List<BaseMarkerData> baseMarkers)
+        public bool ChkBasesSetting(List<BaseData> baseMarkers)
         {
             foreach (var baseMarker in baseMarkers)
             {
@@ -30,7 +31,7 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
                 ChkBase(baseMarker);
             }
 
-            throw new NotImplementedException();
+            return ChkConditions();
         }
 
         private void ResetSetting()
@@ -49,7 +50,7 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
 
                 var baseTypesDict = new Dictionary<BaseTypeEnum, bool>
                 {
-                    {BaseTypeEnum.RaceStart, false}, 
+                    {BaseTypeEnum.RaceStart, false},
                     {BaseTypeEnum.RaceFinish, false}
                 };
 
@@ -57,7 +58,7 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
             }
         }
 
-        private void ChkBase(BaseMarkerData baseMarker)
+        private void ChkBase(BaseData baseMarker)
         {
             var teamSetting = _setting[baseMarker.BaseTeam];
             if (teamSetting.ContainsKey(baseMarker.BaseType))
@@ -65,35 +66,83 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
                 teamSetting[baseMarker.BaseType] = true;
             }
         }
-
-        private void ChkConditions()
+        /// <summary>
+        /// Checks if the configuration of the bases is correct for scenarios:
+        /// ("allTypes" means all teams without Multi and Neutral)
+        /// (Notation: StartBaseType -> FinishBaseType)
+        ///
+        /// Multi -> Multi
+        /// allTypes -> Multi
+        /// Multi -> allTypes
+        /// allTypes -> allTypes
+        ///
+        /// At least one of the presented above configs has to be present for this
+        /// method to return true. Will return false otherwise.
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private bool ChkConditions()
         {
             var multiTeam = _setting[Teams.Multi];
 
-        }
-
-        private void ReportWrongSetting(Teams team, BaseTypeEnum baseType)
-        {
-            switch(baseType)
+            //Multi -> Multi scenario
+            if (multiTeam[BaseTypeEnum.RaceStart] && multiTeam[BaseTypeEnum.RaceFinish])
             {
-                case BaseTypeEnum.RaceStart:
-                case BaseTypeEnum.RaceFinish:
-                    ReportLackOfBase(team, baseType);
-                    break;
-                default:
-                    Debug.LogWarning($"{baseType} is wrong base type for Race mode (team {team}).");
-                    break;
+                return true;
             }
+
+            //allTypes -> Multi scenario
+            var lilyTeam = _setting[Teams.Lily];
+            var lotusTeam = _setting[Teams.Lotus];
+
+            if (multiTeam[BaseTypeEnum.RaceFinish])
+            {
+                if (lilyTeam[BaseTypeEnum.RaceStart] && lotusTeam[BaseTypeEnum.RaceStart])
+                {
+                    return true;
+                }
+            }
+
+            //Multi -> allTypes scenario
+            if (multiTeam[BaseTypeEnum.RaceStart])
+            {
+                if (lilyTeam[BaseTypeEnum.RaceFinish] && lotusTeam[BaseTypeEnum.RaceFinish])
+                {
+                    return true;
+                }
+            }
+
+            //allTypes -> allTypes scenario
+            if (lilyTeam[BaseTypeEnum.RaceStart] && lotusTeam[BaseTypeEnum.RaceStart])
+            {
+                if (lilyTeam[BaseTypeEnum.RaceFinish] && lotusTeam[BaseTypeEnum.RaceFinish])
+                {
+                    return true;
+                }
+            }
+
+            ReportWrongSetting();
+
+            return false;
         }
 
-        private void ReportLackOfBase(Teams team, BaseTypeEnum lackingBaseType)
+        private void ReportWrongSetting()
         {
-            Debug.LogError($"Team {team} lacks base type {lackingBaseType}.");
+            Debug.LogError($"Incorrect base setting for Race game mode! \n" +
+                           $"Correct settings are:\n" +
+                           $" Multi -> Multi\n" +
+                           "allTypes -> Multi\n" +
+                           "Multi -> allTypes\n" +
+                           "allTypes -> allTypes\n\n" +
+                           "Where \"allTypes\" refers to Lotus and Lily teams. Multi refers to Multi team.\n" +
+                           $"Lotus and Lily teams must have a place to start the race ({BaseTypeEnum.RaceStart} base type)" +
+                           $"and a place where the race ends ({BaseTypeEnum.RaceFinish} base type)." +
+                           $"Multi team is sufficient for both Lotus and Lily.");
         }
     }
 }
 
-//TODO: Check if one of the conditions is fulfilled (allTeams means all without Multi):
+//TODO: Check if one of the conditions is fulfilled (allTeams means all without Multi and Neutral):
 //TODO: Multi -> Multi
 //TODO: Multi -> allTeams
 //TODO: allTeams -> Multi
