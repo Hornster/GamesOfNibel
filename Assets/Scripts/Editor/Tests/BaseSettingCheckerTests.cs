@@ -19,7 +19,10 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
 
-            Assert.True(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.True(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 1);
+            Assert.True(result.correctGameModes[0] == GameplayModesEnum.Race);
         }
         [Test]
         public void ChkRaceMultiAllCase()
@@ -30,7 +33,10 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Lotus, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
 
-            Assert.True(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.True(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 1);
+            Assert.True(result.correctGameModes[0] == GameplayModesEnum.Race);
         }
         [Test]
         public void ChkRaceAllAllCase()
@@ -42,7 +48,10 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Lotus, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
 
-            Assert.True(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.True(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 1);
+            Assert.True(result.correctGameModes[0] == GameplayModesEnum.Race);
         }
         [Test]
         public void ChkRaceAllMultiCase()
@@ -53,7 +62,10 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Lotus, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
 
-            Assert.True(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.True(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 1);
+            Assert.True(result.correctGameModes[0] == GameplayModesEnum.Race);
         }
         [Test]
         public void ChkEmptyCase()
@@ -61,7 +73,9 @@ namespace Assets.Scripts.Editor.Tests
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
 
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkMultipleGoodCases()
@@ -80,39 +94,52 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Neutral, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Neutral, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
 
-            Assert.True(baseSettingChecker.ChkBasesSetting(data));
+
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.True(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 1);
+            Assert.True(result.correctGameModes[0] == GameplayModesEnum.Race);
         }
 
         //bad race cases
         [Test]
         public void ChkRaceNeutralNeutralCase()
         {
+            LogAssert.ignoreFailingMessages = true;
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
             data.Add(CreateData(Teams.Neutral, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Neutral, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
 
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkRaceMultiLilyTeam()
         {
+            LogAssert.ignoreFailingMessages = true;
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
 
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkRaceMultiLotusTeam()
         {
+            LogAssert.ignoreFailingMessages = true;
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Lotus, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
 
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkRaceLilyMultiTeam()
@@ -122,46 +149,59 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
 
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+            LogAssert.ignoreFailingMessages = true;
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkRaceLotusMultiTeam()
         {
+            LogAssert.ignoreFailingMessages = true;
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
             data.Add(CreateData(Teams.Lotus, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
 
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+            LogAssert.ignoreFailingMessages = true;
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkRaceOnlyStartTeam()
         {
+            LogAssert.ignoreFailingMessages = true;
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
             data.Add(CreateData(Teams.Lotus, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
 
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkRaceOnlyFinishTeam()
         {
+            LogAssert.ignoreFailingMessages = true;
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
             data.Add(CreateData(Teams.Lotus, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Neutral, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.RaceFinish, GameplayModesEnum.Race));
 
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
 
 
         //CTF
         //[LilyCount, LotusCount, NeutralCount] - for example, [...]OneOneOneCase
         [Test]
-        public void ChkRaceOneOneOneCase()
+        public void ChkCtfOneOneOneCase()
         {
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
@@ -169,10 +209,13 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
             data.Add(CreateData(Teams.Neutral, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
 
-            Assert.True(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.True(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 1);
+            Assert.True(result.correctGameModes[0] == GameplayModesEnum.CTF);
         }
         [Test]
-        public void ChkRaceOneOneThreeCase()
+        public void ChkCtfOneOneThreeCase()
         {
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
@@ -212,10 +255,13 @@ namespace Assets.Scripts.Editor.Tests
                 ID = 1
             });
 
-            Assert.True(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.True(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 1);
+            Assert.True(result.correctGameModes[0] == GameplayModesEnum.CTF);
         }
         [Test]
-        public void ChkRaceThreeThreeOneCase()
+        public void ChkCtfThreeThreeOneCase()
         {
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
@@ -227,7 +273,10 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
 
-            Assert.True(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.True(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 1);
+            Assert.True(result.correctGameModes[0] == GameplayModesEnum.CTF);
         }
         //bad ctf cases
         [Test]
@@ -236,7 +285,10 @@ namespace Assets.Scripts.Editor.Tests
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkBadCtfMultiCase3Bases()
@@ -246,7 +298,10 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkBadCtfLilyBases()
@@ -256,7 +311,10 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
             data.Add(CreateData(Teams.Neutral, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkBadCtfLotusBases()
@@ -266,7 +324,10 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Lotus, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
             data.Add(CreateData(Teams.Lotus, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
             data.Add(CreateData(Teams.Neutral, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
         [Test]
         public void ChkBadCtfNoNeutralBases()
@@ -275,12 +336,15 @@ namespace Assets.Scripts.Editor.Tests
             var data = new List<BaseData>();
             data.Add(CreateData(Teams.Lotus, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
             data.Add(CreateData(Teams.Lily, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
-            Assert.False(baseSettingChecker.ChkBasesSetting(data));
+
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.False(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 0);
         }
 
         //Mixed
         [Test]
-        public void ChkBadMixedBases()
+        public void ChkMixedBases()
         {
             var baseSettingChecker = new BaseSettingChecker();
             var data = new List<BaseData>();
@@ -292,7 +356,9 @@ namespace Assets.Scripts.Editor.Tests
             data.Add(CreateData(Teams.Neutral, BaseTypeEnum.CtfDefault, GameplayModesEnum.CTF));
             data.Add(CreateData(Teams.Multi, BaseTypeEnum.RaceStart, GameplayModesEnum.Race));
 
-            Assert.True(baseSettingChecker.ChkBasesSetting(data));
+            var result = baseSettingChecker.ChkBasesSetting(data);
+            Assert.True(result.isSettingCorrect);
+            Assert.True(result.correctGameModes.Length == 2);
         }
 
 

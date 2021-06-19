@@ -15,7 +15,7 @@ namespace Assets.Scripts.MapEdit.Editor.Util
     public class BaseSettingChecker
     {
         private IBaseSettingChecker _usedChecker;
-        public bool ChkBasesSetting(List<BaseData> baseMarkers)
+        public (bool isSettingCorrect, GameplayModesEnum[] correctGameModes) ChkBasesSetting(List<BaseData> baseMarkers)
         {
             var modeCheck = new Dictionary<GameplayModesEnum, List<BaseData>>();
 
@@ -27,44 +27,51 @@ namespace Assets.Scripts.MapEdit.Editor.Util
                 }
                 else
                 {
-                    modeCheck.Add(marker.GameMode, new List<BaseData>(){marker});
+                    modeCheck.Add(marker.GameMode, new List<BaseData>() { marker });
                 }
             }
 
             return ChkAgainstBaseSetting(modeCheck);
         }
-        private bool ChkAgainstBaseSetting(Dictionary<GameplayModesEnum, List<BaseData>> baseMarkers)
+        private (bool isSettingCorrect, GameplayModesEnum[] correctGameModes) ChkAgainstBaseSetting(Dictionary<GameplayModesEnum, List<BaseData>> baseMarkers)
         {
             var modes = EnumValueRetriever.GetEnumArray<GameplayModesEnum>();
-
+            var correctGameModes = new List<GameplayModesEnum>();
+            bool wasAtLeastOneCorrectSetting = false;
             foreach (var mode in modes)
             {
-                switch(mode)
+                if(baseMarkers.TryGetValue(mode, out var baseDataList) == false)
+                {
+                    continue;
+                }
+                switch (mode)
                 {
                     case GameplayModesEnum.CTF:
                         _usedChecker = new CTFBaseSettingChecker();
-                        return _usedChecker.ChkBasesSetting(baseMarkers[GameplayModesEnum.CTF]);
+                        if (_usedChecker.ChkBasesSetting(baseDataList))
+                        {
+                            correctGameModes.Add(GameplayModesEnum.CTF);
+                            wasAtLeastOneCorrectSetting = true;
+                        }
                         break;
                     case GameplayModesEnum.Race:
                         _usedChecker = new RaceBaseSettingChecker();
-                        return _usedChecker.ChkBasesSetting(baseMarkers[GameplayModesEnum.Race]);
+                        if (_usedChecker.ChkBasesSetting(baseDataList))
+                        {
+                            correctGameModes.Add(GameplayModesEnum.Race);
+                            wasAtLeastOneCorrectSetting = true;
+                        }
                         break;
                     case GameplayModesEnum.TimeAttack:
                         throw new NotImplementedException();
-                        break;
                     default:
                         Debug.LogWarning($"The {mode} gamemode check is not supported. Make sure you have the latest version of editor package installed.");
-                        return false;
+                        break;
                 }
             }
 
-            Debug.LogError("No bases detected!");
-            return false;
+            return (wasAtLeastOneCorrectSetting, correctGameModes.ToArray());
         }
-        private void ChkAgainstTeams(List<BaseData> ctfMarkers)
-        {
 
-        }
-        
     }
 }

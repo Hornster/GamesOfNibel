@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Helpers;
+using Assets.Scripts.MapEdit.Editor.Data.Constants;
 using TMPro;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
 
         public bool ChkBasesSetting(List<BaseData> baseMarkers)
         {
+            ResetSetting();
+
             foreach (var baseMarker in baseMarkers)
             {
                 if (baseMarker.GameMode != GameplayModesEnum.Race)
@@ -37,7 +40,6 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
         private void ResetSetting()
         {
             var teams = EnumValueRetriever.GetEnumArray<Teams>();
-            var baseTypes = EnumValueRetriever.GetEnumArray<BaseTypeEnum>();
 
             _setting = new Dictionary<Teams, Dictionary<BaseTypeEnum, bool>>();
             foreach (var team in teams)
@@ -60,10 +62,14 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
 
         private void ChkBase(BaseData baseMarker)
         {
-            var teamSetting = _setting[baseMarker.BaseTeam];
-            if (teamSetting.ContainsKey(baseMarker.BaseType))
+            if(_setting.TryGetValue(baseMarker.BaseTeam, out var baseTypes) == false)
             {
-                teamSetting[baseMarker.BaseType] = true;
+                return;
+            }
+
+            if (baseTypes.ContainsKey(baseMarker.BaseType))
+            {
+                baseTypes[baseMarker.BaseType] = true;
             }
         }
         /// <summary>
@@ -128,16 +134,7 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
 
         private void ReportWrongSetting()
         {
-            Debug.LogError($"Incorrect base setting for Race game mode! \n" +
-                           $"Correct settings are:\n" +
-                           $" Multi -> Multi\n" +
-                           "allTypes -> Multi\n" +
-                           "Multi -> allTypes\n" +
-                           "allTypes -> allTypes\n\n" +
-                           "Where \"allTypes\" refers to Lotus and Lily teams. Multi refers to Multi team.\n" +
-                           $"Lotus and Lily teams must have a place to start the race ({BaseTypeEnum.RaceStart} base type)" +
-                           $"and a place where the race ends ({BaseTypeEnum.RaceFinish} base type)." +
-                           $"Multi team is sufficient for both Lotus and Lily.");
+            Debug.LogError(SGMapEditMessages.RaceBaseSettingIncorrectErrMessage);
         }
     }
 }
