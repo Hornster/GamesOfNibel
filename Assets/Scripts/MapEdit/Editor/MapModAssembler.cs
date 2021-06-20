@@ -301,29 +301,36 @@ namespace Assets.Scripts.MapEdit.Editor
 
             var assetBundleCreator = new AssetBundleCreator();
             var baseDir = GetOutputPath();
+            var mapper = new DataMapper();
+            var serializableMapData = mapper.MapDataSOToRawMapData(_mapDataSO);
+
+            if (ChkBaseSetting(serializableMapData) == false)
+            {
+                MapEditReporter.ReportError(SGMapEditMessages.MapCreationErrorBadBaseSetting);
+            }
+
+            assetBundleCreator.CreateJSONInfoFile(serializableMapData, baseDir, serializableMapData.ShownMapName);
 
             CreatePreviewImagesBundle(assetBundleCreator, baseDir);
             CreateSceneBundle(assetBundleCreator, baseDir);
-
-
-            var mapper = new DataMapper();
-            var serializableMapData = mapper.MapDataSOToRawMapData(_mapDataSO); //TODO move that before asset bundle creation since
-                                                                                //TODO bases setting needs to be checked first.
-
-            assetBundleCreator.CreateJSONInfoFile(serializableMapData, baseDir, serializableMapData.ShownMapName);
         }
         /// <summary>
         /// Checks if the base setting is correct. If it is the case,
         /// sets the gamemode field with first correct bases setting and returns true.
+        /// If setting not correct - doesn't set anything and returns false.
         /// </summary>
         /// <returns></returns>
-        private bool ChkBaseSetting(Game.Common.Data.Maps.RawMapData _mapData)
+        private bool ChkBaseSetting(Game.Common.Data.Maps.RawMapData mapData)
         {
             var baseChecker = new BaseSettingChecker();
-            var (isBaseSettingCorrect, availableGameModes) = baseChecker.ChkBasesSetting(_mapData.BasesData);
-            //TODO test it, make it return first available game mode or something
-            return isBaseSettingCorrect;
+            var (isBaseSettingCorrect, availableGameModes) = baseChecker.ChkBasesSetting(mapData.BasesData);
 
+            if (isBaseSettingCorrect)
+            {
+                mapData.GameplayMode = availableGameModes[0];//If isBaseSettingCorrect is true, then there is at least one element here.
+            }
+            
+            return isBaseSettingCorrect;
         }
     }
 }

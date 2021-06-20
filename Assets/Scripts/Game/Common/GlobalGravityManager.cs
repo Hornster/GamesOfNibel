@@ -7,6 +7,7 @@ namespace Assets.Scripts.Game.Common
     /// </summary>
     public class GlobalGravityManager : SceneSingleton<GlobalGravityManager>
     {
+        [Header("")]
         /// <summary>
         /// How long will it take to reach max height jumping off the ground vertically.
         /// </summary>
