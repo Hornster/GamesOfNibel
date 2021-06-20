@@ -307,11 +307,24 @@ namespace Assets.Scripts.MapEdit.Editor
 
 
             var mapper = new DataMapper();
-            var serializableMapData = mapper.MapDataSOToRawMapData(_mapDataSO);
+            var serializableMapData = mapper.MapDataSOToRawMapData(_mapDataSO); //TODO move that before asset bundle creation since
+                                                                                //TODO bases setting needs to be checked first.
 
             assetBundleCreator.CreateJSONInfoFile(serializableMapData, baseDir, serializableMapData.ShownMapName);
         }
+        /// <summary>
+        /// Checks if the base setting is correct. If it is the case,
+        /// sets the gamemode field with first correct bases setting and returns true.
+        /// </summary>
+        /// <returns></returns>
+        private bool ChkBaseSetting(Game.Common.Data.Maps.RawMapData _mapData)
+        {
+            var baseChecker = new BaseSettingChecker();
+            var (isBaseSettingCorrect, availableGameModes) = baseChecker.ChkBasesSetting(_mapData.BasesData);
+            //TODO test it, make it return first available game mode or something
+            return isBaseSettingCorrect;
 
+        }
     }
 }
 //https://www.youtube.com/watch?v=1zROlULebXg - creating build pipeline for asset bundles
