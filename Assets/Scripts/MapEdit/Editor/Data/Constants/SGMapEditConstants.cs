@@ -10,6 +10,7 @@
         public const string MapEditScriptableObjectsPath = "Assets/Sandbox/ComponentBasesTests/MapEdit/Data/SOs/";
         public const string ScriptableObjectsExtension = "asset";
 
+        public const string BaseMarkersFactorySOPath = "Assets/Sandbox/ComponentBasesTests/MapEdit/Data/SOs/";
         #endregion
 
         #region ValueConstants

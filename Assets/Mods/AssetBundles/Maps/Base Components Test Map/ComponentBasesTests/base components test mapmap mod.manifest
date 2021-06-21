@@ -1,0 +1,51 @@
+ManifestFileVersion: 0
+CRC: 3263527562
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6459eead0bdf15dff5f3e1d7096c9bbf
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 8a7b7eb28caa96fbb5c31562b5166524
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 81
+  Script: {instanceID: 0}
+- Class: 104
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 039dca90c3af4d3408c2484b3d3926ec, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7b81e8a6af000a542b4cd14a080f1d49, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a6e3d3c90ec82e748b5d64f57867436b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 183f3ead757b14c468338e9b33e83683, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8a9cc1ce30ea3b145aa11308cbff6b10, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 157
+  Script: {instanceID: 0}
+- Class: 196
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Sandbox/ComponentBasesTests/Scenes/ComponentBasesTests.unity
+Dependencies: []

@@ -16,7 +16,9 @@ namespace Assets.Scripts.Editor.CustomEditors
 
         public override void OnInspectorGUI()
         {
-            //TODO make an explanation field here, just show text.
+            EditorGUILayout.HelpBox(SGMapEditMessages.GlobalGravityManagerInfo, MessageType.Info, true);
+
+            base.OnInspectorGUI();
         }
     }
 }

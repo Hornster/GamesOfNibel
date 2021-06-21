@@ -30,7 +30,14 @@ namespace Assets.Scripts.MapEdit.Editor
         {
             var window = GetWindow<BaseCreatorWindow>("Base Creator Window");
             var assetSeeker = new AssetSeeker<BaseMarkerFactorySO>();
-            window._baseMarkerFactorySo = assetSeeker.FindBaseMarkerFactorySo(
+            window._baseMarkerFactorySo = assetSeeker.FindAsset(
+                SGMapEditConstants.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
+        }
+
+        public void Awake()
+        {
+            var assetSeeker = new AssetSeeker<BaseMarkerFactorySO>();
+            _baseMarkerFactorySo = assetSeeker.FindAsset(
                 SGMapEditConstants.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
         }
 
@@ -57,7 +64,7 @@ namespace Assets.Scripts.MapEdit.Editor
                 var previousFoldout = EditorGUI.indentLevel;
                 EditorGUI.indentLevel++;
 
-                EditorGUILayout.HelpBox("None of these should be null/empty.", MessageType.Info);
+                EditorGUILayout.HelpBox(SGMapEditMessages.BaseCreatorWindowReqPrefsInfo, MessageType.Info);
                 _baseMarkerFactorySo = EditorGUILayout.ObjectField("Factory object", _baseMarkerFactorySo, typeof(BaseMarkerFactorySO), false) as BaseMarkerFactorySO;
 
                 EditorGUI.indentLevel = previousFoldout;

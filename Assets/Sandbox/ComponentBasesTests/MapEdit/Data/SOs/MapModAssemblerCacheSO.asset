@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f56786d588e2d0b46b9ae2e59bf8a78b, type: 3}
   m_Name: MapModAssemblerCacheSO
   m_EditorClassIdentifier: 
-  _lastSetScene: {fileID: 102900000, guid: aefdefdfff4af36459c4131bac0b8a96, type: 3}
-  _lastMapDataSO: {fileID: 11400000, guid: 24cd1cc53a81ddd49af83e531720c8ce, type: 2}
+  _lastSetScene: {fileID: 102900000, guid: 31d8cacecb868114c85aa76e083b6b8f, type: 3}
+  _lastMapDataSO: {fileID: 11400000, guid: 789cfd1988fa9f84eb60c8a298f08313, type: 2}

@@ -10,6 +10,7 @@ namespace Assets.Scripts.Game.Common.Data.Maps
     /// <summary>
     /// Class directly used to serialize and deserialize base data.
     /// </summary>
+    [Serializable]
     public class BaseData
     {
         /// <summary>

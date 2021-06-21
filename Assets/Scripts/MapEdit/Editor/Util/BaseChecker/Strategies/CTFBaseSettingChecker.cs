@@ -38,10 +38,10 @@ namespace Assets.Scripts.MapEdit.Editor.Util.BaseChecker.Strategies
                         _hasNeutralBase = true;
                         break;
                     case Teams.Multi:
-                        Debug.LogWarning("Multi-team bases do not apply to Capture The Flag mode. You can leave the marker if you want, it will not cause any problems but it won't be used either.");
+                        Debug.LogWarning(Errors.CTFMultiTeamBaseFoundWarning);
                         break;
                     default:
-                        throw new Exception(baseMarker.BaseTeam + Errors.TeamNotFound);
+                        throw new Exception(string.Format(Errors.TeamNotFoundException, baseMarker.BaseTeam));
                 }
             }
 

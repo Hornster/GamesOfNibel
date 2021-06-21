@@ -18,6 +18,12 @@ namespace Assets.Scripts.MapEdit.Editor.Util
         private string RemoveLastSlashFromPath(string path)
         {
             int lastCharacterIndex = path.Length - 1;
+
+            if (path.Length <= 0)
+            {
+                return path;
+            }
+
             if (path[lastCharacterIndex] == '/' || path[lastCharacterIndex] == '\\')
             {
                 path = path.Remove(lastCharacterIndex);
@@ -32,18 +38,36 @@ namespace Assets.Scripts.MapEdit.Editor.Util
         /// <param name="pathToAsset">Path to where the search should be done.</param>
         /// <param name="assetName">Name of the asset we are looking for.</param>
         /// <returns></returns>
-        public T FindBaseMarkerFactorySo(string pathToAsset, string assetName)
+        public T FindAsset(string pathToAsset, string assetName)
         {
             pathToAsset = RemoveLastSlashFromPath(pathToAsset); //the path to asset cannot have a slash or a backslash. Otherwise Unity won't find the folder.
             var hitsGUIDs = AssetDatabase.FindAssets(assetName, new[] { pathToAsset });
 
             if (hitsGUIDs.Length <= 0)
             {
-                throw new Exception($"Cannot find {assetName} at {pathToAsset}!");
+                MapEditReporter.ReportWarning(string.Format(Errors.AssetSeekerAssetNotFoundAtPath, assetName, pathToAsset));
+                return FindAsset(assetName);
             }
             else if (hitsGUIDs.Length > 1)
             {
-                throw new Exception($"Only one {assetName} is allowed at {pathToAsset}!");
+                throw new Exception(string.Format(Errors.AssetSeekerMultipleAssetsFoundAtPath, assetName, pathToAsset));
+            }
+
+            var pathToFirstAsset = AssetDatabase.GUIDToAssetPath(hitsGUIDs[0]);
+            return AssetDatabase.LoadAssetAtPath<T>(pathToFirstAsset);
+        }
+
+        public T FindAsset(string assetName)
+        {
+            var hitsGUIDs = AssetDatabase.FindAssets(assetName);
+
+            if (hitsGUIDs.Length <= 0)
+            {
+                throw new Exception(string.Format(Errors.AssetSeekerAssetNotFoundGlobally, assetName));
+            }
+            else if (hitsGUIDs.Length > 1)
+            {
+                throw new Exception(string.Format(Errors.AssetSeekerMultipleAssetsFoundGlobally, assetName));
             }
 
             var pathToFirstAsset = AssetDatabase.GUIDToAssetPath(hitsGUIDs[0]);

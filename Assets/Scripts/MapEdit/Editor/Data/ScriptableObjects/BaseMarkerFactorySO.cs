@@ -6,6 +6,8 @@ using Assets.Scripts.Game.Common.Data;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.MapEdit.Editor.Data.Constants;
+using Unity.Collections;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
@@ -17,7 +19,11 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
     {
         public const string BaseMarkerFactorySoName = "BaseMarkerFactorySO";
         private const int _maxIDValue = 300000000;
-        private int _lastUsedMarkerID = 0;
+
+
+        [SerializeField]
+        [HideInInspector]
+        private int _lastUsedMarkerID;
 
         [Header("Data Sources")]
         [SerializeField]
@@ -39,6 +45,10 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
         [SerializeField]
         private BaseTypeGameObjectDictionary _baseAdditionalComponents = new BaseTypeGameObjectDictionary();
 
+        private void Awake()
+        {
+            Debug.Log($"Last used ID: {_lastUsedMarkerID}");
+        }
         public GameObject CreateBaseMarker(Teams team, BaseTypeEnum baseType, Vector3 position)
         {
             var floorPrefab = GetPrefabFromDictionary(baseType, _baseFloorComponents);
@@ -158,6 +168,8 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
             {
                 _lastUsedMarkerID = 0;
             }
+
+            EditorUtility.SetDirty(this);
 
             return _lastUsedMarkerID;
         }

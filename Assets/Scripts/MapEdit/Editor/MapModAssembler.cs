@@ -41,7 +41,7 @@ namespace Assets.Scripts.MapEdit.Editor
             var cacheSeeker = new AssetSeeker<MapModAssemblerCacheSO>();
             try
             {
-                _cache = cacheSeeker.FindBaseMarkerFactorySo(SGMapEditConstants.MapEditScriptableObjectsPath,
+                _cache = cacheSeeker.FindAsset(SGMapEditConstants.MapEditScriptableObjectsPath,
                     MapModAssemblerCacheSO.MapModAssemblerCacheSoName);
             }
             catch (Exception ex)
@@ -301,6 +301,10 @@ namespace Assets.Scripts.MapEdit.Editor
 
             var assetBundleCreator = new AssetBundleCreator();
             var baseDir = GetOutputPath();
+
+            CreatePreviewImagesBundle(assetBundleCreator, baseDir);
+            CreateSceneBundle(assetBundleCreator, baseDir);
+
             var mapper = new DataMapper();
             var serializableMapData = mapper.MapDataSOToRawMapData(_mapDataSO);
 
@@ -310,9 +314,6 @@ namespace Assets.Scripts.MapEdit.Editor
             }
 
             assetBundleCreator.CreateJSONInfoFile(serializableMapData, baseDir, serializableMapData.ShownMapName);
-
-            CreatePreviewImagesBundle(assetBundleCreator, baseDir);
-            CreateSceneBundle(assetBundleCreator, baseDir);
         }
         /// <summary>
         /// Checks if the base setting is correct. If it is the case,

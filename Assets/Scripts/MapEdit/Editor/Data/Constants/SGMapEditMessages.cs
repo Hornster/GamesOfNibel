@@ -22,5 +22,8 @@ namespace Assets.Scripts.MapEdit.Editor.Data.Constants
 
         public static readonly string MapCreationErrorBadBaseSetting = "Map creating process interrupted. Check error messages.";
         public static readonly string GlobalGravityManagerInfo = "You can modify these values if you want, though make sure you know what are you doing. Default values correspond to Ori games as close as I was able to measure them. Negative and equal to 0 values can result in undefined behavior - set these at your own risk.";
+
+        public static readonly string BaseCreatorWindowReqPrefsInfo =
+            "None of these should be null/empty.If any are - try closing and reopening the window.";
     }
 }
