@@ -115,7 +115,6 @@ namespace Assets.Scripts.Game.Mods.Maps
 
             foreach (var potentialMap in potentialMaps)
             {
-                //var readMapAttempt = Instantiate(_defaultSO);
                 try
                 {
                     var readMapAttempt = JsonUtility.FromJson<RawMapData>(potentialMap);

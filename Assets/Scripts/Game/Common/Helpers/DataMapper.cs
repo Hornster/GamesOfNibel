@@ -63,7 +63,8 @@ namespace Assets.Scripts.Game.Common.Helpers
                 Description = source.Description,
                 RequiredSkills = source.RequiredSkills.ToList(),
                 ScenePath = source.ScenePath,
-                SceneBundlePath = source.SceneBundlePath
+                SceneBundlePath = source.SceneBundlePath,
+                BasesData = source.BasesData
             };
 
             mapData.BasesCount.Add(Teams.Lily, source.LilyBasesCount);
