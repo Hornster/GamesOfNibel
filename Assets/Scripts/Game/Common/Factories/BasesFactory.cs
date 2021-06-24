@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Factories
 {
-    public class SpawnerFactory : MonoBehaviour, ISpawnerFactory
+    public class BasesFactory : MonoBehaviour, IBasesFactory
     {
         [Tooltip("Prefab for the neutral base variant.")]
         [SerializeField]

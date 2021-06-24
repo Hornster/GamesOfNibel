@@ -8,9 +8,9 @@ namespace Assets.Scripts.Game.InspectorSerialization.Interfaces
     /// Adapter for ISpawnerFactory interface to be visible in the inspector. 
     /// </summary>
     [Serializable]
-    public class ISpawnerFactoryContainer : IUnifiedContainer<ISpawnerFactory>
+    public class ISpawnerFactoryContainer : IUnifiedContainer<IBasesFactory>
     {
-        public ISpawnerFactory Interface
+        public IBasesFactory Interface
         {
             get => this.Result;
             set => this.Result = value;

@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Game.Common.Enums;
+﻿using Assets.Scripts.Game.Common.Data.Maps;
+using Assets.Scripts.Game.Common.Enums;
+using Boo.Lang;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Data
@@ -22,6 +24,8 @@ namespace Assets.Scripts.Game.Common.Data
         /// How many spawns of this team there should be.
         /// </summary>
         public int Quantity { get => _quantity; set => _quantity=value; }
+
+        public List<BaseData> BasesData { get; set; }
         /// <summary>
         /// Destroys the config's gameobject.
         /// </summary>

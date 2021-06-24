@@ -7,7 +7,7 @@ namespace Assets.Scripts.Game.Common.Factories
     /// <summary>
     /// Used to spawn spawners.
     /// </summary>
-    public interface ISpawnerFactory
+    public interface IBasesFactory
     {
         List<GameObject> CreateSpawner(SpawnerGroupConfig spawnerGroupConfig);
     }
