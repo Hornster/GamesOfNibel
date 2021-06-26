@@ -16,5 +16,6 @@ namespace Assets.Scripts.Game.Common.Data
         public const string SGSOSceneChangingRelativePath = "Scene Changing/";
         public const string SGSOTransitionsRelativePath = "Transitions/";
         public const string SGSOColorsRelativePath = "Colors/";
+        public const string SGSOFactoryDataRelativePath = "Factory Data/";
     }
 }

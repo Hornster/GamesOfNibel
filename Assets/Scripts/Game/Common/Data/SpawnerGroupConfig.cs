@@ -21,7 +21,7 @@ namespace Assets.Scripts.Game.Common.Data
         /// </summary>
         public Teams MyTeam { get => _myTeam; set => _myTeam = value; }
         /// <summary>
-        /// How many spawns of this team there should be.
+        /// OBSOLETE How many spawns of this team there should be.
         /// </summary>
         public int Quantity { get => _quantity; set => _quantity=value; }
 
