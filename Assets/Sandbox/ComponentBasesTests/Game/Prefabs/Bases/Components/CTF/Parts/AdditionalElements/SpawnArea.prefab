@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1552831986854519728}
   - component: {fileID: 2481901421168736493}
   - component: {fileID: 1486487351681403852}
+  - component: {fileID: 7460345924426263343}
   m_Layer: 0
   m_Name: SpawnArea
   m_TagString: Untagged
@@ -115,6 +116,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerSpawnPosition: {fileID: 6075300274023757932}
   _spawnerTeam: {fileID: 0}
+--- !u!114 &7460345924426263343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552831986854519742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a9cc1ce30ea3b145aa11308cbff6b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderers:
+  - {fileID: 1552831986854519728}
+  OverrideAlpha: 0
+  AlphaOverrideValue: 0
 --- !u!1001 &6984831970509819635
 PrefabInstance:
   m_ObjectHideFlags: 0

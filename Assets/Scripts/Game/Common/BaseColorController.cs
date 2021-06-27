@@ -37,6 +37,29 @@ namespace Assets.Scripts.Game.Common
             get => _additionalElementsColorSetter;
             set => _additionalElementsColorSetter = value;
         }
+        /// <summary>
+        /// Assigns provider setters to given component type. Overwrites last assignment.
+        /// </summary>
+        /// <exception cref="Exception">Throws exception when provided component type is not recognized.</exception>
+        /// <param name="colorSetters"></param>
+        /// <param name="componentType"></param>
+        public void SetColorSettersList(List<ColorSetter> colorSetters, BaseComponentTypeEnum componentType)
+        {
+            switch (componentType)
+            {
+                case BaseComponentTypeEnum.FloorObjectID:
+                    _baseFloorColorSetter = colorSetters;
+                    break;
+                case BaseComponentTypeEnum.SpireObjectID:
+                    _spireColorSetter = colorSetters;
+                    break;
+                case BaseComponentTypeEnum.AdditionalElementsID:
+                    _additionalElementsColorSetter = colorSetters;
+                    break;
+                default:
+                    throw new Exception($"Unknown base component type {componentType}!");
+            }
+        }
 
         public void SetTeamColorsSO(TeamColorsSO teamColorsSO)
         {
@@ -52,7 +75,7 @@ namespace Assets.Scripts.Game.Common
             {
                 throw new Exception("You first need to initalize the color SO!");
             }
-            switch(team)
+            switch (team)
             {
                 case Teams.Lotus:
                     SetColorForList(_baseFloorColorSetter, _teamColorsSO.LotusBaseColor);

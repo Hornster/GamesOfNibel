@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfe4aea585791f448f5c9fc61e67106, type: 3}
+  m_Name: BaseComponentsTestMapSO 1
+  m_EditorClassIdentifier: 
+  ShownMapName: Base Components Test Map
+  Authors:
+  - CrazedAerialCable
+  GameplayMode: 0
+  Description: It's just a test, nothing to be concerned about.
+  RequiredSkills: 02000000
+  PreviewImg: {fileID: 0}
+  ThumbnailImg: {fileID: 0}
+  MapAssetBundleConstants: {fileID: 11400000, guid: 53eb7e63772834345b3cd1007e84b2e3,
+    type: 2}
+  SceneBundlePath: 
+  PreviewBundlePath: 
+  PreviewImgPath: 
+  ThumbnailImgPath: 
+  ScenePath: Assets/Sandbox/ComponentBasesTests/Scenes/ComponentBasesTests.unity
+  MultiTeamBasesCount: 0
+  NeutralBasesCount: 1
+  LotusBasesCount: 2
+  LilyBasesCount: 2
+  BaseMarkersData:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

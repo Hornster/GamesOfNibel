@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2196252519097847349}
   - component: {fileID: 3820117230882165551}
   - component: {fileID: 1294773555755682793}
+  - component: {fileID: 7728804001866608353}
+  - component: {fileID: 3205530853340517061}
   m_Layer: 0
   m_Name: BaseMainObject
   m_TagString: Untagged
@@ -58,3 +60,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseRootGameObject: {fileID: 2196252519097847350}
+--- !u!114 &7728804001866608353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2196252519097847350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45df4323146149e479e5dbe7a986b3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 0
+  _baseTeam: {fileID: 0}
+  _gameMode: 0
+  _baseType: 0
+--- !u!114 &3205530853340517061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2196252519097847350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b81e8a6af000a542b4cd14a080f1d49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseFloorColorSetter: []
+  _spireColorSetter: []
+  _additionalElementsColorSetter: []

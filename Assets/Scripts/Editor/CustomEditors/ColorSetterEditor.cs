@@ -15,8 +15,8 @@ namespace Assets.Scripts.Editor.CustomEditors
         public override void OnInspectorGUI()
         {
             var colorSetterScript = target as ColorSetter;
-
-            colorSetterScript.OverrideAlpha =
+            colorSetterScript.
+            //TODO colorSetterScript.OverrideAlpha = EditorGUILayout.ObjectField("Sprite renderers", colorSetterScript) as SpriteRenderer[];
                 EditorGUILayout.Toggle("Override Alpha channel", colorSetterScript.OverrideAlpha);
 
             if (colorSetterScript.OverrideAlpha)

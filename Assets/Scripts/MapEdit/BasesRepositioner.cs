@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Exceptions;
@@ -135,24 +136,40 @@ namespace Assets.Scripts.MapEdit
         /// <param name="spawnerMarkers">Markers for all spawners of given team.</param>
         private void RepositionSpawns([NotNull] List<GameObject> spawnersByTeam, [NotNull] Queue<ISpawnerMarker> spawnerMarkers)
         {
-            foreach (var spawner in spawnersByTeam)
+            while(spawnerMarkers.Count != 0)
             {
-                var spawnerTeam = spawner.GetComponentInChildren<TeamModule>().MyTeam;
-                if (_foundSpawnMarkers.TryGetValue(spawnerTeam, out var markers))
+                var nextSpawnerMarker = spawnerMarkers.Dequeue();
+                var spawnerMarkerData = nextSpawnerMarker.MarkerTransform.GetComponent<BaseDataGOAdapter>();
+                foreach(var spawner in spawnersByTeam)
                 {
-                    var marker = markers.Dequeue();
-                    if (marker.MoveSpawn(spawner) == false)
+                    var spawnerData = spawner.GetComponent<BaseDataGOAdapter>();
+                    if(spawnerData.ID == spawnerMarkerData.ID)
                     {
-                        throw new Exception($"Bases of team {spawnerTeam} are overlapping!");
+                        if (nextSpawnerMarker.MoveSpawn(spawner) == false)
+                        {
+                            throw new Exception($"Bases of team {nextSpawnerMarker.SpawnerTeam} are overlapping!");
+                        }
+                        break;
                     }
                 }
-                else
-                {
-                    throw new Exception($"Tried to add spawn of team that was not present on the map: {spawnerTeam}!");
-                }
             }
-            
-            
+            //foreach (var spawner in spawnersByTeam)
+            //{
+            //    var spawnerTeam = spawner.GetComponentInChildren<TeamModule>().MyTeam;
+            //    if (_foundSpawnMarkers.TryGetValue(spawnerTeam, out var markers))
+            //    {
+            //        var marker = markers.Dequeue();
+            //        if (marker.MoveSpawn(spawner) == false)
+            //        {
+            //            throw new Exception($"Bases of team {spawnerTeam} are overlapping!");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        throw new Exception($"Tried to add spawn of team that was not present on the map: {spawnerTeam}!");
+            //    }
+            //}
+
         }
     }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6079858373944089193
+--- !u!1 &6802517810055636379
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6079858373944089198}
-  - component: {fileID: 5149297529505760033}
+  - component: {fileID: 6802517810055636380}
+  - component: {fileID: 4808173861442151419}
   m_Layer: 0
-  m_Name: SpawnerFactory
+  m_Name: ComponentBaseFactory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6079858373944089198
+--- !u!4 &6802517810055636380
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6079858373944089193}
+  m_GameObject: {fileID: 6802517810055636379}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,23 +31,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5149297529505760033
+--- !u!114 &4808173861442151419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6079858373944089193}
+  m_GameObject: {fileID: 6802517810055636379}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ca219f324991a746a854951cf9eb69c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b76d13c927841e438e3204316ccb423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _neutralBaseVariant: {fileID: 1802774658394306758, guid: 4674325ea1fd62f4c85275977b08e1a7,
-    type: 3}
-  _lotusBaseVariant: {fileID: 4296282655228140164, guid: 0c362acf885a0a84eaffd61dec0353be,
-    type: 3}
-  _lilyBaseVariant: {fileID: 3898500124913803426, guid: 2aec7f8354b785a43917d376c19d9aa3,
-    type: 3}
-  _multiTeamBaseVariant: {fileID: 6616774278055752891, guid: 182a33002ac7b0946a30451fa6a4a660,
-    type: 3}
+  _componentFactoryDataSO: {fileID: 11400000, guid: 761fe92c2c13ecc47a24e06d2998918b,
+    type: 2}
+  _teamColorsSO: {fileID: 11400000, guid: 2adf72060deb64b4bb27efad3c058b9e, type: 2}

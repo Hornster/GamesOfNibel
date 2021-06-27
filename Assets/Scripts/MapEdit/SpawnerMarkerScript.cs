@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Helpers;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Assets.Scripts.MapEdit
     /// <summary>
     /// Script solely used for finding spawner positions on maps (so far, might change later).
     /// </summary>
-    [RequireComponent(typeof(TeamModule))]
+    [RequireComponent(typeof(TeamModule), typeof(BaseDataGOAdapter), typeof(BaseColorController))]
     public class SpawnerMarkerScript : MonoBehaviour, ISpawnerMarker
     {
         [Tooltip("Object defining the team of the marker, and thus, its future spawn counterpart.")]

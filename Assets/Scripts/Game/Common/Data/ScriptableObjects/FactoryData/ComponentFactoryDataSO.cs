@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
+using Assets.Scripts.Game.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,5 +36,43 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.FactoryData
         public BaseTypeGameObjectDictionary BaseFloorComponents => _baseFloorComponents;
         public BaseTypeGameObjectDictionary BaseSpireComponents => _baseSpireComponents;
         public BaseTypeGameObjectDictionary BaseAdditionalComponents => _baseAdditionalComponents;
+
+
+
+        public GameObject CreateBaseFloor(BaseTypeEnum baseType)
+        {
+            GameObject baseFloor = null;
+            var baseFloorDict = BaseFloorComponents.dictionary;
+            if (baseFloorDict.TryGetValue(baseType, out var baseFloorPrefab))
+            {
+                baseFloor = Instantiate(baseFloorPrefab);
+            }
+
+            return baseFloor;
+        }
+
+        public GameObject CreateSpire(BaseTypeEnum baseType)
+        {
+            GameObject baseSpire = null;
+            var baseSpireDict = BaseSpireComponents.dictionary;
+            if (baseSpireDict.TryGetValue(baseType, out var baseSpirePrefab))
+            {
+                baseSpire = Instantiate(baseSpirePrefab);
+            }
+
+            return baseSpire;
+        }
+
+        public GameObject CreateAdditionalElements(BaseTypeEnum baseType)
+        {
+            GameObject baseAdditionalElements = null;
+            var baseAdditionalElementsDict = BaseSpireComponents.dictionary;
+            if (baseAdditionalElementsDict.TryGetValue(baseType, out var baseAdditionalElementsPrefab))
+            {
+                baseAdditionalElements = Instantiate(baseAdditionalElementsPrefab);
+            }
+
+            return baseAdditionalElements;
+        }
     }
 }

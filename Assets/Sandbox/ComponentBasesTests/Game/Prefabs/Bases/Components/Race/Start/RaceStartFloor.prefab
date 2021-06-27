@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1211617101402184084}
   m_Layer: 0
-  m_Name: Base
+  m_Name: RaceStartFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23,9 +23,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211617101402184087}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 1, z: 1}
   m_Children:
   - {fileID: 1211617102710340666}
   - {fileID: 1211617103190136378}
@@ -99,6 +99,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 779649342921972445, guid: e4e494565a7735a418731ca0658428a1,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4e494565a7735a418731ca0658428a1, type: 3}
 --- !u!4 &1211617103190136378 stripped
@@ -123,6 +128,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3270808681923925337, guid: 03db55193368d554aaa796a550587263,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3270808681923925337, guid: 03db55193368d554aaa796a550587263,
         type: 3}
@@ -172,6 +182,11 @@ PrefabInstance:
     - target: {fileID: 3270808681923925337, guid: 03db55193368d554aaa796a550587263,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6274150488779337605, guid: 03db55193368d554aaa796a550587263,
+        type: 3}
+      propertyPath: OverrideAlpha
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
