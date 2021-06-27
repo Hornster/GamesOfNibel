@@ -25,7 +25,10 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         /// List of all created spawners.
         /// </summary>
         public override Dictionary<Teams, List<GameObject>> Bases { get; protected set; } = new Dictionary<Teams, List<GameObject>>();
-
+        /// <summary>
+        /// Game mode for the current map.
+        /// </summary>
+        public GameplayModesEnum GameplayMode { get; set; }
         /// <summary>
         /// Adds player to the data structure.
         /// </summary>

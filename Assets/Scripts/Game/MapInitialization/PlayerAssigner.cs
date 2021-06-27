@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Exceptions;
@@ -24,9 +25,35 @@ namespace Assets.Scripts.Game.MapInitialization
             var bases = sceneData.Bases;
             var players = sceneData.Players;
 
+            bases = FilterBasesByGameplayMode(bases, sceneData.GameplayMode);
             AssignAllPlayersToBases(players, bases);
         }
+        /// <summary>
+        /// Returns only bases that have the same gameplay mode set.
+        /// </summary>
+        /// <param name="bases"></param>
+        /// <param name="gameplayMode"></param>
+        /// <returns></returns>
+        private Dictionary<Teams, List<GameObject>> FilterBasesByGameplayMode(Dictionary<Teams, List<GameObject>> bases, GameplayModesEnum gameplayMode)
+        {
+            var filteredBases = new Dictionary<Teams, List<GameObject>>();
+            foreach(var team in bases)
+            {
+                var filteredBasesForTeam = new List<GameObject>();
 
+                foreach (var checkedBase in team.Value)
+                {
+                    var baseData = checkedBase.GetComponent<BaseDataGOAdapter>();
+                    if(baseData.GameMode == gameplayMode)
+                    {
+                        filteredBasesForTeam.Add(checkedBase);
+                    }
+                }
+                filteredBases.Add(team.Key, filteredBasesForTeam);
+            }
+
+            return filteredBases;
+        }
         private void AssignAllPlayersToBases(Dictionary<Teams, List<GameObject>> players, Dictionary<Teams, List<GameObject>> bases)
         {
             var teams = players.Keys;
@@ -89,7 +116,9 @@ namespace Assets.Scripts.Game.MapInitialization
                 var playerID = player.gameObject.GetInstanceID();
                 var positioner = player.GetComponentInChildren<IRepositioner>();
                 var state = player.GetComponentInChildren<PlayerReset>();
-
+                //TODO null exception happened here. Test if it still happens - base didn't have player repositioner script attached.
+                //TODO you added filtering of the bases so only the same gamemode ones stay. Should work now
+                //TODO also, maybe make it round robin type of player setting up.
                 targetBase.AssignPlayer(playerID, positioner, state);
             }
             //Do NOT reposition players now. Wait for the initialization to finish, then
