@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Data.Constants;
 using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Common.Helpers;
+using Assets.Scripts.Game.Common.Helpers.Markers;
 using Assets.Scripts.Game.GameModes.CTF.Entities;
 using Assets.Scripts.Game.GameModes.CTF.Observers;
 using UnityEngine;
@@ -12,7 +16,7 @@ namespace Assets.Scripts.Game.GameModes.CTF
     /// Defines the behavior of entities that can capture a flag, like bases.
     /// </summary>
     [RequireComponent(typeof(Collider2D))]
-    public class FlagCapturer : MonoBehaviour, IFlagCarrier, IFlagCapturedObserver
+    public class FlagCapturer : MonoBehaviour, IFlagCarrier, IFlagCapturedObserver, IInjectionHook
     {
         /// <summary>
         /// Handler for capturing the flag event. Provides the team that captured the flag and
@@ -109,6 +113,16 @@ namespace Assets.Scripts.Game.GameModes.CTF
         public void RegisterObserver(UnityAction<Teams, int> handler)
         {
             _flagCapturedHandler += handler;
+        }
+
+        public void InjectReferences(GameObject source)
+        {
+            _myTeam = source.GetComponent<TeamModule>();
+            _flagPosition = source.GetComponentInChildren<CTFBaseFlagHoldPositionMarker>().transform;
+            if (_myTeam == null || _flagPosition == null)
+            {
+                throw new Exception(ErrorMessages.InjectionHookErrorNoRefFound);
+            }
         }
     }
 }

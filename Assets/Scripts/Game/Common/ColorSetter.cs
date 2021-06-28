@@ -8,10 +8,11 @@ namespace Assets.Scripts.Game.Common
     /// </summary>
     public class ColorSetter : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer[] _spriteRenderers;
+        public SpriteRenderer[] SpriteRenderers;
 
+        [HideInInspector]
         public bool OverrideAlpha = false;
-
+        [HideInInspector]
         public float AlphaOverrideValue = 0f;
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace Assets.Scripts.Game.Common
             {
                 color.a = Mathf.Clamp01(AlphaOverrideValue);
             }
-            foreach(var spriteRenderer in _spriteRenderers)
+            foreach(var spriteRenderer in SpriteRenderers)
             {
                 spriteRenderer.color = color;
             }

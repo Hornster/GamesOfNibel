@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Data.Constants;
 using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.Game.Player;
 using UnityEngine;
+using UnityEngine.Networking.NetworkSystem;
 
 namespace Assets.Scripts.Game.Spawner.PlayerSpawner
 {
     /// <summary>
     /// Used in bases. Keeps an eye for assigned players and repositions them to the base when necessary.
     /// </summary>
-    public class PlayerPositioner : MonoBehaviour
+    public class PlayerPositioner : MonoBehaviour, IInjectionHook
     {
         [Tooltip("Where should the players be put after spawning/respawning.")]
         [SerializeField]
@@ -65,6 +68,15 @@ namespace Assets.Scripts.Game.Spawner.PlayerSpawner
             {
                 (var positioner, var stateReseter) = player;
                 positioner.ChangePosition(_playerSpawnPosition.position);
+            }
+        }
+
+        public void InjectReferences(GameObject source)
+        {
+            _spawnerTeam = source.GetComponent<TeamModule>();
+            if (_spawnerTeam == null)
+            {
+                throw new Exception(ErrorMessages.InjectionHookErrorNoRefFound);
             }
         }
     }

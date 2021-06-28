@@ -26,7 +26,7 @@ namespace Assets.Scripts.MapEdit
         /// </summary>
         public bool HasSpawnAssigned { get; private set; }
 
-        
+
         /// <summary>
         /// Move the spawn to the location of this marker.
         /// </summary>
@@ -42,8 +42,10 @@ namespace Assets.Scripts.MapEdit
 
             var baseRepositioner = spawnGameObject.GetComponentInChildren<IRepositioner>();
             var baseRotator = spawnGameObject.GetComponentInChildren<IRotator>();
-            baseRotator.Rotate(transform.rotation);             //First rotate, then repsition. Upon repositioning we also set the
+            var baseScaler = spawnGameObject.GetComponentInChildren<IScaler>();
+            baseRotator.Rotate(transform.rotation);             //First rotate, then reposition. Upon repositioning we also set the
             baseRepositioner.ChangePosition(transform.position);//players' positions.
+            baseScaler.ChangeScale(transform.localScale);
 
             HasSpawnAssigned = true;
             return HasSpawnAssigned;

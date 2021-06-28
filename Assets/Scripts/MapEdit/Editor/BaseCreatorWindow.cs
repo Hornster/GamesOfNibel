@@ -23,6 +23,10 @@ namespace Assets.Scripts.MapEdit.Editor
         private Teams _baseTeam;
         [Tooltip("Where the base shall be spawned. You can change it later.")]
         private Vector2 _basePosition;
+        /// <summary>
+        /// Cache for base root object reference. If not found - new object is created in its place.
+        /// </summary>
+        private GameObject _baseRootObject;
         
 
         [MenuItem(SGMapEditConstants.WindowsPath + "/Base Creator")]
@@ -36,11 +40,18 @@ namespace Assets.Scripts.MapEdit.Editor
 
         public void Awake()
         {
+            //RetrieveFactorySO(this);
             var assetSeeker = new AssetSeeker<BaseMarkerFactorySO>();
             _baseMarkerFactorySo = assetSeeker.FindAsset(
                 SGMapEditConstants.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
         }
 
+        private static void RetrieveFactorySO(BaseCreatorWindow instance)
+        {
+            var assetSeeker = new AssetSeeker<BaseMarkerFactorySO>();
+            instance._baseMarkerFactorySo = assetSeeker.FindAsset(
+                SGMapEditConstants.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
+        }
         private void OnGUI()
         {
             CreateRequiredReferencesGroup();

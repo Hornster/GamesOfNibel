@@ -8,7 +8,7 @@ namespace Assets.Scripts.Game.Spawner
     /// <summary>
     /// Allows for moving base around. Designed for load-time usage.
     /// </summary>
-    public class BaseRepositioner : MonoBehaviour, IRepositioner, IRotator
+    public class BaseRepositioner : MonoBehaviour, IRepositioner, IRotator, IScaler
     {
         [Tooltip("The base's root gameobject.")]
         [SerializeField]
@@ -29,7 +29,11 @@ namespace Assets.Scripts.Game.Spawner
         public void Rotate(Quaternion rotation)
         {
             _baseRootGameObject.transform.rotation = rotation;
+        }
 
+        public void ChangeScale(Vector3 newScale)
+        {
+            _baseRootGameObject.transform.localScale = newScale;
         }
     }
 }

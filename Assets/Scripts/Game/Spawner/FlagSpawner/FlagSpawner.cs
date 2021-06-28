@@ -1,10 +1,13 @@
-﻿using Assets.Scripts.Game.Common;
+﻿using System;
+using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Data.Constants;
+using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.Game.GameModes.CTF.Entities;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Spawner.FlagSpawner
 {
-    public class FlagSpawner : MonoBehaviour, IFlagSpawner
+    public class FlagSpawner : MonoBehaviour, IFlagSpawner, IInjectionHook
     {
 
         /// <summary>
@@ -41,6 +44,15 @@ namespace Assets.Scripts.Game.Spawner.FlagSpawner
             flagIniData.FlagTeam = _teamModule.MyTeam;
             flagIniData.FlagSpawnPosition = _spawningPosition;
             flagController.SetFlagData(flagIniData);
+        }
+
+        public void InjectReferences(GameObject source)
+        {
+            _teamModule = source.GetComponent<TeamModule>();
+            if (_teamModule == null)
+            {
+                throw new Exception(ErrorMessages.InjectionHookErrorNoRefFound);
+            }
         }
     }
 }

@@ -36,6 +36,9 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
         [Tooltip("The main base marker object which contains the components and universal scripts.")]
         [SerializeField]
         private GameObject _baseMainPrefab;
+        [Header("Root prefab")]
+        [Tooltip("All of generated bases will be stored in here.")]
+        private GameObject _basesRootPrefab;
         [Header("Base markers components")]
         [SerializeField]
         private BaseTypeGameObjectDictionary _baseFloorComponents = new BaseTypeGameObjectDictionary();
@@ -47,7 +50,15 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
 
         private void Awake()
         {
-            Debug.Log($"Last used ID: {_lastUsedMarkerID}");
+            Debug.Log($"Last used base ID: {_lastUsedMarkerID}");
+        }
+        /// <summary>
+        /// Creates and returns an object that should contain all bases.
+        /// </summary>
+        /// <returns></returns>
+        public GameObject CreateBaseRoot()
+        {
+            return Instantiate(_basesRootPrefab);
         }
         public GameObject CreateBaseMarker(Teams team, BaseTypeEnum baseType, Vector3 position)
         {

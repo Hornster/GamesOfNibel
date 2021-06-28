@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Data.Constants;
 using Assets.Scripts.Game.Common.Exceptions;
 using Assets.Scripts.Game.Spawner.FlagSpawner;
 using UnityEngine;
@@ -81,13 +82,17 @@ namespace Assets.Scripts.Game.GameModes.CTF
 
             foreach (var flagSpawningBase in flagSpawningBases)
             {
-                _neutralFlagSpawnerModules.Add(flagSpawningBase.GetComponentInChildren<IFlagSpawner>());
+                var flagSpawningModule = flagSpawningBase.GetComponentInChildren<IFlagSpawner>();
+                if (flagSpawningModule != null)
+                {
+                    _neutralFlagSpawnerModules.Add(flagSpawningModule);
+                }
             }
             
 
             if (_neutralFlagSpawnerModules.Count == 0)
             {
-                throw new GONBaseException("No flag spawners found!");
+                throw new GONBaseException(ErrorMessages.NeutralCTFFlagSpawnersNotFound);
             }
 
             _neutralFlagRespawnTimer = GetComponent<Timer>();

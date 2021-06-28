@@ -76,7 +76,6 @@ namespace Assets.Scripts.Game.MapInitialization
             {
                 throw new GONBaseException("No matchdata found during map loading!");
             }
-            _sceneData.GameplayMode = _matchData.GameplayMode;
             CreateSpawners();
             CreatePlayers();
 

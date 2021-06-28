@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
@@ -109,20 +110,58 @@ namespace Assets.Scripts.Game.MapInitialization
         /// <param name="bases">Bases of the same team as players.</param>
         private void AssignPlayersToBases(List<GameObject> players, List<GameObject> bases)
         {
+            int baseIndex = 0;
             //TODO Allow for configuration of spawn assignment perhaps? For example random. In the future.
-            var targetBase = bases[0].GetComponentInChildren<PlayerPositioner>();
             foreach (var player in players)
             {
+                PlayerPositioner targetBase = null;
+                (targetBase, baseIndex) = GetNextBase(bases, baseIndex);
+                
                 var playerID = player.gameObject.GetInstanceID();
                 var positioner = player.GetComponentInChildren<IRepositioner>();
                 var state = player.GetComponentInChildren<PlayerReset>();
-                //TODO null exception happened here. Test if it still happens - base didn't have player repositioner script attached.
-                //TODO you added filtering of the bases so only the same gamemode ones stay. Should work now
-                //TODO also, maybe make it round robin type of player setting up.
+                
                 targetBase.AssignPlayer(playerID, positioner, state);
             }
             //Do NOT reposition players now. Wait for the initialization to finish, then
             //reposition players when on the map, right after moving the spawns.
+        }
+        /// <summary>
+        /// Returns next base from provided list. If exceeds the list capacity - loops back to index 0.
+        /// </summary>
+        /// <param name="bases">All viable bases.</param>
+        /// <param name="baseIndex">Index of base that should be returned. Values greater than the length
+        /// of <see cref="bases"/> are changed to 0.</param>
+        /// <returns></returns>
+        private (PlayerPositioner targetBase, int nextBaseIndex) GetNextBase(List<GameObject> bases, int baseIndex)
+        {
+            PlayerPositioner targetBase = null;
+            int loopCount = bases.Count;
+            do
+            {
+                if (loopCount <= 0)
+                {
+                    throw new Exception("None of provided bases has a viable player positioner!");
+                }
+
+                if (baseIndex > bases.Count)
+                {
+                    baseIndex = 0;
+                }
+
+                targetBase = bases[baseIndex].GetComponentInChildren<PlayerPositioner>();
+                if (targetBase == null)
+                {
+                    Debug.LogWarning($"Base of index {baseIndex} has no player positioner script attached!");
+                }
+
+                baseIndex++;
+
+                loopCount--;
+            } while (targetBase == null);
+            
+            
+            return (targetBase, baseIndex);
         }
     }
 }

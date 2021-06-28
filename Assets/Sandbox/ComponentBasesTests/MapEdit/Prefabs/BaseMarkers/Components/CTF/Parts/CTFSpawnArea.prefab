@@ -95,9 +95,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9cc1ce30ea3b145aa11308cbff6b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 5495391636035522318}
-  OverrideAlpha: 0
-  AlphaOverrideValue: 0
+  SpriteRenderers:
+  - {fileID: 5495391636035522318}
+  OverrideAlpha: 1
+  AlphaOverrideValue: 0.1
 --- !u!1001 &6496075521084343792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165,11 +166,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlagHoldPosition
       objectReference: {fileID: 0}
+    - target: {fileID: 8524521841024000378, guid: 0fd265446f551cf4caf94d5e80b586d2,
+        type: 3}
+      propertyPath: SpriteRenderers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524521841024000378, guid: 0fd265446f551cf4caf94d5e80b586d2,
+        type: 3}
+      propertyPath: SpriteRenderers.Array.data[0]
+      value: 
+      objectReference: {fileID: 8157772301942167062}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fd265446f551cf4caf94d5e80b586d2, type: 3}
 --- !u!4 &5762621455075110993 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1575771593145857441, guid: 0fd265446f551cf4caf94d5e80b586d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 6496075521084343792}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &8157772301942167062 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3103130686620390374, guid: 0fd265446f551cf4caf94d5e80b586d2,
     type: 3}
   m_PrefabInstance: {fileID: 6496075521084343792}
   m_PrefabAsset: {fileID: 0}

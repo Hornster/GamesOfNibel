@@ -31,6 +31,8 @@ namespace Assets.Scripts.Game.Common.Factories
                 newBase = SetBaseColor(newBase, ref baseComponents, baseData.BaseTeam);
                 newBase = SetBaseData(newBase, baseData);
 
+                InjectMonoBehavioursIntoComponents(newBase, ref baseComponents);
+
                 newBases.Add(newBase);
             }
 
@@ -104,6 +106,23 @@ namespace Assets.Scripts.Game.Common.Factories
             baseDataComponent.GameMode = baseData.GameMode;
 
             return newBase;
+        }
+
+        private void InjectMonoBehavioursIntoComponents(GameObject baseObject, ref GameObject[] baseComponents)
+        {
+            foreach (var baseComponent in baseComponents)
+            {
+                if (baseComponent == null)
+                {
+                    continue;
+                }
+
+                var injectionHooks = baseComponent.GetComponentsInChildren <IInjectionHook>();
+                foreach (var injectionHook in injectionHooks)
+                {
+                    injectionHook.InjectReferences(baseObject);
+                }
+            }
         }
     }
 }

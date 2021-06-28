@@ -66,7 +66,7 @@ namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.FactoryData
         public GameObject CreateAdditionalElements(BaseTypeEnum baseType)
         {
             GameObject baseAdditionalElements = null;
-            var baseAdditionalElementsDict = BaseSpireComponents.dictionary;
+            var baseAdditionalElementsDict = BaseAdditionalComponents.dictionary;
             if (baseAdditionalElementsDict.TryGetValue(baseType, out var baseAdditionalElementsPrefab))
             {
                 baseAdditionalElements = Instantiate(baseAdditionalElementsPrefab);
