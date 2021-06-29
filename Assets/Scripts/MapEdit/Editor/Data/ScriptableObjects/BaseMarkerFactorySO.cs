@@ -20,6 +20,7 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
         public const string BaseMarkerFactorySoName = "BaseMarkerFactorySO";
         private const int _maxIDValue = 300000000;
 
+        public int LastUsedMarkerID => _lastUsedMarkerID;
 
         [SerializeField]
         [HideInInspector]
@@ -38,6 +39,7 @@ namespace Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects
         private GameObject _baseMainPrefab;
         [Header("Root prefab")]
         [Tooltip("All of generated bases will be stored in here.")]
+        [SerializeField]
         private GameObject _basesRootPrefab;
         [Header("Base markers components")]
         [SerializeField]

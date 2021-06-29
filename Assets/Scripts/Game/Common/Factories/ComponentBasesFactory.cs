@@ -64,9 +64,15 @@ namespace Assets.Scripts.Game.Common.Factories
                 baseAdditionalElements.transform.parent = baseMainObject.transform;
             }
 
+            baseMainObject.name = CreateBaseName(baseData.BaseTeam, baseData.BaseType, baseMainObject.name);
+
             return (baseMainObject, baseComponents);
         }
-
+        private string CreateBaseName(Teams team, BaseTypeEnum baseType, string defaultBaseName)
+        {
+            defaultBaseName = defaultBaseName.Replace("(Clone)", string.Empty);
+            return team.ToString() + baseType.ToString() + defaultBaseName;
+        }
         private GameObject SetBaseColor(GameObject newBase, ref GameObject[] baseComponents, Teams team)
         {
             var baseColorController = newBase.GetComponentInChildren<BaseColorController>();

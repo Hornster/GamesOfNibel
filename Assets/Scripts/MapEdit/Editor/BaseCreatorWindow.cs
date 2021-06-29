@@ -10,7 +10,9 @@ using Assets.Scripts.MapEdit.Editor.Data.ScriptableObjects;
 using Assets.Scripts.MapEdit.Editor.Util;
 using Data.Util;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.MapEdit.Editor
 {
@@ -59,9 +61,16 @@ namespace Assets.Scripts.MapEdit.Editor
             else
             {
                 _baseRootObject = _baseMarkerFactorySo.CreateBaseRoot();
+                NotifySceneAboutChanges(_baseRootObject, SGMapEditMessages.AddBaseMarkerRootUndoAction);
             }
         }
 
+        private void NotifySceneAboutChanges(GameObject addedObject, string undoMessage)
+        {
+
+            Undo.RecordObject(addedObject, undoMessage);
+            EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
+        }
         private void ResetBasesToBaseRoot()
         {
             var bases = FindObjectsOfType<BaseMarkerData>();
@@ -72,6 +81,16 @@ namespace Assets.Scripts.MapEdit.Editor
             }
         }
 
+        private void AddBaseMarkerToRoot(GameObject newBaseMarker)
+        {
+            if (_baseRootObject == null)
+            {
+                ChkBasesRootObjectPresence();
+                ResetBasesToBaseRoot();
+            }
+
+            newBaseMarker.transform.parent = _baseRootObject.transform;
+        }
         private void OnGUI()
         {
             CreateRequiredReferencesGroup();
@@ -82,16 +101,19 @@ namespace Assets.Scripts.MapEdit.Editor
 
             if (GUILayout.Button("Create base!"))
             {
-                _baseMarkerFactorySo?.CreateBaseMarker(_baseTeam, _baseType, _basePosition);
+                var newBaseMarker = _baseMarkerFactorySo?.CreateBaseMarker(_baseTeam, _baseType, _basePosition);
+                AddBaseMarkerToRoot(newBaseMarker);
                 BaseMarkersCache.GetInstance().BasesAdded = true;
+                NotifySceneAboutChanges(newBaseMarker, SGMapEditMessages.AddBaseMarkerUndoAction);
             }
+            CreateBaseRestorationGroup();
         }
 
 
 
         private void CreateBaseRestorationGroup()
         {
-            _baseRestorationGroupFoldout = EditorGUILayout.Foldout(_baseRestorationGroupFoldout, "Required references");
+            _baseRestorationGroupFoldout = EditorGUILayout.Foldout(_baseRestorationGroupFoldout, "Base Restoration Group");
             if (_baseRestorationGroupFoldout)
             {
                 var previousFoldout = EditorGUI.indentLevel;

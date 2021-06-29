@@ -14,7 +14,7 @@ namespace Assets.Scripts.MapEdit
         /// <summary>
         /// Unique ID of the base
         /// </summary>
-        public int ID { get; set; }
+        public int ID { get => _id; set => _id = value; }
 
         public GameplayModesEnum GameMode
         {
@@ -30,6 +30,8 @@ namespace Assets.Scripts.MapEdit
 
         public Teams BaseTeam => _myTeam.MyTeam;
 
+        [SerializeField] 
+        private int _id;
         [SerializeField]
         private TeamModule _myTeam;
         [SerializeField]

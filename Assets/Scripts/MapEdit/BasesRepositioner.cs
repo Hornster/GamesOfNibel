@@ -139,7 +139,7 @@ namespace Assets.Scripts.MapEdit
             while(spawnerMarkers.Count != 0)
             {
                 var nextSpawnerMarker = spawnerMarkers.Dequeue();
-                var spawnerMarkerData = nextSpawnerMarker.MarkerTransform.GetComponent<BaseDataGOAdapter>();
+                var spawnerMarkerData = nextSpawnerMarker.MarkerTransform.GetComponent<BaseMarkerData>();
                 foreach(var spawner in spawnersByTeam)
                 {
                     var spawnerData = spawner.GetComponent<BaseDataGOAdapter>();

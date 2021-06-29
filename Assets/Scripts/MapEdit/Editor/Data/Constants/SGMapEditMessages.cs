@@ -30,5 +30,8 @@ namespace Assets.Scripts.MapEdit.Editor.Data.Constants
                                                                              " bases structure is correct. Please note that" +
                                                                              " the operation might take a while to complete" +
                                                                              " if there are more objects on the map.";
+
+        public static readonly string AddBaseMarkerUndoAction = "Add base marker";
+        public static readonly string AddBaseMarkerRootUndoAction = "Add base markers root";
     }
 }
