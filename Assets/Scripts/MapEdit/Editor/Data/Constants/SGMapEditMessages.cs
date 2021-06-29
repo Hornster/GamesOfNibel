@@ -25,5 +25,10 @@ namespace Assets.Scripts.MapEdit.Editor.Data.Constants
 
         public static readonly string BaseCreatorWindowReqPrefsInfo =
             "None of these should be null/empty.If any are - try closing and reopening the window.";
+
+        public static readonly string BaseCreatorWindowBaseRootRecheckInfo = "Click this in order to check if" +
+                                                                             " bases structure is correct. Please note that" +
+                                                                             " the operation might take a while to complete" +
+                                                                             " if there are more objects on the map.";
     }
 }

@@ -18,6 +18,7 @@ namespace Assets.Scripts.MapEdit.Editor
     {
         private BaseMarkerFactorySO _baseMarkerFactorySo;
         private bool _requiredRefsGroupFoldout = false;
+        private bool _baseRestorationGroupFoldout = false;
 
         private BaseTypeEnum _baseType;
         private Teams _baseTeam;
@@ -33,25 +34,44 @@ namespace Assets.Scripts.MapEdit.Editor
         public static void ShowWindow()
         {
             var window = GetWindow<BaseCreatorWindow>("Base Creator Window");
-            var assetSeeker = new AssetSeeker<BaseMarkerFactorySO>();
-            window._baseMarkerFactorySo = assetSeeker.FindAsset(
-                SGMapEditConstants.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
+            window.RetrieveFactorySO();
         }
 
         public void Awake()
         {
-            //RetrieveFactorySO(this);
+            RetrieveFactorySO();
+        }
+
+        private void RetrieveFactorySO()
+        {
             var assetSeeker = new AssetSeeker<BaseMarkerFactorySO>();
             _baseMarkerFactorySo = assetSeeker.FindAsset(
                 SGMapEditConstants.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
         }
 
-        private static void RetrieveFactorySO(BaseCreatorWindow instance)
+        private void ChkBasesRootObjectPresence()
         {
-            var assetSeeker = new AssetSeeker<BaseMarkerFactorySO>();
-            instance._baseMarkerFactorySo = assetSeeker.FindAsset(
-                SGMapEditConstants.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
+            var basesRepositioner = FindObjectOfType<BasesRepositioner>();
+            if (basesRepositioner != null)
+            {
+                _baseRootObject = basesRepositioner.gameObject;
+            }
+            else
+            {
+                _baseRootObject = _baseMarkerFactorySo.CreateBaseRoot();
+            }
         }
+
+        private void ResetBasesToBaseRoot()
+        {
+            var bases = FindObjectsOfType<BaseMarkerData>();
+
+            foreach (var baseObject in bases)
+            {
+                baseObject.transform.parent = _baseRootObject.transform;
+            }
+        }
+
         private void OnGUI()
         {
             CreateRequiredReferencesGroup();
@@ -67,6 +87,26 @@ namespace Assets.Scripts.MapEdit.Editor
             }
         }
 
+
+
+        private void CreateBaseRestorationGroup()
+        {
+            _baseRestorationGroupFoldout = EditorGUILayout.Foldout(_baseRestorationGroupFoldout, "Required references");
+            if (_baseRestorationGroupFoldout)
+            {
+                var previousFoldout = EditorGUI.indentLevel;
+                EditorGUI.indentLevel++;
+
+                EditorGUILayout.HelpBox(SGMapEditMessages.BaseCreatorWindowBaseRootRecheckInfo, MessageType.Info);
+                if (GUILayout.Button("Check bases against the root"))
+                {
+                    ChkBasesRootObjectPresence();
+                    ResetBasesToBaseRoot();
+                }
+            
+                EditorGUI.indentLevel = previousFoldout;
+            }
+        }
         private void CreateRequiredReferencesGroup()
         {
             _requiredRefsGroupFoldout = EditorGUILayout.Foldout(_requiredRefsGroupFoldout, "Required references");
