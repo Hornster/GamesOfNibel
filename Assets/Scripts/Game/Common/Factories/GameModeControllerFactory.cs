@@ -93,6 +93,7 @@ namespace Assets.Scripts.Game.Common.Factories
                 case GameplayModesEnum.CTF:
                     return CreateCTFController(sceneData, gameModeUIs);
                 case GameplayModesEnum.Race:
+                    return CreateCTFController(sceneData, gameModeUIs);
                     throw new NotImplementedException();
                 case GameplayModesEnum.TimeAttack:
                     throw new NotImplementedException();

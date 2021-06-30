@@ -111,11 +111,12 @@ namespace Assets.Scripts.Game.MapInitialization
         private void AssignPlayersToBases(List<GameObject> players, List<GameObject> bases)
         {
             int baseIndex = 0;
+            var playerAssignableBases = GetPlayerAssignableBases(bases);
             //TODO Allow for configuration of spawn assignment perhaps? For example random. In the future.
             foreach (var player in players)
             {
                 PlayerPositioner targetBase = null;
-                (targetBase, baseIndex) = GetNextBase(bases, baseIndex);
+                (targetBase, baseIndex) = GetNextBase(playerAssignableBases, baseIndex);
                 
                 var playerID = player.gameObject.GetInstanceID();
                 var positioner = player.GetComponentInChildren<IRepositioner>();
@@ -125,6 +126,24 @@ namespace Assets.Scripts.Game.MapInitialization
             }
             //Do NOT reposition players now. Wait for the initialization to finish, then
             //reposition players when on the map, right after moving the spawns.
+        }
+        /// <summary>
+        /// Returns list of bases that can have players assigned to them.
+        /// </summary>
+        /// <param name="bases"></param>
+        /// <returns></returns>
+        private List<GameObject> GetPlayerAssignableBases(List<GameObject> bases)
+        {
+            var playerAssignableBases = new List<GameObject>();
+            foreach (var baseObject in bases)
+            {
+                if (baseObject.GetComponentInChildren<PlayerPositioner>() != null)
+                {
+                    playerAssignableBases.Add(baseObject);
+                }
+            }
+
+            return playerAssignableBases;
         }
         /// <summary>
         /// Returns next base from provided list. If exceeds the list capacity - loops back to index 0.

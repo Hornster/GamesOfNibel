@@ -18,12 +18,10 @@ namespace Assets.Scripts.Game.Spawner
             _baseRootGameObject.transform.position = newPosition;
             var playerRepositioner = _baseRootGameObject.GetComponentInChildren<PlayerPositioner>();
 
-            if (playerRepositioner == null)
+            if (playerRepositioner != null)
             {
-                throw new GONBaseException("Tried to move players on object that is not a valid player spawning base!");
+                playerRepositioner.RepositionAllPlayers();
             }
-
-            playerRepositioner.RepositionAllPlayers();
         }
 
         public void Rotate(Quaternion rotation)

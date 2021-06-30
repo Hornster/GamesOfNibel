@@ -45,7 +45,8 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         [Tooltip("Used to force given scene to be loaded.")]
         [SerializeField]
         private string _sceneToLoad;
-
+        [SerializeField]
+        private GameplayModesEnum _gameplayMode = GameplayModesEnum.CTF;
         /// <summary>
         /// Stores data of all players that needs to be spawned.
         /// </summary>
@@ -66,7 +67,7 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         /// <summary>
         /// What mode is the currently selected map for.
         /// </summary>
-        public GameplayModesEnum GameplayMode { get; set; } = GameplayModesEnum.CTF;//TODO change to reading from map data
+        public GameplayModesEnum GameplayMode { get => _gameplayMode; set => _gameplayMode = value; }//TODO change to reading from map data
 
 
         private void Awake()

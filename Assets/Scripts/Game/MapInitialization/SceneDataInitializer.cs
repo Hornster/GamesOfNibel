@@ -69,13 +69,15 @@ namespace Assets.Scripts.Game.MapInitialization
         {
             var newSceneDataObj = Instantiate(_sceneDataPrefab);
             var baseSceneObjects = Instantiate(_baseSceneObjectsPrefab, newSceneDataObj.transform);
-            _sceneData = newSceneDataObj.GetComponentInChildren<SceneData>();
+            _sceneData = newSceneDataObj.GetComponentInChildren<SceneData>(); 
             DontDestroyOnLoad(newSceneDataObj);//This object is supposed to survive being passed to the loaded map.
             //Then, after retrieving its contents, we can destroy it.
             if (RetrieveDataObject() == false)
             {
                 throw new GONBaseException("No matchdata found during map loading!");
             }
+
+            _sceneData.GameplayMode = _matchData.GameplayMode;
             CreateSpawners();
             CreatePlayers();
 

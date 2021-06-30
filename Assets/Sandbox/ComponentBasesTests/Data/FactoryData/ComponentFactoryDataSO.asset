@@ -27,6 +27,7 @@ MonoBehaviour:
     - {fileID: 4527690224751782212, guid: e3340271bbfa1134fb2eddba19856503, type: 3}
     - {fileID: 4527690224751782212, guid: b99ad6faad666d94cbe965be3869007d, type: 3}
   _baseAdditionalComponents:
-    keys: 00000000
+    keys: 0000000001000000
     values:
     - {fileID: 4186132843019895170, guid: 10ed5da7825662940b02473b1101389e, type: 3}
+    - {fileID: 4668565214163248714, guid: f74a7ecc186f40e4987e3d81462967d5, type: 3}
