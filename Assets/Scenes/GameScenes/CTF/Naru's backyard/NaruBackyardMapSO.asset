@@ -19,16 +19,22 @@ MonoBehaviour:
   GameplayMode: 0
   Description: First ever created map.
   RequiredSkills: 0000000002000000
-  PreviewImg: {fileID: 21300000, guid: f8912a18d5c84684a85d2852b5c69d98, type: 3}
-  ThumbnailImg: {fileID: 21300000, guid: 087071f153da04f469ddec67109629ae, type: 3}
+  PreviewImg: {fileID: 21300000, guid: 52f6ff23052e6c24993c140dacf2baa9, type: 3}
+  ThumbnailImg: {fileID: 21300000, guid: ee645af3fd7f52a46b02976df1dab70b, type: 3}
   MapAssetBundleConstants: {fileID: 11400000, guid: 53eb7e63772834345b3cd1007e84b2e3,
     type: 2}
   SceneBundlePath: 
   PreviewBundlePath: 
-  PreviewImgPath: Assets/Scenes/GameScenes/CTF/Naru's backyard Obsolete/LessDumbPreview.png
-  ThumbnailImgPath: Assets/Scenes/GameScenes/CTF/Naru's backyard Obsolete/DumbThumbnail.png
+  PreviewImgPath: Assets/Scenes/GameScenes/CTF/Naru's backyard/LessDumbPreview.png
+  ThumbnailImgPath: Assets/Scenes/GameScenes/CTF/Naru's backyard/DumbThumbnail.png
   ScenePath: 
   MultiTeamBasesCount: 0
   NeutralBasesCount: 3
   LotusBasesCount: 1
   LilyBasesCount: 1
+  BaseMarkersData:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

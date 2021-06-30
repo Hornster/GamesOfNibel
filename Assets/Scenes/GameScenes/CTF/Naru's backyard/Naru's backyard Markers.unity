@@ -1954,6 +1954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183f3ead757b14c468338e9b33e83683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 1
   _myTeam: {fileID: 498459844}
   _gameMode: 0
   _baseType: 0
@@ -2998,6 +2999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183f3ead757b14c468338e9b33e83683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 3
   _myTeam: {fileID: 860677437}
   _gameMode: 0
   _baseType: 0
@@ -4885,6 +4887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183f3ead757b14c468338e9b33e83683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 2
   _myTeam: {fileID: 1210462635}
   _gameMode: 0
   _baseType: 0
@@ -6749,6 +6752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183f3ead757b14c468338e9b33e83683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 0
   _myTeam: {fileID: 1878257656}
   _gameMode: 0
   _baseType: 0
@@ -7232,6 +7236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183f3ead757b14c468338e9b33e83683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 4
   _myTeam: {fileID: 1951520243}
   _gameMode: 0
   _baseType: 0

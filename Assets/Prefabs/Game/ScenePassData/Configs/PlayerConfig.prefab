@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerName: 
-  _playerTeam: 2
+  _playerTeam: 0
+  _whatPlayer: 0

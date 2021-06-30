@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Game.Common.Data.Maps;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Game.Common.Data.Maps;
 using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
@@ -47,20 +48,36 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         {
             foreach (var baseCountData in mapData.BasesCount)
             {
-                MatchDataReference.AddSpawnerConfig(CreateSpawnData(baseCountData.Key, baseCountData.Value));
+                MatchDataReference.AddSpawnerConfig(CreateSpawnData(baseCountData.Key, baseCountData.Value, mapData.BasesData));
             }
             
         }
 
-        private SpawnerGroupConfig CreateSpawnData(Teams spawnerTeam, int spawnersCount)
+        
+        private SpawnerGroupConfig CreateSpawnData(Teams spawnerTeam, int spawnersCount, List<BaseData> basesData)
         {
             var newSpawnerConfig = Instantiate(_spawnerConfigPrefab);
             var newSpawnerConfigData = newSpawnerConfig.GetComponent<SpawnerGroupConfig>();
+            var basesForTeam = GetBasesDataForTeam(basesData, spawnerTeam);
 
             newSpawnerConfigData.MyTeam = spawnerTeam;
             newSpawnerConfigData.Quantity = spawnersCount;
+            newSpawnerConfigData.BasesData = basesForTeam;
 
             return newSpawnerConfigData;
+        }
+        private List<BaseData> GetBasesDataForTeam(List<BaseData> basesData, Teams team)
+        {
+            var teamBasesData = new List<BaseData>();
+            foreach (var baseData in basesData)
+            {
+                if (baseData.BaseTeam == team)
+                {
+                    teamBasesData.Add(baseData);
+                }
+            }
+
+            return teamBasesData;
         }
     }
 }
