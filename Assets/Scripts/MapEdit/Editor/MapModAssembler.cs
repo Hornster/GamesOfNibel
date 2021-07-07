@@ -41,7 +41,7 @@ namespace Assets.Scripts.MapEdit.Editor
             var cacheSeeker = new AssetSeeker<MapModAssemblerCacheSO>();
             try
             {
-                _cache = cacheSeeker.FindAsset(SGMapEditConstants.MapEditScriptableObjectsPath,
+                _cache = cacheSeeker.FindAsset(SGMapEditConstants.MapEditMapModAssemblerSOsFolderPath,
                     MapModAssemblerCacheSO.MapModAssemblerCacheSoName);
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace Assets.Scripts.MapEdit.Editor
             }
             else
             {
-                _cache = cacheSeeker.CreateScriptableObjectAsset<MapModAssemblerCacheSO>(SGMapEditConstants.MapEditScriptableObjectsPath,
+                _cache = cacheSeeker.CreateScriptableObjectAsset<MapModAssemblerCacheSO>(SGMapEditConstants.MapEditMapModAssemblerSOsFolderPath,
                     MapModAssemblerCacheSO.MapModAssemblerCacheSoName, SGMapEditConstants.ScriptableObjectsExtension);
             }
         }

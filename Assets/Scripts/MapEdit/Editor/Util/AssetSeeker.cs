@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.MapEdit.Editor.Data.Constants;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -31,6 +32,34 @@ namespace Assets.Scripts.MapEdit.Editor.Util
 
             return path;
         }
+
+        private List<string> GUIDsToAssetPaths(string[] guids)
+        {
+            var paths = new List<string>(guids.Length);
+            foreach (var guid in guids)
+            {
+                paths.Add(AssetDatabase.GUIDToAssetPath(guid));
+            }
+
+            return paths;
+        }
+
+        private List<string> FilterSOAssets(List<string> foundAssetsPaths)
+        {
+            var filteredAssetsPaths = new List<string>();
+            foreach (var foundAssetPath in foundAssetsPaths)
+            {
+                var foundAssetExtension =
+                    foundAssetPath.Substring(foundAssetPath.Length -
+                                             SGMapEditConstants.ScriptableObjectsExtension.Length);
+                if (foundAssetExtension.Equals(SGMapEditConstants.ScriptableObjectsExtension))
+                {
+                    filteredAssetsPaths.Add(foundAssetPath);
+                }
+            }
+
+            return filteredAssetsPaths;
+        }
         /// <summary>
         /// Seeks for given asset and returns it if found. Throws exception if nothing was found or if
         /// more than one file was found.
@@ -42,35 +71,40 @@ namespace Assets.Scripts.MapEdit.Editor.Util
         {
             pathToAsset = RemoveLastSlashFromPath(pathToAsset); //the path to asset cannot have a slash or a backslash. Otherwise Unity won't find the folder.
             var hitsGUIDs = AssetDatabase.FindAssets(assetName, new[] { pathToAsset });
+            var paths = GUIDsToAssetPaths(hitsGUIDs);
+            paths = FilterSOAssets(paths);
 
-            if (hitsGUIDs.Length <= 0)
+            if (paths.Count <= 0)
             {
                 MapEditReporter.ReportWarning(string.Format(Errors.AssetSeekerAssetNotFoundAtPath, assetName, pathToAsset));
                 return FindAsset(assetName);
             }
-            else if (hitsGUIDs.Length > 1)
+            else if (paths.Count > 1)
             {
                 throw new Exception(string.Format(Errors.AssetSeekerMultipleAssetsFoundAtPath, assetName, pathToAsset));
             }
 
-            var pathToFirstAsset = AssetDatabase.GUIDToAssetPath(hitsGUIDs[0]);
+            var pathToFirstAsset = paths[0];
             return AssetDatabase.LoadAssetAtPath<T>(pathToFirstAsset);
         }
 
         public T FindAsset(string assetName)
         {
             var hitsGUIDs = AssetDatabase.FindAssets(assetName);
+            var paths = GUIDsToAssetPaths(hitsGUIDs);
+            paths = FilterSOAssets(paths);  //FindAssets return assets of given name, disregarding the extension.
+                                            //We seek for the scriptable objects only, which have .asset extension.
 
-            if (hitsGUIDs.Length <= 0)
+            if (paths.Count <= 0)
             {
                 throw new Exception(string.Format(Errors.AssetSeekerAssetNotFoundGlobally, assetName));
             }
-            else if (hitsGUIDs.Length > 1)
+            else if (paths.Count > 1)
             {
                 throw new Exception(string.Format(Errors.AssetSeekerMultipleAssetsFoundGlobally, assetName));
             }
 
-            var pathToFirstAsset = AssetDatabase.GUIDToAssetPath(hitsGUIDs[0]);
+            var pathToFirstAsset = paths[0];
             return AssetDatabase.LoadAssetAtPath<T>(pathToFirstAsset);
         }
 
