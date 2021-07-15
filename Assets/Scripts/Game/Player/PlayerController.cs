@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Game.Common.Enums;
+﻿using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.Game.Player.Character;
 using Assets.Scripts.Game.Player.Character.Skills;
@@ -25,6 +26,7 @@ namespace Assets.Scripts.Game.Player
         [SerializeField] private CharacterRotator _characterRotator;
         [SerializeField] private PlayerEffectManager _effectManager;
         [SerializeField] private Transform _characterBody;
+        [SerializeField] private TeamModule _myTeam;
 
 
         //--Component References
@@ -38,6 +40,9 @@ namespace Assets.Scripts.Game.Player
         /// The velocity calculated from gravity, jump time and jump force.
         /// </summary>
         private float _jumpVelocity;
+
+        public Teams MyTeam => _myTeam.MyTeam;
+
         /// <summary>
         /// Changes position of the player.
         /// </summary>
