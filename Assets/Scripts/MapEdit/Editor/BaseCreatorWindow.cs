@@ -48,7 +48,7 @@ namespace Assets.Scripts.MapEdit.Editor
         {
             var assetSeeker = new AssetSeeker<BaseMarkerFactorySO>();
             _baseMarkerFactorySo = assetSeeker.FindAsset(
-                SGMapEditConstants.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
+                SGMapEditConstants.MapEditBaseMarkersSOsFolderPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
         }
 
         private void ChkBasesRootObjectPresence()

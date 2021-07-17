@@ -18,7 +18,7 @@ namespace Assets.Scripts.Editor.Tests
         {
             var assetsSeeker = new AssetSeeker<BaseMarkerFactorySO>();
             var baseMarkersFactory = assetsSeeker.FindAsset(
-                SGMapEditConstants.MapEditScriptableObjectsPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
+                SGMapEditConstants.MapEditBaseMarkersSOsFolderPath, BaseMarkerFactorySO.BaseMarkerFactorySoName);
             Assert.True(baseMarkersFactory != null);
 
             var baseObject = baseMarkersFactory.CreateBaseMarker(Teams.Lotus, BaseTypeEnum.CtfDefault, Vector3.zero);

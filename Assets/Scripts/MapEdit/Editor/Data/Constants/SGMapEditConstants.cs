@@ -7,7 +7,8 @@
         public const string MapEditMenuPath = "ScriptableObjects/MapEdit/";
         public const string WindowsPath = "Window/SGMapEdit/";
 
-        public const string MapEditScriptableObjectsPath = "Assets/Sandbox/ComponentBasesTests/MapEdit/Data/SOs/";
+        public const string MapEditMapModAssemblerSOsFolderPath = "Assets/Data/MapEdit/MapModAssembler/";
+        public const string MapEditBaseMarkersSOsFolderPath = "Assets/Data/MapEdit/BaseMarkers/";
         public const string ScriptableObjectsExtension = "asset";
 
         public const string BaseMarkersFactorySOPath = "Assets/Sandbox/ComponentBasesTests/MapEdit/Data/SOs/";
