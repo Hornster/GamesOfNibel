@@ -20,7 +20,7 @@ namespace Assets.Scripts.Game.Player
         //--Private Variables Exposed to the Inspector.
         [SerializeField] private float _prematureJumpEndScale = 0.5f;
 
-        [Header("Required references")] 
+        [Header("Required references")]
         [SerializeField] private PlayerMovementApplier _movementApplier;
         [SerializeField] private SkillsController _skillsController;
         [SerializeField] private CharacterRotator _characterRotator;
@@ -36,11 +36,19 @@ namespace Assets.Scripts.Game.Player
         private PlayerState _playerState;
         private PlayerPhysics _playerPhysics;
 
+        [SerializeField]
+        private int _playerID;
+
         /// <summary>
         /// The velocity calculated from gravity, jump time and jump force.
         /// </summary>
         private float _jumpVelocity;
 
+        public int PlayerID
+        {
+            get => _playerID;
+            set => _playerID = value;
+        }
         public Teams MyTeam => _myTeam.MyTeam;
 
         /// <summary>
@@ -163,7 +171,7 @@ namespace Assets.Scripts.Game.Player
             _playerState.GlideStage = glideStage;
             _skillsController.UseSkill(SkillType.Glide);
         }
-    
+
 
         private void RepositionToGround()
         {
@@ -173,7 +181,7 @@ namespace Assets.Scripts.Game.Player
         private void ApplyMovement()
         {
             RepositionToGround();   //Move the player closer to the ground, if applicable.
-        
+
             _movementApplier.ApplyMovement(Time.deltaTime);
 
             ChkWallSlide();

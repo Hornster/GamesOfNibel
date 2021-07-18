@@ -37,7 +37,7 @@ namespace Assets.Scripts.Game.GameModes.Race
 
             if (_myTeam.MyTeam == Teams.Multi || _myTeam.MyTeam == playerController.MyTeam)
             {
-                _playerArrived?.Invoke(playerController.GetInstanceID());
+                _playerArrived?.Invoke(playerController.PlayerID);
             }
             
         }

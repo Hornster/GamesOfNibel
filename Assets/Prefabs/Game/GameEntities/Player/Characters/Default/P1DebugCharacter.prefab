@@ -354,6 +354,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5220255037441368523, guid: 1a7a436c9d53c0a48ae42d58aa69e509,
+        type: 3}
+      propertyPath: _myTeam
+      value: 
+      objectReference: {fileID: 7686857009796243035}
     - target: {fileID: 5220255037441368525, guid: 1a7a436c9d53c0a48ae42d58aa69e509,
         type: 3}
       propertyPath: _beginningJumpTimer
