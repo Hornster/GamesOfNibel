@@ -2,6 +2,7 @@
 using Assets.Scripts.Game.Common.Data;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Player;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Factories
@@ -35,6 +36,7 @@ namespace Assets.Scripts.Game.Common.Factories
             }
 
             SetPlayerTeam(newCharacter, playerConfig.PlayerTeam);
+            SetPlayerID(newCharacter, playerConfig.MyId);
 
             return newCharacter;
         }
@@ -50,6 +52,12 @@ namespace Assets.Scripts.Game.Common.Factories
             var playerColorSetter = characterInstance.GetComponentInChildren<ColorSetter>();
             playerColorSetter.SetColor(TeamColorsSO.GetTeamColor(team));
             playerTeamModule.MyTeam = team;
+        }
+
+        private void SetPlayerID(GameObject characterInstance, int id)
+        {
+            var playerController = characterInstance.GetComponentInChildren<PlayerController>();
+            playerController.PlayerID = id;
         }
     }
 }

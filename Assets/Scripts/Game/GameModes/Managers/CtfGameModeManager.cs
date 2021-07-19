@@ -4,6 +4,7 @@ using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Localization;
 using Assets.Scripts.Game.GameModes.CTF;
 using Assets.Scripts.Game.GameModes.CTF.Observers;
+using Assets.Scripts.Game.GameModes.Race;
 using Assets.Scripts.Game.GUI.Gamemodes.CTF;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,13 +15,9 @@ namespace Assets.Scripts.Game.GameModes.Managers
     /// Manages the capture the flag game mode play.
     /// </summary>
     [RequireComponent(typeof(Timer))]
-    public class CtfGameModeManager : MonoBehaviour
+    public class CtfGameModeManager : GameModeManager
     {
-        /// <summary>
-        /// The await time for the players to prepare before the match starts.
-        /// </summary>
-        [SerializeField]
-        private float _startTime = 15.0f;
+        
         /// <summary>
         /// How many flags does given team has to capture in order to win?
         /// </summary>
@@ -31,13 +28,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
         /// </summary>
         [SerializeField]
         private List<CtfGuiController> _guiControllers;
-        /// <summary>
-        /// Set to true as long as the match is being played. When match ending requirements are met, the match ends and
-        /// the flag is set to false/
-        /// </summary>
-        private bool _isMatchOn;
-
-        private Timer _roundTimer;
+        
         /// <summary>
         /// Stores the score count of the teams.
         /// </summary>
@@ -55,7 +46,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
         /// <summary>
         /// Starts the match.
         /// </summary>
-        public void StartMatch()
+        public override void StartMatch()
         {
             foreach (var uiController in _guiControllers)
             {
@@ -92,24 +83,24 @@ namespace Assets.Scripts.Game.GameModes.Managers
                 flagCapturer.RegisterObserver(TeamScoredPoint);
             }
         }
-        /// <summary>
-        /// Registers awaiting event for scene load.
-        /// </summary>
-        private void OnEnable()
-        {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        /// <summary>
-        /// Called when scene is loaded - starts match begin sequence.
-        /// </summary>
-        /// <param name="scene"></param>
-        /// <param name="mode"></param>
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            Debug.Log("OnSceneLoaded: " + scene.name);
-            Debug.Log(mode);
-            StartMatch();
-        }
+        ///// <summary>
+        ///// Registers awaiting event for scene load.
+        ///// </summary>
+        //private void OnEnable()
+        //{
+        //    SceneManager.sceneLoaded += OnSceneLoaded;
+        //}
+        ///// <summary>
+        ///// Called when scene is loaded - starts match begin sequence.
+        ///// </summary>
+        ///// <param name="scene"></param>
+        ///// <param name="mode"></param>
+        //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        //{
+        //    Debug.Log("OnSceneLoaded: " + scene.name);
+        //    Debug.Log(mode);
+        //    StartMatch();
+        //}
         private void Start()
         {
             _roundTimer = GetComponent<Timer>();

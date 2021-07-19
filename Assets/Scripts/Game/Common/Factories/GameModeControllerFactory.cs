@@ -80,6 +80,11 @@ namespace Assets.Scripts.Game.Common.Factories
 
             return gameModeManager;
         }
+
+        private GameObject CreateRaceController(SceneData sceneData, List<GameObject> gameModeUIs)
+        {
+            throw new NotImplementedException();
+        }
         /// <summary>
         /// Creates selected game controller and connects it to provided UI. Make sure the UI is correct.
         /// </summary>
@@ -93,8 +98,7 @@ namespace Assets.Scripts.Game.Common.Factories
                 case GameplayModesEnum.CTF:
                     return CreateCTFController(sceneData, gameModeUIs);
                 case GameplayModesEnum.Race:
-                    return CreateCTFController(sceneData, gameModeUIs);
-                    throw new NotImplementedException();
+                    return CreateRaceController(sceneData, gameModeUIs);
                 case GameplayModesEnum.TimeAttack:
                     throw new NotImplementedException();
                 default:

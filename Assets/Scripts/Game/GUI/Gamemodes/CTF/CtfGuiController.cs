@@ -10,7 +10,7 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.CTF
     /// <summary>
     /// Controller for CTF mode GUI elements.
     /// </summary>
-    public class CtfGuiController : MonoBehaviour, ICtfGuiInterface
+    public class CtfGuiController : MonoBehaviour, IGUIInterface
     {
         /// <summary>
         /// The message showed to all players.

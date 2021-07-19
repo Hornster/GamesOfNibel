@@ -1,13 +1,9 @@
-﻿using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
+﻿using System;
+using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
 using Assets.Scripts.Game.Common.Enums;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.Game.Common.Factories;
-using Assets.Scripts.Game.MapInitialization;
 using UnityEngine;
 
-namespace Assets.Sandbox.Scripts
+namespace Assets.Scripts.Game.Common.Factories
 {
     public class GameGUIFactory : MonoBehaviour, IGameGUIFactory
     {
