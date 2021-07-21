@@ -83,24 +83,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
                 flagCapturer.RegisterObserver(TeamScoredPoint);
             }
         }
-        ///// <summary>
-        ///// Registers awaiting event for scene load.
-        ///// </summary>
-        //private void OnEnable()
-        //{
-        //    SceneManager.sceneLoaded += OnSceneLoaded;
-        //}
-        ///// <summary>
-        ///// Called when scene is loaded - starts match begin sequence.
-        ///// </summary>
-        ///// <param name="scene"></param>
-        ///// <param name="mode"></param>
-        //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        //{
-        //    Debug.Log("OnSceneLoaded: " + scene.name);
-        //    Debug.Log(mode);
-        //    StartMatch();
-        //}
+
         private void Start()
         {
             _roundTimer = GetComponent<Timer>();

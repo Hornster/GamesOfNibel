@@ -34,6 +34,10 @@ namespace Assets.Scripts.Game.Common
         /// </summary>
         public bool IsTimeUp { get; private set; } = false;
         /// <summary>
+        /// Gets the measured time, in seconds.
+        /// </summary>
+        public float CurrentTime => _currentAwaitTime;
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="maxAwaitTime">The time which the timer will await until calling the callback, in seconds.</param>

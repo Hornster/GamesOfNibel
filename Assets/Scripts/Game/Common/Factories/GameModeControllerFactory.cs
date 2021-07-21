@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
+using Assets.Scripts.Game.Common.Data.Constants;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Exceptions;
@@ -22,18 +24,21 @@ namespace Assets.Scripts.Game.Common.Factories
         [Tooltip("Prefab for the capture the flag mode controller.")]
         [SerializeField]
         private GameObject _ctfMatchControllerPrefab;
-        
+
+        private GameplayModeGameObjectDictionary _matchControllers = new GameplayModeGameObjectDictionary();
+
         /// <summary>
         /// Creates controller for CTF mode and connects it with bases and UI.
         /// </summary>
         /// <param name="sceneData">Data of the scene, takes neutral bases from here.</param>
-        /// <param name="gameModeUI">UI for CTF game mode.</param>
+        /// <param name="gameModeUIs">UIs for CTF game mode.</param>
+        /// <param name="gameModeController">Already instantiated instance of controller to set up.</param>
         /// <returns></returns>
-        private GameObject CreateCTFController(SceneData sceneData, List<GameObject> gameModeUIs)
+        private GameObject CreateCTFController(SceneData sceneData, List<GameObject> gameModeUIs, GameObject gameModeController)
         {
-            var controller = Instantiate(_ctfMatchControllerPrefab);
-            var flagController = controller.GetComponentInChildren<FlagSpawnersController>();
-            var ctfGameModeManager = controller.GetComponentInChildren<CtfGameModeManager>();
+            //var controller = Instantiate(gameModeController);
+            var flagController = gameModeController.GetComponentInChildren<FlagSpawnersController>();
+            var ctfGameModeManager = gameModeController.GetComponentInChildren<CtfGameModeManager>();
 
             if (sceneData.Bases.TryGetValue(Teams.Neutral, out var neutralBases))
             {
@@ -58,7 +63,7 @@ namespace Assets.Scripts.Game.Common.Factories
 
             ctfGameModeManager = RegisterFlagCaptureHandlers(sceneData, ctfGameModeManager);
 
-            return controller;
+            return gameModeController;
         }
         /// <summary>
         /// Registers (if possible) players' bases' flag capture handlers.
@@ -81,9 +86,34 @@ namespace Assets.Scripts.Game.Common.Factories
             return gameModeManager;
         }
 
-        private GameObject CreateRaceController(SceneData sceneData, List<GameObject> gameModeUIs)
+        private GameObject CreateRaceController(SceneData sceneData, List<GameObject> gameModeUIs, GameObject gameModeController)
         {
-            throw new NotImplementedException();
+            var raceController = gameModeController.GetComponentInChildren<RaceGameModeManager>();
+            foreach (var team in sceneData.Players)
+            {
+                foreach (var player in team.Value)
+                {
+                    raceController.AddPlayer(player);
+                }
+            }
+            //TODO, if you have to
+            return gameModeController;
+        }
+        /// <summary>
+        /// Returns an instantiated instance of selected gameplay controller.
+        /// </summary>
+        /// <param name="gameplayMode">What gameplay controller should be instantiated.</param>
+        /// <returns></returns>
+        private GameObject InstantiateController(GameplayModesEnum gameplayMode)
+        {
+            if (_matchControllers.dictionary.TryGetValue(gameplayMode, out var controllerPrefab))
+            {
+                return Instantiate(controllerPrefab);
+            }
+            else
+            {
+                throw new Exception(ErrorMessages.NoGameplayControllerFound);
+            }
         }
         /// <summary>
         /// Creates selected game controller and connects it to provided UI. Make sure the UI is correct.
@@ -93,12 +123,14 @@ namespace Assets.Scripts.Game.Common.Factories
         /// <returns></returns>
         public GameObject CreateGameController(SceneData sceneData, List<GameObject> gameModeUIs, GameplayModesEnum gameplayMode)
         {
+            var gameModeController = InstantiateController(gameplayMode);
+
             switch (gameplayMode)
             {
                 case GameplayModesEnum.CTF:
-                    return CreateCTFController(sceneData, gameModeUIs);
+                    return CreateCTFController(sceneData, gameModeUIs, gameModeController);
                 case GameplayModesEnum.Race:
-                    return CreateRaceController(sceneData, gameModeUIs);
+                    return CreateRaceController(sceneData, gameModeUIs, gameModeController);
                 case GameplayModesEnum.TimeAttack:
                     throw new NotImplementedException();
                 default:

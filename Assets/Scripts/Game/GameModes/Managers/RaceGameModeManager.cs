@@ -32,6 +32,31 @@ namespace Assets.Scripts.Game.GameModes.Managers
         [SerializeField]
         private List<RaceGUIController> _guiControllers = new List<RaceGUIController>();
 
+        private void Start()
+        {
+            _roundTimer.MaxAwaitTime = _startTime;
+            _roundTimer.RegisterTimeoutHandler(StartRound);
+        }
+
+        private void Update()
+        {
+            var time = TimeSpan.FromSeconds(_roundTimer.CurrentTime);
+            foreach (var guiController in _guiControllers)
+            {
+                guiController.UpdateCounter(ref time);
+            }
+        }
+
+        private void StartRound()
+        {
+            foreach (var uiController in _guiControllers)
+            {
+                uiController.PrintMessage(Teams.Multi, "Round begins!");
+            }
+            _roundTimer.Reset();
+            _isMatchOn = true;
+        }
+
         public void AddPlayer(GameObject player)
         {
             var playerRaceUI = player.GetComponentInChildren<RaceGUIController>();

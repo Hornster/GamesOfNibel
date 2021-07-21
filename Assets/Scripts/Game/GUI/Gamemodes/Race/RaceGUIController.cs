@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Game.Common;
 using Assets.Scripts.Game.Common.Data;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.GUI.Gamemodes.CTF;
@@ -30,7 +31,7 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.Race
             _informationMessage.HideMessage(true);
         }
 
-        public void UpdateCounter(TimeSpan time)
+        public void UpdateCounter(ref TimeSpan time)
         {
             _timeCounter.text = time.ToString(@"hh\:mm\:ss.fff");
         }
