@@ -23,6 +23,7 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.Race
 
         [SerializeField]
         private TMP_Text _timeCounter;
+        public int OwningPlayerID { get; set; }
 
         private void Start()
         {
@@ -33,8 +34,9 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.Race
 
         public void UpdateCounter(ref TimeSpan time)
         {
-            _timeCounter.text = time.ToString(@"hh\:mm\:ss.fff");
+            _timeCounter.text = time.ToString(@"hh\:mm\:ss\.fff");
         }
+
 
         public void PrintMessage(Teams whichTeam, string message)
         {

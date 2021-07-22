@@ -11,6 +11,7 @@ using Assets.Scripts.Game.Common.Exceptions;
 using Assets.Scripts.Game.GUI.Camera;
 using Assets.Scripts.Game.GUI.Menu.InGameMenu;
 using Assets.Scripts.Game.InspectorSerialization.Interfaces;
+using Assets.Scripts.Game.Player;
 using Assets.Scripts.Game.Player.Character;
 using Assets.Scripts.Game.Player.Character.Skills;
 using JetBrains.Annotations;
@@ -79,11 +80,11 @@ namespace Assets.Scripts.Game.MapInitialization
 
             _sceneData.GameplayMode = _matchData.GameplayMode;
             CreateSpawners();
-            CreatePlayers();
+            var playersIDs = CreatePlayers();
 
             var ingameGUIBase = CreateIngameMenus();
             RegisterSceneDataForDestroy(ingameGUIBase);
-            var playerUIs = CreatePlayerUIs(newSceneDataObj, GameplayModesEnum.CTF);
+            var playerUIs = CreatePlayerUIs(newSceneDataObj, playersIDs, _matchData.GameplayMode);
             InjectMainCameraToIngameMenus(newSceneDataObj, ingameGUIBase);
             ReassignTopUIs(ingameGUIBase, baseSceneObjects);
 
@@ -114,7 +115,6 @@ namespace Assets.Scripts.Game.MapInitialization
                 }
             }
         }
-
         private void CreateGameMode(GameplayModesEnum gameMode, List<GameObject> gameModeUI)
         {
             var matchController = _gameModeControllerFactory.Interface.CreateGameController(_sceneData, gameModeUI, gameMode);
@@ -155,17 +155,23 @@ namespace Assets.Scripts.Game.MapInitialization
             }
         }
         /// <summary>
-        /// Creates players based off the matchData contents.
+        /// Creates players based off the matchData contents. Returns list of players' ids.
         /// </summary>
-        private void CreatePlayers()
+        private List<int> CreatePlayers()
         {
+            var playerIDs = new List<int>();
             var playerConfigs = _matchData.PlayersConfigs.PlayerConfigs;
+
             foreach (var playerConfig in playerConfigs)
             {
                 var newPlayer = _characterFactory.Interface.CreateCharacter(playerConfig);
+                var currentPlayerID = newPlayer.GetComponentInChildren<PlayerController>().PlayerID;
+                playerIDs.Add(currentPlayerID);
                 CreateSkillsForPlayer(newPlayer);
                 _sceneData.AddPlayer(newPlayer);
             }
+
+            return playerIDs;
         }
         /// <summary>
         /// Adds skills to player accordingly with provided with match data skills configuration.
@@ -204,15 +210,21 @@ namespace Assets.Scripts.Game.MapInitialization
 
             return guiMainObject;
         }
-
-        private List<GameObject> CreatePlayerUIs(GameObject sceneDataObj, GameplayModesEnum selectedGameMode)
+        /// <summary>
+        /// Creates UIs for players.
+        /// </summary>
+        /// <param name="sceneDataObj">Object that contains data of the scene.</param>
+        /// <param name="playersIDs">Unique IDs of the players. Used to find out which UI belongs to who later on.</param>
+        /// <param name="selectedGameMode">Current game mode.</param>
+        /// <returns></returns>
+        private List<GameObject> CreatePlayerUIs(GameObject sceneDataObj, List<int> playersIDs, GameplayModesEnum selectedGameMode)
         {
             var ingameMenuFactory = _ingameMenuFactory.Interface;
             var playerUIs = new List<GameObject>();
             int playersCount = _matchData.PlayersConfigs.PlayerConfigs.Count;
             for (int i = 0; i < playersCount; i++)
             {
-                playerUIs.Add(ingameMenuFactory.CreatePlayerGameUI(selectedGameMode, null));
+                playerUIs.Add(ingameMenuFactory.CreatePlayerGameUI(selectedGameMode, null, playersIDs[i]));
             }
 
             return playerUIs;

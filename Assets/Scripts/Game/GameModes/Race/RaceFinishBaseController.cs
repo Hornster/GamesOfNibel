@@ -17,7 +17,7 @@ namespace Assets.Scripts.Game.GameModes.Race
 {
     //TODO Make serverside
     [RequireComponent(typeof(BoxCollider2D))]
-    public class RaceBaseController : MonoBehaviour, IInjectionHook
+    public class RaceFinishBaseController : MonoBehaviour, IInjectionHook
     {
         private TeamModule _myTeam;
         private IntegerUnityEvent _playerArrived = new IntegerUnityEvent();

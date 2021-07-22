@@ -31,6 +31,7 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.CTF
         [SerializeField]
         private ITextControlContainer _teamLotusScoreContainer;
         private IGuiTextControl _teamLotusScore;
+        public int OwningPlayerID { get; set; }
 
         private void Start()
         {

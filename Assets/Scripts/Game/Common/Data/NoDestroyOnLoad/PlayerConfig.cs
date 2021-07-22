@@ -26,7 +26,8 @@ namespace Assets.Scripts.Game.Common.Data.NoDestroyOnLoad
         [SerializeField]
         private WhatPlayer _whatPlayer;
 
-
+        [Tooltip("Id of the player. MUST BE UNIQUE!")]
+        [SerializeField]
         private int _myId;
         //TODO add character enum when char selection will become available
         /// <summary>

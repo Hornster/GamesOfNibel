@@ -22,7 +22,8 @@ namespace Assets.Scripts.Game.Common.Factories
         /// </summary>
         /// <param name="gameplayMode">Decides what should the UI represent.</param>
         /// <param name="parent">What should be the parent of created UI.</param>
+        /// <param name="playerID">Owning player's ID.</param>
         /// <returns></returns>
-        GameObject CreatePlayerGameUI(GameplayModesEnum gameplayMode, Transform parent);
+        GameObject CreatePlayerGameUI(GameplayModesEnum gameplayMode, Transform parent, int playerID);
     }
 }

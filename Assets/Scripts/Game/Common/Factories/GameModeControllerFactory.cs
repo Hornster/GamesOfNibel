@@ -12,6 +12,7 @@ using Assets.Scripts.Game.GameModes.CTF;
 using Assets.Scripts.Game.GameModes.CTF.Entities;
 using Assets.Scripts.Game.GameModes.Managers;
 using Assets.Scripts.Game.GUI.Gamemodes.CTF;
+using Assets.Scripts.Game.GUI.Gamemodes.Race;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Factories
@@ -24,7 +25,8 @@ namespace Assets.Scripts.Game.Common.Factories
         [Tooltip("Prefab for the capture the flag mode controller.")]
         [SerializeField]
         private GameObject _ctfMatchControllerPrefab;
-
+        [Tooltip("Prefabs for available game managers (controllers).")]
+        [SerializeField]
         private GameplayModeGameObjectDictionary _matchControllers = new GameplayModeGameObjectDictionary();
 
         /// <summary>
@@ -89,14 +91,12 @@ namespace Assets.Scripts.Game.Common.Factories
         private GameObject CreateRaceController(SceneData sceneData, List<GameObject> gameModeUIs, GameObject gameModeController)
         {
             var raceController = gameModeController.GetComponentInChildren<RaceGameModeManager>();
-            foreach (var team in sceneData.Players)
+            foreach (var ui in gameModeUIs)
             {
-                foreach (var player in team.Value)
-                {
-                    raceController.AddPlayer(player);
-                }
+                var uiController = ui.GetComponentInChildren<RaceGUIController>();
+                raceController.AddPlayerGUI(uiController);
             }
-            //TODO, if you have to
+
             return gameModeController;
         }
         /// <summary>

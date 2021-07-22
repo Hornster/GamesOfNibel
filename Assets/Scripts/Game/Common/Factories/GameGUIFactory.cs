@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Scripts.Game.Common.CustomCollections.DefaultCollectionsSerialization.Dictionary;
 using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.GUI.Gamemodes.CTF;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Factories
@@ -28,17 +29,22 @@ namespace Assets.Scripts.Game.Common.Factories
 
             return mainUI;
         }
+
         /// <summary>
         /// Creates UI visible by given player.
         /// </summary>
         /// <param name="gameplayMode">Decides what should the UI represent.</param>
         /// <param name="parent">What should be the parent of created UI.</param>
+        /// <param name="playerID">Owning player's ID.</param>
         /// <returns></returns>
-        public GameObject CreatePlayerGameUI(GameplayModesEnum gameplayMode, Transform parent)
+        public GameObject CreatePlayerGameUI(GameplayModesEnum gameplayMode, Transform parent, int playerID)
         {
             if(_UIPrefabs.dictionary.TryGetValue(gameplayMode, out var prefab))
             {
                 var menu = Instantiate(prefab, parent);
+
+                var guiController = menu.GetComponentInChildren<IGUIInterface>();
+                guiController.OwningPlayerID = playerID;
 
                 return menu;
             }

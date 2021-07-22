@@ -7,6 +7,7 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.CTF
     /// </summary>
     public interface IGUIInterface
     {
+        int OwningPlayerID { get; set; }
         /// <summary>
         /// Shows informational message.
         /// </summary>

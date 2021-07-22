@@ -34,6 +34,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
 
         private void Start()
         {
+            _roundTimer = GetComponent<Timer>();
             _roundTimer.MaxAwaitTime = _startTime;
             _roundTimer.RegisterTimeoutHandler(StartRound);
         }
@@ -57,20 +58,18 @@ namespace Assets.Scripts.Game.GameModes.Managers
             _isMatchOn = true;
         }
 
-        public void AddPlayer(GameObject player)
+        public void AddPlayerGUI(RaceGUIController raceGUIController)
         {
-            var playerRaceUI = player.GetComponentInChildren<RaceGUIController>();
-            var playerController = player.GetComponentInChildren<PlayerController>();
-
-            if (_players.ContainsKey(playerController.PlayerID))
+            if (_players.ContainsKey(raceGUIController.OwningPlayerID))
             {
                 throw new Exception(ErrorMessages.DuplicatePlayerIDFound);
             }
 
-            _players.Add(playerController.PlayerID, new PlayerRefs
+            _guiControllers.Add(raceGUIController);
+            _players.Add(raceGUIController.OwningPlayerID, new PlayerRefs
             {
                 PlayerFinishedRace = false,
-                PlayerGUIController = playerRaceUI,
+                PlayerGUIController = raceGUIController,
             });
         }
 

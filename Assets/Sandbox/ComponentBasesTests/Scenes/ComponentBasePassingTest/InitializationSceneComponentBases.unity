@@ -406,7 +406,7 @@ PrefabInstance:
     - target: {fileID: 6804705105742983035, guid: c6df3633020b09b4881c863733b09e8e,
         type: 3}
       propertyPath: _gameplayMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6804705106925202256, guid: c6df3633020b09b4881c863733b09e8e,
         type: 3}
@@ -1330,6 +1330,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8348775851442230018, guid: a87557b8c3a9af642b1d3d0a35ef208e,
         type: 3}
+      propertyPath: _myId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8348775851442230018, guid: a87557b8c3a9af642b1d3d0a35ef208e,
+        type: 3}
       propertyPath: _playerName
       value: Lotus
       objectReference: {fileID: 0}
@@ -2060,6 +2065,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7656175380858357561, guid: f59c6ac74e04404499d4efb9864d92e5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9105683011586640908, guid: f59c6ac74e04404499d4efb9864d92e5,
         type: 3}
