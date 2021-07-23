@@ -18,13 +18,14 @@ namespace Assets.Scripts.Game.GameModes.Managers
     [RequireComponent(typeof(Timer))]
     public class RaceGameModeManager : GameModeManager
     {
-        private class PlayerRefs
+        private class PlayerRaceData
         {
             public bool PlayerFinishedRace { get; set; }
             public RaceGUIController PlayerGUIController { get; set; }
+            public float PlayerTime { get; set; }
         }
 
-        private  Dictionary<int, PlayerRefs> _players = new Dictionary<int, PlayerRefs>();
+        private  Dictionary<int, PlayerRaceData> _players = new Dictionary<int, PlayerRaceData>();
 
         /// <summary>
         /// Reference to the gui controllers. Used to show the game state to the players.
@@ -42,9 +43,23 @@ namespace Assets.Scripts.Game.GameModes.Managers
         private void Update()
         {
             var time = TimeSpan.FromSeconds(_roundTimer.CurrentTime);
-            foreach (var guiController in _guiControllers)
+            foreach (var playerData in _players)
             {
-                guiController.UpdateCounter(ref time);
+                var playerRaceData = playerData.Value;
+                if (playerRaceData.PlayerFinishedRace == false)
+                {
+                    playerRaceData.PlayerGUIController.UpdateCounter(ref time);
+                }
+            }
+        }
+        private void PlayerFinishedRace(int playerID)
+        {
+            if (_players.TryGetValue(playerID, out var raceData))
+            {
+                var playerTimeSpan = TimeSpan.FromSeconds(raceData.PlayerTime);
+                raceData.PlayerFinishedRace = true;
+                raceData.PlayerTime = _roundTimer.CurrentTime;
+                raceData.PlayerGUIController.UpdateCounter(ref playerTimeSpan);
             }
         }
 
@@ -66,7 +81,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
             }
 
             _guiControllers.Add(raceGUIController);
-            _players.Add(raceGUIController.OwningPlayerID, new PlayerRefs
+            _players.Add(raceGUIController.OwningPlayerID, new PlayerRaceData
             {
                 PlayerFinishedRace = false,
                 PlayerGUIController = raceGUIController,
@@ -98,6 +113,12 @@ namespace Assets.Scripts.Game.GameModes.Managers
             }
             _roundTimer.StartTimer();
             SceneManager.sceneLoaded -= OnSceneLoaded;  //The match began - unregister the event handler.
+        }
+
+
+        public void RegisterPlayerFinishedRaceHandler(RaceFinishBaseController raceFinishBase)
+        {
+            raceFinishBase.RegisterPlayerArrivedEvent(PlayerFinishedRace);
         }
     }
 }

@@ -192,7 +192,7 @@ PrefabInstance:
     - target: {fileID: 5532096992831744820, guid: 9965a5324f1b3ec4596e9bc9ea06fe04,
         type: 3}
       propertyPath: m_Name
-      value: Body
+      value: FinishBody
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9965a5324f1b3ec4596e9bc9ea06fe04, type: 3}

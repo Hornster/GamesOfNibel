@@ -11,6 +11,7 @@ using Assets.Scripts.Game.Common.Exceptions;
 using Assets.Scripts.Game.GameModes.CTF;
 using Assets.Scripts.Game.GameModes.CTF.Entities;
 using Assets.Scripts.Game.GameModes.Managers;
+using Assets.Scripts.Game.GameModes.Race;
 using Assets.Scripts.Game.GUI.Gamemodes.CTF;
 using Assets.Scripts.Game.GUI.Gamemodes.Race;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace Assets.Scripts.Game.Common.Factories
         [SerializeField]
         private GameplayModeGameObjectDictionary _matchControllers = new GameplayModeGameObjectDictionary();
 
+        #region CTFManager
         /// <summary>
         /// Creates controller for CTF mode and connects it with bases and UI.
         /// </summary>
@@ -87,6 +89,9 @@ namespace Assets.Scripts.Game.Common.Factories
 
             return gameModeManager;
         }
+        #endregion
+
+        #region RaceManager
 
         private GameObject CreateRaceController(SceneData sceneData, List<GameObject> gameModeUIs, GameObject gameModeController)
         {
@@ -95,10 +100,38 @@ namespace Assets.Scripts.Game.Common.Factories
             {
                 var uiController = ui.GetComponentInChildren<RaceGUIController>();
                 raceController.AddPlayerGUI(uiController);
+                RegisterRaceHandlers(raceController, sceneData);
             }
 
             return gameModeController;
         }
+
+        private RaceGameModeManager RegisterRaceFinishHandlerForBase(RaceGameModeManager raceGameModeManager, GameObject playerBase)
+        {
+            var raceFinishBase = playerBase.GetComponentInChildren<RaceFinishBaseController>();
+            if (raceFinishBase != null)
+            {
+                raceGameModeManager.RegisterPlayerFinishedRaceHandler(raceFinishBase);
+            }
+
+            return raceGameModeManager;
+        }
+        private RaceGameModeManager RegisterRaceHandlers(RaceGameModeManager raceGameModeManager, SceneData sceneData)
+        {
+            var bases = sceneData.Bases;
+
+            foreach (var team in bases)
+            {
+                foreach (var playerBase in team.Value)
+                {
+                    raceGameModeManager = RegisterRaceFinishHandlerForBase(raceGameModeManager, playerBase);
+                }
+            }
+
+            return raceGameModeManager;
+        }
+
+        #endregion
         /// <summary>
         /// Returns an instantiated instance of selected gameplay controller.
         /// </summary>
@@ -138,7 +171,7 @@ namespace Assets.Scripts.Game.Common.Factories
             }
         }
 
-        
+
     }
 }
 //TODO: Create spawning of CTF game controller, together with connecting it with UI and bases.
