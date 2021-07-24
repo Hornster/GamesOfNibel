@@ -31,10 +31,21 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.Race
 
             _informationMessage.HideMessage(true);
         }
-
-        public void UpdateCounter(ref TimeSpan time)
+        /// <summary>
+        /// Updates the value shown by the counter.
+        /// </summary>
+        /// <param name="time">Time to show.</param>
+        /// <param name="isNegative">Setting this to TRUE adds a minus sign at the beginning.</param>
+        public void UpdateCounter(ref TimeSpan time, bool isNegative)
         {
-            _timeCounter.text = time.ToString(@"hh\:mm\:ss\.fff");
+            string textToShow = string.Empty;
+            if (isNegative)
+            {
+                textToShow += "-";
+            }
+            textToShow += time.ToString(@"hh\:mm\:ss\.fff");
+
+            _timeCounter.text = textToShow;
         }
 
 

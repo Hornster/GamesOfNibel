@@ -18,10 +18,10 @@ namespace Assets.Scripts.Game.GameModes.Race
         [SerializeField]
         protected float _startTime = 15.0f;
         /// <summary>
-        /// Set to true as long as the match is being played. When match ending requirements are met, the match ends and
+        /// Set to true as long as the round of the match is being played. When match ending requirements are met, the match ends and
         /// the flag is set to false/
         /// </summary>
-        protected bool _isMatchOn;
+        protected bool _isRoundOn;
 
         protected Timer _roundTimer;
 

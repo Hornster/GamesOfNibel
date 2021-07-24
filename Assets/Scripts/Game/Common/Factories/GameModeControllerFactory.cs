@@ -100,8 +100,10 @@ namespace Assets.Scripts.Game.Common.Factories
             {
                 var uiController = ui.GetComponentInChildren<RaceGUIController>();
                 raceController.AddPlayerGUI(uiController);
-                RegisterRaceHandlers(raceController, sceneData);
             }
+
+            RegisterRaceHandlers(raceController, sceneData);
+            InjectPlayerResetReferences(raceController, sceneData);
 
             return gameModeController;
         }
@@ -120,11 +122,26 @@ namespace Assets.Scripts.Game.Common.Factories
         {
             var bases = sceneData.Bases;
 
-            foreach (var team in bases)
+            foreach (var team in bases.Values)
             {
-                foreach (var playerBase in team.Value)
+                foreach (var playerBase in team)
                 {
                     raceGameModeManager = RegisterRaceFinishHandlerForBase(raceGameModeManager, playerBase);
+                }
+            }
+
+            return raceGameModeManager;
+        }
+        private RaceGameModeManager InjectPlayerResetReferences(RaceGameModeManager raceGameModeManager, SceneData sceneData)
+        {
+            var players = sceneData.Players.Values;
+
+            foreach(var team in players)
+            {
+                foreach(var player in team)
+                {
+                    var resetComponent = player.GetComponentInChildren<IReset>();
+                    raceGameModeManager.AddResetComponent(resetComponent);
                 }
             }
 

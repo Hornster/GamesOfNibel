@@ -18,14 +18,21 @@ namespace Assets.Scripts.Game.GameModes.Managers
     [RequireComponent(typeof(Timer))]
     public class RaceGameModeManager : GameModeManager
     {
-        private class PlayerRaceData
+        private class PlayerRaceData : IReset
         {
             public bool PlayerFinishedRace { get; set; }
             public RaceGUIController PlayerGUIController { get; set; }
             public float PlayerTime { get; set; }
+
+            public void Reset()
+            {
+                PlayerTime = 0f;
+                PlayerFinishedRace = false;
+            }
         }
 
-        private  Dictionary<int, PlayerRaceData> _players = new Dictionary<int, PlayerRaceData>();
+        private Dictionary<int, PlayerRaceData> _playerStates = new Dictionary<int, PlayerRaceData>();
+        private List<IReset> _objectsToReset = new List<IReset>();
 
         /// <summary>
         /// Reference to the gui controllers. Used to show the game state to the players.
@@ -42,27 +49,58 @@ namespace Assets.Scripts.Game.GameModes.Managers
 
         private void Update()
         {
-            var time = TimeSpan.FromSeconds(_roundTimer.CurrentTime);
-            foreach (var playerData in _players)
+            var time = GetTimeToShow(); 
+            foreach (var playerData in _playerStates)
             {
                 var playerRaceData = playerData.Value;
                 if (playerRaceData.PlayerFinishedRace == false)
                 {
-                    playerRaceData.PlayerGUIController.UpdateCounter(ref time);
+                    playerRaceData.PlayerGUIController.UpdateCounter(ref time, !_isRoundOn);
                 }
             }
         }
+        /// <summary>
+        /// Gets the format of the time to be shown, basing on current round status (if the round is on or countdown to start is being performed).
+        /// </summary>
+        /// <returns></returns>
+        private TimeSpan GetTimeToShow()
+        {
+            float currentTime;
+
+            if (_isRoundOn)
+            {
+                currentTime = _roundTimer.CurrentTime;
+            }
+            else
+            {
+                currentTime = -(_startTime - _roundTimer.CurrentTime);
+            }
+
+            return TimeSpan.FromSeconds(currentTime);
+        }
         private void PlayerFinishedRace(int playerID)
         {
-            if (_players.TryGetValue(playerID, out var raceData))
+            if(_isRoundOn == false)
             {
-                var playerTimeSpan = TimeSpan.FromSeconds(raceData.PlayerTime);
+                return; //Don't even bother if the round hasn't started yet.
+            }
+
+            if (_playerStates.TryGetValue(playerID, out var raceData))
+            {
+                if (raceData.PlayerFinishedRace)
+                {
+                    return;//If the player has already finished - we don't need to change anything.
+                }
+
+                var playerTimeSpan = TimeSpan.FromSeconds(_roundTimer.CurrentTime);
                 raceData.PlayerFinishedRace = true;
                 raceData.PlayerTime = _roundTimer.CurrentTime;
-                raceData.PlayerGUIController.UpdateCounter(ref playerTimeSpan);
+                raceData.PlayerGUIController.UpdateCounter(ref playerTimeSpan, !_isRoundOn);
             }
         }
-
+        /// <summary>
+        /// Starts current round after initial countdown.
+        /// </summary>
         private void StartRound()
         {
             foreach (var uiController in _guiControllers)
@@ -70,30 +108,43 @@ namespace Assets.Scripts.Game.GameModes.Managers
                 uiController.PrintMessage(Teams.Multi, "Round begins!");
             }
             _roundTimer.Reset();
-            _isMatchOn = true;
+            _isRoundOn = true;
+            _roundTimer.ClearTimeoutHandlers();
         }
 
         public void AddPlayerGUI(RaceGUIController raceGUIController)
         {
-            if (_players.ContainsKey(raceGUIController.OwningPlayerID))
+            if (_playerStates.ContainsKey(raceGUIController.OwningPlayerID))
             {
                 throw new Exception(ErrorMessages.DuplicatePlayerIDFound);
             }
 
-            _guiControllers.Add(raceGUIController);
-            _players.Add(raceGUIController.OwningPlayerID, new PlayerRaceData
+            var playerData = new PlayerRaceData
             {
                 PlayerFinishedRace = false,
                 PlayerGUIController = raceGUIController,
-            });
-        }
+            };
 
-        public void ResetGame()
+            _guiControllers.Add(raceGUIController);
+            _playerStates.Add(raceGUIController.OwningPlayerID, playerData);
+            AddResetComponent(playerData);
+        }
+        public void AddResetComponent(IReset componentToReset)
         {
-            foreach (var player in _players)
+            _objectsToReset.Add(componentToReset);
+        }
+        /// <summary>
+        /// Resets the state of the round, allowing for racing again without the need of reloading the map.
+        /// </summary>
+        public void ResetRound()
+        {
+            foreach(var objectToReset in _objectsToReset)
             {
-                player.Value.PlayerFinishedRace = false;
+                objectToReset.Reset();
             }
+            _roundTimer.Reset();
+            _roundTimer.RegisterTimeoutHandler(StartRound);
+            _isRoundOn = false;
         }
         //TODO Make player controller have an ID assigned through factory.  DONE
         //TODO Factory would receive the id from data object    DONE
@@ -105,6 +156,9 @@ namespace Assets.Scripts.Game.GameModes.Managers
         //TODO In Update, whoever has not finished the race yet would have their UI updated every frame.
         //TODO You could use timer with TimeOffset (or something like that) structure from .Net. It could be initialized with
         //TODO seconds, then read hours, minutes and seconds part for easy formatting.
+        /// <summary>
+        /// Begins the match itself, starting from beginning countdown.
+        /// </summary>
         public override void StartMatch()
         {
             foreach (var uiController in _guiControllers)

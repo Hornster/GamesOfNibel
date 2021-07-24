@@ -98,7 +98,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
         /// <param name="whichTeam">What team has recently stored a point?</param>
         private void ReportVictory(Teams whichTeam)
         {
-            _isMatchOn = false;
+            _isRoundOn = false;
             Debug.Log($"Team {whichTeam} is victorious!!");
             var locale = LocalizationManager.GetInstance();
             var victoryMsg = locale.CtfLocale.GetVictoryQuote(whichTeam);
@@ -138,7 +138,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
         /// </summary>
         private void TeamScoredPoint(Teams whichTeam, int pointsAmount)
         {
-            if (_isMatchOn == false)
+            if (_isRoundOn == false)
             {
                 return; //Do not check for points if the match has ended already. No point in that.
             }
@@ -171,7 +171,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
                 uiController.PrintMessage(Teams.Multi, "Round begins!");
             }
             _roundTimer.ResetAndStop();
-            _isMatchOn = true;
+            _isRoundOn = true;
             _flagSpawnersController.StartMatch();
         }
     }
