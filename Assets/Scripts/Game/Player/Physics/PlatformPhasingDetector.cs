@@ -30,7 +30,7 @@ namespace Assets.Scripts.Game.Player.Physics
         /// Measures the time since the collision stopped.
         /// </summary>
         private Timer _timer;
-        private void Start()
+        private void Awake()
         {
             _timer = GetComponent<Timer>();
             _whatIsPlatformLayerIndex = MathOperations.ConvertLayerMaskValueToIndex(_whatIsPlatform);
