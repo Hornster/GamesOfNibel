@@ -59,6 +59,18 @@ namespace Assets.Scripts.Game.GameModes.Managers
                 }
             }
         }
+
+        private void ChkRoundEndCondition()
+        {
+            foreach (var playerState in _playerStates.Values)
+            {
+                if (playerState.PlayerFinishedRace == false)
+                {
+                    return;
+                }
+            }
+
+        }
         /// <summary>
         /// Gets the format of the time to be shown, basing on current round status (if the round is on or countdown to start is being performed).
         /// </summary>
