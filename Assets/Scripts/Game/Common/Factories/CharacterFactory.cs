@@ -3,6 +3,7 @@ using Assets.Scripts.Game.Common.Data;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Player;
+using Assets.Scripts.Game.Player.Data;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Factories
@@ -35,8 +36,11 @@ namespace Assets.Scripts.Game.Common.Factories
                 throw new Exception($"There is noprefab defined for player type {playerConfig.WhatPlayer}");
             }
 
+            var playerMatchData = newCharacter.GetComponentInChildren<PlayerController>().PlayerMatchData;
+
             SetPlayerTeam(newCharacter, playerConfig.PlayerTeam);
-            SetPlayerID(newCharacter, playerConfig.MyId);
+            SetPlayerID(playerMatchData, playerConfig.MyId);
+            SetPlayerName(playerMatchData, playerConfig.PlayerName);
 
             return newCharacter;
         }
@@ -54,10 +58,14 @@ namespace Assets.Scripts.Game.Common.Factories
             playerTeamModule.MyTeam = team;
         }
 
-        private void SetPlayerID(GameObject characterInstance, int id)
+        private void SetPlayerID(PlayerMatchData playerMatchData, int id)
         {
-            var playerController = characterInstance.GetComponentInChildren<PlayerController>();
-            playerController.PlayerID = id;
+            playerMatchData.PlayerID = id;
+        }
+
+        private void SetPlayerName(PlayerMatchData playerMatchData, string playerName)
+        {
+            playerMatchData.PlayerName = playerName;
         }
     }
 }

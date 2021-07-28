@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 7686857009796243035}
   - component: {fileID: 1829659284853566161}
   - component: {fileID: 7717328495437174184}
+  - component: {fileID: 2096670647755806355}
   m_Layer: 10
   m_Name: P1DebugCharacter
   m_TagString: Untagged
@@ -122,6 +123,19 @@ MonoBehaviour:
   _playerBody: {fileID: 5535999678530167650}
   _localGravityManager: {fileID: 1426052490}
   _playerController: {fileID: 5535999678530167648}
+--- !u!114 &2096670647755806355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5535999678183602758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8be61594c8ed00a44bccc7cf6d93c47c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerTeam: {fileID: 7686857009796243035}
 --- !u!1 &8139542515268257690
 GameObject:
   m_ObjectHideFlags: 0

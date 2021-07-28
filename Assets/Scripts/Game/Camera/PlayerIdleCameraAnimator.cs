@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.Game.Player;
+using Assets.Scripts.Game.Player.Data;
 using Cinemachine;
 using UnityEditor;
 using UnityEngine;

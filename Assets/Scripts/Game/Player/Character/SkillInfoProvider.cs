@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.Player.Character.Skills;
+using Assets.Scripts.Game.Player.Data;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Player.Character

@@ -99,7 +99,12 @@ namespace Assets.Scripts.Game.Common.Factories
             foreach (var ui in gameModeUIs)
             {
                 var uiController = ui.GetComponentInChildren<RaceGUIController>();
-                raceController.AddPlayerGUI(uiController);
+                //TODO: This call has to be modified. You need to pass PlayerMatchData.
+                //TODO: In internet match we most likely won't have UIs of other players.
+                //TODO: Remake this to prioritize passing the PlayerMatchData.
+                //TODO: Compare ui's owner ID with given player's and if it matches -
+                //TODO: Pass it as well.
+                //raceController.AddPlayerData(uiController);
             }
 
             RegisterRaceHandlers(raceController, sceneData);

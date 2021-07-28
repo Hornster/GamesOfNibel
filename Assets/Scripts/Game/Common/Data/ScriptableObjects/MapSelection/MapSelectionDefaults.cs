@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Game.Common.Data.Constants;
+using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.MapSelection
 {

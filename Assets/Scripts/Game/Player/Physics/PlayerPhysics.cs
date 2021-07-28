@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.Game.Player.Character;
+using Assets.Scripts.Game.Player.Data;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Player.Physics

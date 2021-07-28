@@ -3,8 +3,10 @@ using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Common.Helpers;
 using Assets.Scripts.Game.Player.Character;
 using Assets.Scripts.Game.Player.Character.Skills;
+using Assets.Scripts.Game.Player.Data;
 using Assets.Scripts.Game.Player.Effects;
 using Assets.Scripts.Game.Player.Physics;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Player
@@ -36,19 +38,18 @@ namespace Assets.Scripts.Game.Player
         private PlayerState _playerState;
         private PlayerPhysics _playerPhysics;
 
-        [SerializeField]
-        private int _playerID;
+        //[SerializeField]
+        //private int _playerID;
+        [Tooltip("Reference to common player data used by other objects.")]
+        [SerializeField] 
+        private PlayerMatchData _playerMatchData;
 
         /// <summary>
         /// The velocity calculated from gravity, jump time and jump force.
         /// </summary>
         private float _jumpVelocity;
 
-        public int PlayerID
-        {
-            get => _playerID;
-            set => _playerID = value;
-        }
+        public PlayerMatchData PlayerMatchData => _playerMatchData;
         public Teams MyTeam => _myTeam.MyTeam;
 
         /// <summary>

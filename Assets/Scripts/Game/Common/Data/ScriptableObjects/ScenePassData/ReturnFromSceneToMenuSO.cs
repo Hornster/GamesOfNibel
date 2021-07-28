@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Game.Common.Enums;
+﻿using Assets.Scripts.Game.Common.Data.Constants;
+using Assets.Scripts.Game.Common.Enums;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Common.Data.ScriptableObjects.ScenePassData

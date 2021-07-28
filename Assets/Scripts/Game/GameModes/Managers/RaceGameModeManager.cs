@@ -9,6 +9,7 @@ using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.GameModes.Race;
 using Assets.Scripts.Game.GUI.Gamemodes.Race;
 using Assets.Scripts.Game.Player;
+using Assets.Scripts.Game.Player.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +23,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
         {
             public bool PlayerFinishedRace { get; set; }
             public RaceGUIController PlayerGUIController { get; set; }
+            public PlayerMatchData PlayerMatchData { get; set; }
             public float PlayerTime { get; set; }
 
             public void Reset()
@@ -124,7 +126,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
             _roundTimer.ClearTimeoutHandlers();
         }
 
-        public void AddPlayerGUI(RaceGUIController raceGUIController)
+        public void AddPlayerData(RaceGUIController raceGUIController, PlayerMatchData playerMatchData)
         {
             if (_playerStates.ContainsKey(raceGUIController.OwningPlayerID))
             {
@@ -135,6 +137,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
             {
                 PlayerFinishedRace = false,
                 PlayerGUIController = raceGUIController,
+                PlayerMatchData = playerMatchData,
             };
 
             _guiControllers.Add(raceGUIController);

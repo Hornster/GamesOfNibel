@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.Common;
+using Assets.Scripts.Game.Player.Data;
 using UnityEngine;
 using UnityEngine.Events;
 

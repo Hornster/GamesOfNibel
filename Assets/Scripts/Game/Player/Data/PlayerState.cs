@@ -4,7 +4,7 @@ using Assets.Scripts.Game.Player.Gravity;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.Game.Player
+namespace Assets.Scripts.Game.Player.Data
 {
     /// <summary>
     /// Contains all necessary info about the player's physics and movement.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Player.Data;
 using Assets.Scripts.Game.Player.Gravity.Constraints;
 using UnityEngine;
 

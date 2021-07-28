@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Game.Common.Data.NoDestroyOnLoad;
 using Assets.Scripts.Game.Common.Enums;
 using Assets.Scripts.Game.Player.Character.Skills.Factory;
+using Assets.Scripts.Game.Player.Data;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Player.Character.Skills

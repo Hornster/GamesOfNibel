@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Scripts.Game.Common.Data
+﻿namespace Assets.Scripts.Game.Common.Data.Constants
 {
     /// <summary>
     /// Spirit Games constants. SO means Scriptable Object.
@@ -17,5 +11,7 @@ namespace Assets.Scripts.Game.Common.Data
         public const string SGSOTransitionsRelativePath = "Transitions/";
         public const string SGSOColorsRelativePath = "Colors/";
         public const string SGSOFactoryDataRelativePath = "Factory Data/";
+
+        public const string SGPlayerDefaultName = "RANDOM SPIRIT";
     }
 }

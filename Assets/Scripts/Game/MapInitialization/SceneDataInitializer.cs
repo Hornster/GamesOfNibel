@@ -165,7 +165,7 @@ namespace Assets.Scripts.Game.MapInitialization
             foreach (var playerConfig in playerConfigs)
             {
                 var newPlayer = _characterFactory.Interface.CreateCharacter(playerConfig);
-                var currentPlayerID = newPlayer.GetComponentInChildren<PlayerController>().PlayerID;
+                var currentPlayerID = newPlayer.GetComponentInChildren<PlayerController>().PlayerMatchData.PlayerID;
                 playerIDs.Add(currentPlayerID);
                 CreateSkillsForPlayer(newPlayer);
                 _sceneData.AddPlayer(newPlayer);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Game.Common.Enums;
+using Assets.Scripts.Game.Player.Data;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Player.Character.Skills.Factory
