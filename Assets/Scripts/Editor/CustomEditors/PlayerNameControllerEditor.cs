@@ -15,7 +15,7 @@ namespace Assets.Scripts.Editor.CustomEditors
     {
         public override void OnInspectorGUI()
         {
-            EditorGUILayout.HelpBox(EditorSGConstants.PlayerNameControllerEditorInfo, MessageType.Info);
+            //EditorGUILayout.HelpBox(EditorSGConstants.PlayerNameControllerEditorInfo, MessageType.Info);
 
             base.OnInspectorGUI();
         }

@@ -125,23 +125,52 @@ namespace Assets.Scripts.Game.GameModes.Managers
             _isRoundOn = true;
             _roundTimer.ClearTimeoutHandlers();
         }
-
-        public void AddPlayerData(RaceGUIController raceGUIController, PlayerMatchData playerMatchData)
+        /// <summary>
+        /// Checks if race data for player of provided ID exists. If yes - returns it. If no - creates new one, adds it
+        /// to dictionary and returns it (new data obj). Registers new player data for reset actions.
+        /// </summary>
+        /// <returns></returns>
+        private PlayerRaceData ChkForRaceData(int playerID)
         {
-            if (_playerStates.ContainsKey(raceGUIController.OwningPlayerID))
+            if (_playerStates.TryGetValue(playerID, out var playerData))
             {
-                throw new Exception(ErrorMessages.DuplicatePlayerIDFound);
+                return playerData;
+            }
+            else
+            {
+                playerData = new PlayerRaceData
+                {
+                    PlayerFinishedRace = false,
+                    PlayerTime = 0.0f,
+                };
+
+                _playerStates.Add(playerID, playerData);
             }
 
-            var playerData = new PlayerRaceData
-            {
-                PlayerFinishedRace = false,
-                PlayerGUIController = raceGUIController,
-                PlayerMatchData = playerMatchData,
-            };
+            return playerData;
+        }
+        public void AddPlayerGUI(RaceGUIController raceGuiController)
+        {
+            var playerData = ChkForRaceData(raceGuiController.OwningPlayerID);
 
-            _guiControllers.Add(raceGUIController);
-            _playerStates.Add(raceGUIController.OwningPlayerID, playerData);
+            if (playerData.PlayerGUIController != null)
+            {
+                throw new Exception(ErrorMessages.RaceControllerPlayerGUIOverrideAttempt);
+            }
+
+            playerData.PlayerGUIController = raceGuiController;
+            _guiControllers.Add(raceGuiController);
+        }
+        public void AddPlayerData(PlayerMatchData playerMatchData)
+        {
+            var playerData = ChkForRaceData(playerMatchData.PlayerID);
+
+            if (playerData.PlayerMatchData != null)
+            {
+                throw new Exception(ErrorMessages.RaceControllerPlayerMatchDataOverrideAttempt);
+            }
+
+            playerData.PlayerMatchData = playerMatchData;
             AddResetComponent(playerData);
         }
         public void AddResetComponent(IReset componentToReset)
