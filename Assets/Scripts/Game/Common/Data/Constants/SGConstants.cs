@@ -13,5 +13,12 @@
         public const string SGSOFactoryDataRelativePath = "Factory Data/";
 
         public const string SGPlayerDefaultName = "RANDOM SPIRIT";
+        /// <summary>
+        /// Shown when the round of race game mode ends. Formatting args:
+        /// 1: Name of the player - string
+        /// 2: Time the player finished race in - string.
+        /// </summary>
+        public const string SGRaceFinishMessage = "{0} has won with time {1}!";
+        public const string SGRaceTimerFormat = @"hh\:mm\:ss\.fff";
     }
 }

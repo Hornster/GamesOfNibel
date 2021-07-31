@@ -33,6 +33,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
             }
         }
 
+        protected new float _startTime = 2f;
         private Dictionary<int, PlayerRaceData> _playerStates = new Dictionary<int, PlayerRaceData>();
         private List<IReset> _objectsToReset = new List<IReset>();
 
@@ -62,16 +63,21 @@ namespace Assets.Scripts.Game.GameModes.Managers
             }
         }
 
-        private void ChkRoundEndCondition()
+        private PlayerRaceData GetFastestPlayer()
         {
-            foreach (var playerState in _playerStates.Values)
+            float minTime = float.MaxValue;
+            PlayerRaceData fastestPlayer = null;
+
+            foreach(var playerState in _playerStates.Values)
             {
-                if (playerState.PlayerFinishedRace == false)
+                if (playerState.PlayerTime < minTime)
                 {
-                    return;
+                    minTime = playerState.PlayerTime;
+                    fastestPlayer = playerState;
                 }
             }
 
+            return fastestPlayer;
         }
         /// <summary>
         /// Gets the format of the time to be shown, basing on current round status (if the round is on or countdown to start is being performed).
@@ -111,6 +117,8 @@ namespace Assets.Scripts.Game.GameModes.Managers
                 raceData.PlayerTime = _roundTimer.CurrentTime;
                 raceData.PlayerGUIController.UpdateCounter(ref playerTimeSpan, !_isRoundOn);
             }
+
+            ChkRoundEndCondition();
         }
         /// <summary>
         /// Starts current round after initial countdown.
@@ -124,6 +132,31 @@ namespace Assets.Scripts.Game.GameModes.Managers
             _roundTimer.Reset();
             _isRoundOn = true;
             _roundTimer.ClearTimeoutHandlers();
+        }
+        private void ChkRoundEndCondition()
+        {
+            foreach (var playerState in _playerStates.Values)
+            {
+                if (playerState.PlayerFinishedRace == false)
+                {
+                    return;
+                }
+            }
+
+            EndRound();
+        }
+        private void EndRound()
+        {
+            var fastestPlayer = GetFastestPlayer();
+            var playerFormattedTime = TimeSpan.FromSeconds(fastestPlayer.PlayerTime).ToString(SGConstants.SGRaceTimerFormat);
+            var victoryMessage = string.Format(SGConstants.SGRaceFinishMessage, fastestPlayer.PlayerMatchData.PlayerName, playerFormattedTime);
+
+            foreach (var guiController in _guiControllers)
+            {
+                guiController.PrintMessage(fastestPlayer.PlayerMatchData.PlayerTeam, victoryMessage);
+            }
+
+            _isRoundOn = false;
         }
         /// <summary>
         /// Checks if race data for player of provided ID exists. If yes - returns it. If no - creates new one, adds it
