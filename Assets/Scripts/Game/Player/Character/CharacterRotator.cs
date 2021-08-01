@@ -13,6 +13,10 @@ namespace Assets.Scripts.Game.Player.Character
         /// Used to rotate the player.
         /// </summary>
         [SerializeField] private Transform _characterTransform;
+        /// <summary>
+        /// Used to rotate the player's name object.
+        /// </summary>
+        [SerializeField] private Transform _playerNameTransform;
         [SerializeField] private PlayerState _playerState;
 
         /// <summary>
@@ -22,6 +26,7 @@ namespace Assets.Scripts.Game.Player.Character
         {
             _playerState.facingDirection *= -1;
             _characterTransform.Rotate(0.0f, 180.0f, 0.0f);
+            _playerNameTransform.Rotate(0.0f, 180.0f, 0.0f);
         }
         /// <summary>
         /// Rotates the character towards the wall they hold. If they hold

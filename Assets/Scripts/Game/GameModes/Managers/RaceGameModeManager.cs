@@ -32,7 +32,7 @@ namespace Assets.Scripts.Game.GameModes.Managers
                 PlayerFinishedRace = false;
             }
         }
-
+        [SerializeField]
         protected new float _startTime = 2f;
         private Dictionary<int, PlayerRaceData> _playerStates = new Dictionary<int, PlayerRaceData>();
         private List<IReset> _objectsToReset = new List<IReset>();
