@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Game.Common.Data.Constants
+﻿using UnityEngine;
+
+namespace Assets.Scripts.Game.Common.Data.Constants
 {
     /// <summary>
     /// Spirit Games constants. SO means Scriptable Object.
@@ -20,5 +22,11 @@
         /// </summary>
         public const string SGRaceFinishMessage = "{0} has won with time {1}!";
         public const string SGRaceTimerFormat = @"hh\:mm\:ss\.fff";
+        /// <summary>
+        /// The resolution factor: width/height.
+        /// </summary>
+        public const double ReferenceResolutionFactor = 16.0 / 9.0;
+        public const int ReferenceResolutionX = 3840;
+        public const int ReferenceResolutionY = 2160;
     }
 }

@@ -13,10 +13,6 @@ namespace Assets.Scripts.Game.GameModes.Race
     public abstract class GameModeManager : MonoBehaviour
     {
         /// <summary>
-        /// The await time for the players to prepare before the match starts.
-        /// </summary>
-        protected float _startTime = 15.0f;
-        /// <summary>
         /// Set to true as long as the round of the match is being played. When match ending requirements are met, the match ends and
         /// the flag is set to false/
         /// </summary>

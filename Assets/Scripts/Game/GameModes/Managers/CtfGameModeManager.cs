@@ -17,7 +17,8 @@ namespace Assets.Scripts.Game.GameModes.Managers
     [RequireComponent(typeof(Timer))]
     public class CtfGameModeManager : GameModeManager
     {
-        
+        [SerializeField]
+        protected float _startTime = 15f;
         /// <summary>
         /// How many flags does given team has to capture in order to win?
         /// </summary>

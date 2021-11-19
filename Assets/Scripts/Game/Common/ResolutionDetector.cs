@@ -6,7 +6,7 @@ namespace Assets.Scripts.Game.Common
     /// <summary>
     /// Detects changes in game window resolution.
     /// </summary>
-    public class ResolutionDetector : MonoBehaviour
+    public class ResolutionDetector : SceneSingleton<ResolutionDetector>
     {
         /// <summary>
         /// Who to inform about screen resolution change.
@@ -40,7 +40,7 @@ namespace Assets.Scripts.Game.Common
         /// <summary>
         /// Registers handler for resolution change event.
         /// </summary>
-        /// <param name="handler">Argument is new resolution.</param>
+        /// <param name="handler">Argument is new resolution, in pixels.</param>
         public static void RegisterOnScreenResolutionChange(UnityAction<Vector2Int> handler)
         {
             _onScreenResolutionChange += handler;
