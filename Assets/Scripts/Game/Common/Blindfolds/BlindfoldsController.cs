@@ -26,14 +26,21 @@ namespace Assets.Scripts.Game.Common.Blindfolds
 
         private void OnResolutionChanged(Vector2Int newResolution)
         {
-            var resolutionXCoeff = (double)newResolution.x / SGConstants.ReferenceResolutionX;
-            var newHeight = SGConstants.ReferenceResolutionY * resolutionXCoeff;
-            var resolutionYCoeff = (double)newResolution.y / SGConstants.ReferenceResolutionY;
+            var referenceResolutionRatio = SGConstants.ReferenceResolutionX / SGConstants.ReferenceResolutionY;
+            var newResolutionRatio = newResolution.x / ((float)newResolution.y);
 
-            var blindfoldHeight = newHeight * (1 - resolutionYCoeff) * 0.5f;
+            var percentageDifference = newResolutionRatio / referenceResolutionRatio;
+            var blindfoldedAreaPercent = 1 - percentageDifference;
 
-            _topBlindfold.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (int)blindfoldHeight);
-            _bottomBlindfold.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (int)blindfoldHeight);
+            var singleBlindfoldOffset = newResolution.y * blindfoldedAreaPercent / 2;
+            var topBlindfoldPos = _topBlindfold.anchoredPosition;
+            var bottomBlindfoldPos = _bottomBlindfold.anchoredPosition;
+
+            topBlindfoldPos.y -= singleBlindfoldOffset;
+            bottomBlindfoldPos.y += singleBlindfoldOffset;
+
+            _topBlindfold.anchoredPosition = topBlindfoldPos;
+            _bottomBlindfold.anchoredPosition = bottomBlindfoldPos;
         }
     }
 }
