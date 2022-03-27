@@ -12,10 +12,16 @@ namespace Assets.Scripts.Game.Common.Blindfolds
         private RectTransform _topBlindfold;
         [SerializeField]
         private RectTransform _bottomBlindfold;
+
+        private Vector2 _topBlindfoldAnchor;
+        private Vector2 _bottomBlindfoldAnchor;
         // Start is called before the first frame update
         void Start()
         {
             ResolutionDetector.RegisterOnScreenResolutionChange(this.OnResolutionChanged);
+            _topBlindfoldAnchor = _topBlindfold.anchoredPosition;
+            _bottomBlindfoldAnchor = _bottomBlindfold.anchoredPosition;
+            OnResolutionChanged(ResolutionDetector.Instance.CurrentScreenResolution);
         }
 
         // Update is called once per frame
@@ -26,18 +32,17 @@ namespace Assets.Scripts.Game.Common.Blindfolds
 
         private void OnResolutionChanged(Vector2Int newResolution)
         {
-            var referenceResolutionRatio = SGConstants.ReferenceResolutionX / SGConstants.ReferenceResolutionY;
-            var newResolutionRatio = newResolution.x / ((float)newResolution.y);
+            var widthScaleRatio = (float)newResolution.x / SGConstants.ReferenceResolutionX;
+            var menuNewHeight = SGConstants.ReferenceResolutionY * widthScaleRatio;
+            var emptySpaceHeight = newResolution.y - menuNewHeight;
+            var blindfoldOffset = emptySpaceHeight / 2;//2 since blindfolds come from bottom and top
+            blindfoldOffset /= widthScaleRatio;//the blindfolds offset has to be rescaled back to 4k screen dimensions.
 
-            var percentageDifference = newResolutionRatio / referenceResolutionRatio;
-            var blindfoldedAreaPercent = 1 - percentageDifference;
+            var topBlindfoldPos = _topBlindfoldAnchor;
+            var bottomBlindfoldPos = _bottomBlindfoldAnchor;
 
-            var singleBlindfoldOffset = newResolution.y * blindfoldedAreaPercent / 2;
-            var topBlindfoldPos = _topBlindfold.anchoredPosition;
-            var bottomBlindfoldPos = _bottomBlindfold.anchoredPosition;
-
-            topBlindfoldPos.y -= singleBlindfoldOffset;
-            bottomBlindfoldPos.y += singleBlindfoldOffset;
+            topBlindfoldPos.y += blindfoldOffset;
+            bottomBlindfoldPos.y -= blindfoldOffset;
 
             _topBlindfold.anchoredPosition = topBlindfoldPos;
             _bottomBlindfold.anchoredPosition = bottomBlindfoldPos;
