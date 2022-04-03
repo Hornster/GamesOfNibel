@@ -22,6 +22,7 @@ namespace Assets.Scripts.Game.Player
 
         public KeyCode HelpButton { get; set; } = KeyCode.H;
         public KeyCode LeaveButton { get; set; } = KeyCode.Escape;
+        public KeyCode UnstuckButton { get; set; } = KeyCode.U;
 
         private static ButtonConfig _instance;
 

@@ -65,5 +65,10 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.Race
             var newColor = TeamColorsSO.GetTeamColor(whichTeam);
             whichMessage.ChangeColor(newColor);
         }
+
+        public void ShowUnstuck(KeyStateEnum keyState)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

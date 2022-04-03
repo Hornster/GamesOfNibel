@@ -17,6 +17,7 @@ namespace Assets.Scripts.Game.Player
         private static UnityAction _jumpingOffPlatformsEndHandler;
         private static UnityAction _helpToggleHandler;
         private static UnityAction _gameLeaveHandler;
+        private static UnityAction<KeyStateEnum> _unstuckHandler;
         /// <summary>
         /// Handler for special activities that differ among the gamemodes, like flag drop.
         /// </summary>
@@ -126,6 +127,19 @@ namespace Assets.Scripts.Game.Player
             {
                 _specialActivityGameModeHandler?.Invoke();
             }
+
+            if (Input.GetKeyDown(_buttonConfig.UnstuckButton))
+            {
+                _unstuckHandler?.Invoke(KeyStateEnum.Down);
+            }
+            else if (Input.GetKey(_buttonConfig.UnstuckButton))
+            {
+                _unstuckHandler?.Invoke(KeyStateEnum.Held);
+            }
+            else if (Input.GetKeyUp(_buttonConfig.UnstuckButton))
+            {
+                _unstuckHandler?.Invoke(KeyStateEnum.Up);
+            }
         }
         /// <summary>
         /// Used to toggle the input reader.
@@ -205,6 +219,10 @@ namespace Assets.Scripts.Game.Player
             _specialActivityGameModeHandler += handler;
         }
 
+        public static void RegisterUnstuckRequest(UnityAction<KeyStateEnum> handler)
+        {
+            _unstuckHandler += handler;
+        }
         #endregion EventRegistering
 
         private void OnDestroy()
@@ -217,6 +235,7 @@ namespace Assets.Scripts.Game.Player
             _helpToggleHandler = null;
             _gameLeaveHandler = null;
             _specialActivityGameModeHandler = null;
+            _unstuckHandler = null;
         }
     }
 }

@@ -14,5 +14,10 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.CTF
         /// <param name="whichTeam">Which team does the message concern.</param>
         /// <param name="message">What exactly should be shown.</param>
         void PrintMessage(Teams whichTeam, string message);
+        /// <summary>
+        /// Used to show the state of calling the unstuck option by the player.
+        /// </summary>
+        /// <param name="keyState"></param>
+        void ShowUnstuck(KeyStateEnum keyState);
     }
 }

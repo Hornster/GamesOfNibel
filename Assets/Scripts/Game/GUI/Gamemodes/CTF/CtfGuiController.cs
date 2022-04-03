@@ -85,5 +85,10 @@ namespace Assets.Scripts.Game.GUI.Gamemodes.CTF
                     throw new ArgumentOutOfRangeException(nameof(whichTeam), whichTeam, "Provided team cannot have their points increased in CTF mode!");
             }
         }
+
+        public void ShowUnstuck(KeyStateEnum keyState)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

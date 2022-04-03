@@ -14,7 +14,7 @@ namespace Assets.Scripts.Game.Common.Data.Constants
         public const string SGSOColorsRelativePath = "Colors/";
         public const string SGSOFactoryDataRelativePath = "Factory Data/";
 
-        public const string SGPlayerDefaultName = "RANDOM SPIRIT";
+        public const string SGPlayerDefaultName = "RANDOM MARSHMALLOW";
         /// <summary>
         /// Shown when the round of race game mode ends. Formatting args:
         /// 1: Name of the player - string
@@ -28,5 +28,7 @@ namespace Assets.Scripts.Game.Common.Data.Constants
         public const double ReferenceResolutionFactor = 16.0 / 9.0;
         public const int ReferenceResolutionX = 3840;
         public const int ReferenceResolutionY = 2160;
+
+        public static readonly Color TransparentColor = new Color(0, 0, 0, 0);
     }
 }
